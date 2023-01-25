@@ -41,7 +41,7 @@ const Navbar = () => {
         <div className="hover:cursor-pointer duration-500 hover:opacity-50">
           <Fade up delay={550} distance="12px">
             <div className="flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
-              <div>Start Now</div>
+              <div className="font-semibold">Start Now</div>
               <div className="opacity-75">
                 <AiOutlineRight size={15} />
               </div>
