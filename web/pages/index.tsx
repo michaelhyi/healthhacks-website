@@ -10,9 +10,8 @@ export default function Home() {
           content="Assembling the future innovators of medicine."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Official Logo.JPEG" />
       </Head>
-      <div className=""></div>
     </>
   );
 }
