@@ -10,9 +10,9 @@ export default function Home() {
       <Statistics />
       <div className="flex flex-col space-y-16 justify-center items-center pt-16">
         <div className="font-semibold text-xl opacity-75">{`EXPLORE THE HEALTH{HACKS} WAY`}</div>
-        <div className="flex space-x-48">
+        <div className="flex space-x-48 items-center">
           <img src="/DAY 1.GIF" className="w-[10vw]" />
-          <div className="flex flex-col">
+          <div className="flex flex-col w-[20vw] space-y-4">
             <div className="font-semibold text-3xl">
               Day 1: Experience the power of collaboration.
             </div>
@@ -23,10 +23,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex space-x-48">
+        <div className="flex space-x-48 items-center">
           <img src="/DAY 2.GIF" className="w-[10vw]" />
-          <div className="flex flex-col">
-            <div className="font-semibold text-3xl">
+          <div className="flex flex-col space-y-4">
+            <div className="font-semibold text-3xl w-[20vw]">
               Day 2: Enhance your knowledge and skills.
             </div>
             <div className="font-medium opacity-75 text-xl w-[20vw]">
@@ -36,10 +36,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex space-x-48">
+        <div className="flex space-x-48 items-center">
           <img src="/DAY 3.GIF" className="w-[10vw]" />
-          <div className="flex flex-col">
-            <div className="font-semibold text-3xl">
+          <div className="flex flex-col space-y-4">
+            <div className="font-semibold text-3xl w-[20vw]">
               Day 3: Pitch your ideas to the world.
             </div>
             <div className="font-medium opacity-75 text-xl w-[20vw]">
