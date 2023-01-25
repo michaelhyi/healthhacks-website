@@ -1,0 +1,17 @@
+import React from "react";
+import Navbar from "./Navbar";
+
+interface Props {
+  children: React.ReactNode;
+}
+
+const Container: React.FC<Props> = ({ children }) => {
+  return (
+    <div className="flex flex-col bg-black text-white font-inter">
+      <Navbar />
+      {children}
+    </div>
+  );
+};
+
+export default Container;
