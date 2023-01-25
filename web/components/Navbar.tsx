@@ -1,6 +1,6 @@
 const Navbar = () => {
   return (
-    <div className="flex items-center p-4 w-full sticky top-0 z-50 bg-black ">
+    <div className="flex items-center p-8 w-full sticky top-0 z-50 bg-black ">
       <div className="flex items-center space-x-1">
         <img src="/Official Logo.JPEG" className="h-[50px] w-[50px]" />
         <div className="font-semibold text-xl">{`health{hacks}`}</div>
@@ -16,7 +16,7 @@ const Navbar = () => {
           Blog
         </div>
       </div>
-      <div className="flex items-center space-x-4 absolute right-4 ">
+      <div className="flex items-center space-x-4 absolute right-8 ">
         <div>Login</div>
         <div className="hover:cursor-pointer duration-500 hover:opacity-50 text-black bg-white py-3 px-4 rounded-3xl">
           Start Now
