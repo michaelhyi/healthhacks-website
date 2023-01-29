@@ -24,10 +24,7 @@ const main = async () => {
         entities: [User_1.User],
     });
     const app = (0, express_1.default)();
-    app.use((0, cors_1.default)({
-        origin: "http://localhost:4000",
-        credentials: true,
-    }));
+    app.use((0, cors_1.default)());
     const apolloServer = new apollo_server_express_1.ApolloServer({
         plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()],
         schema: await (0, type_graphql_1.buildSchema)({

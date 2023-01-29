@@ -3,8 +3,23 @@ import Container from "../components/Container";
 import Input from "../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
+import { useState } from "react";
+import { useRegisterMutation } from "../generated/graphql";
+import { useRouter } from "next/router";
+import { withUrqlClient } from "next-urql";
+import { createUrqlClient } from "../utils/createUrqlClient";
 
 const Register = () => {
+  const router = useRouter();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [organization, setOrganization] = useState("");
+
+  const [, register] = useRegisterMutation();
+
   return (
     <Container>
       <Fade delay={500} up distance="24px">
@@ -22,20 +37,44 @@ const Register = () => {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
+                const response = await register({
+                  firstName,
+                  lastName,
+                  email,
+                  password,
+                  organization,
+                });
+                console.log(response);
+                if (!response.data?.register.error) {
+                  console.log(response.data!.register.user!.id);
+                  router.push("/");
+                }
               }}
               className="mt-4"
             >
               <div className="flex space-x-6">
                 <div className="w-[20vw]">
-                  <Input label="First Name" />
+                  <Input
+                    value={firstName}
+                    setValue={setFirstName}
+                    label="First Name"
+                  />
                 </div>
                 <div className="w-[20vw]">
-                  <Input label="Last Name" />
+                  <Input
+                    value={lastName}
+                    setValue={setLastName}
+                    label="Last Name"
+                  />
                 </div>
               </div>
-              <Input label="Email" />
-              <Input label="Password" />
-              <Input label="Organization" />
+              <Input value={email} setValue={setEmail} label="Email" />
+              <Input value={password} setValue={setPassword} label="Password" />
+              <Input
+                value={organization}
+                setValue={setOrganization}
+                label="Organization"
+              />
               <div className="text-xs mt-6">
                 By continuing you agree to the {`health{hacks}`}&nbsp;
                 <Link
@@ -75,4 +114,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default withUrqlClient(createUrqlClient)(Register);

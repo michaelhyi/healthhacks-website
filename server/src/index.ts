@@ -22,12 +22,7 @@ const main = async () => {
 
   const app = express();
 
-  app.use(
-    cors({
-      origin: "http://localhost:4000",
-      credentials: true,
-    })
-  );
+  app.use(cors());
 
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],

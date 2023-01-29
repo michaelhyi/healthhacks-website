@@ -3,8 +3,18 @@ import Container from "../components/Container";
 import Input from "../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
+import { withUrqlClient } from "next-urql";
+import { useState } from "react";
+import { createUrqlClient } from "../utils/createUrqlClient";
+import { useLoginMutation } from "../generated/graphql";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [, login] = useLoginMutation();
+
   return (
     <Container>
       <Fade delay={500} up distance="24px">
@@ -31,12 +41,17 @@ const Login = () => {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
+                const response = await login({ email, password });
+                console.log(response);
+                if (!response.data?.login.error) {
+                  console.log(response.data!.login.user!.id);
+                  router.push("/");
+                }
               }}
               className="mt-4"
             >
-              <Input label="Email" />
-              <Input label="Password" />
-
+              <Input value={email} setValue={setEmail} label="Email" />
+              <Input value={password} setValue={setPassword} label="Password" />
               <div className="flex items-center mt-6 space-x-4">
                 <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-4 py-2 rounded-xl text-sm font-medium">
                   Register
@@ -59,4 +74,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withUrqlClient(createUrqlClient)(Login);

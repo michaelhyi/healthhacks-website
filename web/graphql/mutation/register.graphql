@@ -5,7 +5,13 @@ mutation Register(
   $lastName: String!
   $organization: String!
 ) {
-  login(email: $email, password: $password) {
+  register(
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+    password: $password
+    organization: $organization
+  ) {
     user {
       id
     }

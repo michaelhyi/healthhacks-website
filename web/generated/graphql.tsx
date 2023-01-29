@@ -88,7 +88,7 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
 
 export const LoginDocument = gql`
@@ -110,7 +110,13 @@ export function useLoginMutation() {
 };
 export const RegisterDocument = gql`
     mutation Register($email: String!, $password: String!, $firstName: String!, $lastName: String!, $organization: String!) {
-  login(email: $email, password: $password) {
+  register(
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+    password: $password
+    organization: $organization
+  ) {
     user {
       id
     }
