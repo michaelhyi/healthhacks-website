@@ -6,7 +6,8 @@ import express from "express";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
-import { HiResolver } from "./resolvers/hi";
+import { User } from "./entities/User";
+import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
   await createConnection({
@@ -16,7 +17,7 @@ const main = async () => {
     password: "postgres",
     logging: true,
     synchronize: true,
-    entities: [],
+    entities: [User],
   });
 
   const app = express();
@@ -31,7 +32,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [HiResolver],
+      resolvers: [UserResolver],
       validate: false,
     }),
   });
