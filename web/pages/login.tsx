@@ -13,8 +13,12 @@ import Context from "../utils/context";
 const Login = () => {
   const router = useRouter();
   const { setUser } = useContext(Context);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const [, login] = useLoginMutation();
 
   return (
@@ -51,12 +55,33 @@ const Login = () => {
                   );
                   setUser(response.data!.login.user!);
                   router.push("/");
+                } else {
+                  if (response.data.login.error.field === "Email") {
+                    setEmailError(response.data.login.error.message);
+                  } else {
+                    setEmailError("");
+                  }
+                  if (response.data.login.error.field === "Password") {
+                    setPasswordError(response.data.login.error.message);
+                  } else {
+                    setPasswordError("");
+                  }
                 }
               }}
               className="mt-4"
             >
-              <Input value={email} setValue={setEmail} label="Email" />
-              <Input value={password} setValue={setPassword} label="Password" />
+              <Input
+                value={email}
+                setValue={setEmail}
+                label="Email"
+                error={emailError}
+              />
+              <Input
+                value={password}
+                setValue={setPassword}
+                label="Password"
+                error={passwordError}
+              />
               <div className="flex items-center mt-6 space-x-4">
                 <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-4 py-2 rounded-xl text-sm font-medium">
                   Login

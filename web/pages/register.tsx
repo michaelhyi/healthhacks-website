@@ -20,6 +20,12 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [organization, setOrganization] = useState("");
 
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [organizationError, setOrganizationError] = useState("");
+
   const [, register] = useRegisterMutation();
 
   return (
@@ -53,6 +59,34 @@ const Register = () => {
                   );
                   setUser(response.data!.register.user!);
                   router.push("/");
+                } else {
+                  if (response.data.register.error.field === "First Name") {
+                    setFirstNameError(response.data.register.error.message);
+                  } else {
+                    setFirstNameError("");
+                  }
+                  if (response.data.register.error.field === "Last Name") {
+                    setLastNameError(response.data.register.error.message);
+                  } else {
+                    setLastNameError("");
+                  }
+
+                  if (response.data.register.error.field === "Email") {
+                    setEmailError(response.data.register.error.message);
+                  } else {
+                    setEmailError("");
+                  }
+                  if (response.data.register.error.field === "Password") {
+                    setPasswordError(response.data.register.error.message);
+                  } else {
+                    setPasswordError("");
+                  }
+
+                  if (response.data.register.error.field === "Organization") {
+                    setOrganizationError(response.data.register.error.message);
+                  } else {
+                    setOrganizationError("");
+                  }
                 }
               }}
               className="mt-4"
@@ -60,6 +94,7 @@ const Register = () => {
               <div className="flex space-x-6">
                 <div className="w-[20vw]">
                   <Input
+                    error={firstNameError}
                     value={firstName}
                     setValue={setFirstName}
                     label="First Name"
@@ -67,15 +102,27 @@ const Register = () => {
                 </div>
                 <div className="w-[20vw]">
                   <Input
+                    error={lastNameError}
                     value={lastName}
                     setValue={setLastName}
                     label="Last Name"
                   />
                 </div>
               </div>
-              <Input value={email} setValue={setEmail} label="Email" />
-              <Input value={password} setValue={setPassword} label="Password" />
               <Input
+                value={email}
+                setValue={setEmail}
+                label="Email"
+                error={emailError}
+              />
+              <Input
+                value={password}
+                setValue={setPassword}
+                label="Password"
+                error={passwordError}
+              />
+              <Input
+                error={organizationError}
                 value={organization}
                 setValue={setOrganization}
                 label="Organization"
