@@ -7,7 +7,7 @@ interface Props {
 
 const Container: React.FC<Props> = ({ children }) => {
   return (
-    <div className="flex flex-col bg-black text-white font-inter">
+    <div className="flex flex-col bg-black text-white font-inter min-h-screen">
       <Navbar />
       {children}
     </div>
