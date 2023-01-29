@@ -3,14 +3,16 @@ import Container from "../components/Container";
 import Input from "../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRegisterMutation } from "../generated/graphql";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
+import Context from "../utils/context";
 
 const Register = () => {
   const router = useRouter();
+  const { setUser } = useContext(Context);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -44,9 +46,12 @@ const Register = () => {
                   password,
                   organization,
                 });
-                console.log(response);
                 if (!response.data?.register.error) {
-                  console.log(response.data!.register.user!.id);
+                  await localStorage.setItem(
+                    "user",
+                    JSON.stringify(response.data!.register.user!)
+                  );
+                  setUser(response.data!.register.user!);
                   router.push("/");
                 }
               }}

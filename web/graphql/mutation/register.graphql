@@ -14,6 +14,11 @@ mutation Register(
   ) {
     user {
       id
+      firstName
+      lastName
+      email
+      organization
+      applicationStatus
     }
     error {
       field

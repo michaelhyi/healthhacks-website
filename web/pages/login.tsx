@@ -4,13 +4,15 @@ import Input from "../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { withUrqlClient } from "next-urql";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { useLoginMutation } from "../generated/graphql";
 import { useRouter } from "next/router";
+import Context from "../utils/context";
 
 const Login = () => {
   const router = useRouter();
+  const { setUser } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [, login] = useLoginMutation();
@@ -42,9 +44,12 @@ const Login = () => {
               onSubmit={async (e) => {
                 e.preventDefault();
                 const response = await login({ email, password });
-                console.log(response);
                 if (!response.data?.login.error) {
-                  console.log(response.data!.login.user!.id);
+                  await localStorage.setItem(
+                    "user",
+                    JSON.stringify(response.data!.login.user!)
+                  );
+                  setUser(response.data!.login.user!);
                   router.push("/");
                 }
               }}
@@ -54,7 +59,7 @@ const Login = () => {
               <Input value={password} setValue={setPassword} label="Password" />
               <div className="flex items-center mt-6 space-x-4">
                 <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-4 py-2 rounded-xl text-sm font-medium">
-                  Register
+                  Login
                 </button>
                 <div className="text-sm">
                   Forgot Password?&nbsp;
