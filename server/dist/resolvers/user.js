@@ -21,6 +21,10 @@ const type_graphql_1 = require("type-graphql");
 const User_1 = require("../entities/User");
 const types_1 = require("../utils/types");
 let UserResolver = class UserResolver {
+    async deleteUsers() {
+        await User_1.User.delete({});
+        return true;
+    }
     async readUser(id) {
         const user = await User_1.User.findOne({ where: { id } });
         return user;
@@ -123,6 +127,12 @@ let UserResolver = class UserResolver {
         };
     }
 };
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "deleteUsers", null);
 __decorate([
     (0, type_graphql_1.Query)(() => User_1.User),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),

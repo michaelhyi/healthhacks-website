@@ -5,6 +5,12 @@ import { UserResponse } from "../utils/types";
 
 @Resolver()
 export class UserResolver {
+  @Mutation(() => Boolean)
+  async deleteUsers() {
+    await User.delete({});
+    return true;
+  }
+
   @Query(() => User)
   async readUser(@Arg("id", () => Int) id: number): Promise<User> {
     const user = await User.findOne({ where: { id } });
