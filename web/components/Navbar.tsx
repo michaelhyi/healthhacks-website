@@ -35,11 +35,14 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center space-x-8 absolute right-8">
-        <div className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100">
+        <Link
+          href="/login"
+          className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100"
+        >
           <Fade up delay={500} distance="12px">
             Login
           </Fade>
-        </div>
+        </Link>
         <Link
           href="/register"
           className="hover:cursor-pointer duration-500 hover:opacity-50"
