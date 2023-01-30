@@ -29,11 +29,14 @@ const Navbar = () => {
             Explore
           </Fade>
         </div>
-        <div className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100">
+        <Link
+          href="/about"
+          className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100"
+        >
           <Fade up delay={400} distance="12px">
-            Team
+            About
           </Fade>
-        </div>
+        </Link>
         <div className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100">
           <Fade up delay={450} distance="12px">
             Blog
