@@ -1,5 +1,6 @@
 import argon2 from "argon2";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { Application } from "../entities/Application";
 import { User } from "../entities/User";
 import { UserResponse } from "../utils/types";
 
@@ -70,6 +71,13 @@ export class UserResolver {
       user = await User.create({
         email,
         password: await argon2.hash(password),
+        firstName,
+        lastName,
+      }).save();
+
+      await Application.create({
+        userId: user.id,
+        status: "pending",
         firstName,
         lastName,
       }).save();

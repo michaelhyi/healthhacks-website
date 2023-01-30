@@ -21,79 +21,79 @@ export class Application extends BaseEntity {
 
   @Field()
   @Column()
-  status!: boolean;
+  status!: string;
 
   @Field()
   @Column()
   firstName!: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  middleName!: string;
+  middleName: string;
 
   @Field()
   @Column()
   lastName!: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  phone!: string;
+  phone: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  organization!: string;
+  organization: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  city!: string;
+  city: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  state!: string;
+  state: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  inPerson!: boolean;
+  inPerson: boolean;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  wholeEvent!: boolean;
+  wholeEvent: boolean;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  background!: string;
+  background: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  whyUs!: string;
+  whyUs: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  trackRanking!: string;
+  trackRanking: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  howHear!: string;
+  howHear: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  team!: boolean;
+  team: boolean;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  linkedin!: string;
+  linkedin: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  contact!: string;
+  contact: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  dietaryRestrictions!: string;
+  dietaryRestrictions: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  other!: string;
+  other: string;
 
   @Field(() => String)
   @CreateDateColumn()
