@@ -56,8 +56,25 @@ const About = () => {
         <div className="pt-24 font-semibold text-3xl bg-clip-text text-transparent bg-gradient-to-r to-[#00B59D] from-[#CB47F4] ">
           We Have Been Backed By
         </div>
-        <img src="/polygon.svg" />
-        <img src="/clipboard-health.png" className="fill-white" />
+        <div className="flex space-x-4 items-center mt-6">
+          <img
+            src="/logos/polygon.svg"
+            className="h-[5vh] filter brightness-0 invert"
+          />
+          <img
+            src="/logos/clipboard-health.png"
+            className="h-[5vh] filter brightness-0 invert"
+          />
+          <img
+            src="/logos/fund-global.png"
+            className="h-[5vh] filter brightness-0 invert"
+          />
+          <img
+            src="/logos/vital.svg"
+            className="h-[5vh] filter brightness-0 invert"
+          />
+        </div>
+
         <div className="pt-24 font-semibold text-3xl bg-clip-text text-transparent bg-gradient-to-r to-[#00B59D] from-[#CB47F4] ">
           We Believe In
         </div>
