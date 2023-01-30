@@ -33,7 +33,7 @@ let UserResolver = class UserResolver {
         const users = await User_1.User.find();
         return users;
     }
-    async register(email, password, firstName, lastName, organization) {
+    async register(email, password, firstName, lastName) {
         if (!email.includes("@")) {
             return {
                 error: {
@@ -66,14 +66,6 @@ let UserResolver = class UserResolver {
                 },
             };
         }
-        if (organization.length === 0) {
-            return {
-                error: {
-                    field: "Organization",
-                    message: "You must enter an organization.",
-                },
-            };
-        }
         let user;
         try {
             user = await User_1.User.create({
@@ -81,8 +73,6 @@ let UserResolver = class UserResolver {
                 password: await argon2_1.default.hash(password),
                 firstName,
                 lastName,
-                organization,
-                applicationStatus: "pending",
             }).save();
         }
         catch (e) {
@@ -152,9 +142,8 @@ __decorate([
     __param(1, (0, type_graphql_1.Arg)("password")),
     __param(2, (0, type_graphql_1.Arg)("firstName")),
     __param(3, (0, type_graphql_1.Arg)("lastName")),
-    __param(4, (0, type_graphql_1.Arg)("organization")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
 __decorate([

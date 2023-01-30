@@ -30,14 +30,6 @@ export class User extends BaseEntity {
   @Column()
   lastName!: string;
 
-  @Field()
-  @Column()
-  organization!: string;
-
-  @Field()
-  @Column()
-  applicationStatus!: string;
-
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;

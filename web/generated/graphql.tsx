@@ -23,6 +23,7 @@ export type Error = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  deleteUsers: Scalars['Boolean'];
   login: UserResponse;
   register: UserResponse;
 };
@@ -38,7 +39,6 @@ export type MutationRegisterArgs = {
   email: Scalars['String'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
-  organization: Scalars['String'];
   password: Scalars['String'];
 };
 
@@ -55,13 +55,11 @@ export type QueryReadUserArgs = {
 
 export type User = {
   __typename?: 'User';
-  applicationStatus: Scalars['String'];
   createdAt: Scalars['String'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['Float'];
   lastName: Scalars['String'];
-  organization: Scalars['String'];
   updatedAt: Scalars['String'];
 };
 
@@ -77,18 +75,17 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, organization: string, applicationStatus: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
-  organization: Scalars['String'];
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, organization: string, applicationStatus: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
 
 export const LoginDocument = gql`
@@ -99,8 +96,6 @@ export const LoginDocument = gql`
       firstName
       lastName
       email
-      organization
-      applicationStatus
     }
     error {
       field
@@ -114,21 +109,18 @@ export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 };
 export const RegisterDocument = gql`
-    mutation Register($email: String!, $password: String!, $firstName: String!, $lastName: String!, $organization: String!) {
+    mutation Register($email: String!, $password: String!, $firstName: String!, $lastName: String!) {
   register(
     firstName: $firstName
     lastName: $lastName
     email: $email
     password: $password
-    organization: $organization
   ) {
     user {
       id
       firstName
       lastName
       email
-      organization
-      applicationStatus
     }
     error {
       field

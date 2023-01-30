@@ -3,22 +3,18 @@ mutation Register(
   $password: String!
   $firstName: String!
   $lastName: String!
-  $organization: String!
 ) {
   register(
     firstName: $firstName
     lastName: $lastName
     email: $email
     password: $password
-    organization: $organization
   ) {
     user {
       id
       firstName
       lastName
       email
-      organization
-      applicationStatus
     }
     error {
       field

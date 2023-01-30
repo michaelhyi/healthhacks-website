@@ -28,8 +28,7 @@ export class UserResolver {
     @Arg("email") email: string,
     @Arg("password") password: string,
     @Arg("firstName") firstName: string,
-    @Arg("lastName") lastName: string,
-    @Arg("organization") organization: string
+    @Arg("lastName") lastName: string
   ): Promise<UserResponse> {
     //some sort of email validity checker
     if (!email.includes("@")) {
@@ -65,14 +64,6 @@ export class UserResolver {
         },
       };
     }
-    if (organization.length === 0) {
-      return {
-        error: {
-          field: "Organization",
-          message: "You must enter an organization.",
-        },
-      };
-    }
 
     let user;
     try {
@@ -81,8 +72,6 @@ export class UserResolver {
         password: await argon2.hash(password),
         firstName,
         lastName,
-        organization,
-        applicationStatus: "pending",
       }).save();
     } catch (e) {
       if (

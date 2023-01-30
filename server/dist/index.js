@@ -11,6 +11,7 @@ const express_1 = __importDefault(require("express"));
 require("reflect-metadata");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
+const Application_1 = require("./entities/Application");
 const User_1 = require("./entities/User");
 const user_1 = require("./resolvers/user");
 const main = async () => {
@@ -21,7 +22,7 @@ const main = async () => {
         password: "postgres",
         logging: true,
         synchronize: true,
-        entities: [User_1.User],
+        entities: [User_1.User, Application_1.Application],
     });
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)());
