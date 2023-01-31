@@ -5,9 +5,16 @@ interface Props {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   error: string;
+  textarea?: boolean;
 }
 
-const Input: React.FC<Props> = ({ label, value, setValue, error }) => {
+const Input: React.FC<Props> = ({
+  label,
+  value,
+  setValue,
+  error,
+  textarea,
+}) => {
   return (
     <div>
       <div
@@ -17,14 +24,25 @@ const Input: React.FC<Props> = ({ label, value, setValue, error }) => {
       >
         {label}
       </div>
-      <input
-        type={`${label === "Password" ? "password" : ""}`}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        className={`w-full bg-black border-[0.5px] ${
-          error.length > 0 ? "border-red-400" : "border-white"
-        } py-2 rounded-xl px-4`}
-      />
+      {textarea ? (
+        <textarea
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className={`w-full bg-black border-[0.5px] ${
+            error.length > 0 ? "border-red-400" : "border-white"
+          } py-2 rounded-xl px-4 min-h-[25vh]`}
+        />
+      ) : (
+        <input
+          type={`${label === "Password" ? "password" : ""}`}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className={`w-full bg-black border-[0.5px] ${
+            error.length > 0 ? "border-red-400" : "border-white"
+          } py-2 rounded-xl px-4`}
+        />
+      )}
+
       {error.length > 0 && (
         <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
           {error}

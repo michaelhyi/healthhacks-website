@@ -29,11 +29,11 @@ const Application = () => {
   return (
     <Container>
       <div className="flex flex-col items-center pt-24">
-        <div className="w-[25vw]">
+        <div className="w-[50vw]">
           <div className="font-semibold text-3xl">Application</div>
           <form>
             <div className="flex space-x-6">
-              <div className="w-[25vw]">
+              <div className="w-[50vw]">
                 <Input
                   error={firstNameError}
                   value={firstName}
@@ -41,7 +41,7 @@ const Application = () => {
                   label="First Name"
                 />
               </div>
-              <div className="w-[25vw]">
+              <div className="w-[50vw]">
                 <Input
                   error={middleNameError}
                   value={middleName}
@@ -49,7 +49,7 @@ const Application = () => {
                   label="Middle Name"
                 />
               </div>
-              <div className="w-[25vw]">
+              <div className="w-[50vw]">
                 <Input
                   error={lastNameError}
                   value={lastName}
@@ -59,7 +59,7 @@ const Application = () => {
               </div>
             </div>
             <div className="flex space-x-6">
-              <div className="w-[25vw]">
+              <div className="w-[50vw]">
                 <Input
                   error={phoneError}
                   value={phone}
@@ -67,7 +67,7 @@ const Application = () => {
                   label="Phone"
                 />
               </div>
-              <div className="w-[25vw]">
+              <div className="w-[50vw]">
                 <Input
                   error={organizationError}
                   value={organization}
@@ -77,7 +77,7 @@ const Application = () => {
               </div>
             </div>
             <div className="flex space-x-6">
-              <div className="w-[25vw]">
+              <div className="w-[50vw]">
                 <Input
                   error={cityError}
                   value={city}
@@ -85,7 +85,7 @@ const Application = () => {
                   label="City"
                 />
               </div>
-              <div className="w-[25vw]">
+              <div className="w-[50vw]">
                 <div className={`mt-4 mb-2 }`}>State</div>
                 <Menu>
                   <MenuButton as={Button} color="black" bg="white">

@@ -28,7 +28,7 @@ export class Application extends BaseEntity {
   firstName!: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   middleName: string;
 
   @Field()
@@ -36,63 +36,63 @@ export class Application extends BaseEntity {
   lastName!: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   phone: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   organization: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   city: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   state: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   inPerson: boolean;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   wholeEvent: boolean;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   background: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   whyUs: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   trackRanking: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   howHear: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   team: boolean;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   linkedin: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   contact: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   dietaryRestrictions: string;
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   other: string;
 
   @Field(() => String)

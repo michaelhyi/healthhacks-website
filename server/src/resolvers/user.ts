@@ -75,12 +75,14 @@ export class UserResolver {
         lastName,
       }).save();
 
-      await Application.create({
+      const application = await Application.create({
         userId: user.id,
         status: "pending",
         firstName,
         lastName,
       }).save();
+
+      console.log(application);
     } catch (e) {
       if (
         e.detail.includes("already exists") ||

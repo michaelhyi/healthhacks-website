@@ -30,7 +30,7 @@ const Register = () => {
     <Container>
       <Fade delay={500} up distance="24px">
         <div className="flex flex-col items-center pt-24">
-          <div className="w-[17.5vw]">
+          <div className="w-[50vw]">
             <div>
               <div className="font-semibold text-3xl">
                 Let's Create An Account
@@ -83,7 +83,7 @@ const Register = () => {
               className="mt-4"
             >
               <div className="flex space-x-6">
-                <div className="w-[20vw]">
+                <div className="w-[50vw]">
                   <Input
                     error={firstNameError}
                     value={firstName}
@@ -91,7 +91,7 @@ const Register = () => {
                     label="First Name"
                   />
                 </div>
-                <div className="w-[20vw]">
+                <div className="w-[50vw]">
                   <Input
                     error={lastNameError}
                     value={lastName}

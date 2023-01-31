@@ -8,6 +8,7 @@ import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import { Application } from "./entities/Application";
 import { User } from "./entities/User";
+import { ApplicationResolver } from "./resolvers/application";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
@@ -28,7 +29,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, ApplicationResolver],
       validate: false,
     }),
   });

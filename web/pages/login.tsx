@@ -25,7 +25,7 @@ const Login = () => {
     <Container>
       <Fade delay={500} up distance="24px">
         <div className="flex flex-col items-center pt-24">
-          <div className="w-[17.5vw]">
+          <div className="w-[50vw]">
             <div>
               <div className="font-semibold text-3xl">
                 Let's Log Into Your Account
