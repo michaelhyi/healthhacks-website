@@ -25,9 +25,11 @@ const Input: React.FC<Props> = ({ label, value, setValue, error }) => {
           error.length > 0 ? "border-red-400" : "border-white"
         } py-2 rounded-xl px-4`}
       />
-      <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
-        {error}
-      </div>
+      {error.length > 0 && (
+        <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+          {error}
+        </div>
+      )}
     </div>
   );
 };

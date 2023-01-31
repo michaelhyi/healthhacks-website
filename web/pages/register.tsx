@@ -18,13 +18,11 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [organization, setOrganization] = useState("");
 
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [organizationError, setOrganizationError] = useState("");
 
   const [, register] = useRegisterMutation();
 
@@ -50,7 +48,6 @@ const Register = () => {
                   lastName,
                   email,
                   password,
-                  organization,
                 });
                 if (!response.data?.register.error) {
                   await localStorage.setItem(
@@ -80,12 +77,6 @@ const Register = () => {
                     setPasswordError(response.data.register.error.message);
                   } else {
                     setPasswordError("");
-                  }
-
-                  if (response.data.register.error.field === "Organization") {
-                    setOrganizationError(response.data.register.error.message);
-                  } else {
-                    setOrganizationError("");
                   }
                 }
               }}
@@ -120,12 +111,6 @@ const Register = () => {
                 setValue={setPassword}
                 label="Password"
                 error={passwordError}
-              />
-              <Input
-                error={organizationError}
-                value={organization}
-                setValue={setOrganization}
-                label="Organization"
               />
               <div className="text-xs mt-6">
                 By continuing you agree to the {`health{hacks}`}&nbsp;

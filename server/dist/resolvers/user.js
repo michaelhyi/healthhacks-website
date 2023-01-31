@@ -18,6 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const argon2_1 = __importDefault(require("argon2"));
 const type_graphql_1 = require("type-graphql");
+const Application_1 = require("../entities/Application");
 const User_1 = require("../entities/User");
 const types_1 = require("../utils/types");
 let UserResolver = class UserResolver {
@@ -71,6 +72,12 @@ let UserResolver = class UserResolver {
             user = await User_1.User.create({
                 email,
                 password: await argon2_1.default.hash(password),
+                firstName,
+                lastName,
+            }).save();
+            await Application_1.Application.create({
+                userId: user.id,
+                status: "pending",
                 firstName,
                 lastName,
             }).save();

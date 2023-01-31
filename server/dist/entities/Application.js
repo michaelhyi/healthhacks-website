@@ -27,7 +27,7 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], Application.prototype, "status", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:type", String)
 ], Application.prototype, "firstName", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "middleName", void 0);
@@ -45,77 +45,77 @@ __decorate([
     __metadata("design:type", String)
 ], Application.prototype, "lastName", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "phone", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "organization", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "city", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "state", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Application.prototype, "inPerson", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Application.prototype, "wholeEvent", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "background", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "whyUs", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "trackRanking", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "howHear", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Application.prototype, "team", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "linkedin", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "contact", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "dietaryRestrictions", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Application.prototype, "other", void 0);
