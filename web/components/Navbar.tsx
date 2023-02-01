@@ -55,7 +55,7 @@ const Navbar = () => {
                 bg="black"
                 className="hover:opacity-50"
                 onClick={async () => {
-                  router.reload();
+                  router.push("/");
                   await localStorage.removeItem("user");
                   setUser(undefined);
                 }}

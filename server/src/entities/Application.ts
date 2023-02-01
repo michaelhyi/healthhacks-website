@@ -53,11 +53,11 @@ export class Application extends BaseEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  inPerson: boolean;
+  inPerson: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  wholeEvent: boolean;
+  wholeEvent: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
@@ -77,7 +77,7 @@ export class Application extends BaseEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  team: boolean;
+  team: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })

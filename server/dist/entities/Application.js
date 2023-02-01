@@ -67,12 +67,12 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], Application.prototype, "inPerson", void 0);
 __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], Application.prototype, "wholeEvent", void 0);
 __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
@@ -97,7 +97,7 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], Application.prototype, "team", void 0);
 __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
