@@ -15,6 +15,33 @@ export type Scalars = {
   Float: number;
 };
 
+export type Application = {
+  __typename?: 'Application';
+  background: Scalars['String'];
+  city: Scalars['String'];
+  contact: Scalars['String'];
+  createdAt: Scalars['String'];
+  dietaryRestrictions: Scalars['String'];
+  firstName: Scalars['String'];
+  howHear: Scalars['String'];
+  id: Scalars['Float'];
+  inPerson: Scalars['String'];
+  lastName: Scalars['String'];
+  linkedin: Scalars['String'];
+  middleName: Scalars['String'];
+  organization: Scalars['String'];
+  other: Scalars['String'];
+  phone: Scalars['String'];
+  state: Scalars['String'];
+  status: Scalars['String'];
+  team: Scalars['String'];
+  trackRanking: Scalars['String'];
+  updatedAt: Scalars['String'];
+  userId: Scalars['Float'];
+  wholeEvent: Scalars['String'];
+  whyUs: Scalars['String'];
+};
+
 export type Error = {
   __typename?: 'Error';
   field: Scalars['String'];
@@ -25,13 +52,20 @@ export type Mutation = {
   __typename?: 'Mutation';
   deleteUsers: Scalars['Boolean'];
   login: UserResponse;
+  readApplication: Application;
   register: UserResponse;
+  updateApplication: Scalars['Boolean'];
 };
 
 
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationReadApplicationArgs = {
+  userId: Scalars['Int'];
 };
 
 
@@ -42,8 +76,24 @@ export type MutationRegisterArgs = {
   password: Scalars['String'];
 };
 
+
+export type MutationUpdateApplicationArgs = {
+  city?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  inPerson?: InputMaybe<Scalars['String']>;
+  item: Scalars['String'];
+  lastName?: InputMaybe<Scalars['String']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  organization?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  state?: InputMaybe<Scalars['String']>;
+  userId: Scalars['Int'];
+  wholeEvent?: InputMaybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
+  readApplications: Array<Application>;
   readUser: User;
   readUsers: Array<User>;
 };
@@ -77,6 +127,13 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
+export type ReadApplicationMutationVariables = Exact<{
+  userId: Scalars['Int'];
+}>;
+
+
+export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, status: string, firstName: string, middleName: string, lastName: string, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: string, whyUs: string, trackRanking: string, howHear: string, team: string, linkedin: string, contact: string, dietaryRestrictions: string, other: string } };
+
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -86,6 +143,23 @@ export type RegisterMutationVariables = Exact<{
 
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+
+export type UpdateApplicationMutationVariables = Exact<{
+  userId: Scalars['Int'];
+  item: Scalars['String'];
+  firstName?: InputMaybe<Scalars['String']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  organization?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  state?: InputMaybe<Scalars['String']>;
+  inPerson?: InputMaybe<Scalars['String']>;
+  wholeEvent?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateApplicationMutation = { __typename?: 'Mutation', updateApplication: boolean };
 
 
 export const LoginDocument = gql`
@@ -107,6 +181,37 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const ReadApplicationDocument = gql`
+    mutation ReadApplication($userId: Int!) {
+  readApplication(userId: $userId) {
+    id
+    userId
+    status
+    firstName
+    middleName
+    lastName
+    phone
+    organization
+    city
+    state
+    inPerson
+    wholeEvent
+    background
+    whyUs
+    trackRanking
+    howHear
+    team
+    linkedin
+    contact
+    dietaryRestrictions
+    other
+  }
+}
+    `;
+
+export function useReadApplicationMutation() {
+  return Urql.useMutation<ReadApplicationMutation, ReadApplicationMutationVariables>(ReadApplicationDocument);
 };
 export const RegisterDocument = gql`
     mutation Register($email: String!, $password: String!, $firstName: String!, $lastName: String!) {
@@ -132,4 +237,25 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const UpdateApplicationDocument = gql`
+    mutation UpdateApplication($userId: Int!, $item: String!, $firstName: String, $middleName: String, $lastName: String, $phone: String, $organization: String, $city: String, $state: String, $inPerson: String, $wholeEvent: String) {
+  updateApplication(
+    userId: $userId
+    item: $item
+    firstName: $firstName
+    middleName: $middleName
+    lastName: $lastName
+    phone: $phone
+    organization: $organization
+    city: $city
+    state: $state
+    inPerson: $inPerson
+    wholeEvent: $wholeEvent
+  )
+}
+    `;
+
+export function useUpdateApplicationMutation() {
+  return Urql.useMutation<UpdateApplicationMutation, UpdateApplicationMutationVariables>(UpdateApplicationDocument);
 };

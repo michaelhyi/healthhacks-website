@@ -1,4 +1,7 @@
+import { withUrqlClient } from "next-urql";
 import React, { Dispatch, SetStateAction } from "react";
+import { useUpdateApplicationMutation } from "../generated/graphql";
+import { createUrqlClient } from "../utils/createUrqlClient";
 
 interface Props {
   label: string;
@@ -6,14 +9,16 @@ interface Props {
   setValue: Dispatch<SetStateAction<string>>;
   error?: string;
   textarea?: boolean;
+  userId: number;
 }
 
-const Input: React.FC<Props> = ({
+const ApplicationInput: React.FC<Props> = ({
   label,
   value,
   setValue,
   error,
   textarea,
+  userId,
 }) => {
   return (
     <div>
@@ -27,7 +32,9 @@ const Input: React.FC<Props> = ({
       {textarea ? (
         <textarea
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={async (e) => {
+            setValue(e.target.value);
+          }}
           className={`w-full bg-black border-[0.5px] ${
             error && error.length > 0 ? "border-red-400" : "border-white"
           } py-2 rounded-xl px-4 min-h-[25vh]`}
@@ -36,7 +43,9 @@ const Input: React.FC<Props> = ({
         <input
           type={`${label === "Password" ? "password" : ""}`}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={async (e) => {
+            setValue(e.target.value);
+          }}
           className={`w-full bg-black border-[0.5px] ${
             error && error.length > 0 ? "border-red-400" : "border-white"
           } py-2 rounded-xl px-4`}
@@ -52,4 +61,4 @@ const Input: React.FC<Props> = ({
   );
 };
 
-export default Input;
+export default ApplicationInput;

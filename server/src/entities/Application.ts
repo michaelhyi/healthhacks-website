@@ -20,80 +20,80 @@ export class Application extends BaseEntity {
   userId!: number;
 
   @Field()
-  @Column()
-  status!: string;
+  @Column("text", { default: "pending" })
+  status: string = "pending";
 
   @Field()
   @Column()
   firstName!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  middleName: string;
+  @Field()
+  @Column("text", { default: "" })
+  middleName: string = "";
 
   @Field()
   @Column()
   lastName!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  phone: string;
+  @Field()
+  @Column("text", { default: "" })
+  phone: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  organization: string;
+  @Field()
+  @Column("text", { default: "" })
+  organization: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  city: string;
+  @Field()
+  @Column("text", { default: "" })
+  city: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  state: string;
+  @Field()
+  @Column("text", { default: "" })
+  state: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  inPerson: string;
+  @Field()
+  @Column("text", { default: "" })
+  inPerson: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  wholeEvent: string;
+  @Field()
+  @Column("text", { default: "" })
+  wholeEvent: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  background: string;
+  @Field()
+  @Column("text", { default: "" })
+  background: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  whyUs: string;
+  @Field()
+  @Column("text", { default: "" })
+  whyUs: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  trackRanking: string;
+  @Field()
+  @Column("text", { default: "" })
+  trackRanking: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  howHear: string;
+  @Field()
+  @Column("text", { default: "" })
+  howHear: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  team: string;
+  @Field()
+  @Column("text", { default: "" })
+  team: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  linkedin: string;
+  @Field()
+  @Column("text", { default: "" })
+  linkedin: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  contact: string;
+  @Field()
+  @Column("text", { default: "" })
+  contact: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  dietaryRestrictions: string;
+  @Field()
+  @Column("text", { default: "" })
+  dietaryRestrictions: string = "";
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  other: string;
+  @Field()
+  @Column("text", { default: "" })
+  other: string = "";
 
   @Field(() => String)
   @CreateDateColumn()

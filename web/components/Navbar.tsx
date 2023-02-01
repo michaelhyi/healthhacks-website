@@ -46,7 +46,7 @@ const Navbar = () => {
                 bg="black"
                 className="hover:opacity-50"
                 onClick={async () => {
-                  router.push("/application/0");
+                  router.push(`/application/0`);
                 }}
               >
                 Application

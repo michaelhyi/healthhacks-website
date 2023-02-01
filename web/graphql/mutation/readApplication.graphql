@@ -1,0 +1,25 @@
+mutation ReadApplication($userId: Int!) {
+  readApplication(userId: $userId) {
+    id
+    userId
+    status
+    firstName
+    middleName
+    lastName
+    phone
+    organization
+    city
+    state
+    inPerson
+    wholeEvent
+    background
+    whyUs
+    trackRanking
+    howHear
+    team
+    linkedin
+    contact
+    dietaryRestrictions
+    other
+  }
+}
