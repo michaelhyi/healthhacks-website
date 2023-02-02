@@ -1,19 +1,17 @@
 mutation UpdateApplication(
   $userId: Int!
-  $item: String!
-  $firstName: String
-  $middleName: String
-  $lastName: String
-  $phone: String
-  $organization: String
-  $city: String
-  $state: String
-  $inPerson: String
-  $wholeEvent: String
+  $firstName: String!
+  $middleName: String!
+  $lastName: String!
+  $phone: String!
+  $organization: String!
+  $city: String!
+  $state: String!
+  $inPerson: String!
+  $wholeEvent: String!
 ) {
   updateApplication(
     userId: $userId
-    item: $item
     firstName: $firstName
     middleName: $middleName
     lastName: $lastName

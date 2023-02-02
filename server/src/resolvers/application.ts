@@ -7,101 +7,34 @@ export class ApplicationResolver {
   @Mutation(() => Boolean)
   async updateApplication(
     @Arg("userId", () => Int) userId: number,
-    @Arg("item", () => String) item: string,
-    @Arg("firstName", () => String, { nullable: true }) firstName?: string,
-    @Arg("middleName", () => String, { nullable: true }) middleName?: string,
-    @Arg("lastName", () => String, { nullable: true }) lastName?: string,
-    @Arg("phone", () => String, { nullable: true }) phone?: string,
-    @Arg("organization", () => String, { nullable: true })
-    organization?: string,
-    @Arg("city", () => String, { nullable: true }) city?: string,
-    @Arg("state", () => String, { nullable: true }) state?: string,
-    @Arg("inPerson", () => String, { nullable: true }) inPerson?: string,
-    @Arg("wholeEvent", () => String, { nullable: true }) wholeEvent?: string
+    @Arg("firstName", () => String) firstName: string,
+    @Arg("middleName", () => String) middleName: string,
+    @Arg("lastName", () => String) lastName: string,
+    @Arg("phone", () => String) phone: string,
+    @Arg("organization", () => String)
+    organization: string,
+    @Arg("city", () => String) city: string,
+    @Arg("state", () => String) state: string,
+    @Arg("inPerson", () => String) inPerson: string,
+    @Arg("wholeEvent", () => String) wholeEvent: string
   ): Promise<boolean> {
-    switch (item) {
-      case "firstName":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ firstName })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-      case "middleName":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ middleName })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-      case "lastName":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ lastName })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-      case "phone":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ phone })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-      case "organization":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ organization })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-      case "city":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ city })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-      case "state":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ state })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-      case "inPerson":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ inPerson })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-      case "wholeEvent":
-        await getConnection()
-          .getRepository(Application)
-          .createQueryBuilder()
-          .update({ wholeEvent })
-          .where({ userId })
-          .returning("*")
-          .execute();
-        break;
-    }
+    await getConnection()
+      .getRepository(Application)
+      .createQueryBuilder()
+      .update({
+        firstName,
+        middleName,
+        lastName,
+        phone,
+        organization,
+        city,
+        state,
+        inPerson,
+        wholeEvent,
+      })
+      .where({ userId })
+      .returning("*")
+      .execute();
 
     return true;
   }

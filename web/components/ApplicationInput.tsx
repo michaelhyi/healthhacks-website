@@ -1,7 +1,4 @@
-import { withUrqlClient } from "next-urql";
 import React, { Dispatch, SetStateAction } from "react";
-import { useUpdateApplicationMutation } from "../generated/graphql";
-import { createUrqlClient } from "../utils/createUrqlClient";
 
 interface Props {
   label: string;

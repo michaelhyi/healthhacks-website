@@ -78,17 +78,16 @@ export type MutationRegisterArgs = {
 
 
 export type MutationUpdateApplicationArgs = {
-  city?: InputMaybe<Scalars['String']>;
-  firstName?: InputMaybe<Scalars['String']>;
-  inPerson?: InputMaybe<Scalars['String']>;
-  item: Scalars['String'];
-  lastName?: InputMaybe<Scalars['String']>;
-  middleName?: InputMaybe<Scalars['String']>;
-  organization?: InputMaybe<Scalars['String']>;
-  phone?: InputMaybe<Scalars['String']>;
-  state?: InputMaybe<Scalars['String']>;
+  city: Scalars['String'];
+  firstName: Scalars['String'];
+  inPerson: Scalars['String'];
+  lastName: Scalars['String'];
+  middleName: Scalars['String'];
+  organization: Scalars['String'];
+  phone: Scalars['String'];
+  state: Scalars['String'];
   userId: Scalars['Int'];
-  wholeEvent?: InputMaybe<Scalars['String']>;
+  wholeEvent: Scalars['String'];
 };
 
 export type Query = {
@@ -146,16 +145,15 @@ export type RegisterMutation = { __typename?: 'Mutation', register: { __typename
 
 export type UpdateApplicationMutationVariables = Exact<{
   userId: Scalars['Int'];
-  item: Scalars['String'];
-  firstName?: InputMaybe<Scalars['String']>;
-  middleName?: InputMaybe<Scalars['String']>;
-  lastName?: InputMaybe<Scalars['String']>;
-  phone?: InputMaybe<Scalars['String']>;
-  organization?: InputMaybe<Scalars['String']>;
-  city?: InputMaybe<Scalars['String']>;
-  state?: InputMaybe<Scalars['String']>;
-  inPerson?: InputMaybe<Scalars['String']>;
-  wholeEvent?: InputMaybe<Scalars['String']>;
+  firstName: Scalars['String'];
+  middleName: Scalars['String'];
+  lastName: Scalars['String'];
+  phone: Scalars['String'];
+  organization: Scalars['String'];
+  city: Scalars['String'];
+  state: Scalars['String'];
+  inPerson: Scalars['String'];
+  wholeEvent: Scalars['String'];
 }>;
 
 
@@ -239,10 +237,9 @@ export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
 export const UpdateApplicationDocument = gql`
-    mutation UpdateApplication($userId: Int!, $item: String!, $firstName: String, $middleName: String, $lastName: String, $phone: String, $organization: String, $city: String, $state: String, $inPerson: String, $wholeEvent: String) {
+    mutation UpdateApplication($userId: Int!, $firstName: String!, $middleName: String!, $lastName: String!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!) {
   updateApplication(
     userId: $userId
-    item: $item
     firstName: $firstName
     middleName: $middleName
     lastName: $lastName
