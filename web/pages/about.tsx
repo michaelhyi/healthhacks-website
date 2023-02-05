@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import Headquarters from "../components/Headquarters";
 import Mission from "../components/Mission";
 import Sponsors from "../components/Sponsors";
-import Values from "../components/Values";
+import Team from "../components/Team";
 
 const About = () => {
   return (
@@ -11,7 +11,7 @@ const About = () => {
       <Mission />
       <Headquarters />
       <Sponsors />
-      <Values />
+      <Team />
       <Footer />
     </Container>
   );

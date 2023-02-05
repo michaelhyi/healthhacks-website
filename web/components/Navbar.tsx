@@ -1,9 +1,11 @@
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import { Link } from "react-scroll";
 import { AiFillCaretDown, AiOutlineRight } from "react-icons/ai";
 import Context from "../utils/context";
+import Logo from "./Logo";
+import NavbarLink from "./NavbarLink";
 
 const Navbar = () => {
   const { user, setUser } = useContext(Context);
@@ -11,28 +13,21 @@ const Navbar = () => {
 
   return (
     <div className="flex items-center p-8 w-full sticky top-0 z-50 bg-black">
-      <Link
-        href="/"
-        className="z-[1000] hover:cursor-pointer duration-500 hover:opacity-50 flex items-center space-x-1"
-      >
-        <img src="/Official Logo.JPEG" className="h-[50px] w-[50px]" />
-        <img src="/health{hacks} - Logo.svg" className="h-[25px]" />
-      </Link>
+      <Logo />
       <div className="absolute left-0 right-0 justify-center mx-auto flex items-center space-x-4">
-        <div className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100">
-          Explore
-        </div>
         <Link
-          href="/about"
-          className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100"
+          to="explore"
+          spy={true}
+          smooth={true}
+          offset={-100}
+          duration={1000}
         >
-          About
+          <NavbarLink page="Explore" />
         </Link>
-        <div className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100">
-          Blog
-        </div>
+        <NavbarLink page="About" />
+        <NavbarLink page="Blog" />
       </div>
-      <div className="flex items-center space-x-8 absolute right-8">
+      {/* <div className="flex items-center space-x-8 absolute right-8">
         {user && (
           <Menu>
             <MenuButton>
@@ -86,7 +81,7 @@ const Navbar = () => {
             </Link>
           </>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

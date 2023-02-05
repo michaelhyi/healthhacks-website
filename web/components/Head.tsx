@@ -18,7 +18,7 @@ const Head = () => {
         <Fade delay={1250} up distance="25px">
           <div className="pt-8 font-medium text-2xl w-[20vw] text-center text-[#aaa]">{`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}</div>
         </Fade>
-        <Link href="/register">
+        {/* <Link href="/register">
           <div className="hover:cursor-pointer duration-500 hover:opacity-50">
             <Fade delay={1500} up distance="25px">
               <div className="mt-12 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
@@ -29,7 +29,7 @@ const Head = () => {
               </div>
             </Fade>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
