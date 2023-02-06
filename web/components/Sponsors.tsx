@@ -13,16 +13,19 @@ const Sponsors = () => {
       <div className="grid grid-cols-4 gap-6 mt-12 justify-center items-center">
         {sponsors.map((v, i) => (
           <Fade up delay={500 + 100 * i} distance="24px">
-            <div
+            <a
+              href={v.href}
               className={`w-[10vw] h-[10vh] flex items-center justify-center ${
                 i === 16 && "col-start-2"
               }`}
+              target="_blank"
+              rel="noreferrer"
             >
               <img
                 src={v.src}
-                className={`h-[${v.height}vh] filter brightness-0 invert`}
+                className={`hover:cursor-pointer duration-500 hover:opacity-50 h-[${v.height}vh] filter brightness-0 invert`}
               />
-            </div>
+            </a>
           </Fade>
         ))}
       </div>
