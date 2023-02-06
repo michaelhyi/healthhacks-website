@@ -68,28 +68,33 @@ const Footer = () => {
     <div className="flex flex-col items-center justify-center text-center border-t-[0.5px] border-white border-opacity-25 mt-24 pt-12">
       <Fade up delay={250} distance="12px">
         <div className="font-semibold text-5xl pt-8">{`Build with us at health{hacks}.`}</div>
-        <form onSubmit={submitForm} className="flex pt-12 space-x-8 h-[7.5vh]">
+        <form
+          onSubmit={submitForm}
+          className="flex items-center pt-12 space-x-8"
+        >
           <div className="flex flex-col text-left">
-            <input
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              className={`placeholder-white bg-black border-2  ${
-                error && error.length > 0 ? "border-red-400" : "border-white"
-              } p-4 rounded-2xl w-[20vw]`}
-            />
+            <div className="flex items-center space-x-8">
+              <input
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                className={`placeholder-white bg-black border-2  ${
+                  error && error.length > 0 ? "border-red-400" : "border-white"
+                } p-4 rounded-2xl w-[384px]`}
+              />
+              <button className="hover:cursor-pointer duration-500 hover:opacity-50 flex items-center text-black bg-white px-8 py-4 rounded-[75px] font-semibold">
+                Subscribe
+              </button>
+            </div>
             {error && error.length > 0 && (
               <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
                 {error}
               </div>
             )}
           </div>
-          <button className="hover:cursor-pointer duration-500 hover:opacity-50 flex items-center text-black bg-white px-8 rounded-[75px] font-semibold">
-            Subscribe
-          </button>
         </form>
-        <div className="pt-24 pb-12">{`© 2023 health{hacks} All Rights Reserved.`}</div>
+        <div className="pt-12 pb-12">{`© 2023 health{hacks} All Rights Reserved.`}</div>
       </Fade>
     </div>
   );

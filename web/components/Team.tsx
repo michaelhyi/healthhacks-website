@@ -18,7 +18,7 @@ const Team = () => {
                 i === 5 ? "col-start-2" : ""
               }`}
             >
-              <img src={v.pfp} className="w-[5vw] rounded-full mb-4" />
+              <img src={v.pfp} className="w-[150px] rounded-full mb-4" />
               <div className="font-bold">{v.name}</div>
               <div>{v.position}</div>
             </div>

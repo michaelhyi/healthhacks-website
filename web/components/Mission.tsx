@@ -10,13 +10,13 @@ const Mission = () => {
         </div>
       </Fade>
       <Fade up delay={1100} distance="24px">
-        <div className="pt-6 font-bold text-5xl w-[50vw]">
+        <div className="pt-6 font-bold text-5xl w-[1024px]">
           We accelerate the world’s most empathy-driven healthcare innovations
           by connecting and supporting diverse creators.
         </div>
       </Fade>
       <Fade up delay={1200} distance="24px">
-        <div className="pt-6 opacity-50 text-lg w-[35vw]">
+        <div className="pt-6 opacity-50 text-lg w-[768px]">
           Health is the quintessential human experience for all. Despite its
           importance, medical innovations have slowed while the world around us
           has and will continue to accelerate to new heights. We need a

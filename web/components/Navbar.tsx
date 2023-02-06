@@ -12,7 +12,7 @@ const Navbar = () => {
   const router = useRouter();
 
   return (
-    <div className="flex items-center p-8 w-full sticky top-0 z-50 bg-black">
+    <div className="flex items-center p-8 w-full sticky top-0 z-50 lg:bg-white xl:bg-black">
       <Logo />
       <div className="absolute left-0 right-0 justify-center mx-auto flex items-center space-x-4">
         {router.pathname === "/" ? (

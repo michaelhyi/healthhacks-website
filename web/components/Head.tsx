@@ -7,16 +7,19 @@ const Head = () => {
   return (
     <div className="flex flex-col items-center justify-center pt-12">
       <Fade delay={1000} up distance="25px">
-        <div className="relative">
-          <img className="w-[30vw]" src="/health{hacks} - Website Header.PNG" />
-          <div className="absolute bottom-6 text-7xl font-bold text-center w-[30vw]">
+        <div className="relative flex flex-col items-center">
+          <img
+            className="xl:w-[640px] 2xl:w-[1024px]"
+            src="/health{hacks} - Website Header.PNG"
+          />
+          <div className="absolute bottom-6 xl:text-5xl 2xl:text-7xl font-bold text-center xl:w-[640px] 2xl:w-[768px]">
             Assembling the future innovators of medicine.
           </div>
         </div>
       </Fade>
       <div className="flex flex-col items-center">
         <Fade delay={1250} up distance="25px">
-          <div className="pt-8 font-medium text-2xl w-[20vw] text-center text-[#aaa]">{`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}</div>
+          <div className="pt-8 font-medium text-2xl xl:w-[512px] 2xl:w-[768px] text-center text-[#aaa]">{`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}</div>
         </Fade>
         {/* <Link href="/register">
           <div className="hover:cursor-pointer duration-500 hover:opacity-50">

@@ -11,7 +11,7 @@ const Stat: React.FC<Props> = ({ name, value }) => {
     <div className="flex flex-col space-y-2 text-center">
       <CountUp
         separator=","
-        className="font-semibold text-6xl"
+        className="font-semibold xl:text-5xl 2xl:text-6xl"
         end={value}
         duration={2}
         delay={2}
@@ -22,7 +22,9 @@ const Stat: React.FC<Props> = ({ name, value }) => {
             : ""
         }`}
       />
-      <div className="font-medium opacity-50 text-lg">{name}</div>
+      <div className="font-medium opacity-50 xl:text-base 2xl:text-lg">
+        {name}
+      </div>
     </div>
   );
 };

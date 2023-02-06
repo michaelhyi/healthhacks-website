@@ -15,7 +15,7 @@ const Sponsors = () => {
           <Fade up delay={500 + 100 * i} distance="24px">
             <a
               href={v.href}
-              className={`w-[10vw] h-[10vh] flex items-center justify-center ${
+              className={`w-[200px] h-[150px] flex items-center justify-center ${
                 i === 16 && "col-start-2"
               }`}
               target="_blank"
@@ -23,7 +23,7 @@ const Sponsors = () => {
             >
               <img
                 src={v.src}
-                className={`hover:cursor-pointer duration-500 hover:opacity-50 h-[${v.height}vh] filter brightness-0 invert`}
+                className={`hover:cursor-pointer duration-500 hover:opacity-50 ${v.height} filter brightness-0 invert`}
               />
             </a>
           </Fade>
