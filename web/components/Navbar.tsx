@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { Link } from "react-scroll";
+import { Link as SmoothLink } from "react-scroll";
 import { AiFillCaretDown, AiOutlineRight } from "react-icons/ai";
 import Context from "../utils/context";
 import Logo from "./Logo";
@@ -15,15 +15,21 @@ const Navbar = () => {
     <div className="flex items-center p-8 w-full sticky top-0 z-50 bg-black">
       <Logo />
       <div className="absolute left-0 right-0 justify-center mx-auto flex items-center space-x-4">
-        <Link
-          to="explore"
-          spy={true}
-          smooth={true}
-          offset={-100}
-          duration={1000}
-        >
+        {router.pathname === "/" ? (
+          <SmoothLink
+            to="explore"
+            spy={true}
+            smooth={true}
+            offset={-100}
+            duration={1000}
+          >
+            <div className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100">
+              Explore
+            </div>
+          </SmoothLink>
+        ) : (
           <NavbarLink page="Explore" />
-        </Link>
+        )}
         <NavbarLink page="About" />
         <NavbarLink page="Blog" />
       </div>
