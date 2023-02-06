@@ -1,4 +1,5 @@
 import argon2 from "argon2";
+import * as EmailValidator from "email-validator";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
@@ -32,7 +33,7 @@ export class UserResolver {
     @Arg("lastName") lastName: string
   ): Promise<UserResponse> {
     //some sort of email validity checker
-    if (!email.includes("@")) {
+    if (!EmailValidator.validate(email)) {
       return {
         error: {
           field: "Email",
