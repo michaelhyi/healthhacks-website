@@ -31,7 +31,7 @@ const Navbar = () => {
           <NavbarLink page="Explore" />
         )}
         <NavbarLink page="About" />
-        <NavbarLink page="Blog" />
+        {/* <NavbarLink page="Blog" /> */}
       </div>
       {/* <div className="flex items-center space-x-8 absolute right-8">
         {user && (

@@ -36,6 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 # hidden pages
-/pages/application/
+/pages/application
 /pages/login.tsx
 /pages/register.tsx
+/pages/blog.tsx
