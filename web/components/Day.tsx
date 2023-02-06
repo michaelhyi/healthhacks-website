@@ -10,7 +10,7 @@ interface Props {
 const Day: React.FC<Props> = ({ id, title, desc, embed }) => {
   return (
     <div className="flex sm:flex-col sm:space-y-24 sm:space-x-0 xl:sm:flex-row xl:space-y-0 xl:space-x-48 items-center">
-      <div className="pointer-events-none">
+      {/* <div className="pointer-events-none">
         <iframe
           width="662"
           height="1176"
@@ -19,9 +19,9 @@ const Day: React.FC<Props> = ({ id, title, desc, embed }) => {
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         ></iframe>
-      </div>
+      </div> */}
 
-      {/* <video
+      <video
         playsInline
         autoPlay
         loop
@@ -29,7 +29,7 @@ const Day: React.FC<Props> = ({ id, title, desc, embed }) => {
         className="sm:w-[320px] xl:w-[384px] 2xl:w-[512px]"
       >
         <source src={`/days/Day ${id}.mp4`} type="video/mp4" />
-      </video> */}
+      </video>
       <div className="flex flex-col sm:text-center sm:w-[384px] md:w-[512px] xl:text-left xl:w-[384px] 2xl:w-[512px] space-y-4">
         <div className="font-semibold text-3xl">{`Day ${id}: ${title}`}</div>
         <div className="font-medium opacity-75 text-xl xl:w-[384px] 2xl:w-[512px]">
