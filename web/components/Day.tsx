@@ -11,7 +11,7 @@ const Day: React.FC<Props> = ({ id, title, desc }) => {
     <div className="flex sm:flex-col sm:space-y-24 sm:space-x-0 xl:sm:flex-row xl:space-y-0 xl:space-x-48 items-center">
       <video
         autoPlay
-        loop
+        // loop
         muted
         className="sm:w-[320px] xl:w-[384px] 2xl:w-[512px]"
         src={`/days/Day ${id}.mp4`}
