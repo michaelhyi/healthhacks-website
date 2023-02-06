@@ -15,7 +15,7 @@ const Days = () => {
       {days.map((v, i) => (
         <div key={i}>
           <Fade delay={1000}>
-            <Day id={v.id} title={v.title} desc={v.desc} />
+            <Day embed={v.embed} id={v.id} title={v.title} desc={v.desc} />
           </Fade>
         </div>
       ))}
