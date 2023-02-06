@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import Fade from "react-reveal/Fade";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import * as EmailValidator from "email-validator";
+import { socials } from "../data/socials";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -65,12 +66,12 @@ const Footer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-center border-t-[0.5px] border-white border-opacity-25 mt-24 pt-12">
+    <div className="flex flex-col items-center justify-center text-center border-t-[0.5px] border-white border-opacity-50 mt-24 pt-12 bg-hh-gray">
       <Fade up delay={250} distance="12px">
-        <div className="font-semibold sm:text-2xl md:text-3xl xl:text-5xl pt-8">{`Build with us at health{hacks}.`}</div>
+        <div className="font-semibold sm:text-2xl md:text-3xl xl:text-4xl pt-8">{`Build with us at health{hacks}.`}</div>
         <form
           onSubmit={submitForm}
-          className="flex items-center pt-12 space-x-8"
+          className="flex items-center pt-6 space-x-8"
         >
           <div className="flex flex-col text-left">
             <div className="flex items-center space-x-8">
@@ -79,11 +80,12 @@ const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className={`placeholder-white bg-black border-2  ${
+                // border-2 
+                className={`placeholder-white bg-black  ${
                   error && error.length > 0 ? "border-red-400" : "border-white"
-                } p-4 rounded-2xl sm-[256px] md:w-[320px] xl:w-[384px]`}
+                } p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
               />
-              <button className="hover:cursor-pointer duration-500 hover:opacity-50 flex items-center text-black bg-white px-8 py-4 rounded-[75px] font-semibold">
+              <button className="hover:cursor-pointer duration-500 hover:opacity-90 flex items-center text-black bg-white px-8 py-4 rounded-[75px] font-semibold">
                 Subscribe
               </button>
             </div>
@@ -94,7 +96,34 @@ const Footer = () => {
             )}
           </div>
         </form>
-        <div className="pt-12 pb-12">{`© 2023 health{hacks} All Rights Reserved.`}</div>
+        <div className="flex justify-between content-start flex-wrap flex-row w-full text-left gap-y-2 -mt-4 p-8">
+          <div className="w-2/5 mt-8 mb-12 p-4">
+            <img src='/health{hacks} - Logo.svg' alt="logo" className="w-1/3"></img>
+            <p>Email: williampan@stanford.edu <br />
+              Phone: (714) 633 2888</p>
+          </div>
+          <div className="flex flex-wrap justify-between gap-8 mt-8 p-4">
+            <div className="cursor-pointer">
+              <a href="https://health-hacks.tech/"> <p>Home</p> </a>
+              <a href="https://desimonegroup.stanford.edu/"> <p>Explore</p> </a>
+              <a href="https://desimonegroup.stanford.edu/"> <p>About</p> </a>
+              <a href="https://desimonegroup.stanford.edu/"> <p>Register</p> </a>
+            </div>
+            <div className="cursor-pointer gap-y-2">
+              <h4>Social</h4>
+              <div className="flex flex-row">
+                {socials.map((s, i) => (
+                  <div key={i} className="p-1">
+                    <Fade delay={1000}>
+                      <a href={s.href}> <img src={s.src} alt={s.id} className="w-8 cursor-pointer"/> </a>
+                    </Fade>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          </div>
+        <div className="pb-12">{`© 2023 health{hacks} All Rights Reserved.`}</div>
       </Fade>
     </div>
   );
