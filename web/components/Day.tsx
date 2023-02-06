@@ -1,13 +1,12 @@
 import React from "react";
 
 interface Props {
-  key: number;
   id: number;
   title: string;
   desc: string;
 }
 
-const Day: React.FC<Props> = ({ key, id, title, desc }) => {
+const Day: React.FC<Props> = ({ id, title, desc }) => {
   return (
     <div className="flex sm:flex-col sm:space-y-24 sm:space-x-0 xl:sm:flex-row xl:space-y-0 xl:space-x-48 items-center">
       <video
