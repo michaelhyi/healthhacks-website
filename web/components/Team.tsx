@@ -12,17 +12,19 @@ const Team = () => {
       </Fade>
       <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-6 mt-12 justify-center items-center">
         {team.map((v, i) => (
-          <Fade up delay={500 + 100 * i} distance="24px">
-            <div
-              className={`flex flex-col text-center items-center ${
-                i === 5 ? "xl:col-start-2" : ""
-              }`}
-            >
-              <img src={v.pfp} className="w-[150px] rounded-full mb-4" />
-              <div className="font-bold">{v.name}</div>
-              <div>{v.position}</div>
-            </div>
-          </Fade>
+          <div key={i}>
+            <Fade up delay={500 + 100 * i} distance="24px">
+              <div
+                className={`flex flex-col text-center items-center ${
+                  i === 5 ? "xl:col-start-2" : ""
+                }`}
+              >
+                <img src={v.pfp} className="w-[150px] rounded-full mb-4" />
+                <div className="font-bold">{v.name}</div>
+                <div>{v.position}</div>
+              </div>
+            </Fade>
+          </div>
         ))}
       </div>
     </div>

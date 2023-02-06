@@ -12,21 +12,23 @@ const Sponsors = () => {
       </Fade>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-2 md:gap-6 mt-12 justify-center items-center">
         {sponsors.map((v, i) => (
-          <Fade up delay={500 + 100 * i} distance="24px">
-            <a
-              href={v.href}
-              className={`w-[200px] h-[150px] flex items-center justify-center ${
-                i === 16 && "xl:col-start-2"
-              }`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src={v.src}
-                className={`hover:cursor-pointer duration-500 hover:opacity-50 ${v.height} filter brightness-0 invert`}
-              />
-            </a>
-          </Fade>
+          <div key={i}>
+            <Fade up delay={500 + 100 * i} distance="24px">
+              <a
+                href={v.href}
+                className={`w-[200px] h-[150px] flex items-center justify-center ${
+                  i === 16 && "xl:col-start-2"
+                }`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src={v.src}
+                  className={`hover:cursor-pointer duration-500 hover:opacity-50 ${v.height} filter brightness-0 invert`}
+                />
+              </a>
+            </Fade>
+          </div>
         ))}
       </div>
     </div>

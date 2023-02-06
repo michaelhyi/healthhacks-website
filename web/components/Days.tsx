@@ -13,9 +13,11 @@ const Days = () => {
         <div className="font-semibold sm:text-xl 2xl:text-3xl opacity-75 sm:pb-8 2xl:pb-24">{`EXPLORE THE HEALTH{HACKS} WAY`}</div>
       </Fade>
       {days.map((v, i) => (
-        <Fade key={i} delay={1000}>
-          <Day id={v.id} title={v.title} desc={v.desc} />
-        </Fade>
+        <div key={i}>
+          <Fade delay={1000}>
+            <Day id={v.id} title={v.title} desc={v.desc} />
+          </Fade>
+        </div>
       ))}
     </div>
   );
