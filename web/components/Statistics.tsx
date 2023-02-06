@@ -5,7 +5,7 @@ import Fade from "react-reveal/Fade";
 const Statistics = () => {
   return (
     <Fade delay={2000}>
-      <div className="flex items-center justify-center lg:flex-col lg:space-y-12 xl:space-x-12 2xl:space-x-16 text-center border-y-[0.5px] border-white border-opacity-25 mt-16 py-16">
+      <div className="flex items-center justify-center sm:flex-col sm:space-y-12 xl:flex-row xl:space-y-0 xl:space-x-12 2xl:space-x-16 text-center border-y-[0.5px] border-white border-opacity-25 mt-16 py-16">
         <Stat value={0} name="LINES OF CODE NEEDED" />
         <div className="border-l-2  xl:border-l-2 border-[#353535] h-[125px]" />
         <Stat value={1000} name="TOTAL PARTICIPANTS" />

@@ -12,9 +12,9 @@ const Navbar = () => {
   const router = useRouter();
 
   return (
-    <div className="flex items-center p-8 w-full sticky top-0 z-50 lg:bg-white xl:bg-black">
+    <div className="flex sm:h-[128px]  sm:flex-col sm:space-y-12 md:space-y-0 md:flex-row items-center p-8 w-full sticky top-0 z-50 bg-black">
       <Logo />
-      <div className="absolute left-0 right-0 justify-center mx-auto flex items-center space-x-4">
+      <div className="absolute left-0 right-0 justify-center mx-auto flex items-center sm:space-x-2  md:space-x-4 ">
         {router.pathname === "/" ? (
           <SmoothLink
             to="explore"
@@ -23,7 +23,7 @@ const Navbar = () => {
             offset={-100}
             duration={1000}
           >
-            <div className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100">
+            <div className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm md:text-base">
               Explore
             </div>
           </SmoothLink>
