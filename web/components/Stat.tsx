@@ -8,10 +8,10 @@ interface Props {
 
 const Stat: React.FC<Props> = ({ name, value }) => {
   return (
-    <div className="flex flex-col space-y-2 text-center">
+    <div className="flex flex-col text-center">
       <CountUp
         separator=","
-        className="font-semibold sm:text-6xl xl:text-5xl 2xl:text-6xl"
+        className="font-semibold sm:text-5xl md:text-4xl xl:text-5xl 2xl:text-6xl"
         end={value}
         duration={2}
         delay={2}
@@ -22,7 +22,7 @@ const Stat: React.FC<Props> = ({ name, value }) => {
             : ""
         }`}
       />
-      <div className="font-medium opacity-50 sm:text-lg xl:text-base 2xl:text-lg">
+      <div className="font-medium opacity-50 sm:text-base lg:text-sm xl:text-base 2xl:text-lg px-4 leading-tight md:mt-2 sm:mt-1">
         {name}
       </div>
     </div>
