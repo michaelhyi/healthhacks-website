@@ -31,8 +31,8 @@ const Day: React.FC<Props> = ({ id, title, desc, embed }) => {
         <source src={`/days/Day ${id}.mp4`} type="video/mp4" />
       </video>
       <div className="flex flex-col sm:text-center sm:w-[384px] md:w-[512px] xl:text-left xl:w-[384px] 2xl:w-[512px] space-y-4">
-        <div className="font-semibold text-3xl">{`Day ${id}: ${title}`}</div>
-        <div className="font-medium opacity-75 text-xl xl:w-[384px] 2xl:w-[512px]">
+        <div className="font-semibold text-3xl sm:text-2xl sm:mx-4">{`Day ${id}: ${title}`}</div>
+        <div className="font-medium opacity-75 text-xl sm:text-lg xl:w-[384px] 2xl:w-[512px] sm:mx-4">
           {desc}
         </div>
       </div>
