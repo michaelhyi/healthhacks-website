@@ -18,11 +18,23 @@ export const sponsors = [
     height: "h-[24px]",
   },
   {
-    id: "vital",
-    src: "/logos/vital.svg",
-    href: "https://tryvital.io/",
+    id: "aws",
+    src: "/logos/aws.png",
+    href: "https://aws.amazon.com/",
     height: "h-[36px]",
   },
+  {
+    id: "google cloud",
+    src: "/logos/gcp.png",
+    href: "https://cloud.google.com/",
+    height: "h-[36px]",
+  },
+  // {
+  //   id: "vital",
+  //   src: "/logos/vital.svg",
+  //   href: "https://tryvital.io/",
+  //   height: "h-[36px]",
+  // },
   {
     id: "flex logistics",
     src: "/logos/flex-logistics.png",
@@ -34,6 +46,18 @@ export const sponsors = [
     src: "/logos/akasa.svg",
     href: "https://akasa.com/",
     height: "h-[36px]",
+  },
+  {
+    id: "desimone",
+    src: "/logos/desimone.png",
+    href: "https://desimonegroup.stanford.edu/",
+    height: "h-[96px]",
+  },
+  {
+    id: "wu tsai",
+    src: "/logos/wu-tsai.png",
+    href: "https://humanperformancealliance.org/",
+    height: "h-[24px]",
   },
   {
     id: "futek",
@@ -54,41 +78,17 @@ export const sponsors = [
     height: "h-[96px]",
   },
   {
-    id: "desimone",
-    src: "/logos/desimone.png",
-    href: "https://desimonegroup.stanford.edu/",
-    height: "h-[96px]",
-  },
-  {
-    id: "wu tsai",
-    src: "/logos/wu-tsai.png",
-    href: "https://humanperformancealliance.org/",
-    height: "h-[24px]",
-  },
-  {
     id: "isono",
     src: "/logos/isono.png",
     href: "https://isonohealth.com/",
     height: "h-[36px]",
   },
-  {
-    id: "elite",
-    src: "/logos/elite.png",
-    href: "https://www.eliteprep.com/",
-    height: "h-[36px]",
-  },
-  {
-    id: "aws",
-    src: "/logos/aws.png",
-    href: "https://aws.amazon.com/",
-    height: "h-[64px]",
-  },
-  {
-    id: "google cloud",
-    src: "/logos/gcp.png",
-    href: "https://cloud.google.com/",
-    height: "h-[96px]",
-  },
+  // {
+  //   id: "elite",
+  //   src: "/logos/elite.png",
+  //   href: "https://www.eliteprep.com/",
+  //   height: "h-[36px]",
+  // },
   {
     id: "moodfit",
     src: "/logos/moodfit logo.webp",

@@ -5,7 +5,7 @@ import Fade from "react-reveal/Fade";
 const Sponsors = () => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <Fade up delay={2500} distance="24px">
+      <Fade up delay={500} distance="24px">
         <div className="pt-32 font-semibold sm:text-2xl md:text-3xl bg-clip-text text-transparent bg-gradient-to-r to-[#00B59D] from-[#CB47F4] ">
           We Have Been Backed By
         </div>
@@ -24,7 +24,7 @@ const Sponsors = () => {
               >
                 <img
                   src={v.src}
-                  className={`hover:cursor-pointer duration-500 hover:opacity-50 ${v.height} filter brightness-0 invert`}
+                  className={`hover:cursor-pointer duration-500 hover:opacity-75 ${v.height} filter brightness-0 invert`}
                 />
               </a>
             </Fade>
