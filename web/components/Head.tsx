@@ -6,7 +6,7 @@ import Fade from "react-reveal/Fade";
 const Head = () => {
   return (
     <div className="flex flex-col items-center justify-center pt-12 .p-4">
-      <Fade delay={1000} up distance="25px">
+      <Fade delay={500} up distance="25px">
         <div className="relative flex flex-col items-center">
           <img
             className="sm:w-[384px] md:w-[512px] xl:w-[640px] 2xl:w-[768px] -mt-8"
@@ -18,7 +18,7 @@ const Head = () => {
         </div>
       </Fade>
       <div className="flex flex-col items-center">
-        <Fade delay={1250} up distance="25px">
+        <Fade delay={500} up distance="25px">
           <div className="pt-8 font-regular sm:text-md md:text-lg lg:text-xl sm:w-[384px] md:w-[512px] 2xl:w-[768px] text-center text-[#aaa] sm:px-4 sm:leading-tight md:leading-tight lg:leading-tight -mt-10">{`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}</div>
         </Fade>
         {/* <Link href="/register">

@@ -67,7 +67,7 @@ const Footer = () => {
 
   return (
     <div className="flex flex-col items-center justify-center text-center border-t-[0.5px] border-white border-opacity-50 mt-24 pt-12 bg-hh-gray">
-      <Fade up delay={250} distance="12px">
+      <Fade up delay={500} distance="12px">
         <div className="font-semibold sm:text-xl md:text-3xl xl:text-4xl pt-8">{`Build with us at health{hacks}.`}</div>
         <form
           onSubmit={submitForm}
@@ -113,7 +113,7 @@ const Footer = () => {
               <div className="flex flex-row flex-wrap">
                 {socials.map((s, i) => (
                   <div key={i} className="p-1">
-                    <Fade delay={1000}>
+                    <Fade delay={500}>
                       <a href={s.href}> <img src={s.src} alt={s.id} className="w-8 cursor-pointer sm:w-6"/> </a>
                     </Fade>
                   </div>
