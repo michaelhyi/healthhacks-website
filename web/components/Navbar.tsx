@@ -33,8 +33,8 @@ const Navbar = () => {
         <NavbarLink page="About" />
         {/* <NavbarLink page="Blog" /> */}
       </div>
-      {/* <div className="flex items-center space-x-8 absolute right-8">
-        {user && (
+      <div className="flex items-center space-x-8 absolute right-8">
+        {/* {user && (
           <Menu>
             <MenuButton>
               <div className="flex items-center space-x-2">
@@ -65,10 +65,10 @@ const Navbar = () => {
               </MenuItem>
             </MenuList>
           </Menu>
-        )}
-        {!user && (
-          <>
-            <Link
+        )} */}
+        {/* {!user && ( */}
+        <>
+          {/* <Link
               href="/login"
               className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100"
             >
@@ -77,17 +77,22 @@ const Navbar = () => {
             <Link
               href="/register"
               className="hover:cursor-pointer duration-500 hover:opacity-50"
-            >
-              <div className="flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
-                <div className="font-semibold">Start Now</div>
-                <div className="opacity-75">
-                  <AiOutlineRight size={15} />
-                </div>
-              </div>
-            </Link>
-          </>
-        )}
-      </div> */}
+            > */}
+          <a
+            href="https://forms.gle/NUiwgzowasc6GjGv5"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:cursor-pointer duration-500 hover:opacity-50 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl"
+          >
+            <div className="font-semibold">Start Now</div>
+            <div className="opacity-75">
+              <AiOutlineRight size={15} />
+            </div>
+          </a>
+          {/* </Link> */}
+        </>
+        {/* )} */}
+      </div>
     </div>
   );
 };

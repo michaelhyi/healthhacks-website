@@ -13,8 +13,7 @@ const Stat: React.FC<Props> = ({ name, value }) => {
         separator=","
         className="font-semibold sm:text-5xl md:text-4xl xl:text-5xl 2xl:text-6xl"
         end={value}
-        duration={2}
-        delay={2}
+        duration={2.5}
         suffix={`${
           name === "TOTAL PARTICIPANTS" ||
           name === "HOURS SPENT CHANGING HEALTHCARE"

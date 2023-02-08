@@ -80,7 +80,7 @@ const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                // border-2 
+                // border-2
                 className={`placeholder-white bg-black  ${
                   error && error.length > 0 ? "border-red-400" : "border-white"
                 } p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
@@ -98,7 +98,11 @@ const Footer = () => {
         </form>
         <div className="flex justify-between content-start flex-wrap flex-row w-full text-left gap-y-2 -mt-4 pt-8 px-16 sm:px-8">
           <div className="w-2/5 mt-8 md:p-4 sm:p-0">
-            <img src='/health{hacks} - Logo.svg' alt="logo" className="w-[250px] sm:w-[150px]"></img>
+            <img
+              src="/health{hacks} - Logo.svg"
+              alt="logo"
+              className="w-[250px] sm:w-[150px]"
+            ></img>
             <div className="pb-12 pt-2 sm:text-sm">{`© 2023 health{hacks} All Rights Reserved.`}</div>
           </div>
           <div className="flex flex-wrap justify-end gap-8 mt-8 md:p-4 sm:p-0 w-2/5">
@@ -108,20 +112,26 @@ const Footer = () => {
               <a href="LINK"> <p>About</p> </a>
               <a href="LINK"> <p>Register</p> </a>
             </div> */}
-            <div className="cursor-pointer gap-y-2">
+            <div className="gap-y-2">
               <h4 className="font-semibold sm:text-md md:text-base">Social</h4>
               <div className="flex flex-row flex-wrap">
                 {socials.map((s, i) => (
                   <div key={i} className="p-1">
                     <Fade delay={500}>
-                      <a href={s.href}> <img src={s.src} alt={s.id} className="w-8 cursor-pointer sm:w-6"/> </a>
+                      <a href={s.href}>
+                        <img
+                          src={s.src}
+                          alt={s.id}
+                          className="w-8 hover:cursor-pointer sm:w-6 duration-500 hover:opacity-50 "
+                        />
+                      </a>
                     </Fade>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          </div>
+        </div>
       </Fade>
     </div>
   );

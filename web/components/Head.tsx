@@ -21,18 +21,23 @@ const Head = () => {
         <Fade delay={500} up distance="25px">
           <div className="pt-8 font-regular sm:text-md md:text-lg lg:text-xl sm:w-[384px] md:w-[512px] 2xl:w-[768px] text-center text-[#aaa] sm:px-4 sm:leading-tight md:leading-tight lg:leading-tight -mt-10">{`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}</div>
         </Fade>
-        {/* <Link href="/register">
-          <div className="hover:cursor-pointer duration-500 hover:opacity-50">
-            <Fade delay={1500} up distance="25px">
-              <div className="mt-12 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
-                <div className="font-semibold">Start Now</div>
-                <div className="opacity-75">
-                  <AiOutlineRight size={15} />
-                </div>
+        {/* <Link href="/register"> */}
+        <div className="hover:cursor-pointer duration-500 hover:opacity-50">
+          <Fade delay={500} up distance="25px">
+            <a
+              href="https://forms.gle/NUiwgzowasc6GjGv5"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-6 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl"
+            >
+              <div className="font-semibold">Start Now</div>
+              <div className="opacity-75">
+                <AiOutlineRight size={15} />
               </div>
-            </Fade>
-          </div>
-        </Link> */}
+            </a>
+          </Fade>
+        </div>
+        {/* </Link> */}
       </div>
     </div>
   );
