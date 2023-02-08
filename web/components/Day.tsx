@@ -28,7 +28,7 @@ const Day: React.FC<Props> = ({ id, title, desc, embed }) => {
         muted
         className="sm:w-[320px] xl:w-[384px] 2xl:w-[512px]"
       >
-        <source src={`/days/Day ${id}.mp4`} type="video/mp4" />
+        <source src={`/days/day${id}a.mp4`} type="video/mp4" />
       </video>
       <div className="flex flex-col sm:text-center sm:w-[384px] md:w-[512px] xl:text-left xl:w-[384px] 2xl:w-[512px] space-y-4">
         <div className="font-semibold text-3xl sm:text-2xl sm:mx-4">{`Day ${id}: ${title}`}</div>
