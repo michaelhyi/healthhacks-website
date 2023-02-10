@@ -36,8 +36,8 @@ web/env.local
 *.tsbuildinfo
 next-env.d.ts
 
-# hidden pages
-/pages/application
-/pages/login.tsx
-/pages/register.tsx
-/pages/blog.tsx
+# # hidden pages
+# /pages/application
+# /pages/login.tsx
+# /pages/register.tsx
+# /pages/blog.tsx
