@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Container from "../components/Container";
+import ContainerApp from "../components/ContainerApp";
 import Input from "../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
@@ -27,17 +27,16 @@ const Register = () => {
   const [, register] = useRegisterMutation();
 
   return (
-    <Container>
+    <ContainerApp>
       <Fade delay={500} up distance="24px">
-        <div className="flex flex-col items-center pt-24">
-          <div className="w-[50vw]">
+        <div className="flex flex-col items-center md:pt-16 sm:pt-8">
+          <div className="lg:w-[50vw] md:w-[75vw] sm:w-[75vw]">
             <div>
               <div className="font-semibold text-3xl">
                 Let's Create An Account
               </div>
-              <div className="mt-4 opacity-50 text-semibold text-sm">
-                {`health{hacks}`} transforms recurring revenue into up-front
-                capital for growth without restrictive debt or dilution.
+              <div className="mt-2 opacity-50 text-semibold text-sm">
+                {`health{hacks}`} connects diverse creators to build the next innovations in healthcare.
               </div>
             </div>
             <form
@@ -116,30 +115,30 @@ const Register = () => {
                 By continuing you agree to the {`health{hacks}`}&nbsp;
                 <Link
                   href="/"
-                  className="text-blue-400 hover:cursor-pointer duration-500 hover:opacity-50"
+                  className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
                 >
                   terms of service
                 </Link>
                 &nbsp;and&nbsp;
                 <Link
                   href="/"
-                  className="text-blue-400 hover:cursor-pointer duration-500 hover:opacity-50"
+                  className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
                 >
                   privacy policy
                 </Link>
                 .
               </div>
-              <div className="flex items-center mt-6 space-x-4">
-                <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-4 py-2 rounded-xl text-sm font-medium">
+              <div className="flex items-center mt-6 space-x-4 pb-8">
+                <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-4 py-2 rounded-xl text-sm font-medium">
                   Register
                 </button>
-                <div className="text-sm">
+                <div className="md:text-sm sm:text-xs">
                   Already Registered?&nbsp;
                   <Link
                     href="/login"
-                    className="text-blue-400 hover:cursor-pointer duration-500 hover:opacity-50"
+                    className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
                   >
-                    Login
+                    Sign In
                   </Link>
                 </div>
               </div>
@@ -147,7 +146,7 @@ const Register = () => {
           </div>
         </div>
       </Fade>
-    </Container>
+    </ContainerApp>
   );
 };
 

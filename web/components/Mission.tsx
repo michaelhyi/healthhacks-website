@@ -5,6 +5,11 @@ const Mission = () => {
   return (
     <div className="flex flex-col items-center text-center">
       <Fade up delay={500} distance="24px">
+        <div className="align-center ">
+          <img src="/ring (1).png" alt="mission" />
+        </div>
+      </Fade>
+      <Fade up delay={500} distance="24px">
         <div className="pt-24 font-semibold text-3xl bg-clip-text text-transparent bg-gradient-to-r to-[#00B59D] from-[#CB47F4] ">
           Our Mission
         </div>

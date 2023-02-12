@@ -22,7 +22,7 @@ const Head = () => {
           <div className="pt-8 font-regular sm:text-md md:text-lg lg:text-xl sm:w-[384px] md:w-[512px] 2xl:w-[768px] text-center text-[#aaa] sm:px-4 sm:leading-tight md:leading-tight lg:leading-tight -mt-10">{`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}</div>
         </Fade>
         {/* <Link href="/register"> */}
-        <div className="hover:cursor-pointer duration-500 hover:opacity-50">
+        <div className="hover:cursor-pointer duration-500 hover:opacity-70">
           <Fade delay={500} up distance="25px">
             <a
               href="https://forms.gle/NUiwgzowasc6GjGv5"

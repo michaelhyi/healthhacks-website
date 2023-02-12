@@ -4,7 +4,7 @@ import Fade from "react-reveal/Fade";
 const Headquarters = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full">
-      <Fade delay={2000}>
+      <Fade delay={500}>
         <div className="flex flex-col items-center justify-center text-center border-y-[0.5px] border-white border-opacity-25 mt-32 bg-gradient-to-r from-[#FF7448] to-[#6248FF] p-1 rounded-xl sm:h-[512px] sm:w-[384px] md:h-[384px] md:w-[512px] xl:h-[512px] xl:w-[1024px]">
           <div className="h-full w-full flex flex-col items-center justify-center bg-black rounded-xl">
             <div className="font-semibold sm:text-xl md:text-2xl xl:text-3xl opacity-50">

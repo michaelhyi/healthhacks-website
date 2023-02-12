@@ -6,13 +6,15 @@ import {
   MenuList,
   Radio,
   RadioGroup,
+  Textarea,
 } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import ApplicationInput from "../../components/ApplicationInput";
-import Container from "../../components/Container";
+import DropDown from "../../components/DropDown";
+import ContainerApp from "../../components/ContainerApp";
 import { states } from "../../data/states";
 import {
   useReadApplicationMutation,
@@ -20,8 +22,14 @@ import {
 } from "../../generated/graphql";
 import Context from "../../utils/context";
 import { createUrqlClient } from "../../utils/createUrqlClient";
+import MultiSelect from "@/components/MultiSelect";
+import { background } from "@/data/background";
+import { whyhh } from "@/data/whyhh";
+import { wherefrom } from "@/data/wherefrom";
+import { yesno } from "@/data/yesno";
+import { dietary } from "@/data/dietary";
 
-const Application = () => {
+const Application = ({ name }) => {
   const router = useRouter();
   const { user } = useContext(Context);
   const [, readApplication] = useReadApplicationMutation();
@@ -38,6 +46,8 @@ const Application = () => {
   const [state, setState] = useState("");
   const [inPerson, setInPerson] = useState("");
   const [wholeEvent, setWholeEvent] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
+  const [anythingElse, setAnythingElse] = useState("");
 
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
@@ -56,7 +66,6 @@ const Application = () => {
         const response = await readApplication({ userId: user.id });
 
         setFirstName(response.data?.readApplication.firstName!);
-        setMiddleName(response.data?.readApplication.middleName!);
         setLastName(response.data?.readApplication.lastName!);
 
         setPhone(response.data?.readApplication.phone!);
@@ -66,186 +75,186 @@ const Application = () => {
         setState(response.data?.readApplication.state!);
         setInPerson(response.data?.readApplication.inPerson!);
         setWholeEvent(response.data?.readApplication.wholeEvent!);
+        setLinkedIn(response.data?.readApplication.linkedin!)
+        setAnythingElse(response.data?.readApplication.anythingElse!)
       }
     })();
   }, [user]);
 
-  if (!user) {
-    return <div>You must be signed in</div>;
-  }
+  // if (!user) {
+  //   return <div>You must be signed in</div>;
+  // }
 
-  return (
-    <Container>
-      <>
-        <div className="flex flex-col items-center pt-24">
-          <div className="w-[50vw]">
-            <div className="font-semibold text-3xl">Application</div>
-            <form>
-              <div className="flex space-x-6">
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    userId={user.id}
-                    error={firstNameError}
-                    value={firstName}
-                    setValue={setFirstName}
-                    label="First Name"
-                  />
-                </div>
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    userId={user.id}
-                    value={middleName}
-                    setValue={setMiddleName}
-                    label="Middle Name"
-                  />
-                </div>
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    userId={user.id}
-                    error={lastNameError}
-                    value={lastName}
-                    setValue={setLastName}
-                    label="Last Name"
-                  />
-                </div>
+  if (!user) {
+    return (
+      <ContainerApp>
+        <>
+          <div className="flex flex-col items-center lg:pt-24 md:pt-12">
+            <div className="lg:w-[50vw] md:w-[75vw] sm:w-[75vw]">
+              <div className="font-semibold text-5xl">
+                Let's learn more about you, <span className="font-semibold text-5xl text-hh-purple"> William. </span>
               </div>
-              <div className="flex space-x-6">
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    userId={user.id}
-                    error={phoneError}
-                    value={phone}
-                    setValue={setPhone}
-                    label="Phone"
-                  />
-                </div>
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    userId={user.id}
-                    error={organizationError}
-                    value={organization}
-                    setValue={setOrganization}
-                    label="Organization"
-                  />
-                </div>
-              </div>
-              <div className="flex space-x-6">
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    userId={user.id}
-                    error={cityError}
-                    value={city}
-                    setValue={setCity}
-                    label="City"
-                  />
-                </div>
-                <div className="w-[50vw]">
-                  <div className={`mt-4 mb-2 }`}>State</div>
-                  <Menu>
-                    <MenuButton as={Button} color="black" bg="white">
-                      <div className="flex items-center space-x-2">
-                        <div>{state.length > 0 ? state : "Select"}</div>
-                        <AiFillCaretDown />
-                      </div>
-                    </MenuButton>
-                    <MenuList
-                      color="black"
-                      overflowY={"scroll"}
-                      zIndex="dropdown"
-                      maxHeight={"60vh"}
-                    >
-                      {states.map((v, i) => (
-                        <MenuItem
-                          key={i.toString()}
-                          onClick={() => setState(v)}
-                        >
-                          {v}
-                        </MenuItem>
-                      ))}
-                    </MenuList>
-                  </Menu>
-                </div>
-              </div>
-              <div className="flex space-x-6">
-                <div className="w-[50vw]">
-                  <div className={`mt-4 mb-2 }`}>Can you attend in-person?</div>
-                  <RadioGroup onChange={setInPerson} value={inPerson}>
-                    <div className="flex items-center space-x-4">
-                      <Radio
-                        value="Yes"
-                        colorScheme="blue"
-                        onClick={() => setInPerson("Yes")}
-                      >
-                        Yes
-                      </Radio>
-                      <Radio
-                        value="No"
-                        colorScheme="red"
-                        onClick={() => setInPerson("No")}
-                      >
-                        No
-                      </Radio>
-                    </div>
-                  </RadioGroup>
-                </div>
-                <div className="w-[50vw]">
-                  <div className={`mt-4 mb-2 }`}>
-                    Can you attend the whole event?
+              <p className="font-base text-md text-[#b9b9b9] mt-2">
+                Fill out this five minute application to attend our event at <strong> Stanford University on April 14 - 16th, 2023. </strong> </p>
+              <p className="font-base text-md text-[#b9b9b9] mt-2"> We are assembling leaders from a diverse group of backgrounds, including healthcare,
+                medicine, business, public policy, and more! If you are interested in participating, please fill out this application by <strong> Thursday, March 24, 2023 (11:59 pm PT). </strong>
+                Thank you so much and hope to see you at the event!</p>
+
+
+              <form>
+                {/* PHONE NUMBER AND ORGANIZATION */}
+                <div className="flex space-x-6">
+                  <div className="w-[50vw]">
+                    <ApplicationInput
+                      // userId={user.id}
+                      error={phoneError}
+                      value={phone}
+                      setValue={setPhone}
+                      label="Phone Number"
+                    />
                   </div>
-                  <RadioGroup onChange={setWholeEvent} value={wholeEvent}>
-                    <div className="flex items-center space-x-4">
-                      <Radio value="Yes" colorScheme="blue">
-                        Yes
-                      </Radio>
-                      <Radio value="No" colorScheme="red">
-                        No
-                      </Radio>
-                    </div>
-                  </RadioGroup>
+                  <div className="w-[50vw]">
+                    <ApplicationInput
+                      // userId={user.id}
+                      error={organizationError}
+                      value={organization}
+                      setValue={setOrganization}
+                      label="University / Company"
+                    />
+                  </div>
                 </div>
-              </div>
-            </form>
-            <div className="flex items-center space-x-6 pt-6 pb-24">
-              <button
-                onClick={async () => {
-                  await updateApplication({
-                    userId: user.id,
-                    firstName,
-                    middleName,
-                    lastName,
-                    phone,
-                    organization,
-                    city,
-                    state,
-                    inPerson,
-                    wholeEvent,
-                  });
-                }}
-                className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-green-500 text-white px-6 py-4 rounded-xl text-sm font-bold"
-              >
-                Save
-              </button>
-              <button
-                onClick={async () => {
-                  if (firstName.length === 0) {
-                    setFirstNameError("You must enter a first name.");
-                  } else if (lastName.length === 0) {
-                    setFirstNameError("You must enter a last name.");
-                  } else if (phone.length === 0) {
-                    setFirstNameError("You must enter a phone number.");
-                  } else if (organization.length === 0) {
-                    setFirstNameError("You must enter an organization.");
-                  } else if (city.length === 0) {
-                    setFirstNameError("You must enter a city.");
-                  } else if (state.length === 0) {
-                    setFirstNameError("You must enter a state.");
-                  } else if (inPerson === "No") {
-                    setFirstNameError("You must attend the event in-person.");
-                  } else if (wholeEvent.length === 0) {
-                    setFirstNameError(
-                      "You must answer if you can attend the full event."
-                    );
-                  } else {
+
+                {/* CITY AND STATE */}
+                <div className="flex space-x-6">
+                  <div className="w-[50vw]">
+                    <ApplicationInput
+                      // userId={user.id}
+                      error={cityError}
+                      value={city}
+                      setValue={setCity}
+                      label="City"
+                    />
+                  </div>
+                  <div className="w-[50vw]">
+                    <DropDown name="State" options={states} />
+                  </div>
+                </div>
+
+                {/* CAN YOU ATTEND EVENT */}
+                <div className="flex space-x-6">
+                  <div className="w-[50vw]">
+                    <div className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold`}>Can you attend in-person?</div>
+                    <RadioGroup onChange={setInPerson} value={inPerson}>
+                      <div className="flex items-center space-x-4">
+                        <Radio
+                          value="Yes"
+                          colorScheme="black"
+                          onClick={() => setInPerson("Yes")}
+                        >
+                          Yes
+                        </Radio>
+                        <Radio
+                          value="No"
+                          colorScheme="black"
+                          onClick={() => setInPerson("No")}
+                        >
+                          No
+                        </Radio>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                  <div className="w-[50vw]">
+                    <div className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold`}>
+                      Can you attend the whole event?
+                    </div>
+                    <RadioGroup onChange={setWholeEvent} value={wholeEvent}>
+                      <div className="flex items-center space-x-4">
+                        <Radio value="Yes" colorScheme="black">
+                          Yes
+                        </Radio>
+                        <Radio value="No" colorScheme="black">
+                          No
+                        </Radio>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+
+                {/* What is your background? */}
+                <div>
+                  <div>
+                    <MultiSelect name="What is your background?" options={background} />
+                  </div>
+                </div>
+
+                {/* Why do you want to attend health{hacks} 2023? */}
+                <div>
+                  <div>
+                    <MultiSelect name="Why do you want to attend health{hacks} 2023?" options={whyhh} />
+                  </div>
+                </div>
+
+                {/* How did you hear about health{hacks} */}
+                <div>
+                  <div>
+                    <DropDown name="How did you hear about health{hacks}" options={wherefrom} />
+                  </div>
+                </div>
+
+                {/* Do you have a team yet? */}
+                <div>
+                  <div>
+                    <DropDown name="Do you have a team yet?" options={yesno} />
+                  </div>
+                </div>
+
+                {/* LinkedIn Profile */}
+                <div>
+                  <ApplicationInput
+                    // userId={user.id}
+                    value={linkedIn}
+                    setValue={setLinkedIn}
+                    label="LinkedIn Profile"
+                  />
+                </div>
+
+                {/* Any Dietary Restrictions? */}
+                <div>
+                  <div>
+                    <DropDown name="Any dietary restrictions?" options={dietary} />
+                  </div>
+                </div>
+
+                {/* Do you need transporation to Stanford? */}
+                <div>
+                  <div>
+                    <DropDown name="Do you need transporation to Stanford?" options={yesno} />
+                  </div>
+                </div>
+
+                {/* Anything Else? */}
+                <div>
+                  <p className="mt-8 mb-2 lg:text-lg md:text-small font-semibold">Anything else you want to tell us?</p>
+                  <Textarea
+                    value={anythingElse}
+                    onInput={setAnythingElse}
+                    placeholder='We love to hear your thoughts, questions, concerns, and more about our event'
+                    textColor='white'
+                    size='sm'
+                    border='1px'
+                    borderRadius='0.75rem'
+                    _expanded={{outline: "0px"}}
+                  />
+                </div>
+
+                <p className="font-base text-xs text-[#b9b9b9] mt-6"> Please note that this year we will be collecting a <strong> $5 food voucher fee </strong>
+                when we send out registration confirmations in a couple of weeks. If this will present a barrier, please let us know at 
+                <a href="mailto: info@joinhealthhacks.com"> <u> info@joinhealthhacks.com </u> </a></p>
+
+              </form>
+              <div className="flex items-center space-x-6 pt-8 pb-24">
+                <button
+                  onClick={async () => {
                     await updateApplication({
                       userId: user.id,
                       firstName,
@@ -258,19 +267,58 @@ const Application = () => {
                       inPerson,
                       wholeEvent,
                     });
-                    router.push("/application/disclaimer");
-                  }
-                }}
-                className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-blue-500 text-white px-6 py-4 rounded-xl text-sm font-bold"
-              >
-                Continue
-              </button>
+                  }}
+                  className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-6 py-3 w-auto rounded-xl text-sm font-medium"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={async () => {
+                    if (firstName.length === 0) {
+                      setFirstNameError("You must enter a first name.");
+                    } else if (lastName.length === 0) {
+                      setFirstNameError("You must enter a last name.");
+                    } else if (phone.length === 0) {
+                      setFirstNameError("You must enter a phone number.");
+                    } else if (organization.length === 0) {
+                      setFirstNameError("You must enter an organization.");
+                    } else if (city.length === 0) {
+                      setFirstNameError("You must enter a city.");
+                    } else if (state.length === 0) {
+                      setFirstNameError("You must enter a state.");
+                    } else if (inPerson === "No") {
+                      setFirstNameError("You must attend the event in-person.");
+                    } else if (wholeEvent.length === 0) {
+                      setFirstNameError(
+                        "You must answer if you can attend the full event."
+                      );
+                    } else {
+                      await updateApplication({
+                        userId: user.id,
+                        firstName,
+                        middleName,
+                        lastName,
+                        phone,
+                        organization,
+                        city,
+                        state,
+                        inPerson,
+                        wholeEvent,
+                      });
+                      router.push("/application/disclaimer");
+                    }
+                  }}
+                  className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium"
+                >
+                  Submit
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </>
-    </Container>
-  );
+        </>
+      </ContainerApp>
+    );
+  };
 };
 
 export default withUrqlClient(createUrqlClient, { ssr: true })(Application);

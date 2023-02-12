@@ -82,7 +82,7 @@ const Navbar = () => {
             href="https://forms.gle/NUiwgzowasc6GjGv5"
             target="_blank"
             rel="noreferrer"
-            className="hover:cursor-pointer duration-500 hover:opacity-50 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl"
+            className="hover:cursor-pointer duration-500 hover:opacity-75 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl sm:h-[0px] sm:px-0 sm:py-0"
           >
             <div className="font-semibold">Start Now</div>
             <div className="opacity-75">
