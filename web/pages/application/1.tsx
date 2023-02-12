@@ -1,186 +1,50 @@
-import {
-  Button,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Radio,
-  RadioGroup,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import { AiFillCaretDown } from "react-icons/ai";
-import Container from "../../components/Container";
-import Input from "../../components/Input";
-import TrackRanking from "../../components/TrackRanking";
-import Context from "../../utils/context";
+import React, { useState } from "react";
+import Router from "next/router";
+import ContainerApp from "@/components/ContainerApp";
+import Fade from "react-reveal/Fade";
+import { socials } from "@/data/socials";
 
-const Application = () => {
-  const router = useRouter();
-  const user = useContext(Context);
-
-  const [whyUs, setWhyUs] = useState("");
-  const [howHear, setHowHear] = useState("");
-  const [team, setTeam] = useState<string>("");
-  const [linkedin, setLinkedin] = useState("");
-  const [dietaryRestrictions, setDietaryRestrictions] = useState("");
-
-  const [whyUsError, setWhyUsError] = useState("");
-  const [howHearError, setHowHearError] = useState("");
-  const [teamError, setTeamError] = useState("");
-  const [linkedinError, setLinkedinError] = useState("");
-  const [dietaryRestrictionsError, setDietaryRestrictionsError] = useState("");
+const Success = ({ email }) => {
+  const [error, setError] = useState("");
 
   return (
-    <Container>
-      <div className="flex flex-col items-center">
-        {user ? (
-          <div className="w-[50vw] pt-24">
-            <div className="font-semibold text-3xl">Application</div>
-            <form className="w-[50vw]">
-              <div className={`mt-4 mb-2 }`}>What is your background?</div>
-              <Menu>
-                <MenuButton as={Button} color="black" bg="white">
-                  <div className="flex items-center space-x-2">
-                    <div>Select</div>
-                    <AiFillCaretDown />
+    <ContainerApp>
+      <Fade delay={500} up distance="24px">
+        <div className="flex flex-col items-center md:pb-16 md:pt-8 xl:pt-0 sm:pt-0 w-screen">
+          <img className='md:w-[275px] sm:w-[200px]' src='\circle1.png' alt='globe'/>
+          <div className="max-w-md">
+            <h2 className="font-semibold text-4xl w-lg px-8 pt-8 text-center ">Thanks for applying!</h2>
+            <p className="font-normal text-base px-8 pt-4  md:text-base  sm:text-sm text-hh-lightgray">
+              We have sent an email to <span className="text-white"> <strong>{email}</strong>. </span>
+            </p>
+            <p className="font-normal text-base pl-8 pt-4  md:text-base sm:text-sm text-hh-lightgray">
+              Please wait a couple of weeks to hear back from us regarding your application.
+            </p>
+            <p className="font-normal text-base px-8 pt-4  md:text-base sm:text-sm text-hh-lightgray">
+              In the meantime, follow us on social media:
+            </p>
+            <div className="px-8 pt-6 items-center">
+              <div className="flex flex-row flex-wrap justify-center">
+                {socials.map((s, i) => (
+                  <div key={i} className="px-4">
+                    <Fade delay={500}>
+                      <a href={s.href}>
+                        <img
+                          src={s.src}
+                          alt={s.id}
+                          className="w-12 hover:cursor-pointer sm:w-8 duration-500 hover:opacity-50 "
+                        />
+                      </a>
+                    </Fade>
                   </div>
-                </MenuButton>
-                <MenuList
-                  color="black"
-                  overflowY={"scroll"}
-                  zIndex="dropdown"
-                  maxHeight={"60vh"}
-                >
-                  <MenuItem>
-                    Doctor / Physician / Nurse / Healthcare Worker
-                  </MenuItem>
-                  <MenuItem>
-                    Computer Science / Machine Learning / Systems
-                  </MenuItem>
-                  <MenuItem>Biomedical / Biotechnology</MenuItem>
-                  <MenuItem>Engineering</MenuItem>
-                  <MenuItem>Patient / Family Member of Patient</MenuItem>
-                  <MenuItem>Graduate</MenuItem>
-                  <MenuItem>MBA</MenuItem>
-                  <MenuItem>Undergraduate</MenuItem>
-                  <MenuItem>High School Student</MenuItem>
-                  <MenuItem>Other</MenuItem>
-                </MenuList>
-              </Menu>
-              <Input
-                textarea
-                label="Why do you want to attend health{hacks} 2023?"
-                value={whyUs}
-                setValue={setWhyUs}
-                error={whyUsError}
-              />
-              <TrackRanking />
-              <div className="flex space-x-6">
-                <div className="w-[50vw]">
-                  <div className={`mt-4 mb-2 }`}>
-                    How did you hear about {`health{hacks}`}?
-                  </div>
-                  <Menu>
-                    <MenuButton as={Button} color="black" bg="white">
-                      <div className="flex items-center space-x-2">
-                        <div>Select</div>
-                        <AiFillCaretDown />
-                      </div>
-                    </MenuButton>
-                    <MenuList
-                      color="black"
-                      overflowY={"scroll"}
-                      zIndex="dropdown"
-                      maxHeight={"60vh"}
-                    >
-                      <MenuItem>Linkedin</MenuItem>
-                      <MenuItem>Email</MenuItem>
-                      <MenuItem>Twitter</MenuItem>
-                      <MenuItem>Instagram</MenuItem>
-                      <MenuItem>A Friend</MenuItem>
-                    </MenuList>
-                  </Menu>
-                </div>
-                <div className="w-[50vw]">
-                  <div className={`mt-4 mb-2 }`}>Do you have a team?</div>
-                  <RadioGroup onChange={setTeam} value={team}>
-                    <div className="flex items-center space-x-4">
-                      <Radio value="Yes" colorScheme="blue">
-                        Yes
-                      </Radio>
-                      <Radio value="No" colorScheme="red">
-                        No
-                      </Radio>
-                    </div>
-                  </RadioGroup>
-                </div>
+                ))}
               </div>
-
-              <div className="flex items-center space-x-6">
-                <div className="w-[50vw]">
-                  <Input
-                    label="Link to Linkedin"
-                    value={linkedin}
-                    setValue={setLinkedin}
-                    error={linkedinError}
-                  />
-                </div>
-                <div className="w-[50vw]">
-                  <div className={`mt-4 mb-2 }`}>
-                    What is the best way to contact you?
-                  </div>
-                  <Menu>
-                    <MenuButton as={Button} color="black" bg="white">
-                      <div className="flex items-center space-x-2">
-                        <div>Select</div>
-                        <AiFillCaretDown />
-                      </div>
-                    </MenuButton>
-                    <MenuList
-                      color="black"
-                      overflowY={"scroll"}
-                      zIndex="dropdown"
-                      maxHeight={"60vh"}
-                    >
-                      <MenuItem>Phone</MenuItem>
-                      <MenuItem>Email</MenuItem>
-                      <MenuItem>Other</MenuItem>
-                    </MenuList>
-                  </Menu>
-                </div>
-              </div>
-              <Input
-                value={dietaryRestrictions}
-                setValue={setDietaryRestrictions}
-                error={dietaryRestrictionsError}
-                label="Please explain any dietary restrictions."
-              />
-              <Input
-                value={dietaryRestrictions}
-                setValue={setDietaryRestrictions}
-                error={dietaryRestrictionsError}
-                label="Anything else you want to tell us?"
-              />
-            </form>
-            <div className="flex items-center space-x-6 pt-6 pb-24">
-              <button
-                onClick={() => router.replace("/application/0")}
-                className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-6 py-4 rounded-xl text-sm font-bold"
-              >
-                Back
-              </button>
-              <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-blue-500 text-white px-6 py-4 rounded-xl text-sm font-bold">
-                Submit
-              </button>
             </div>
           </div>
-        ) : (
-          <div>You must be signed in</div>
-        )}
-      </div>
-    </Container>
+        </div>
+      </Fade>
+    </ContainerApp>
   );
 };
 
-export default Application;
+export default Success;

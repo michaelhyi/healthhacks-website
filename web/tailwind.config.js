@@ -18,7 +18,8 @@ module.exports = {
       },
       colors: {
         'hh-gray': '#1C1C1C',
-        'hh-purple': '#986EC8'
+        'hh-purple': '#986EC8',
+        'hh-lightgray': '#b9b9b9'
       }
     },
   },
