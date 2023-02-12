@@ -12,7 +12,7 @@ const Navbar = () => {
   const router = useRouter();
 
   return (
-    <div className="flex sm:h-[128px]  sm:flex-col sm:space-y-12 md:space-y-0 md:flex-row items-center p-8 w-full sticky top-0 z-50 bg-black">
+    <div className="flex sm:h-[256px sm:flex-col sm:space-y-12 md:space-y-0 md:flex-row items-center p-8 w-full sticky top-0 z-50 bg-black">
       <Logo />
       <div className="absolute left-0 right-0 justify-center mx-auto flex items-center sm:space-x-2  md:space-x-4 ">
         {router.pathname === "/" ? (
@@ -33,7 +33,7 @@ const Navbar = () => {
         <NavbarLink page="About" />
         {/* <NavbarLink page="Blog" /> */}
       </div>
-      <div className="flex items-center space-x-8 absolute right-8">
+      <div className="flex items-center space-x-8 sm:opacity-0 sm:pointer-events-none md:opacity-100 md:pointer-events-auto md:absolute md:right-8">
         {/* {user && (
           <Menu>
             <MenuButton>
