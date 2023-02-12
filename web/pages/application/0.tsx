@@ -53,7 +53,7 @@ const Application = () => {
   useEffect(() => {
     (async () => {
       if (user) {
-        const response = await readApplication({ userId: user.id });
+        // const response = await readApplication({ userId: user.id });
 
         setFirstName(response.data?.readApplication.firstName!);
         setMiddleName(response.data?.readApplication.middleName!);
@@ -70,7 +70,7 @@ const Application = () => {
     })();
   }, [user]);
 
-  if (!user) {
+  if (user) {
     return <div>You must be signed in</div>;
   }
 
