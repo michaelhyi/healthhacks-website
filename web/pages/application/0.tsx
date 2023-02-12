@@ -237,9 +237,13 @@ const Application = ({ name }) => {
                   <p className="mt-8 mb-2 lg:text-lg md:text-small font-semibold">Anything else you want to tell us?</p>
                   <Textarea
                     value={anythingElse}
-                    onChange={setAnythingElse}
+                    onInput={setAnythingElse}
                     placeholder='We love to hear your thoughts, questions, concerns, and more about our event'
+                    textColor='white'
                     size='sm'
+                    border='1px'
+                    borderRadius='0.75rem'
+                    _expanded={{outline: "0px"}}
                   />
                 </div>
 

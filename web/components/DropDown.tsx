@@ -22,11 +22,11 @@ const DropDown: React.FC<Props> = ({ name, options }) => {
   return (
     <div>
       <div className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold`}> {name} </div>
-      <Menu matchWidth={true}>
-        <MenuButton as={Button} color="black" bg="white" w='100%' >
+      <Menu matchWidth={true} closeOnBlur={true}>
+        <MenuButton as={Button} border='1px' color="black" bg="#202020" opacity='95%' w='100%' borderColor="white" borderRadius='0.75rem' minH='42px' _hover={{ opacity: '75%' }} _expanded={{ bg: "#202020" }}>
           <div className="flex items-center justify-between">
-            <div>{selectedState.length > 0 ? selectedState : "Select"}</div>
-            <AiFillCaretDown />
+            <div className="text-white">{selectedState.length > 0 ? selectedState : "Select"}</div>
+            <AiFillCaretDown color="white"/>
           </div>
         </MenuButton>
         <MenuList
@@ -35,11 +35,18 @@ const DropDown: React.FC<Props> = ({ name, options }) => {
           overflow="auto"
           zIndex="dropdown"
           maxHeight="200px"
+          bg="#F5F5F5FF"
+          backdropBlur='2px'
+          borderRadius='0.75rem'
+          border='1px'
         >
           {options.map((v, i) => (
             <MenuItem
               key={i.toString()}
               onClick={() => setSelectedState(v)}
+              backdropBlur='2px'
+              bg="#00000000"
+              _hover={{ bg: "#00000011" }}
             >
               {v}
             </MenuItem>

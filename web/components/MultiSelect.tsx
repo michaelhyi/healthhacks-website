@@ -23,7 +23,7 @@ const MultiSelect: React.FC<Props> = ({ name, options }) => {
               <Checkbox
                 key={i.toString()}
                 onClick={() => setSelectedState(v)}
-                colorScheme='black'
+                colorScheme='purple'
                 spacing='1rem'
               >
                 {v}
