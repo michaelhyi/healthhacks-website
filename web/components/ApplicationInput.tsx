@@ -6,7 +6,7 @@ interface Props {
   setValue: Dispatch<SetStateAction<string>>;
   error?: string;
   textarea?: boolean;
-  userId: number;
+  // userId: number;
 }
 
 const ApplicationInput: React.FC<Props> = ({
@@ -15,12 +15,12 @@ const ApplicationInput: React.FC<Props> = ({
   setValue,
   error,
   textarea,
-  userId,
+  // userId,
 }) => {
   return (
     <div>
       <div
-        className={`mt-4 mb-2 ${
+        className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
           error && error.length > 0 ? "text-red-400" : "text-white"
         }`}
       >

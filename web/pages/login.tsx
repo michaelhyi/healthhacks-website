@@ -7,8 +7,9 @@ import { withUrqlClient } from "next-urql";
 import { useContext, useState } from "react";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { useLoginMutation } from "../generated/graphql";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import Context from "../utils/context";
+import axios from "axios";
 
 const Login = () => {
   const router = useRouter();
@@ -20,6 +21,28 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const [, login] = useLoginMutation();
+
+
+  // ADDED CODE BY WILLIAM: From Chat GPT
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post("/api/signin", {
+        email,
+        password,
+      });
+
+      if (response.data.error) {
+        setEmailError(response.data.error);
+      } else {
+        Router.push("/dashboard");
+      }
+    } catch (error) {
+      setEmailError("An error occurred while signing in. Please try again later.");
+    }
+  }
+
 
   return (
     <ContainerApp>
