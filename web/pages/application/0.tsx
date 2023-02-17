@@ -35,51 +35,54 @@ const Application = ({ name }) => {
   const [, readApplication] = useReadApplicationMutation();
   const [, updateApplication] = useUpdateApplicationMutation();
 
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    phone: "",
+    organization: "",
+    city: "",
+    state: "",
+    inPerson: "",
+    wholeEvent: "",
+    linkedIn: "",
+    anythingElse: "",
+  });
 
-  const [phone, setPhone] = useState("");
-  const [organization, setOrganization] = useState("");
-
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [inPerson, setInPerson] = useState("");
-  const [wholeEvent, setWholeEvent] = useState("");
-  const [linkedIn, setLinkedIn] = useState("");
-  const [anythingElse, setAnythingElse] = useState("");
-
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-
-  const [phoneError, setPhoneError] = useState("");
-  const [organizationError, setOrganizationError] = useState("");
-
-  const [cityError, setCityError] = useState("");
-  const [stateError, setStateError] = useState("");
-  const [inPersonError, setInPersonError] = useState("");
-  const [wholeEventError, setWholeEventError] = useState("");
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    organization: "",
+    city: "",
+    state: "",
+    inPerson: "",
+    wholeEvent: "",
+  });
 
   useEffect(() => {
     (async () => {
       if (user) {
         const response = await readApplication({ userId: user.id });
 
-        setFirstName(response.data?.readApplication.firstName!);
-        setLastName(response.data?.readApplication.lastName!);
-
-        setPhone(response.data?.readApplication.phone!);
-        setOrganization(response.data?.readApplication.organization!);
-
-        setCity(response.data?.readApplication.city!);
-        setState(response.data?.readApplication.state!);
-        setInPerson(response.data?.readApplication.inPerson!);
-        setWholeEvent(response.data?.readApplication.wholeEvent!);
-        setLinkedIn(response.data?.readApplication.linkedin!)
-        setAnythingElse(response.data?.readApplication.anythingElse!)
+        setFormData({
+          firstName: response.data?.readApplication.firstName!,
+          middleName: response.data?.readApplication.middleName!,
+          lastName: response.data?.readApplication.lastName!,
+          phone: response.data?.readApplication.phone!,
+          organization: response.data?.readApplication.organization!,
+          city: response.data?.readApplication.city!,
+          state: response.data?.readApplication.state!,
+          inPerson: response.data?.readApplication.inPerson!,
+          wholeEvent: response.data?.readApplication.wholeEvent!,
+          linkedIn: response.data?.readApplication.linkedin!,
+          anythingElse: response.data?.readApplication.anythingElse!,
+        });
       }
     })();
   }, [user]);
+
+  const { firstName, middleName, lastName, phone, organization, city, state, inPerson, wholeEvent, linkedIn, anythingElse } = formData;
 
   // if (!user) {
   //   return <div>You must be signed in</div>;
@@ -107,18 +110,18 @@ const Application = ({ name }) => {
                   <div className="w-[50vw]">
                     <ApplicationInput
                       // userId={user.id}
-                      error={phoneError}
-                      value={phone}
-                      setValue={setPhone}
+                      error={errors.phone}
+                      value={formData.phone}
+                      setValue={(value) => setFormData({ ...formData, phone: value })}
                       label="Phone Number"
                     />
                   </div>
                   <div className="w-[50vw]">
                     <ApplicationInput
                       // userId={user.id}
-                      error={organizationError}
-                      value={organization}
-                      setValue={setOrganization}
+                      error={errors.organization}
+                      value={formData.organization}
+                      setValue={(value) => setFormData({ ...formData, organization: value })}
                       label="University / Company"
                     />
                   </div>
@@ -129,8 +132,8 @@ const Application = ({ name }) => {
                   <div className="w-[50vw]">
                     <ApplicationInput
                       // userId={user.id}
-                      error={cityError}
-                      value={city}
+                      error={errors.city}
+                      value={formData.city}
                       setValue={setCity}
                       label="City"
                     />
@@ -190,7 +193,9 @@ const Application = ({ name }) => {
                 {/* Why do you want to attend health{hacks} 2023? */}
                 <div>
                   <div>
-                    <MultiSelect name="Why do you want to attend health{hacks} 2023?" options={whyhh} />
+                    <MultiSelect name="Why do you want to attend health{hacks} 2023?" 
+                      options={whyhh} 
+                    />
                   </div>
                 </div>
 

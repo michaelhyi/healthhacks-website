@@ -7,7 +7,7 @@ import { socials } from "@/data/socials";
 // This page is for if the applicant chooses: I can't make the whole event. We will give them a warning that they 
 // can attend our event, however, if they miss most of the event, we would rather have them come next time.
 
-const AreYouSure = ({ email }) => {
+const AreYouSure = () => {
   const [error, setError] = useState("");
 
   return (

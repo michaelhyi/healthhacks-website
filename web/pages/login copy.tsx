@@ -13,7 +13,7 @@ import axios from "axios";
 
 const Login = () => {
   const router = useRouter();
-  const { setUser } = useContext(Context);
+  const { user, setUser } = useContext(Context);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,8 +43,6 @@ const Login = () => {
     }
   }
 
-  
-
 
   return (
     <ContainerApp>
@@ -52,7 +50,7 @@ const Login = () => {
         <div className="flex flex-col items-center pt-24">
           <div className="w-[50vw]">
             <div>
-              <div className="font-bold text-3xl">
+              <div className="font-semibold text-3xl">
                 Welcome to {`health{hacks}`} 
               </div>
               <div className="text-sm mt-4 font-medium">

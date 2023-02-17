@@ -3,7 +3,8 @@ import React, { Dispatch, SetStateAction } from "react";
 interface Props {
   label: string;
   value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  //setValue: Dispatch<SetStateAction<string>>;
+  setValue: string;
   error?: string;
   textarea?: boolean;
   // userId: number;
