@@ -24,7 +24,7 @@ const Register = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const [, register] = useRegisterMutation();
+  const [result, register] = useRegisterMutation();
 
   return (
     <ContainerApp>
@@ -39,6 +39,7 @@ const Register = () => {
                 {`health{hacks}`} connects diverse creators to build the next innovations in healthcare.
               </div>
             </div>
+
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -48,19 +49,22 @@ const Register = () => {
                   email,
                   password,
                 });
+
                 if (!response.data?.register.error) {
                   await localStorage.setItem(
                     "user",
                     JSON.stringify(response.data!.register.user!)
                   );
                   setUser(response.data!.register.user!);
-                  router.push("/");
+                  router.push("/verify");
+
                 } else {
                   if (response.data.register.error.field === "First Name") {
                     setFirstNameError(response.data.register.error.message);
                   } else {
                     setFirstNameError("");
                   }
+
                   if (response.data.register.error.field === "Last Name") {
                     setLastNameError(response.data.register.error.message);
                   } else {
@@ -72,6 +76,7 @@ const Register = () => {
                   } else {
                     setEmailError("");
                   }
+
                   if (response.data.register.error.field === "Password") {
                     setPasswordError(response.data.register.error.message);
                   } else {

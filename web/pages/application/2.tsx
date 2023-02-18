@@ -7,7 +7,7 @@ import { socials } from "@/data/socials";
 // This page is for if the applicant chooses: I can't make the event in person. We will automatically reject them, but
 // they have a chance to change their application if they accidentally selected this.
 
-const NextTime = ({ email }) => {
+const NextTime = () => {
   const [error, setError] = useState("");
 
   return (
