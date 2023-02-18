@@ -36,7 +36,8 @@ const Register = () => {
                 Let's Create An Account
               </div>
               <div className="mt-2 opacity-50 text-semibold text-sm">
-                {`health{hacks}`} connects diverse creators to build the next innovations in healthcare.
+                {`health{hacks}`} connects diverse creators to build the next
+                innovations in healthcare.
               </div>
             </div>
 
@@ -57,7 +58,6 @@ const Register = () => {
                   );
                   setUser(response.data!.register.user!);
                   router.push("/verify");
-
                 } else {
                   if (response.data.register.error.field === "First Name") {
                     setFirstNameError(response.data.register.error.message);
