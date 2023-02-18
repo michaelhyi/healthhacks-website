@@ -1,11 +1,11 @@
 import Container from "../components/Container";
 
-const TermsOfUse = () => {
+const PrivatePolicy = () => {
   return (
     <Container>
       <div className="mt-8 mb-24 mx-24">
         <h1 className="font-bold text-4xl">
-          Terms of Use
+          Private Policy
         </h1>
 
         <p className="font-light text-[#ccc] text-sm">
@@ -378,4 +378,4 @@ const TermsOfUse = () => {
   );
 };
 
-export default TermsOfUse;
+export default PrivatePolicy ;

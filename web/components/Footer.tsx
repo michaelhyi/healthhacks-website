@@ -5,6 +5,7 @@ import Fade from "react-reveal/Fade";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import * as EmailValidator from "email-validator";
 import { socials } from "../data/socials";
+import Link from "next/link"
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -81,9 +82,8 @@ const Footer = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 // border-2
-                className={`placeholder-white bg-black  ${
-                  error && error.length > 0 ? "border-red-400" : "border-white"
-                } p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
+                className={`placeholder-white bg-black  ${error && error.length > 0 ? "border-red-400" : "border-white"
+                  } p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
               />
               <button className="hover:cursor-pointer duration-500 hover:opacity-90 flex items-center text-black bg-white px-8 py-4 rounded-[75px] font-semibold sm:text-sm">
                 Subscribe
@@ -103,7 +103,21 @@ const Footer = () => {
               alt="logo"
               className="w-[250px] sm:w-[150px]"
             ></img>
-            <div className="pb-12 pt-2 sm:text-sm">{`© 2023 health{hacks} All Rights Reserved.`}</div>
+            <div className="pb-12 pt-2 sm:text-sm">
+              © 2023 {`health{hacks}`} <br />
+              All Rights Reserved. <br />
+              <Link
+                className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
+                href="private-policy">
+                Private Policy
+              </Link>
+              <br />
+              <Link
+                className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
+                href="terms-of-use">
+                Terms of Use
+              </Link>
+            </div>
           </div>
           <div className="flex flex-wrap justify-end gap-8 mt-8 md:p-4 sm:p-0 w-2/5">
             {/* <div className="cursor-pointer">
