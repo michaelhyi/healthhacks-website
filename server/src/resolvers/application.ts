@@ -7,30 +7,40 @@ export class ApplicationResolver {
   @Mutation(() => Boolean)
   async updateApplication(
     @Arg("userId", () => Int) userId: number,
-    @Arg("firstName", () => String) firstName: string,
-    @Arg("middleName", () => String) middleName: string,
-    @Arg("lastName", () => String) lastName: string,
     @Arg("phone", () => String) phone: string,
     @Arg("organization", () => String)
     organization: string,
     @Arg("city", () => String) city: string,
     @Arg("state", () => String) state: string,
     @Arg("inPerson", () => String) inPerson: string,
-    @Arg("wholeEvent", () => String) wholeEvent: string
+    @Arg("wholeEvent", () => String) wholeEvent: string,
+    @Arg("background", () => String) background: string,
+    @Arg("whyUs", () => String) whyUs: string,
+    @Arg("howHear", () => String) howHear: string,
+    @Arg("team", () => String) team: string,
+    @Arg("linkedIn", () => String) linkedIn: string,
+    @Arg("dietaryRestrictions", () => String) dietaryRestrictions: string,
+    @Arg("transportation", () => String) transportation: string,
+    @Arg("other", () => String) other: string
   ): Promise<boolean> {
     await getConnection()
       .getRepository(Application)
       .createQueryBuilder()
       .update({
-        firstName,
-        middleName,
-        lastName,
         phone,
         organization,
         city,
         state,
         inPerson,
         wholeEvent,
+        background,
+        whyUs,
+        howHear,
+        team,
+        linkedIn,
+        dietaryRestrictions,
+        transportation,
+        other,
       })
       .where({ userId })
       .returning("*")

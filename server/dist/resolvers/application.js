@@ -17,20 +17,25 @@ const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Application_1 = require("../entities/Application");
 let ApplicationResolver = class ApplicationResolver {
-    async updateApplication(userId, firstName, middleName, lastName, phone, organization, city, state, inPerson, wholeEvent) {
+    async updateApplication(userId, phone, organization, city, state, inPerson, wholeEvent, background, whyUs, howHear, team, linkedIn, dietaryRestrictions, transportation, other) {
         await (0, typeorm_1.getConnection)()
             .getRepository(Application_1.Application)
             .createQueryBuilder()
             .update({
-            firstName,
-            middleName,
-            lastName,
             phone,
             organization,
             city,
             state,
             inPerson,
             wholeEvent,
+            background,
+            whyUs,
+            howHear,
+            team,
+            linkedIn,
+            dietaryRestrictions,
+            transportation,
+            other,
         })
             .where({ userId })
             .returning("*")
@@ -49,17 +54,22 @@ let ApplicationResolver = class ApplicationResolver {
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),
-    __param(1, (0, type_graphql_1.Arg)("firstName", () => String)),
-    __param(2, (0, type_graphql_1.Arg)("middleName", () => String)),
-    __param(3, (0, type_graphql_1.Arg)("lastName", () => String)),
-    __param(4, (0, type_graphql_1.Arg)("phone", () => String)),
-    __param(5, (0, type_graphql_1.Arg)("organization", () => String)),
-    __param(6, (0, type_graphql_1.Arg)("city", () => String)),
-    __param(7, (0, type_graphql_1.Arg)("state", () => String)),
-    __param(8, (0, type_graphql_1.Arg)("inPerson", () => String)),
-    __param(9, (0, type_graphql_1.Arg)("wholeEvent", () => String)),
+    __param(1, (0, type_graphql_1.Arg)("phone", () => String)),
+    __param(2, (0, type_graphql_1.Arg)("organization", () => String)),
+    __param(3, (0, type_graphql_1.Arg)("city", () => String)),
+    __param(4, (0, type_graphql_1.Arg)("state", () => String)),
+    __param(5, (0, type_graphql_1.Arg)("inPerson", () => String)),
+    __param(6, (0, type_graphql_1.Arg)("wholeEvent", () => String)),
+    __param(7, (0, type_graphql_1.Arg)("background", () => String)),
+    __param(8, (0, type_graphql_1.Arg)("whyUs", () => String)),
+    __param(9, (0, type_graphql_1.Arg)("howHear", () => String)),
+    __param(10, (0, type_graphql_1.Arg)("team", () => String)),
+    __param(11, (0, type_graphql_1.Arg)("linkedIn", () => String)),
+    __param(12, (0, type_graphql_1.Arg)("dietaryRestrictions", () => String)),
+    __param(13, (0, type_graphql_1.Arg)("transportation", () => String)),
+    __param(14, (0, type_graphql_1.Arg)("other", () => String)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, String, String, String]),
+    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, String, String, String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], ApplicationResolver.prototype, "updateApplication", null);
 __decorate([
