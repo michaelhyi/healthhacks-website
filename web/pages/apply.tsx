@@ -5,6 +5,8 @@ import { wherefrom } from "@/data/wherefrom";
 import { whyhh } from "@/data/whyhh";
 import { yesno } from "@/data/yesno";
 import { Radio, RadioGroup, useToast } from "@chakra-ui/react";
+import { format } from "date-fns";
+import { GoogleSpreadsheet } from "google-spreadsheet";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -18,6 +20,72 @@ import {
 } from "../generated/graphql";
 import Context from "../utils/context";
 import { createUrqlClient } from "../utils/createUrqlClient";
+
+// Config variables
+const SPREADSHEET_ID = process.env.NEXT_PUBLIC_APPLICATION_SPREADSHEET_ID;
+const SHEET_ID = process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID;
+const GOOGLE_CLIENT_EMAIL =
+  process.env.NEXT_PUBLIC_APPLICATION_GOOGLE_CLIENT_EMAIL;
+const GOOGLE_SERVICE_PRIVATE_KEY =
+  process.env.NEXT_PUBLIC_APPLICATION_GOOGLE_SERVICE_PRIVATE_KEY;
+
+// GoogleSpreadsheet Initialize
+const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+
+// Append Function
+const appendSpreadsheet = async (row: {
+  Timestamp: string;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Phone: string;
+  Organization: string;
+  City: string;
+  State: string;
+  InPerson: string;
+  WholeEvent: string;
+  Background: string;
+  WhyUs: string;
+  HowHear: string;
+  Team: string;
+  LinkedIn: string;
+  DietaryRestrictions: string;
+  Transportation: string;
+  Other: string;
+}) => {
+  try {
+    console.log(row);
+    await doc.useServiceAccountAuth({
+      client_email: GOOGLE_CLIENT_EMAIL!,
+      private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+    });
+    // loads document properties and worksheets
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsById[SHEET_ID!];
+    console.log(sheet);
+    await sheet.addRow(row);
+  } catch (e) {
+    console.error("Error: ", e);
+  }
+};
+
+type FormType = {
+  phone: string;
+  organization: string;
+  city: string;
+  state: string;
+  inPerson: string;
+  wholeEvent: string;
+  background: string;
+  whyUs: string;
+  howHear: string;
+  team: string;
+  linkedIn: string;
+  dietaryRestrictions: string;
+  transportation: string;
+  other: string;
+};
 
 const Apply = () => {
   const router = useRouter();
@@ -379,50 +447,57 @@ const Apply = () => {
               </button>
               <button
                 onClick={async () => {
-                  if (error.phone.length === 0) {
-                    setError({
-                      ...error,
-                      phone: "You must enter a phone number.",
-                    });
-                  } else if (error.organization.length === 0) {
-                    setError({
-                      ...error,
-                      organization: "You must enter an organization.",
-                    });
-                  } else if (error.city.length === 0) {
-                    setError({ ...error, city: "You must enter a city." });
-                  } else if (error.state.length === 0) {
-                    setError({ ...error, state: "You must enter a state." });
-                  } else if (error.inPerson === "No") {
-                    setError({
-                      ...error,
-                      inPerson: "You must attend the event in-person.",
-                    });
-                  } else if (error.wholeEvent.length === 0) {
-                    setError({
-                      ...error,
-                      wholeEvent:
-                        "You must answer if you can attend the full event.",
-                    });
-                  } else {
-                    await updateApplication({
-                      userId: user.id,
-                      phone: form.phone,
-                      organization: form.organization,
-                      city: form.city,
-                      state: form.state,
-                      inPerson: form.inPerson,
-                      wholeEvent: form.wholeEvent,
-                      background: form.background,
-                      whyUs: form.whyUs,
-                      howHear: form.howHear,
-                      team: form.team,
-                      linkedIn: form.linkedIn,
-                      dietaryRestrictions: form.dietaryRestrictions,
-                      transportation: form.transportation,
-                      other: form.other,
-                    });
-                  }
+                  let errors = false;
+
+                  Object.keys(form).forEach((v) => {
+                    if (form[v as keyof FormType].length === 0) {
+                      setError({
+                        ...error,
+                        [v]: "This is a required field.",
+                      });
+                    }
+                  });
+
+                  await updateApplication({
+                    userId: user.id,
+                    phone: form.phone,
+                    organization: form.organization,
+                    city: form.city,
+                    state: form.state,
+                    inPerson: form.inPerson,
+                    wholeEvent: form.wholeEvent,
+                    background: form.background,
+                    whyUs: form.whyUs,
+                    howHear: form.howHear,
+                    team: form.team,
+                    linkedIn: form.linkedIn,
+                    dietaryRestrictions: form.dietaryRestrictions,
+                    transportation: form.transportation,
+                    other: form.other,
+                  });
+
+                  const newRow = {
+                    Timestamp: format(new Date(), "Pp"),
+                    FirstName: user.firstName,
+                    LastName: user.lastName,
+                    Email: user.email,
+                    Phone: form.phone,
+                    Organization: form.organization,
+                    City: form.city,
+                    State: form.state,
+                    InPerson: form.inPerson,
+                    WholeEvent: form.wholeEvent,
+                    Background: form.background,
+                    WhyUs: form.whyUs,
+                    HowHear: form.howHear,
+                    Team: form.team,
+                    LinkedIn: form.linkedIn,
+                    DietaryRestrictions: form.dietaryRestrictions,
+                    Transportation: form.transportation,
+                    Other: form.other,
+                  };
+
+                  appendSpreadsheet(newRow);
                 }}
                 className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium"
               >
