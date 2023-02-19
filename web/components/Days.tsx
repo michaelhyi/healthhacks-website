@@ -11,7 +11,7 @@ const Days = () => {
       className="flex flex-col justify-center items-center"
     >
       <Fade delay={250}>
-        <div className="font-medium space-y-16 sm:text-2xl 2xl:text-3xl opacity-75 sm:pb-8 2xl:pb-24 text-[#ddd] text-center sm:px-4 sm:pt-24 2xl:pt-40">{`EXPLORE THE HEALTH{HACKS} WAY`}</div>
+        <div className="font-medium  text-lg md:text-xl 2xl:text-2xl opacity-75 text-[#ccc] text-center mt-16 mb-0 md:mb-8">{`EXPLORE THE HEALTH{HACKS} WAY`}</div>
       </Fade>
       {days.map((v, i) => (
         <div className="my-0" key={i}>
