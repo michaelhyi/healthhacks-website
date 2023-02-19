@@ -1,16 +1,42 @@
 import Container from "../components/Container";
+import Footer from "@/components/Footer";
 
 const PrivatePolicy = () => {
   return (
     <Container>
-      <div className="mt-8 mb-24 mx-24">
+      <div className="lg:mt-24 md:mt-20 sm:mt-8 mb-24 lg:mx-40 md:mx-16 sm:mx-12">
         <h1 className="font-bold text-4xl">
           Private Policy
         </h1>
 
-        <p className="font-light text-[#ccc] text-sm">
+        <div className="font-light text-[#ccc] text-sm">
           Last updated January 01, 2023
-        </p>
+        </div>
+        <br />
+        <div className="font-thin text-sm">
+          This privacy notice for healthhacks LLC (<strong>"Company," "we," "us," </strong> or <strong>"our"</strong>), describes how and why we might collect, store, use, and/or share (<strong>"process"</strong>) your information when you use our services (<strong>"Services"</strong>), such as when you:
+          <ul className="list-disc list-outside md:pl-12 sm:pl-6">
+            <li className="pl-2"> Visit our website at https://joinhealthhacks.com, or any website of ours that links to this privacy notice </li>
+            <li className="pl-2"> Engage with us in other related ways, including any sales, marketing, or events </li>
+          </ul>
+          <br />
+          <strong>Questions or concerns?</strong> Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at info@joinhealthhacks.com.
+        </div>
+
+        <h2 className="font-semibold text-xl mt-8">
+          SUMMARY OF KEY POINTS
+        </h2>
+        <div className="font-thin text-sm">
+          <br /><strong>This summary provides key points from our privacy notice, but you can find out more details about any of these topics by clicking the link following each key point or by using our table of contents below to find the section you are looking for. </strong>
+          <br /><br /><strong>What personal information do we process?</strong> When you visit, use, or navigate our Services, we may process personal information depending on how you interact with healthhacks LLC and the Services, the choices you make, and the products and features you use.
+          <br /><br /><strong>Do we process any sensitive personal information?</strong> We do not process sensitive personal information.
+          <br /><br /><strong>Do we receive any information from third parties?</strong> We do not receive any information from third parties.
+          <br /><br /><strong>How do we process your information?</strong> We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent. We process your information only when we have a valid legal reason to do so.
+          <br /><br /><strong>In what situations and with which types of parties do we share personal information?</strong> We may share information in specific situations and with specific categories of third parties.
+          <br /><br /><strong>How do we keep your information safe?</strong> We have organizational and technical processes and procedures in place to protect your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information.
+          <br /><br /><strong>What are your rights?</strong> Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information.
+          <br /><br /><strong>How do you exercise your rights?</strong> The easiest way to exercise your rights is by filling out our data subject request form available here: __________, or by contacting us. We will consider and act upon any request in accordance with applicable data protection laws.
+        </div>
 
         <div className="mt-8">
           {/* <h2 className="font-semibold text-xl mt-8">
@@ -47,316 +73,216 @@ const PrivatePolicy = () => {
 
         <div>
           <h2 id="1" className="font-semibold text-xl mt-8">
-            1. AGREEMENT TO TERMS
+            1. WHAT INFORMATION DO WE COLLECT?
           </h2>
-          <p className="font-thin text-sm">
-            These Terms of Use constitute a legally binding agreement made between you,
-            whether personally or on behalf of an entity <strong>(“you”)</strong> and healthhacks LLC
-            <strong>( "Company," “we," “us," or “our”)</strong>, concerning your access to and use of the
-            joinhealthhacks.com website as well as any other media form, media channel, mobile
-            website or mobile application related, linked, or otherwise connected thereto
-            (collectively, the “Site”). We are registered in California, United States and have our
-            registered office at 4032 Rampage Ln, Irvine, CA 92620. You agree that by accessing
-            the Site, you have read, understood, and agreed to be bound by all of these Terms of
-            Use. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF USE, THEN YOU
-            ARE EXPRESSLY PROHIBITED FROM USING THE SITE AND YOU MUST
-            DISCONTINUE USE IMMEDIATELY.
+          <div className="font-thin text-sm">
+            In Short: We collect personal information that you provide to us.
+            <br /> <br />
+            We collect personal information that you voluntarily provide to us when you register on the Services, express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.
+            <br /> <br />
+            <strong>Personal Information Provided by You.</strong> The personal information that we collect depends on the context of your interactions with us and the Services, the choices you make, and the products and features you use. The personal information we collect may include the following:
+
+            <ul className="list-disc list-outside md:pl-12 sm:pl-6">
+              <li className="pl-2"> names </li>
+              <li className="pl-2"> phone numbers </li>
+              <li className="pl-2"> email addresses </li>
+              <li className="pl-2"> mailing addresses </li>
+              <li className="pl-2"> job titles </li>
+              <li className="pl-2"> usernames </li>
+              <li className="pl-2"> passwords </li>
+              <li className="pl-2"> contact preferences </li>
+              <li className="pl-2"> billing addresses </li>
+              <li className="pl-2"> debit/credit card numbers </li>
+              <li className="pl-2"> contact or authentication data </li>
+            </ul>
+            <br />
+            <strong>Sensitive Information.</strong> We do not process sensitive information.
+            All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information.
+            <br /> <br />
+            <strong>In Short:</strong> Some information — such as your Internet Protocol (IP) address and/browser and device characteristics — is collected automatically when you visit ourServices.
+            <br />
+            We automatically collect certain information when you visit, use, or navigate the Services. This information does not reveal your specific identity (like your name or contact information) but may include device and usage information, such as your IPaddress, browser and device characteristics, operating system, language preferences, referring URLs, device name, country, location, information about how and when you use our Services, and other technical information. This information is primarily needed to maintain the security and operation of our Services, and for our internal analytics and reporting purposes.
             <br /><br />
-            Supplemental terms and conditions or documents that may be posted on the Site
-            from time to time are hereby expressly incorporated herein by reference. We reserve
-            the right, in our sole discretion, to make changes or modifications to these Terms of
-            Use at any time and for any reason. We will alert you about any changes by updating
-            the “Last updated” date of these Terms of Use, and you waive any right to receives pecific notice of each such change. Please ensure that you check the applicable Terms every time you use our Site so that you understand which Terms apply. Youwill be subject to, and will be deemed to have been made aware of and to haveaccepted, the changes in any revised Terms of Use by your continued use of the Siteafter the date such revised Terms of Use are posted.
-            <br /><br />
-            The information provided on the Site is not intended for distribution to or use by anyperson or entity in any jurisdiction or country where such distribution or use would becontrary to law or regulation or which would subject us to any registrationrequirement within such jurisdiction or country. Accordingly, those persons whochoose to access the Site from other locations do so on their own initiative and aresolely responsible for compliance with local laws, if and to the extent local laws areapplicable.
-            <br /><br />
-            The Site is not tailored to comply with industry-specific regulations (Health Insurance Portability and Accountability Act (HIPAA), Federal Information Security ManagementAct (FISMA), etc.), so if your interactions would be subjected to such laws, you may not use this Site. You may not use the Site in a way that would violate the Gramm-Leach-Bliley Act (GLBA).
-            <br /><br />
-            The Site is intended for users who are at least 13 years of age. All users who areminors in the jurisdiction in which they reside (generally under the age of 18) musthave the permission of, and be directly supervised by, their parent or guardian to usethe Site. If you are a minor, you must have your parent or guardian read and agree tothese Terms of Use prior to you using the Site.
-          </p>
+            <strong>The information we collect includes:</strong>
+            <br />
+            Log and Usage Data. Log and usage data is service-related, diagnostic, usage, and performance information our servers automatically collect when you access or use our Services and which we record in log files. Depending on how you interact with us, this log data may include your IP address, deviceinformation, browser type, and settings and information about your activity in the Services (such as the date/time stamps associated with your usage, pages and files viewed, searches, and other actions you take such as which features you use), device event information (such as system activity, error reports (sometimes called "crash dumps"), and hardware settings).
+          </div>
         </div>
 
 
-        <h2 id="2"className="font-semibold text-xl mt-8">
-          2. INTELLECTUAL PROPERTY RIGHTS
+        <h2 id="2" className="font-semibold text-xl mt-8">
+          2. HOW DO WE PROCESS YOUR INFORMATION?
         </h2>
-        <p className="font-thin text-sm">
-          Unless otherwise indicated, the Site is our proprietary property and all source code,databases, functionality, software, website designs, audio, video, text, photographs,and graphics on the Site (collectively, the “Content”) and the trademarks, servicemarks, and logos contained therein (the “Marks”) are owned or controlled by us orlicensed to us, and are protected by copyright and trademark laws and various other intellectual property rights and unfair competition laws of the United States,international copyright laws, and international conventions. The Content and theMarks are provided on the Site “AS IS” for your information and personal use only.Except as expressly provided in these Terms of Use, no part of the Site and noContent or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted, distributed, sold,licensed, or otherwise exploited for any commercial purpose whatsoever, without ourexpress prior written permission.
-          <br /><br />
-          Provided that you are eligible to use the Site, you are granted a limited license toaccess and use the Site and to download or print a copy of any portion of the Content to which you have properly gained access solely for your personal, non-commercial use. We reserve all rights not expressly granted to you in and to the Site, the Contentand the Marks.
-        </p>
+        <div className="font-thin text-sm">
+          <i>In Short: We process your information to provide, improve, and administer ourServices, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent.</i>
+          <br /><br /><strong>We process your personal information for a variety of reasons, depending on how you interact with our Services, including:</strong>
+          <ul className="list-disc list-outside md:pl-12 sm:pl-6">
+            <li className="pl-2"><b>To facilitate account creation and authentication and otherwise manage user accounts.</b> We may process your information so you can create and login to your account, as well as keep your account in working order.</li>
+            <li className="pl-2"><b>To deliver and facilitate delivery of services to the user.</b> We may process your information to provide you with the requested service.</li>
+            <li className="pl-2"><b>To respond to user inquiries/offer support to users.</b> We may process your information to respond to your inquiries and solve any potential issues you might have with the requested service.</li>
+            <li className="pl-2"><b>To enable user-to-user communications.</b> We may process your information if you choose to use any of our offerings that allow for communication with another user.</li>
+            <li className="pl-2"><b>To request feedback.</b> We may process your information when necessary to request feedback and to contact you about your use of our Services.</li>
+            <li className="pl-2"><b>To send you marketing and promotional communications.</b> We may process the personal information you send to us for our marketing purposes, if this is in accordance with your marketing preferences. You can opt out of our marketing emails at any time. For more information, see "WHAT ARE YOUR PRIVACY RIGHTS?" below).</li>
+            <li className="pl-2"><b>To administer prize draws and competitions.</b> We may process your information to administer prize draws and competitions.</li>
 
-
-        <h2 id="3"className="font-semibold text-xl mt-8">
-          3. USER REPRESENTATIONS
-        </h2>
-        <p className="font-thin text-sm">
-          By using the Site, you represent and warrant that:
-          (1) all registration information yousubmit will be true, accurate, current, and complete;
-          (2) you will maintain theaccuracy of such information and promptly update such registration information asnecessary;
-          (3) you have the legal capacity and you agree to comply with these Termsof Use;
-          (4) you are not under the age of 13;
-          (5) you are not a minor in the jurisdiction in which you reside, or if a minor, you have received parental permission to use the Site;
-          (6) you will not access the Site through automated or non-human means,whether through a bot, script, or otherwise;
-          (7) you will not use the Site for any illegalor unauthorized purpose; and
-          (8) your use of the Site will not violate any applicable law or regulation.
-          <br /><br />
-          If you provide any information that is untrue, inaccurate, not current, or incomplete,we have the right to suspend or terminate your account and refuse any and all current or future use of the Site (or any portion thereof).
-        </p>
-
-
-        <h2 id="4"className="font-semibold text-xl mt-8">
-          4. USER REGISTRATION
-        </h2>
-        <p className="font-thin text-sm">
-          You may be required to register with the Site. You agree to keep your password confidential and will be responsible for all use of your account and password. Wereserve the right to remove, reclaim, or change a username you select if wedetermine, in our sole discretion, that such username is inappropriate, obscene, or otherwise objectionable.
-        </p>
-
-
-        <h2 id="5"className="font-semibold text-xl mt-8">
-          5. PROHIBITED ACTIVITIES
-        </h2>
-        <p className="font-thin text-sm">
-          You may not access or use the Site for any purpose other than that for which wemake the Site available. The Site may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us.
-          As a user of the Site, you agree not to:
-          <br />  <br />
-          <ul className="list-disc list-outside px-12">
-            <li className="pl-2">Systematically retrieve data or other content from the Site to create or compile, directly or indirectly, a collection, compilation, database, or directory without written permission from us.</li>
-            <li className="pl-2">Trick, defraud, or mislead us and other users, especially in any attempt to learnsensitive account information such as user passwords.</li>
-            <li className="pl-2">Circumvent, disable, or otherwise interfere with security-related features of theSite, including features that prevent or restrict the use or copying of anyContent or enforce limitations on the use of the Site and/or the Contentcontained therein.</li>
-            <li className="pl-2">Disparage, tarnish, or otherwise harm, in our opinion, us and/or the Site.</li>
-            <li className="pl-2">Use any information obtained from the Site in order to harass, abuse, or harmanother person.</li>
-            <li className="pl-2">Make improper use of our support services or submit false reports of abuse ormisconduct.</li>
-            <li className="pl-2">Use the Site in a manner inconsistent with any applicable laws or regulations.</li>
-            <li className="pl-2">Engage in unauthorized framing of or linking to the Site.</li>
-            <li className="pl-2">Upload or transmit (or attempt to upload or to transmit) viruses, Trojan horses, or other material, including excessive use of capital letters and spamming (continuous posting of repetitive text), that interferes with any party’s uninterrupted use and enjoyment of the Site or modifies, impairs, disrupts,alters, or interferes with the use, features, functions, operation, or maintenanceof the Site.</li>
-            <li className="pl-2">Engage in any automated use of the system, such as using scripts to sendcomments or messages, or using any data mining, robots, or similar datagathering and extraction tools.</li>
-            <li className="pl-2">Delete the copyright or other proprietary rights notice from any Content.</li>
-            <li className="pl-2">Attempt to impersonate another user or person or use the username ofanother user.</li>
-            <li className="pl-2">Upload or transmit (or attempt to upload or to transmit) any material that actsas a passive or active information collection or transmission mechanism,including without limitation, clear graphics interchange formats (“gifs”), 1×1 pixels, web bugs, cookies, or other similar devices (sometimes referred to as “spyware” or “passive collection mechanisms” or “pcms”).</li>
-            <li className="pl-2">Interfere with, disrupt, or create an undue burden on the Site or the networksor services connected to the Site.</li>
-            <li className="pl-2">Harass, annoy, intimidate, or threaten any of our employees or agentsengaged in providing any portion of the Site to you.</li>
-            <li className="pl-2">Attempt to bypass any measures of the Site designed to prevent or restrictaccess to the Site, or any portion of the Site.</li>
-            <li className="pl-2">Copy or adapt the Site’s software, including but not limited to Flash, PHP, HTML, JavaScript, or other code.</li>
-            <li className="pl-2">Except as permitted by applicable law, decipher, decompile, disassemble, or reverse engineer any of the software comprising or in any way making up apart of the Site.</li>
-            <li className="pl-2">Except as may be the result of standard search engine or Internet browserusage, use, launch, develop, or distribute any automated system, includingwithout limitation, any spider, robot, cheat utility, scraper, or offline reader that accesses the Site, or using or launching any unauthorized script or other software.</li>
-            <li className="pl-2">Use a buying agent or purchasing agent to make purchases on the Site.</li>
-            <li className="pl-2">Make any unauthorized use of the Site, including collecting usernames and/or email addresses of users by electronic or other means for the purpose of sending unsolicited email, or creating user accounts by automated means or under false pretenses.</li>
-            <li className="pl-2">Use the Site as part of any effort to compete with us or otherwise use the Siteand/or the Content for any revenue-generating endeavor or commercial enterprise.</li>
-            <li className="pl-2">Use the Site to advertise or offer to sell goods and services.</li>
-            <li className="pl-2">Sell or otherwise transfer your profile.</li>
-            <li className="pl-2">Upload, post, transmit, share, store or otherwise make available any contentthat we deem to be harmful, threatening, unlawful, defamatory, infringing,abusive, inflammatory, harassing, vulgar, obscene, fraudulent, invasive of privacy or publicity rights, hateful, or racially, ethnically or otherwise objectionable.</li>
-            <li className="pl-2">Register for more than one User account, or operate a User account on behalfof or for the benefit of any person or entity who is not eligible to register for oroperate a User account in their own name</li>
-            <li className="pl-2">Impersonate any person or entity, or falsely state or otherwise misrepresent yourself, or your affiliation with or authority to act on behalf of any person or entity.</li>
-            <li className="pl-2">Upload, post, transmit, share or otherwise make available any unsolicited or unauthorized advertising, solicitations, promotional materials, "junk mail," "spam," "chain letters," "pyramid schemes," or any other form of solicitation.</li>
-            <li className="pl-2">Upload, post, transmit, share or otherwise make available any material that contains software viruses or any other malicious or tracking computer code, files or programs designed to track, interrupt, destroy or limit the functionalityof any computer software or hardware or telecommunications equipment.</li>
-            <li className="pl-2">Upload, post, transmit, share, store or otherwise make available content that would constitute, encourage or provide instructions for a criminal offense, violate the rights of any party, or that would otherwise create liability or violateany local, state, national or international law.</li>
-            <li className="pl-2">Use or attempt to use another's account, service or system without authorization from that person and the Company, or create a false identity on the Services.</li>
-            <li className="pl-2">Upload, post, transmit, share, store or otherwise make available content that, in the sole judgment of the Company, is objectionable or which restricts or inhibits any other person from using or enjoying the Services, or which may expose the Company or its users to any harm or liability of any type.</li>
           </ul>
-        </p>
+        </div>
 
 
-        <h2 id="6"className="font-semibold text-xl mt-8">
-          6. USER GENERATED CONTRIBUTIONS
+        <h2 id="3" className="font-semibold text-xl mt-8">
+          3. WHAT LEGAL BASES DO WE RELY ON TO PROCESS YOUR INFORMATION?
         </h2>
-        <p className="font-thin text-sm">
-          The Site may invite you to chat, contribute to, or participate in blogs, message boards, online forums, and other functionality, and may provide you with the opportunity to create, submit, post, display, transmit, perform, publish, distribute, or broadcast content and materials to us or on the Site, including but not limited to text, writings, video, audio, photographs, graphics, comments, suggestions, or personal information or other material (collectively, "Contributions"). Contributions may be viewable by other users of the Site and through third-party websites. As such, any Contributions you transmit may be treated as non-confidential and non-proprietary. When you create or make available any Contributions, you thereby represent and warrant that:
-          The creation,
-          distribution, transmission, public display, or performance, and theaccessing, downloading, or copying of your Contributions do not and will notinfringe the proprietary rights, including but not limited to the copyright, patent, trademark, trade secret, or moral rights of any third party.
-          You are the creator and owner of or have the necessary licenses, rights, consents, releases, and permissions to use and to authorize us, the Site, andother users of the Site to use your Contributions in any manner contemplatedby the Site and these Terms of Use.
-          You have the written consent, release, and/or permission of each and every identifiable individual person in your Contributions to use the name or likeness of each and every such identifiable individual person to enable inclusion and use of your Contributions in any manner contemplated by the Site and these Terms of Use.
-          <br /> <br />
-          <ul className="list-disc list-outside px-12">
-            <li className="pl-2">Your Contributions are not false, inaccurate, or misleading.</li>
-            <li className="pl-2">Your Contributions are not unsolicited or unauthorized advertising, promotional materials, pyramid schemes, chain letters, spam, mass mailings, or other forms of solicitation.</li>
-            <li className="pl-2">Your Contributions are not obscene, lewd, lascivious, filthy, violent, harassing, libelous, slanderous, or otherwise objectionable (as determined by us).</li>
-            <li className="pl-2">Your Contributions do not ridicule, mock, disparage, intimidate, or abuse anyone.</li>
-            <li className="pl-2">Your Contributions are not used to harass or threaten (in the legal sense of those terms) any other person and to promote violence against a specific person or class of people.</li>
-            <li className="pl-2">Your Contributions do not violate any applicable law, regulation, or rule.</li>
-            <li className="pl-2">Your Contributions do not violate the privacy or publicity rights of any third party.</li>
-            <li className="pl-2">Your Contributions do not violate any applicable law concerning child pornography, or otherwise intended to protect the health or well-being of minors.</li>
-            <li className="pl-2">Your Contributions do not include any offensive comments that are connected to race, national origin, gender, sexual preference, or physical handicap.</li>
-            <li className="pl-2">Your Contributions do not otherwise violate, or link to material that violates, anyprovision of these Terms of Use, or any applicable law or regulation.</li>
+        <div className="font-thin text-sm">
+          <i>In Short: We only process your personal information when we believe it is necessary and we have a valid legal reason (i.e. legal basis) to do so under applicable law, like with your consent, to comply with laws, to provide you with services to enter into or fulfill our contractual obligations, to protect your rights, or to fulfill our legitimate business interests.</i>
+          <br /><br /><u><b>If you are located in Canada, this section applies to you.</b></u>
+          <br /><br />We may process your information if you have given us specific permission (i.e., express consent) to use your personal information for a specific purpose, or in situations where your permission can be inferred (i.e., implied consent). You can withdraw your consent at any time.
+          <br />In some exceptional cases, we may be legally permitted under applicable law to process your information without your consent, including, for example:
+          <ul className="list-disc list-outside md:pl-12 sm:pl-6">
+            <li className="pl-2">If collection is clearly in the interests of an individual and consent cannot be obtained in a timely way</li>
+            <li className="pl-2">For investigations and fraud detection and prevention</li>
+            <li className="pl-2">For business transactions provided certain conditions are met</li>
+            <li className="pl-2">If it is contained in a witness statement and the collection is necessary to assess, process, or settle an insurance claim</li>
+            <li className="pl-2">For identifying injured, ill, or deceased persons and communicating with next of kin</li>
+            <li className="pl-2">If we have reasonable grounds to believe an individual has been, is, or may be victim of financial abuse</li>
+            <li className="pl-2">If it is reasonable to expect collection and use with consent would compromise the availability or the accuracy of the information and the collection is reasonable for purposes related to investigating a breach of an agreement or contravention of the laws of Canada or a province</li>
+            <li className="pl-2">If disclosure is required to comply with a subpoena, warrant, court order, rules of the court relating to the production of records</li>
+            <li className="pl-2">If it was produced by an individual in the course of their employment, business, or profession and the collection is consistent with the purposes for which the information was produced</li>
+            <li className="pl-2">If the collection is solely for journalistic, artistic, or literary purposes</li>
+            <li className="pl-2">If the information is publicly available and is specified by the regulations</li>
           </ul>
-          <br /> <br />
-          Any use of the Site in violation of the foregoing violates these Terms of Use and mayresult in, among other things, termination or suspension of your rights to use the Site.
-        </p>
+        </div>
 
 
-        <h2 id="7"className="font-semibold text-xl mt-8">
-          7. CONTRIBUTION LICENSE
+        <h2 id="4" className="font-semibold text-xl mt-8">
+          4. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?
         </h2>
-        <p className="font-thin text-sm">
-          By posting your Contributions to any part of the Site or making Contributions accessible to the Site by linking your account from the Site to any of your social networking accounts, you automatically grant, and you represent and warrant thatyou have the right to grant, to us an unrestricted, unlimited, irrevocable, perpetual, non-exclusive, transferable, royalty-free, fully-paid, worldwide right, and license tohost, use, copy, reproduce, disclose, sell, resell, publish, broadcast, retitle, archive, store, cache, publicly perform, publicly display, reformat, translate, transmit, excerpt (in whole or in part), and distribute such Contributions (including, without limitation, your image and voice) for any purpose, commercial, advertising, or otherwise, and to prepare derivative works of, or incorporate into other works, such Contributions, and grant and authorize sublicenses of the foregoing. The use and distribution may occur in any media formats and through any media channels.
-          <br /> <br />
-          This license will apply to any form, media, or technology now known or hereafter developed, and includes our use of your name, company name, and franchise name, as applicable, and any of the trademarks, service marks, trade names, logos, andpersonal and commercial images you provide. You waive all moral rights in your Contributions, and you warrant that moral rights have not otherwise been asserted inyour Contributions.
-          <br /> <br />
-          We do not assert any ownership over your Contributions. You retain full ownership ofall of your Contributions and any intellectual property rights or other proprietary rights associated with your Contributions. We are not liable for any statements or representations in your Contributions provided by you in any area on the Site. Youare solely responsible for your Contributions to the Site and you expressly agree to exonerate us from any and all responsibility and to refrain from any legal action against us regarding your Contributions.
-          <br /> <br />
-          We have the right, in our sole and absolute discretion, (1) to edit, redact, or otherwise change any Contributions; (2) to re-categorize any Contributions to place them in more appropriate locations on the Site; and (3) to pre-screen or delete any Contributions at any time and for any reason, without notice. We have no obligation to monitor your Contributions.
-        </p>
+        <div className="font-thin text-sm">
+          <i>In Short: We may share information in specific situations described in this section and/or with the following categories of third parties.</i>
+          <br /><br /><b>Vendors, Consultants, and Other Third-Party Service Providers.</b> We may share your data with third-party vendors, service providers, contractors, or agents (<b>"third parties"</b>) who perform services for us or on our behalf and require access to such information to do that work. The categories of third parties we may share personal information with are as follows:
+          Event Sponsors
+
+          We also may need to share your personal information in the following situations:
+          <ul className="list-disc list-outside md:pl-12 sm:pl-6">
+            <li className="pl-2"><b>Business Transfers.</b> We may share or transfer your information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company.</li>
+            <li className="pl-2"><b>Event Sponsors and Business Partners.</b> We may share your information with our business partners to offer you certain products, services, or promotions.</li>
+            <li className="pl-2"><b>Other Users.</b> When you share personal information (for example, by posting comments, contributions, or other content to the Services) or otherwise interact with public areas of the Services, such personal information may be viewed by all users and may be publicly made available outside the Services in perpetuity. Similarly, other users will be able to view descriptions of your activity, communicate with you within our Services, and view your profile.</li>
+          </ul>
+        </div>
 
 
-        <h2 id="8"className="font-semibold text-xl mt-8">
-          8. SOCIAL MEDIA
+        <h2 id="5" className="font-semibold text-xl mt-8">
+          5. HOW LONG DO WE KEEP YOUR INFORMATION?
         </h2>
-        <p className="font-thin text-sm">
-          As part of the functionality of the Site, you may link your account with online accountsyou have with third-party service providers (each such account, a “Third-PartyAccount”) by either: (1) providing your Third-Party Account login information through the Site; or (2) allowing us to access your Third-Party Account, as is permitted underthe applicable terms and conditions that govern your use of each Third-Party Account. You represent and warrant that you are entitled to disclose your Third-Party Account login information to us and/or grant us access to your Third-Party Account, without breach by you of any of the terms and conditions that govern your use of the applicable Third-Party Account, and without obligating us to pay any fees or makingus subject to any usage limitations imposed by the third-party service provider of the Third-Party Account. By granting us access to any Third-Party Accounts, you understand that (1) we may access, make available, and store (if applicable) any content that you have provided to and stored in your Third-Party Account (the “SocialNetwork Content”) so that it is available on and through the Site via your account, including without limitation any friend lists and (2) we may submit to and receive from
-          your Third-Party Account additional information to the extent you are notified when you link your account with the Third-Party Account. Depending on the Third-PartyAccounts you choose and subject to the privacy settings that you have set in suchThird-Party Accounts, personally identifiable information that you post to your Third-Party Accounts may be available on and through your account on the Site. Pleasenote that if a Third-Party Account or associated service becomes unavailable or ouraccess to such Third Party Account is terminated by the third-party service provider,then Social Network Content may no longer be available on and through the Site.You will have the ability to disable the connection between your account on the Siteand your Third-Party Accounts at any time. PLEASE NOTE THAT YOURRELATIONSHIP WITH THE THIRD-PARTY SERVICE PROVIDERS ASSOCIATEDWITH YOUR THIRD-PARTY ACCOUNTS IS GOVERNED SOLELY BY YOURAGREEMENT(S) WITH SUCH THIRD-PARTY SERVICE PROVIDERS. We make noeffort to review any Social Network Content for any purpose, including but not limitedto, for accuracy, legality, or non-infringement, and we are not responsible for any Social Network Content. You acknowledge and agree that we may access your email address book associated with a Third-Party Account and your contacts list stored on your mobile device or tablet computer solely for purposes of identifying and informing you of those contacts who have also registered to use the Site. You can deactivate the connection between the Site and your Third-Party Account by contacting us using the contact information below or through your account settings (if applicable). We will attempt to delete any information stored on our servers that was obtained through such Third-Party Account, except the username and profile picture that become associated with your account.
-        </p>
+        <div className="font-thin text-sm">
+          <i>In Short: We keep your information for as long as necessary to fulfill the purposes outlined in this privacy notice unless otherwise required by law.</i>
+          <br /><br />We will only keep your personal information for as long as it is necessary for the purposes set out in this privacy notice, unless a longer retention period is required or permitted by law (such as tax, accounting, or other legal requirements). No purpose in this notice will require us to keep your personal information for longer than the period of time in which users have an account with us.
+          <br /><br />When we have no ongoing legitimate business need to process your personal information, we will either delete or anonymize such information, or, if this is not possible (for example, because your personal information has been stored in backuparchives), then we will securely store your personal information and isolate it from any further processing until deletion is possible.
+        </div>
 
 
-        <h2 id="9"className="font-semibold text-xl mt-8">
-          9. SUBMISSIONS
+        <h2 id="6" className="font-semibold text-xl mt-8">
+          6. HOW DO WE KEEP YOUR INFORMATION SAFE?
         </h2>
-        <p className="font-thin text-sm">
-          You acknowledge and agree that any questions, comments, suggestions, ideas, feedback, or other information regarding the Site ("Submissions") provided by you tous are non-confidential and shall become our sole property. We shall own exclusive rights, including all intellectual property rights, and shall be entitled to the unrestricted use and dissemination of these Submissions for any lawful purpose, commercial or otherwise, without acknowledgment or compensation to you. You hereby waive all moral rights to any such Submissions, and you hereby warrant that any such Submissions are original with you or that you have the right to submit such Submissions. You agree there shall be no recourse against us for any alleged or actual infringement or misappropriation of any proprietary right in your Submissions.
-        </p>
+        <div className="font-thin text-sm">
+          <i>In Short: We aim to protect your personal information through a system of organizational and technical security measures.</i>
+          <br /><br />We have implemented appropriate and reasonable technical and organizational security measures designed to protect the security of any personal information we process. However, despite our safeguards and efforts to secure your information, non electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information. Although We will do our best to protect your personal information, transmission of personal information to and from our Services is at your own risk. You should only access theServices within a secure environment.
+        </div>
 
 
-        <h2 id="10"className="font-semibold text-xl mt-8">
-          10. SITE MANAGEMENT
+        <h2 id="7" className="font-semibold text-xl mt-8">
+          7. DO WE COLLECT INFORMATION FROM MINORS?
         </h2>
-        <p className="font-thin text-sm">
-          We reserve the right, but not the obligation, to: (1) monitor the Site for violations of these Terms of Use; (2) take appropriate legal action against anyone who, in our sole discretion, violates the law or these Terms of Use, including without limitation,reporting such user to law enforcement authorities; (3) in our sole discretion and without limitation, refuse, restrict access to, limit the availability of, or disable (to the extent technologically feasible) any of your Contributions or any portion thereof; (4) in our sole discretion and without limitation, notice, or liability, to remove from the Site or otherwise disable all files and content that are excessive in size or are in any way burdensome to our systems; and (5) otherwise manage the Site in a manner designed to protect our rights and property and to facilitate the proper functioning of the Site.
-        </p>
+        <div className="font-thin text-sm">
+          <i>In Short: We do not knowingly collect data from or market to children under 18 years of age.</i>
+          <br /><br />We do not knowingly solicit data from or market to children under 18 years of age. By Using the Services, you represent that you are at least 18 or that you are the parent or guardian of such a minor and consent to such minor dependents use of theServices. If we learn that personal information from users less than 18 years of age has been collected, we will deactivate the account and take reasonable measures to promptly delete such data from our records. If you become aware of any data we may have collected from children under age 18, please contact us at info@joinhealthhacks.com.
+        </div>
 
 
-        <h2 id="11"className="font-semibold text-xl mt-8">
-          11. PRIVACY POLICY
+        <h2 id="8" className="font-semibold text-xl mt-8">
+          8. WHAT ARE YOUR PRIVACY RIGHTS?
         </h2>
-        <p className="font-thin text-sm">
-          We care about data privacy and security.
-          By using the Site, you agree to be bound by our Privacy Policy posted on the Site, which is incorporated into these Terms of Use. Please be advised the Site is hosted in the United States. If you access the Site from any other region of the world with laws or other requirements governing personal data collection, use, or disclosure that differ from applicable laws in the United States, then through your continued use of the Site, you are transferring your data to the United States, and you agree to have your data transferred to and processed in the United States. Further, we do not knowingly accept, request, or solicit information from children or knowingly market to children. Therefore, in accordance with the U.S. Children’s Online Privacy Protection Act, if we receive actual knowledge that anyone under the age of 13 has provided personal information to us without the requisite and verifiable parental consent, we will delete that information from the Site as quickly as is reasonably practicable.
-        </p>
+        <div className="font-thin text-sm">
+          <i>In Short: In some regions, such as Canada, you have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time.</i>
+          <br /><br />In some regions (like Canada), you have certain rights under applicable data protection laws. These may include the right (i) to request access and obtain a copy of your personal information, (ii) to request rectification or erasure; (iii) to restrict the processing of your personal information; and (iv) if applicable, to data portability. Uncertain circumstances, you may also have the right to object to the processing of your personal information.
+          <br /><br />We will consider and act upon any request in accordance with applicable data protection laws.
+          <br /><br />If you are located in the EEA or UK and you believe we are unlawfully processing your personal information, you also have the right to complain to your local data protection supervisory authority. You can find their contact details here:https://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm.
+          <br /><br />If you are located in Switzerland, the contact details for the data protection authorities are available here: https://www.edoeb.admin.ch/edoeb/en/home.html.
+          <br /><br /><b><u>Withdrawing your consent:</u></b> If we are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting us by using the contact details provided in the section "HOW CAN YOU CONTACT US ABOUT THIS NOTICE?''below.
+          <br /><br />However, please note that this will not affect the lawfulness of the processing before its withdrawal nor, when applicable law allows, will it affect the processing of your personal information conducted in reliance on lawful processing grounds other than consent.
+          <br /><br /><u><b>Opting out of marketing and promotional communications:</b></u> You can unsubscribe from our marketing and promotional communications at any time by clicking on the unsubscribe link in the emails that we send, replying "STOP" or "UNSUBSCRIBE" to the SMS messages that we send, or by contacting us using the details provided in section "HOW CAN YOU CONTACT US ABOUT THIS NOTICE?" below. You will then be removed from the marketing lists. However, we may still communicate with you — for example, to send you service-related messages that are necessary for the administration and use of your account, to respond to service requests, or for othernon-marketing purposes.
+          <br /><br />If you would at any time like to review or change the information in your account or terminate your account, you can log in to your account settings and update your user account.
+          <br /><br />Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain someinformation in our files to prevent fraud, troubleshoot problems, assist with any investigations, enforce our legal terms and/or comply with applicable legal requirements.
+          <br /><br />If you have questions or comments about your privacy rights, you may email us atinfo@joinhealthhacks.com.
+        </div>
 
 
-        <h2 id="12"className="font-semibold text-xl mt-8">
-          12. COPYRIGHT INFRINGEMENTS
+        <h2 id="9" className="font-semibold text-xl mt-8">
+          9. CONTROLS FOR DO-NOT-TRACK FEATURES
         </h2>
-        <p className="font-thin text-sm">
-          We respect the intellectual property rights of others. If you believe that any material available on or through the Site infringes upon any copyright you own or control, please immediately notify us using the contact information provided below (a “Notification”). A copy of your Notification will be sent to the person who posted restored the material addressed in the Notification. Please be advised that pursuant to applicable law you may be held liable for damages if you make material misrepresentations in a Notification. Thus, if you are not sure that material located on or linked to by the Site infringes your copyright, you should consider first contacting an attorney.
-        </p>
+        <div className="font-thin text-sm">
+          Most web browsers and some mobile operating systems and mobile applications include a Do-Not-Track ("DNT '') feature or setting you can activate to signal your privacy preference not to have data about your online browsing activities monitored and collected. At this stage no uniform technology standard for recognizing and implementing DNT signals has been finalized. As such, we do not currently respond to DNT browser signals or any other mechanism that automatically communicates your choice not to be tracked online. If a standard for online tracking is adopted that we must follow in the future, we will inform you about that practice in a revised version of this privacy notice.
+        </div>
 
 
-        <h2 id="13"className="font-semibold text-xl mt-8">
-          13. TERM AND TERMINATION
+        <h2 id="10" className="font-semibold text-xl mt-8">
+          10. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
         </h2>
-        <p className="font-thin text-sm">
-          These Terms of Use shall remain in full force and effect while you use the Site.WITHOUT LIMITING ANY OTHER PROVISION OF THESE TERMS OF USE, WE RESERVE THE RIGHT TO, IN OUR SOLE DISCRETION AND WITHOUT NOTICE OR LIABILITY, DENY ACCESS TO AND USE OF THE SITE (INCLUDING BLOCKING CERTAIN IP ADDRESSES), TO ANY PERSON FOR ANY REASON OR FOR NO REASON, INCLUDING WITHOUT LIMITATION FOR BREACH OF ANY REPRESENTATION, WARRANTY, OR COVENANT CONTAINED IN THESE TERMS OF USE OR OF ANY APPLICABLE LAW OR REGULATION. WE MAY TERMINATE YOUR USE OR PARTICIPATION IN THE SITE OR DELETE YOUR ACCOUNT AND ANY CONTENT OR INFORMATION THAT YOU POSTED AT ANY TIME, WITHOUT WARNING, IN OUR SOLE DISCRETION.
-          <br /> <br />
-          If we terminate or suspend your account for any reason, you are prohibited from registering and creating a new account under your name, a fake or borrowed name,or the name of any third party, even if you may be acting on behalf of the third party. In addition to terminating or suspending your account, we reserve the right to take appropriate legal action, including without limitation pursuing civil, criminal, and injunctive redress.
-        </p>
+        <div className="font-thin text-sm">
+          <i>In Short: Yes, if you are a resident of California, you are granted specific rights regarding access to your personal information.</i>
+          <br /><br />California Civil Code Section 1798.83, also known as the "Shine The Light'' law, permits our users who are California residents to request and obtain from us, once a year and free of charge, information about categories of personal information (if any)we disclosed to third parties for direct marketing purposes and the names and addresses of all third parties with which we shared personal information in the immediately preceding calendar year. If you are a California resident and would like to make such a request, please submit your request in writing to us using the contact information provided below.
+          <br /><br />If you are under 18 years of age, reside in California, and have a registered account with Services, you have the right to request removal of unwanted data that you publicly post on the Services. To request removal of such data, please contact us using the contact information provided below and include the email address associated with your account and a statement that you reside in California. We will make sure the data is not publicly displayed on the Services, but please be aware that the data may not be completely or comprehensively removed from all our systems (e.g., backups, etc.).
+          <br /><br /><b>CCPA Privacy Notice</b>
+          <br />The California Code of Regulations defines a "resident" as: (1) every individual who is in the State of California for other than a temporary or transitory purpose and (2) every individual who is domiciled in the State of California who is outside the State of California for a temporary or transitory purpose. All other individuals are defined as "non-residents." If this definition of "resident" applies to you, we must adhere to certain rights and obligations regarding your personal information.
+          <br /><br />We may also collect other personal information outside of these categories through instances where you interact with us in person, online, or by phone or mail in the context of: receiving help through our customer support channels; participation in customer surveys or contests; and facilitation in the delivery of our Services and to respond to your inquiries.
+
+          <br /><br /><b>How do we use and share your personal information?</b>
+          <br />More information about our data collection and sharing practices can be found in this privacy notice. You can opt out from the selling or sharing of your personal information by disabling cookies in Cookie Preference Settings and clicking on the Do Not Sell or Share MyPersonal Information link on our homepage. You may contact us by email at info@joinhealthhacks.com, or by referring to the contact details at the bottom of this document. If you are using an authorized agent to exercise your right to opt out we may deny a request if the authorized agent does not submit proof that they have been validly authorized to act on your behalf.
+
+          <br /><br /><b>Will your information be shared with anyone else?</b>
+          <br />We may disclose your personal information with our service providers pursuant to written contract between us and each service provider. Each service provider is a for-profit entity that processes the information on our behalf, following the same strict privacy protection obligations mandated by the CCPA.
+          We may use your personal information for our own business purposes, such as for undertaking internal research for technological development and demonstration. This is not considered to be "selling" of your personal information.healthhacks LLC has disclosed the following categories of personal information to third parties for a business or commercial purpose in the preceding twelve (12) months:
+          <br />The categories of third parties to whom we disclose personal information for a business or commercial purpose can be found under "WHEN AND WITH WHOM DOWE SHARE YOUR PERSONAL INFORMATION?".healthhacks LLC has sold or shared the following categories of personal information to third parties in the preceding twelve (12) months:
+          <br />The categories of third parties to whom we sold personal information are: event sponsors
+
+          <br /><br /><b>Your rights with respect to your personal data</b>
+          <br /><u>Right to request deletion of the data — Request to delete</u>
+          <br />You can ask for the deletion of your personal information. If you ask us to delete your personal information, we will respect your request and delete your personal information, subject to certain exceptions provided by law, such as (but not limited to)the exercise by another consumer of his or her right to free speech, our compliance requirements resulting from a legal obligation, or any processing that may be required to protect against illegal activities.
+
+          <br /><br /><u>Right to be informed — Request to know</u>
+          <br />Depending on the circumstances, you have a right to know: whether we collect and use your personal information; the categories of personal information that we collect; the purposes for which the collected personal information is used; whether we sell or share personal information to third parties; the categories of personal information that we sold, shared, or disclosed for a business purpose; the categories of third parties to whom the personal information was sold,shared, or disclosed for a business purpose; the business or commercial purpose for collecting, selling, or sharing personal information; and the specific pieces of personal information we collected about you. In accordance with applicable law, we are not obligated to provide or delete consumer information that is de-identified in response to a consumer request or to re-identify individual data to verify a consumer request.
+
+          <br /><br /><u>Right to Non-Discrimination for the Exercise of a Consumer’s Privacy Rights</u>
+          <br />We will not discriminate against you if you exercise your privacy rights.
+
+          <br /><br /><u>Right to Limit Use and Disclosure of Sensitive Personal Information</u>
+          <br />We do not process consumer's sensitive personal information.
+
+          <br /><br /><u>Verification process</u>
+          <br />Upon receiving your request, we will need to verify your identity to determine you are the same person about whom we have the information in our system. These Verification efforts require us to ask you to provide information so that we can match it with information you have previously provided us. For instance, depending on the type of request you submit, we may ask you to provide certain information so that we can match the information you provide with the information we already have on file,or we may contact you through a communication method (e.g., phone or email) that you have previously provided to us. We may also use other verification methods as the circumstances dictate.
+          <br />We will only use personal information provided in your request to verify your identity authority to make the request. To the extent possible, we will avoid requesting additional information from you for the purposes of verification. However, if we cannot verify your identity from the information already maintained by us, we may request that you provide additional information for the purposes of verifying your identity and for security or fraud-prevention purposes. We will delete such additionally provided information as soon as we finish verifying you.
+
+          <br /><br /><u>Other privacy rights</u>
+          <br />You may object to the processing of your personal information.
+          You may request correction of your personal data if it is incorrect or no longer relevant, or ask to restrict the processing of the information.
+          You can designate an authorized agent to make a request under the CCPA on your behalf. We may deny a request from an authorized agent that does not submit proof that they have been validly authorized to act on your behalf in accordance with the CCPA.
+          To exercise these rights, you can contact us by email at info@joinhealthhacks.com,or by referring to the contact details at the bottom of this document. If you have a complaint about how we handle your data, we would like to hear from you.
+
+        </div>
 
 
-        <h2 id="14"className="font-semibold text-xl mt-8">
-          14. MODIFICATIONS AND INTERRUPTIONS
+        <h2 id="11" className="font-semibold text-xl mt-8">
+          11. DO WE MAKE UPDATES TO THIS NOTICE?
         </h2>
-        <p className="font-thin text-sm">
-          We reserve the right to change, modify, or remove the contents of the Site at any time or for any reason at our sole discretion without notice. However, we have no obligation to update any information on our Site. We also reserve the right to modify or discontinue all or part of the Site without notice at any time. We will not be liable to you or any third party for any modification, price change, suspension, or discontinuance of the Site.
-          <br /> <br />
-          We cannot guarantee the Site will be available at all times. We may experience hardware, software, or other problems or need to perform maintenance related to the Site, resulting in interruptions, delays, or errors. We reserve the right to change, revise, update, suspend, discontinue, or otherwise modify the Site at any time or for any reason without notice to you. You agree that we have no liability whatsoever for any loss, damage, or inconvenience caused by your inability to access or use theSite during any downtime or discontinuance of the Site. Nothing in these Terms of Use will be construed to obligate us to maintain and support the Site or to supply any corrections, updates, or releases in connection therewith.
-        </p>
+        <div className="font-thin text-sm">
+          <i>In Short: Yes, we will update this notice as necessary to stay compliant with relevantlaws.</i>
+          <br /><br />We may update this privacy notice from time to time. The updated version will be indicated by an updated "Revised" date and the updated version will be effective as soon as it is accessible. If we make material changes to this privacy notice, we may notify you either by prominently posting a notice of such changes or by directly sending you a notification. We encourage you to review this privacy notice frequently to be informed of how we are protecting your information.
+        </div>
 
-
-        <h2 id="15"className="font-semibold text-xl mt-8">
-          15. GOVERNING LAW
+        <h2 id="12" className="font-semibold text-xl mt-8">
+          12. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
         </h2>
-        <p className="font-thin text-sm">
-          These Terms of Use and your use of the Site are governed by and construed in accordance with the laws of the State of California applicable to agreements made and to be entirely performed within the State of California, without regard to its conflict of law principles.
-        </p>
-
-
-        <h2 id="16"className="font-semibold text-xl mt-8">
-          16.
-          DISPUTE RESOLUTION
-        </h2>
-        <p className="font-thin text-sm">
-          Any legal action of whatever nature brought by either you or us (collectively, the“Parties” and individually, a “Party”) shall be commenced or prosecuted in the state and federal courts located in Orange County, California, and the Parties hereby consent to, and waive all defenses of lack of personal jurisdiction and forum non conveniens with respect to venue and jurisdiction in such state and federal courts. Application of the United Nations Convention on Contracts for the International Sale Of Goods and the Uniform Computer Information Transaction Act (UCITA) are excluded from these Terms of Use. In no event shall any claim, action, or proceeding brought by either Party related in any way to the Site be commenced more than one (1) years after the cause of action arose.
-        </p>
-
-
-        <h2 id="17"className="font-semibold text-xl mt-8">
-          17.
-          CORRECTIONS
-        </h2>
-        <p className="font-thin text-sm">
-          There may be information on the Site that contains typographical errors, inaccuracies, or omissions, including descriptions, pricing, availability, and various other information. We reserve the right to correct any errors, inaccuracies, or omissions and to change or update the information on the Site at any time, without prior notice.
-        </p>
-
-
-        <h2 id="18"className="font-semibold text-xl mt-8">
-          18.
-          DISCLAIMER
-        </h2>
-        <p className="font-thin text-sm">
-          THE SITE IS PROVIDED ON AN AS-IS AND AS-AVAILABLE BASIS. YOU AGREETHAT YOUR USE OF THE SITE AND OUR SERVICES WILL BE AT YOUR SOLERISK. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, IN CONNECTION WITH THE SITE AND YOUR USE THEREOF, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE MAKE NO WARRANTIES OR REPRESENTATIONS ABOUT THE ACCURACY OR COMPLETENESS OF THE SITE'S CONTENT OR THE CONTENT OF ANY WEBSITES LINKED TO THE SITE AND WE WILL ASSUME NO LIABILITY OR RESPONSIBILITY FOR ANY (1)ERRORS, MISTAKES, OR INACCURACIES OF CONTENT AND MATERIALS, (2)PERSONAL INJURY OR PROPERTY DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM YOUR ACCESS TO AND USE OF THE SITE, (3) ANY UNAUTHORIZED ACCESS TO OR USE OF OUR SECURE SERVERS AND/OR ANY AND ALL PERSONAL INFORMATION AND/OR FINANCIAL INFORMATION STORED THEREIN, (4) ANY INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM THE SITE, (5) ANY BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE WHICH MAY BE TRANSMITTED TO OR THROUGH THE SITE BY ANY THIRD PARTY, AND/OR (6) ANY ERRORS OR OMISSIONS IN ANY CONTENT AND MATERIALS OR FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF THE USE OF ANY CONTENT POSTED, TRANSMITTED, OR OTHERWISE MADE AVAILABLE VIA THE SITE. WE DON'T WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR SERVICE ADVERTISED OR OFFERED BY A THIRD PARTYTHROUGH THE SITE, ANY HYPERLINKED WEBSITE, OR ANY WEBSITE OR MOBILE APPLICATION FEATURED IN ANY BANNER OR OTHER ADVERTISING, AND WE WILL NOT BE A PARTY TO OR IN ANY WAY BE RESPONSIBLE FOR MONITORING ANY TRANSACTION BETWEEN YOU AND ANY THIRD-PARTY PROVIDERS OF PRODUCTS OR SERVICES. AS WITH THE PURCHASE OF A PRODUCT OR SERVICE THROUGH ANY MEDIUM OR IN ANY ENVIRONMENT, YOU SHOULD USE YOUR BEST JUDGMENT AND EXERCISE CAUTION WHERE APPROPRIATE.
-        </p>
-
-
-        <h2 id="19"className="font-semibold text-xl mt-8">
-          19.
-          LIMITATIONS OF LIABILITY
-        </h2>
-        <p className="font-thin text-sm">
-          IN NO EVENT WILL WE OR OUR DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFIT, LOST REVENUE, LOSS OF DATA, OR OTHER DAMAGES ARISING FROM YOUR USE OF THE SITE, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED HEREIN, OUR LIABILITY TO YOU FOR ANY CAUSE WHATSOEVER AND REGARDLESS OF THE FORM OF THE ACTION, WILL AT ALL TIMES BE LIMITED TO THE LESSER OF THE AMOUNT PAID, IF ANY, BY YOU TO US OR $0.00 USD. CERTAIN US STATE LAWS AND INTERNATIONAL LAWS DO NOT ALLOW LIMITATIONS ON IMPLIED WARRANTIES OR THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES. IF THESE LAWS APPLY TO YOU, SOME OR ALL OF THE ABOVE DISCLAIMERS OR LIMITATIONS MAY NOT APPLY TO YOU, AND YOU MAY HAVE ADDITIONAL RIGHTS.
-        </p>
-
-
-        <h2 id="20"className="font-semibold text-xl mt-8">
-          20. IMDENIFICATION
-        </h2>
-        <p className="font-thin text-sm">
-          You agree to defend, indemnify, and hold us harmless, including our subsidiaries, affiliates, and all of our respective officers, agents, partners, and employees, for and against any loss, damage, liability, claim, or demand, including reasonable attorneys' fees and expenses, made by any third party due to or arising out of:
-          (1) your Contributions;
-          (2) use of the Site;
-          (3) breach of these Terms of Use;
-          (4) any breach of your representations and warranties set forth in these Terms of Use;
-          (5) your violation of the rights of a third party, including but not limited to intellectual property rights; or
-          (6) any overt harmful act toward any other user of the Site with whom you connected via the Site. Notwithstanding the foregoing, we reserve the right, at your expense, to assume the exclusive defense and control of any matter for which you are required to indemnify us, and you agree to cooperate, at your expense, with our defense of such claims. We will use reasonable efforts to notify you of any such claim, action, or proceeding which is subject to this indemnification upon becoming aware of it.
-        </p>
-
-
-        <h2 id="21"className="font-semibold text-xl mt-8">
-          21. USER DATA
-        </h2>
-        <p className="font-thin text-sm">
-          We will maintain certain data that you transmit to the Site for the purpose ofmanaging the performance of the Site, as well as data relating to your use of the Site.Although we perform regular routine backups of data, you are solely responsible forall data that you transmit or that relates to any activity you have undertaken using theSite. You agree that we shall have no liability to you for any loss or corruption of anysuch data, and you hereby waive any right of action against us arising from any suchloss or corruption of such data.
-        </p>
-
-
-        <h2 id="22"className="font-semibold text-xl mt-8">
-          22. ELECTRONIC COMMUNICATIONS, TRANSACTIONS,AND SIGNATURES
-        </h2>
-        <p className="font-thin text-sm">
-          We will maintain certain data that you transmit to the Site for the purpose of managing the performance of the Site, as well as data relating to your use of the Site. Although we perform regular routine backups of data, you are solely responsible for all data that you transmit or that relates to any activity you have undertaken using theSite. You agree that we shall have no liability to you for any loss or corruption of any such data, and you hereby waive any right of action against us arising from any such loss or corruption of such data.
-        </p>
-
-
-        <h2 id="23"className="font-semibold text-xl mt-8">
-          23. CALIFORNIA USERS AND RESIDENTS
-        </h2>
-        <p className="font-thin text-sm">
-          If any complaint with us is not satisfactorily resolved, you can contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834 or by telephone at (800) 952-5210 or (916) 445-1254.
-        </p>
-
-
-        <h2 id="24"className="font-semibold text-xl mt-8">
-          24.
-          MISCELLANEOUS
-        </h2>
-        <p className="font-thin text-sm">
-          These Terms of Use and any policies or operating rules posted by us on the Site or in respect to the Site constitute the entire agreement and understanding between you and us. Our failure to exercise or enforce any right or provision of these Terms of Useshall not operate as a waiver of such right or provision. These Terms of Use operate to the fullest extent permissible by law. We may assign any or all of our rights and obligations to others at any time. We shall not be responsible or liable for any loss, damage, delay, or failure to act caused by any cause beyond our reasonable control. If any provision or part of a provision of these Terms of Use is determined to be unlawful, void, or unenforceable, that provision or part of the provision is deemed severable from these Terms of Use and does not affect the validity and enforceability of any remaining provisions. There is no joint venture, partnership, employment or agency relationship created between you and us as a result of these Terms of Use or use of the Site. You agree that these Terms of Use will not be construed against us by virtue of having drafted them. You hereby waive any and all defenses you may have based on the electronic form of these Terms of Use and the lack of signing by the parties hereto to execute these Terms of Use.
-        </p>
-
-
-        <h2 id="25" className="font-semibold text-xl mt-8">
-          25.
-          CONTACT US
-        </h2>
-        <p className="font-thin text-sm">
-          In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at:
+        <div className="font-thin text-sm">
+          If you have questions or comments about this notice, you may email us at info@joinhealthhacks.com or by post to:
           <strong>
             <br /> <br />
             healthhacks LLC
@@ -367,15 +293,21 @@ const PrivatePolicy = () => {
             <br />
             United States
             <br />
-            Phone: 714-633-2888
-            <br />
             info@joinhealthhacks.com
           </strong>
-        </p>
+        </div>
+
+        <h2 id="13" className="font-semibold text-xl mt-8">
+          13. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?
+        </h2>
+        <div className="font-thin text-sm">
+          Based on the applicable laws of your country, you may have the right to request access to the personal information we collect from you, change that information, ordelete it. To request to review, update, or delete your personal information, please email us as info@joinhealthhacks.com
+        </div>
 
       </div>
+      <Footer />
     </Container >
   );
 };
 
-export default PrivatePolicy ;
+export default PrivatePolicy;
