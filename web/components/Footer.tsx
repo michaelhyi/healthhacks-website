@@ -5,7 +5,7 @@ import Fade from "react-reveal/Fade";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import * as EmailValidator from "email-validator";
 import { socials } from "../data/socials";
-import Link from "next/link"
+import Link from "next/link";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -13,11 +13,12 @@ const Footer = () => {
   const toast = useToast();
 
   // Config variables
-  const SPREADSHEET_ID = process.env.NEXT_PUBLIC_SPREADSHEET_ID;
-  const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
-  const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL;
+  const SPREADSHEET_ID = process.env.NEXT_PUBLIC_MAILING_LIST_SPREADSHEET_ID;
+  const SHEET_ID = process.env.NEXT_PUBLIC_MAILING_LIST_SHEET_ID;
+  const GOOGLE_CLIENT_EMAIL =
+    process.env.NEXT_PUBLIC_MAILING_LIST_GOOGLE_CLIENT_EMAIL;
   const GOOGLE_SERVICE_PRIVATE_KEY =
-    process.env.NEXT_PUBLIC_GOOGLE_SERVICE_PRIVATE_KEY;
+    process.env.NEXT_PUBLIC_MAILING_LIST_GOOGLE_SERVICE_PRIVATE_KEY;
 
   // GoogleSpreadsheet Initialize
   const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
@@ -33,6 +34,7 @@ const Footer = () => {
       await doc.loadInfo();
 
       const sheet = doc.sheetsById[SHEET_ID!];
+      console.log(sheet);
       await sheet.addRow(row);
     } catch (e) {
       console.error("Error: ", e);
@@ -82,8 +84,9 @@ const Footer = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 // border-2
-                className={`placeholder-white bg-black  ${error && error.length > 0 ? "border-red-400" : "border-white"
-                  } p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
+                className={`placeholder-white bg-black  ${
+                  error && error.length > 0 ? "border-red-400" : "border-white"
+                } p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
               />
               <button className="hover:cursor-pointer duration-500 hover:opacity-90 flex items-center text-black bg-white px-8 py-4 rounded-[75px] font-semibold sm:text-sm">
                 Subscribe
@@ -108,13 +111,15 @@ const Footer = () => {
               All Rights Reserved. <br />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
-                href="private-policy">
+                href="private-policy"
+              >
                 Private Policy
               </Link>
               <br />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
-                href="terms-of-use">
+                href="terms-of-use"
+              >
                 Terms of Use
               </Link>
             </div>

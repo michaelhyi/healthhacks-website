@@ -19,23 +19,19 @@ export type Application = {
   __typename?: 'Application';
   background: Scalars['String'];
   city: Scalars['String'];
-  contact: Scalars['String'];
   createdAt: Scalars['String'];
   dietaryRestrictions: Scalars['String'];
-  firstName: Scalars['String'];
   howHear: Scalars['String'];
   id: Scalars['Float'];
   inPerson: Scalars['String'];
-  lastName: Scalars['String'];
-  linkedin: Scalars['String'];
-  middleName: Scalars['String'];
+  linkedIn: Scalars['String'];
   organization: Scalars['String'];
   other: Scalars['String'];
   phone: Scalars['String'];
   state: Scalars['String'];
   status: Scalars['String'];
   team: Scalars['String'];
-  trackRanking: Scalars['String'];
+  transportation: Scalars['String'];
   updatedAt: Scalars['String'];
   userId: Scalars['Float'];
   wholeEvent: Scalars['String'];
@@ -78,16 +74,21 @@ export type MutationRegisterArgs = {
 
 
 export type MutationUpdateApplicationArgs = {
+  background: Scalars['String'];
   city: Scalars['String'];
-  firstName: Scalars['String'];
+  dietaryRestrictions: Scalars['String'];
+  howHear: Scalars['String'];
   inPerson: Scalars['String'];
-  lastName: Scalars['String'];
-  middleName: Scalars['String'];
+  linkedIn: Scalars['String'];
   organization: Scalars['String'];
+  other: Scalars['String'];
   phone: Scalars['String'];
   state: Scalars['String'];
+  team: Scalars['String'];
+  transportation: Scalars['String'];
   userId: Scalars['Int'];
   wholeEvent: Scalars['String'];
+  whyUs: Scalars['String'];
 };
 
 export type Query = {
@@ -131,7 +132,7 @@ export type ReadApplicationMutationVariables = Exact<{
 }>;
 
 
-export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, status: string, firstName: string, middleName: string, lastName: string, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: string, whyUs: string, trackRanking: string, howHear: string, team: string, linkedin: string, contact: string, dietaryRestrictions: string, other: string } };
+export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, status: string, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: string, whyUs: string, howHear: string, team: string, linkedIn: string, dietaryRestrictions: string, transportation: string, other: string } };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -145,15 +146,20 @@ export type RegisterMutation = { __typename?: 'Mutation', register: { __typename
 
 export type UpdateApplicationMutationVariables = Exact<{
   userId: Scalars['Int'];
-  firstName: Scalars['String'];
-  middleName: Scalars['String'];
-  lastName: Scalars['String'];
   phone: Scalars['String'];
   organization: Scalars['String'];
   city: Scalars['String'];
   state: Scalars['String'];
   inPerson: Scalars['String'];
   wholeEvent: Scalars['String'];
+  background: Scalars['String'];
+  whyUs: Scalars['String'];
+  howHear: Scalars['String'];
+  team: Scalars['String'];
+  linkedIn: Scalars['String'];
+  dietaryRestrictions: Scalars['String'];
+  transportation: Scalars['String'];
+  other: Scalars['String'];
 }>;
 
 
@@ -186,9 +192,6 @@ export const ReadApplicationDocument = gql`
     id
     userId
     status
-    firstName
-    middleName
-    lastName
     phone
     organization
     city
@@ -197,12 +200,11 @@ export const ReadApplicationDocument = gql`
     wholeEvent
     background
     whyUs
-    trackRanking
     howHear
     team
-    linkedin
-    contact
+    linkedIn
     dietaryRestrictions
+    transportation
     other
   }
 }
@@ -237,18 +239,23 @@ export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
 export const UpdateApplicationDocument = gql`
-    mutation UpdateApplication($userId: Int!, $firstName: String!, $middleName: String!, $lastName: String!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!) {
+    mutation UpdateApplication($userId: Int!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!, $background: String!, $whyUs: String!, $howHear: String!, $team: String!, $linkedIn: String!, $dietaryRestrictions: String!, $transportation: String!, $other: String!) {
   updateApplication(
     userId: $userId
-    firstName: $firstName
-    middleName: $middleName
-    lastName: $lastName
     phone: $phone
     organization: $organization
     city: $city
     state: $state
     inPerson: $inPerson
     wholeEvent: $wholeEvent
+    background: $background
+    whyUs: $whyUs
+    howHear: $howHear
+    team: $team
+    linkedIn: $linkedIn
+    dietaryRestrictions: $dietaryRestrictions
+    transportation: $transportation
+    other: $other
   )
 }
     `;

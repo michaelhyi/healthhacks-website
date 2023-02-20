@@ -1,12 +1,13 @@
 import React, { Dispatch, SetStateAction } from "react";
 
 interface Props {
-  label: string;
+  label?: string;
   value: string;
   //setValue: Dispatch<SetStateAction<string>>;
   setValue: (value: string) => void;
   error?: string;
   textarea?: boolean;
+  placeholder?: string;
   // userId: number;
 }
 
@@ -16,6 +17,7 @@ const ApplicationInput: React.FC<Props> = ({
   setValue,
   error,
   textarea,
+  placeholder,
   // userId,
 }) => {
   return (
@@ -29,16 +31,18 @@ const ApplicationInput: React.FC<Props> = ({
       </div>
       {textarea ? (
         <textarea
+          placeholder={placeholder}
           value={value}
           onChange={async (e) => {
             setValue(e.target.value);
           }}
-          className={`w-full border-[0.5px] ${
+          className={`w-full bg-[#202020] border-[0.5px] ${
             error && error.length > 0 ? "border-red-400" : "border-white"
           } py-2 rounded-xl px-4 min-h-[25vh]`}
         />
       ) : (
         <input
+          placeholder={placeholder}
           type={`${label === "Password" ? "password" : ""}`}
           value={value}
           onChange={async (e) => {
