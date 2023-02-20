@@ -22,7 +22,6 @@ const Login = () => {
 
   const [, login] = useLoginMutation();
 
-
   // ADDED CODE BY WILLIAM: From Chat GPT
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,12 +38,11 @@ const Login = () => {
         Router.push("/dashboard");
       }
     } catch (error) {
-      setEmailError("An error occurred while signing in. Please try again later.");
+      setEmailError(
+        "An error occurred while signing in. Please try again later."
+      );
     }
-  }
-
-  
-
+  };
 
   return (
     <ContainerApp>
@@ -53,7 +51,7 @@ const Login = () => {
           <div className="w-[50vw]">
             <div>
               <div className="font-bold text-3xl">
-                Welcome to {`health{hacks}`} 
+                Welcome to {`health{hacks}`}
               </div>
               <div className="text-sm mt-4 font-medium">
                 Don't have an account?&nbsp;

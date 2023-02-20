@@ -4,7 +4,7 @@ interface Props {
   label: string;
   value: string;
   //setValue: Dispatch<SetStateAction<string>>;
-  setValue: string;
+  setValue: (value: string) => void;
   error?: string;
   textarea?: boolean;
   // userId: number;
