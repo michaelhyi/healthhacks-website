@@ -1,14 +1,5 @@
 import React from "react";
-import { Component } from "react";
 import { Icon } from "./Icon";
-
-// interface IconTypeProps {
-//   width: number;
-//   height: number;
-//   color: string;
-// }
-
-// type IconType = (props: IconTypeProps) => JSX.Element;
 
 interface Props {
   id: number;

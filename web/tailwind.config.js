@@ -23,6 +23,8 @@ module.exports = {
       },
       backgroundImage: {
         'headergradient': "url('/headergradient.svg')",
+        'blogbackground': "linear-gradient(177deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,0) 15%, rgba(0,0,0,0) 85%, rgba(0,0,0,1) 98%, rgba(0,0,0,1) 100%), url('/blogbackground1.png')",
+
       },
     },
   },
