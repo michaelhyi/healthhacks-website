@@ -78,8 +78,6 @@ export class UserResolver {
 
       await Application.create({
         userId: user.id,
-        firstName,
-        lastName,
       }).save();
     } catch (e) {
       if (

@@ -6,86 +6,21 @@ import { whyhh } from "@/data/whyhh";
 import { yesno } from "@/data/yesno";
 import { Radio, RadioGroup, useToast } from "@chakra-ui/react";
 import { format } from "date-fns";
-import { GoogleSpreadsheet } from "google-spreadsheet";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import ApplicationInput from "../components/ApplicationInput";
-import ContainerApp from "../components/ContainerApp";
-import DropDown from "../components/DropDown";
-import { states } from "../data/states";
+import ApplicationInput from "../../components/ApplicationInput";
+import ContainerApp from "../../components/ContainerApp";
+import DropDown from "../../components/DropDown";
+import { states } from "../../data/states";
 import {
   useReadApplicationMutation,
   useUpdateApplicationMutation,
-} from "../generated/graphql";
-import Context from "../utils/context";
-import { createUrqlClient } from "../utils/createUrqlClient";
-
-// Config variables
-const SPREADSHEET_ID = process.env.NEXT_PUBLIC_APPLICATION_SPREADSHEET_ID;
-const SHEET_ID = process.env.NEXT_PUBLIC_APPLICATION_SHEET_ID;
-const GOOGLE_CLIENT_EMAIL =
-  process.env.NEXT_PUBLIC_APPLICATION_GOOGLE_CLIENT_EMAIL;
-const GOOGLE_SERVICE_PRIVATE_KEY =
-  process.env.NEXT_PUBLIC_APPLICATION_GOOGLE_SERVICE_PRIVATE_KEY;
-
-// GoogleSpreadsheet Initialize
-const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
-
-// Append Function
-const appendSpreadsheet = async (row: {
-  Timestamp: string;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  Phone: string;
-  Organization: string;
-  City: string;
-  State: string;
-  InPerson: string;
-  WholeEvent: string;
-  Background: string;
-  WhyUs: string;
-  HowHear: string;
-  Team: string;
-  LinkedIn: string;
-  DietaryRestrictions: string;
-  Transportation: string;
-  Other: string;
-}) => {
-  try {
-    console.log(row);
-    await doc.useServiceAccountAuth({
-      client_email: GOOGLE_CLIENT_EMAIL!,
-      private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
-    });
-    // loads document properties and worksheets
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsById[SHEET_ID!];
-    console.log(sheet);
-    await sheet.addRow(row);
-  } catch (e) {
-    console.error("Error: ", e);
-  }
-};
-
-type FormType = {
-  phone: string;
-  organization: string;
-  city: string;
-  state: string;
-  inPerson: string;
-  wholeEvent: string;
-  background: string;
-  whyUs: string;
-  howHear: string;
-  team: string;
-  linkedIn: string;
-  dietaryRestrictions: string;
-  transportation: string;
-  other: string;
-};
+} from "../../generated/graphql";
+import Context from "../../utils/context";
+import { createUrqlClient } from "../../utils/createUrqlClient";
+import { appendApplicationSpreadsheet } from "../../utils/helpers";
+import { FormType } from "../../utils/types";
 
 const Apply = () => {
   const router = useRouter();
@@ -497,7 +432,9 @@ const Apply = () => {
                     Other: form.other,
                   };
 
-                  appendSpreadsheet(newRow);
+                  await appendApplicationSpreadsheet(newRow);
+
+                  router.push("/apply/success");
                 }}
                 className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium"
               >

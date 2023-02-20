@@ -44,14 +44,27 @@ const Navbar = () => {
 
       <div className="flex flex-row gap-4">
         {user && (
-          <Link
-            href="/apply"
-            className="opacity-100 hover:cursor-pointer duration-500 hover:opacity-75"
-          >
-            <button className="text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-3xl text-sm font-bold">
-              Start Now
+          <>
+            <button
+              className="bg-purple-400 p-4 hover:cursor-pointer z-1000"
+              onClick={async () => {
+                router.push("/");
+                await localStorage.removeItem("user");
+                setUser(null);
+              }}
+            >
+              logout
             </button>
-          </Link>
+            <Link
+              href="/apply"
+              className="opacity-100 hover:cursor-pointer duration-500 hover:opacity-75"
+            >
+              <button className="text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-3xl text-sm font-bold">
+                Start Now
+              </button>
+            </Link>
+          </>
+
           // <Menu>
           //   <MenuButton>
           //     <div className="flex items-center space-x-2">

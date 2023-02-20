@@ -101,8 +101,6 @@ let UserResolver = class UserResolver {
             }).save();
             await Application_1.Application.create({
                 userId: user.id,
-                firstName,
-                lastName,
             }).save();
         }
         catch (e) {
