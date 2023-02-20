@@ -39,7 +39,7 @@ const Navbar = () => {
           <NavbarLink page="Explore" />
         )}
         <NavbarLink page="About" />
-        {/* <NavbarLink page="Blog" /> */}
+        <NavbarLink page="Blog" />
       </div>
 
       <div className="flex flex-row gap-4">

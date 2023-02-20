@@ -3,22 +3,23 @@ import Day from "./Day";
 import Fade from "react-reveal/Fade";
 import { days } from "../data/days";
 
+
 const Days = () => {
   return (
     <div
       id="explore"
-      className="flex flex-col space-y-16 justify-center items-center sm:pt-24 2xl:pt-40"
+      className="flex flex-col justify-center items-center"
     >
       <Fade delay={250}>
-        <div className="font-medium sm:text-2xl 2xl:text-3xl opacity-75 sm:pb-8 2xl:pb-24 text-[#ddd] text-center sm:px-4">{`EXPLORE THE HEALTH{HACKS} WAY`}</div>
+        <div className="font-medium  text-lg md:text-xl 2xl:text-2xl opacity-75 text-[#ccc] text-center mt-16 mb-0 md:mb-8">{`EXPLORE THE HEALTH{HACKS} WAY`}</div>
       </Fade>
-      {days.map((v, i) => (
-        <div key={i}>
-          <Fade delay={250}>
-            <Day id={v.id} title={v.title} desc={v.desc} />
-          </Fade>
-        </div>
-      ))}
+      <Fade delay={250}>
+        {days.map((v, i) => (
+          <div className="my-0" key={i}>
+            <Day id={v.id} title={v.title} desc={v.desc} icon_name={v.icon_name} />
+          </div>
+        ))}
+      </Fade>
     </div>
   );
 };
