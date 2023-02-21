@@ -4,7 +4,7 @@ import Input from "../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { withUrqlClient } from "next-urql";
-import { useContext, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { useLoginMutation } from "../generated/graphql";
 import Router, { useRouter } from "next/router";
@@ -23,7 +23,7 @@ const Login = () => {
   const [, login] = useLoginMutation();
 
   // ADDED CODE BY WILLIAM: From Chat GPT
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {

@@ -15,6 +15,7 @@ import DropDown from "../../components/DropDown";
 import { states } from "../../data/states";
 import {
   useReadApplicationMutation,
+  useSubmitApplicationMutation,
   useUpdateApplicationMutation,
 } from "../../generated/graphql";
 import Context from "../../utils/context";
@@ -27,6 +28,7 @@ const Apply = () => {
   const { user } = useContext(Context);
   const [, readApplication] = useReadApplicationMutation();
   const [, updateApplication] = useUpdateApplicationMutation();
+  const [, submitApplication] = useSubmitApplicationMutation();
   const toast = useToast();
 
   const [form, setForm] = useState({
@@ -393,8 +395,11 @@ const Apply = () => {
                     }
                   });
 
-                  await updateApplication({
+                  await submitApplication({
                     userId: user.id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
                     phone: form.phone,
                     organization: form.organization,
                     city: form.city,
@@ -410,29 +415,6 @@ const Apply = () => {
                     transportation: form.transportation,
                     other: form.other,
                   });
-
-                  const newRow = {
-                    Timestamp: format(new Date(), "Pp"),
-                    FirstName: user.firstName,
-                    LastName: user.lastName,
-                    Email: user.email,
-                    Phone: form.phone,
-                    Organization: form.organization,
-                    City: form.city,
-                    State: form.state,
-                    InPerson: form.inPerson,
-                    WholeEvent: form.wholeEvent,
-                    Background: form.background,
-                    WhyUs: form.whyUs,
-                    HowHear: form.howHear,
-                    Team: form.team,
-                    LinkedIn: form.linkedIn,
-                    DietaryRestrictions: form.dietaryRestrictions,
-                    Transportation: form.transportation,
-                    Other: form.other,
-                  };
-
-                  await appendApplicationSpreadsheet(newRow);
 
                   router.push("/apply/success");
                 }}
