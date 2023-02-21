@@ -24,6 +24,7 @@ const appendApplicationSpreadsheet_1 = __importDefault(require("../utils/appendA
 const sgMail = require("@sendgrid/mail");
 let ApplicationResolver = class ApplicationResolver {
     async submitApplication(userId, firstName, lastName, email, phone, organization, city, state, inPerson, wholeEvent, background, whyUs, howHear, team, linkedIn, dietaryRestrictions, transportation, other) {
+        console.log("resend initaited");
         await (0, typeorm_1.getConnection)()
             .getRepository(Application_1.Application)
             .createQueryBuilder()
@@ -71,9 +72,8 @@ let ApplicationResolver = class ApplicationResolver {
         const msg = {
             to: email,
             from: process.env.SENDGRID_EMAIL,
-            subject: "Sending with SendGrid is Fun",
-            text: "and easy to do anywhere, even with Node.js",
-            html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+            subject: "health{hacks} 2023 Application Confirmation",
+            html: `Dear ${firstName},<br/><br/>Thank you for your application to health{hacks}! Here are your application details:<br/><br/>${JSON.stringify(newRow)}`,
         };
         sgMail
             .send(msg)

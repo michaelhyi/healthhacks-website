@@ -18,11 +18,13 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
 
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [confirmError, setConfirmError] = useState("");
 
   const [result, register] = useRegisterMutation();
 
@@ -44,43 +46,51 @@ const Register = () => {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
-                const response = await register({
-                  firstName,
-                  lastName,
-                  email,
-                  password,
-                });
 
-                if (!response.data?.register.error) {
-                  await localStorage.setItem(
-                    "user",
-                    JSON.stringify(response.data!.register.user!)
-                  );
-                  setUser(response.data!.register.user!);
-                  router.push("/verify");
+                if (password !== confirm) {
+                  setConfirmError("Passwords must match!");
                 } else {
-                  if (response.data.register.error.field === "First Name") {
-                    setFirstNameError(response.data.register.error.message);
-                  } else {
-                    setFirstNameError("");
-                  }
+                  setConfirmError("");
+                  const response = await register({
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                  });
 
-                  if (response.data.register.error.field === "Last Name") {
-                    setLastNameError(response.data.register.error.message);
+                  if (!response.data?.register.error) {
+                    // await localStorage.setItem(
+                    //   "user",
+                    //   JSON.stringify(response.data!.register.user!)
+                    // );
+                    // setUser(response.data!.register.user!);
+                    router.push(
+                      `/verify?id=${response.data?.register.user?.id}?email=${email}`
+                    );
                   } else {
-                    setLastNameError("");
-                  }
+                    if (response.data.register.error.field === "First Name") {
+                      setFirstNameError(response.data.register.error.message);
+                    } else {
+                      setFirstNameError("");
+                    }
 
-                  if (response.data.register.error.field === "Email") {
-                    setEmailError(response.data.register.error.message);
-                  } else {
-                    setEmailError("");
-                  }
+                    if (response.data.register.error.field === "Last Name") {
+                      setLastNameError(response.data.register.error.message);
+                    } else {
+                      setLastNameError("");
+                    }
 
-                  if (response.data.register.error.field === "Password") {
-                    setPasswordError(response.data.register.error.message);
-                  } else {
-                    setPasswordError("");
+                    if (response.data.register.error.field === "Email") {
+                      setEmailError(response.data.register.error.message);
+                    } else {
+                      setEmailError("");
+                    }
+
+                    if (response.data.register.error.field === "Password") {
+                      setPasswordError(response.data.register.error.message);
+                    } else {
+                      setPasswordError("");
+                    }
                   }
                 }
               }}
@@ -115,6 +125,12 @@ const Register = () => {
                 setValue={setPassword}
                 label="Password"
                 error={passwordError}
+              />
+              <Input
+                value={confirm}
+                setValue={setConfirm}
+                label="Confirm Password"
+                error={confirmError}
               />
               <div className="text-xs mt-6">
                 By continuing you agree to the {`health{hacks}`}&nbsp;

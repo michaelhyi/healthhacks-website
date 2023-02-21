@@ -1,19 +1,22 @@
 import React, { useContext, useState } from "react";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import ContainerApp from "@/components/ContainerApp";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import Context from "../utils/context";
+import Context from "../../utils/context";
+import { useResendVerificationEmailMutation } from "../../generated/graphql";
 
 const Verify = () => {
-  const { user } = useContext(Context);
+  const router = useRouter();
   const [error, setError] = useState("");
+  const [, resendVerificationEmail] = useResendVerificationEmailMutation();
 
   const handleResendEmail = async () => {
     try {
-      // Make a request to the backend to resend the verification email
-      // ...
-
+      await resendVerificationEmail({
+        id: parseInt(router.query.id!),
+        email: router.query.email!,
+      });
       setError("");
     } catch (error) {
       setError(
@@ -36,7 +39,7 @@ const Verify = () => {
               Please verify your email.
             </h2>
             <p className="font-normal text-base px-8 pt-2  md:text-base  sm:text-sm">
-              We have sent an email to <strong>{user?.email}</strong>.
+              We have sent an email to <strong>{router.query.email!}</strong>.
               <br /> This can take a couple of minutes. Simply click the link to
               start your registration form.
             </p>

@@ -4,12 +4,55 @@ import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
 import { UserResponse } from "../utils/types";
+import { v4 } from "uuid";
+import { getConnection } from "typeorm";
+
+const sgMail = require("@sendgrid/mail");
 
 @Resolver()
 export class UserResolver {
   @Mutation(() => Boolean)
   async deleteUsers() {
     await User.delete({});
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async resendVerificationEmail(
+    @Arg("id", () => Int) id: number,
+    @Arg("email") email: string
+  ): Promise<Boolean> {
+    const user = await User.findOne({ where: { id } });
+    const token = v4();
+
+    await getConnection()
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({
+        token,
+        expiration: (new Date().getTime() + 1000 * 60 * 60 * 24 * 2).toString(),
+      })
+      .where({ id })
+      .returning("*")
+      .execute();
+
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+      to: email,
+      from: process.env.SENDGRID_EMAIL,
+      subject: "health{hacks} 2023 Email Verification",
+      html: `Dear ${user?.firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="https://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
+    };
+
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log("Email sent");
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+
     return true;
   }
 
@@ -68,17 +111,38 @@ export class UserResolver {
     }
 
     let user;
+    const token = v4();
+
     try {
       user = await User.create({
         email,
         password: await argon2.hash(password),
         firstName,
         lastName,
+        token,
+        expiration: (new Date().getTime() + 1000 * 60 * 60 * 24 * 2).toString(),
       }).save();
 
       await Application.create({
         userId: user.id,
       }).save();
+
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
+        to: email,
+        from: process.env.SENDGRID_EMAIL,
+        subject: "health{hacks} 2023 Email Verification",
+        html: `Dear ${firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="https://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
+      };
+
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log("Email sent");
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
     } catch (e) {
       if (
         e.detail.includes("already exists") ||

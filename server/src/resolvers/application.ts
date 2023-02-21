@@ -30,6 +30,7 @@ export class ApplicationResolver {
     @Arg("transportation", () => String) transportation: string,
     @Arg("other", () => String) other: string
   ): Promise<boolean> {
+    console.log("resend initaited");
     await getConnection()
       .getRepository(Application)
       .createQueryBuilder()
@@ -78,11 +79,12 @@ export class ApplicationResolver {
 
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
-      to: email, // Change to your recipient
-      from: process.env.SENDGRID_EMAIL, // Change to your verified sender
-      subject: "Sending with SendGrid is Fun",
-      text: "and easy to do anywhere, even with Node.js",
-      html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+      to: email,
+      from: process.env.SENDGRID_EMAIL,
+      subject: "health{hacks} 2023 Application Confirmation",
+      html: `Dear ${firstName},<br/><br/>Thank you for your application to health{hacks}! Here are your application details:<br/><br/>${JSON.stringify(
+        newRow
+      )}`,
     };
 
     sgMail
@@ -90,7 +92,7 @@ export class ApplicationResolver {
       .then(() => {
         console.log("Email sent");
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error(error);
       });
 

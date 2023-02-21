@@ -50,6 +50,7 @@ export type Mutation = {
   login: UserResponse;
   readApplication: Application;
   register: UserResponse;
+  resendVerificationEmail: Scalars['Boolean'];
   submitApplication: Scalars['Boolean'];
   updateApplication: Scalars['Boolean'];
 };
@@ -71,6 +72,12 @@ export type MutationRegisterArgs = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationResendVerificationEmailArgs = {
+  email: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
@@ -130,10 +137,13 @@ export type User = {
   __typename?: 'User';
   createdAt: Scalars['String'];
   email: Scalars['String'];
+  expiration: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['Float'];
   lastName: Scalars['String'];
+  token: Scalars['String'];
   updatedAt: Scalars['String'];
+  verified: Scalars['Boolean'];
 };
 
 export type UserResponse = {
@@ -166,6 +176,14 @@ export type RegisterMutationVariables = Exact<{
 
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+
+export type ResendVerificationEmailMutationVariables = Exact<{
+  id: Scalars['Int'];
+  email: Scalars['String'];
+}>;
+
+
+export type ResendVerificationEmailMutation = { __typename?: 'Mutation', resendVerificationEmail: boolean };
 
 export type SubmitApplicationMutationVariables = Exact<{
   userId: Scalars['Int'];
@@ -284,6 +302,15 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const ResendVerificationEmailDocument = gql`
+    mutation ResendVerificationEmail($id: Int!, $email: String!) {
+  resendVerificationEmail(id: $id, email: $email)
+}
+    `;
+
+export function useResendVerificationEmailMutation() {
+  return Urql.useMutation<ResendVerificationEmailMutation, ResendVerificationEmailMutationVariables>(ResendVerificationEmailDocument);
 };
 export const SubmitApplicationDocument = gql`
     mutation SubmitApplication($userId: Int!, $firstName: String!, $lastName: String!, $email: String!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!, $background: String!, $whyUs: String!, $howHear: String!, $team: String!, $linkedIn: String!, $dietaryRestrictions: String!, $transportation: String!, $other: String!) {
