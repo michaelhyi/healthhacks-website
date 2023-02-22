@@ -49,6 +49,11 @@ const uuid_1 = require("uuid");
 const typeorm_1 = require("typeorm");
 const sgMail = require("@sendgrid/mail");
 let UserResolver = class UserResolver {
+    async verifyUser(token) {
+        const user = await User_1.User.findOne({ where: { token } });
+        const date = new Date().getTime();
+        const expiration = parseInt(user === null || user === void 0 ? void 0 : user.expiration);
+    }
     async deleteUsers() {
         await User_1.User.delete({});
         return true;
@@ -196,6 +201,13 @@ let UserResolver = class UserResolver {
         };
     }
 };
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("token")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "verifyUser", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __metadata("design:type", Function),

@@ -12,6 +12,18 @@ const sgMail = require("@sendgrid/mail");
 @Resolver()
 export class UserResolver {
   @Mutation(() => Boolean)
+  async verifyUser(@Arg("token") token: string) {
+    const user = await User.findOne({ where: { token } });
+    const date = new Date().getTime();
+    const expiration = parseInt(user?.expiration!);
+
+    //if date > expiration --> state email failed
+    // else --> update user entity stating that its been fixed
+    // if user is already verified --> show that its already been verified
+    // build response type
+  }
+
+  @Mutation(() => Boolean)
   async deleteUsers() {
     await User.delete({});
     return true;

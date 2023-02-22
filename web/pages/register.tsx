@@ -59,11 +59,6 @@ const Register = () => {
                   });
 
                   if (!response.data?.register.error) {
-                    // await localStorage.setItem(
-                    //   "user",
-                    //   JSON.stringify(response.data!.register.user!)
-                    // );
-                    // setUser(response.data!.register.user!);
                     router.push({
                       pathname: "/verify",
                       query: {

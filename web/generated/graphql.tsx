@@ -158,7 +158,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, verified: boolean } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
 export type ReadApplicationMutationVariables = Exact<{
   userId: Scalars['Int'];
@@ -230,6 +230,13 @@ export type UpdateApplicationMutationVariables = Exact<{
 
 export type UpdateApplicationMutation = { __typename?: 'Mutation', updateApplication: boolean };
 
+export type ReadUserQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, token: string, expiration: string, createdAt: string, updatedAt: string } };
+
 
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
@@ -239,6 +246,7 @@ export const LoginDocument = gql`
       firstName
       lastName
       email
+      verified
     }
     error {
       field
@@ -364,4 +372,23 @@ export const UpdateApplicationDocument = gql`
 
 export function useUpdateApplicationMutation() {
   return Urql.useMutation<UpdateApplicationMutation, UpdateApplicationMutationVariables>(UpdateApplicationDocument);
+};
+export const ReadUserDocument = gql`
+    query ReadUser($id: Int!) {
+  readUser(id: $id) {
+    id
+    email
+    firstName
+    lastName
+    verified
+    token
+    expiration
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+export function useReadUserQuery(options: Omit<Urql.UseQueryArgs<ReadUserQueryVariables>, 'query'>) {
+  return Urql.useQuery<ReadUserQuery, ReadUserQueryVariables>({ query: ReadUserDocument, ...options });
 };
