@@ -46,14 +46,14 @@ const Navbar = () => {
         {user && (
           <>
             <button
-              className="bg-purple-400 p-4 hover:cursor-pointer z-1000"
+              className="text-center bg-white text-black px-6 py-3 w-auto rounded-3xl text-sm font-bold"
               onClick={async () => {
                 router.push("/");
                 await localStorage.removeItem("user");
                 setUser(null);
               }}
             >
-              logout
+              Log Out
             </button>
             <Link
               href="/apply"

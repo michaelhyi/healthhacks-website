@@ -99,7 +99,7 @@ const Footer = () => {
             )}
           </div>
         </form>
-        <div className="flex justify-between content-start flex-wrap flex-row w-full text-left gap-y-2 -mt-4 pt-8 px-16 sm:px-8">
+        <div className="flex justify-between content-start flex-wrap flex-row w-full text-left gap-y-2 -mt-4 pt-8 px-16 sm:px-8 2xl:w-[1200px]">
           <div className="w-2/5 mt-8 md:p-4 sm:p-0">
             <img
               src="/health{hacks} - Logo.svg"
