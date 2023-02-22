@@ -1,9 +1,11 @@
 import ContainerApp from "@/components/ContainerApp";
+import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useState } from "react";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { useResendVerificationEmailMutation } from "../../generated/graphql";
+import { createUrqlClient } from "../../utils/createUrqlClient";
 
 const Verify = () => {
   const router = useRouter();
@@ -17,6 +19,7 @@ const Verify = () => {
         email: router.query.email! as string,
       });
       setError("");
+      console.log("hi");
     } catch (error) {
       setError(
         "An error occurred while resending the verification email. Please try again later."
@@ -73,4 +76,4 @@ const Verify = () => {
   );
 };
 
-export default Verify;
+export default withUrqlClient(createUrqlClient)(Verify);
