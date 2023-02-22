@@ -64,9 +64,13 @@ const Register = () => {
                     //   JSON.stringify(response.data!.register.user!)
                     // );
                     // setUser(response.data!.register.user!);
-                    router.push(
-                      `/verify?id=${response.data?.register.user?.id}?email=${email}`
-                    );
+                    router.push({
+                      pathname: "/verify",
+                      query: {
+                        id: response.data?.register.user?.id,
+                        email,
+                      },
+                    });
                   } else {
                     if (response.data.register.error.field === "First Name") {
                       setFirstNameError(response.data.register.error.message);

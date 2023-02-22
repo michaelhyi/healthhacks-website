@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
-import { useRouter } from "next/router";
 import ContainerApp from "@/components/ContainerApp";
+import { useRouter } from "next/router";
+import { useState } from "react";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import Context from "../../utils/context";
 import { useResendVerificationEmailMutation } from "../../generated/graphql";
 
 const Verify = () => {
@@ -14,8 +13,8 @@ const Verify = () => {
   const handleResendEmail = async () => {
     try {
       await resendVerificationEmail({
-        id: parseInt(router.query.id!),
-        email: router.query.email!,
+        id: parseInt(router.query.id! as string),
+        email: router.query.email! as string,
       });
       setError("");
     } catch (error) {
@@ -58,7 +57,9 @@ const Verify = () => {
               <p className="text-left font-medium content-center md:text-base sm:text-sm sm:mx-0 md:mx-6">
                 Having trouble?{" "}
                 <a
-                  href="#"
+                  href="mailto: info@joinhealthhacks.com"
+                  target="_blank"
+                  rel="noreferrer"
                   className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
                 >
                   Contact us.

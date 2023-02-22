@@ -41,7 +41,7 @@ const Success = () => {
                 {socials.map((s, i) => (
                   <div key={i} className="px-4">
                     <Fade delay={500}>
-                      <a href={s.href}>
+                      <a href={s.href} target="_blank" rel="noreferrer">
                         <img
                           src={s.src}
                           alt={s.id}
