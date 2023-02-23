@@ -2,6 +2,15 @@ import { Field, ObjectType } from "type-graphql";
 import { User } from "../entities/User";
 
 @ObjectType()
+export class VerificationResponse {
+  @Field()
+  success: boolean;
+
+  @Field({ nullable: true })
+  error?: string;
+}
+
+@ObjectType()
 export class Error {
   @Field()
   field: string;

@@ -1,26 +1,55 @@
 import argon2 from "argon2";
 import * as EmailValidator from "email-validator";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { getConnection } from "typeorm";
+import { v4 } from "uuid";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
-import { UserResponse } from "../utils/types";
-import { v4 } from "uuid";
-import { getConnection } from "typeorm";
+import { UserResponse, VerificationResponse } from "../utils/types";
 
 const sgMail = require("@sendgrid/mail");
 
 @Resolver()
 export class UserResolver {
-  @Mutation(() => Boolean)
-  async verifyUser(@Arg("token") token: string) {
+  @Mutation(() => VerificationResponse)
+  async verifyUser(@Arg("token") token: string): Promise<VerificationResponse> {
     const user = await User.findOne({ where: { token } });
     const date = new Date().getTime();
     const expiration = parseInt(user?.expiration!);
 
-    //if date > expiration --> state email failed
-    // else --> update user entity stating that its been fixed
-    // if user is already verified --> show that its already been verified
-    // build response type
+    if (!user) {
+      return {
+        success: false,
+        error: "Invalid token.",
+      };
+    }
+
+    if (!user!.verified) {
+      if (date > expiration) {
+        return {
+          success: false,
+          error: "Token expired.",
+        };
+      } else {
+        await getConnection()
+          .getRepository(User)
+          .createQueryBuilder()
+          .update({
+            verified: true,
+          })
+          .where({ id: user!.id })
+          .returning("*")
+          .execute();
+        return {
+          success: true,
+        };
+      }
+    }
+
+    return {
+      success: false,
+      error: "User already verified.",
+    };
   }
 
   @Mutation(() => Boolean)

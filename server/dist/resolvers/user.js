@@ -42,17 +42,49 @@ exports.UserResolver = void 0;
 const argon2_1 = __importDefault(require("argon2"));
 const EmailValidator = __importStar(require("email-validator"));
 const type_graphql_1 = require("type-graphql");
+const typeorm_1 = require("typeorm");
+const uuid_1 = require("uuid");
 const Application_1 = require("../entities/Application");
 const User_1 = require("../entities/User");
 const types_1 = require("../utils/types");
-const uuid_1 = require("uuid");
-const typeorm_1 = require("typeorm");
 const sgMail = require("@sendgrid/mail");
 let UserResolver = class UserResolver {
     async verifyUser(token) {
         const user = await User_1.User.findOne({ where: { token } });
         const date = new Date().getTime();
         const expiration = parseInt(user === null || user === void 0 ? void 0 : user.expiration);
+        if (!user) {
+            return {
+                success: false,
+                error: "Invalid token.",
+            };
+        }
+        if (!user.verified) {
+            if (date > expiration) {
+                return {
+                    success: false,
+                    error: "Token expired.",
+                };
+            }
+            else {
+                await (0, typeorm_1.getConnection)()
+                    .getRepository(User_1.User)
+                    .createQueryBuilder()
+                    .update({
+                    verified: true,
+                })
+                    .where({ id: user.id })
+                    .returning("*")
+                    .execute();
+                return {
+                    success: true,
+                };
+            }
+        }
+        return {
+            success: false,
+            error: "User already verified.",
+        };
     }
     async deleteUsers() {
         await User_1.User.delete({});
@@ -202,7 +234,7 @@ let UserResolver = class UserResolver {
     }
 };
 __decorate([
-    (0, type_graphql_1.Mutation)(() => Boolean),
+    (0, type_graphql_1.Mutation)(() => types_1.VerificationResponse),
     __param(0, (0, type_graphql_1.Arg)("token")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
