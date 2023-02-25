@@ -108,7 +108,7 @@ let UserResolver = class UserResolver {
             to: email,
             from: process.env.SENDGRID_EMAIL,
             subject: "health{hacks} 2023 Email Verification",
-            html: `Dear ${user === null || user === void 0 ? void 0 : user.firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="https://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
+            html: `Dear ${user === null || user === void 0 ? void 0 : user.firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="http://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
         };
         sgMail
             .send(msg)
@@ -180,7 +180,7 @@ let UserResolver = class UserResolver {
                 to: email,
                 from: process.env.SENDGRID_EMAIL,
                 subject: "health{hacks} 2023 Email Verification",
-                html: `Dear ${firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="https://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
+                html: `Dear ${firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="http://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
             };
             sgMail
                 .send(msg)

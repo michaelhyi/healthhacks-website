@@ -53,6 +53,7 @@ export type Mutation = {
   resendVerificationEmail: Scalars['Boolean'];
   submitApplication: Scalars['Boolean'];
   updateApplication: Scalars['Boolean'];
+  verifyUser: VerificationResponse;
 };
 
 
@@ -121,6 +122,11 @@ export type MutationUpdateApplicationArgs = {
   whyUs: Scalars['String'];
 };
 
+
+export type MutationVerifyUserArgs = {
+  token: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   readApplications: Array<Application>;
@@ -150,6 +156,12 @@ export type UserResponse = {
   __typename?: 'UserResponse';
   error?: Maybe<Error>;
   user?: Maybe<User>;
+};
+
+export type VerificationResponse = {
+  __typename?: 'VerificationResponse';
+  error?: Maybe<Scalars['String']>;
+  success: Scalars['Boolean'];
 };
 
 export type LoginMutationVariables = Exact<{
@@ -229,6 +241,13 @@ export type UpdateApplicationMutationVariables = Exact<{
 
 
 export type UpdateApplicationMutation = { __typename?: 'Mutation', updateApplication: boolean };
+
+export type VerifyUserMutationVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type VerifyUserMutation = { __typename?: 'Mutation', verifyUser: { __typename?: 'VerificationResponse', success: boolean, error?: string | null } };
 
 export type ReadUserQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -372,6 +391,18 @@ export const UpdateApplicationDocument = gql`
 
 export function useUpdateApplicationMutation() {
   return Urql.useMutation<UpdateApplicationMutation, UpdateApplicationMutationVariables>(UpdateApplicationDocument);
+};
+export const VerifyUserDocument = gql`
+    mutation VerifyUser($token: String!) {
+  verifyUser(token: $token) {
+    success
+    error
+  }
+}
+    `;
+
+export function useVerifyUserMutation() {
+  return Urql.useMutation<VerifyUserMutation, VerifyUserMutationVariables>(VerifyUserDocument);
 };
 export const ReadUserDocument = gql`
     query ReadUser($id: Int!) {
