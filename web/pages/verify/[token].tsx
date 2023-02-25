@@ -2,6 +2,8 @@ import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ContainerApp from "../../components/ContainerApp";
+import VerifyFail from "../../components/VerifyFail";
+import VerifySuccess from "../../components/VerifySuccess";
 import { useVerifyUserMutation } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 
@@ -36,9 +38,7 @@ const Verify = () => {
   }
 
   return (
-    <ContainerApp>
-      <div className="text-white">{result && result.toString()}</div>
-    </ContainerApp>
+    <ContainerApp>{result ? <VerifySuccess /> : <VerifyFail />}</ContainerApp>
   );
 };
 

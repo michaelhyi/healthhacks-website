@@ -5,10 +5,10 @@ import { wherefrom } from "@/data/wherefrom";
 import { whyhh } from "@/data/whyhh";
 import { yesno } from "@/data/yesno";
 import { Radio, RadioGroup, useToast } from "@chakra-ui/react";
-import { format } from "date-fns";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import { Autosave, useAutosave } from "react-autosave";
 import ApplicationInput from "../../components/ApplicationInput";
 import ContainerApp from "../../components/ContainerApp";
 import DropDown from "../../components/DropDown";
@@ -20,7 +20,6 @@ import {
 } from "../../generated/graphql";
 import Context from "../../utils/context";
 import { createUrqlClient } from "../../utils/createUrqlClient";
-import { appendApplicationSpreadsheet } from "../../utils/helpers";
 import { FormType } from "../../utils/types";
 
 const Apply = () => {
@@ -90,6 +89,28 @@ const Apply = () => {
       }
     })();
   }, [user]);
+
+  const updateForm = async () => {
+    await updateApplication({
+      userId: user!.id,
+      phone: form.phone,
+      organization: form.organization,
+      city: form.city,
+      state: form.state,
+      inPerson: form.inPerson,
+      wholeEvent: form.wholeEvent,
+      background: form.background,
+      whyUs: form.whyUs,
+      howHear: form.howHear,
+      team: form.team,
+      linkedIn: form.linkedIn,
+      dietaryRestrictions: form.dietaryRestrictions,
+      transportation: form.transportation,
+      other: form.other,
+    });
+  };
+
+  useAutosave({ data: form, onSave: updateForm });
 
   if (!user) {
     return <div>You must be signed in</div>;
@@ -347,39 +368,10 @@ const Apply = () => {
                   <u> info@joinhealthhacks.com </u>{" "}
                 </a>
               </p>
+              <Autosave data={form} onSave={updateForm} />
             </form>
             <div className="flex items-center space-x-6 pt-8 pb-24">
-              <button
-                onClick={async () => {
-                  await updateApplication({
-                    userId: user.id,
-                    phone: form.phone,
-                    organization: form.organization,
-                    city: form.city,
-                    state: form.state,
-                    inPerson: form.inPerson,
-                    wholeEvent: form.wholeEvent,
-                    background: form.background,
-                    whyUs: form.whyUs,
-                    howHear: form.howHear,
-                    team: form.team,
-                    linkedIn: form.linkedIn,
-                    dietaryRestrictions: form.dietaryRestrictions,
-                    transportation: form.transportation,
-                    other: form.other,
-                  });
-
-                  toast({
-                    title: "Saved!",
-                    description:
-                      "You have successfully saved your application!",
-                    status: "success",
-                    duration: 10000,
-                    isClosable: true,
-                  });
-                }}
-                className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-6 py-3 w-auto rounded-xl text-sm font-medium"
-              >
+              <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-6 py-3 w-auto rounded-xl text-sm font-medium">
                 Save
               </button>
               <button
