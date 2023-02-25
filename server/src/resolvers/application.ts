@@ -3,6 +3,7 @@ import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Application } from "../entities/Application";
 import appendApplicationSpreadsheet from "../utils/appendApplicationSpreadsheet";
+import { applicationConfirmationHTML } from "../utils/emails";
 
 const sgMail = require("@sendgrid/mail");
 
@@ -82,9 +83,7 @@ export class ApplicationResolver {
       to: email,
       from: process.env.SENDGRID_EMAIL,
       subject: "health{hacks} 2023 Application Confirmation",
-      html: `Dear ${firstName},<br/><br/>Thank you for your application to health{hacks}! Here are your application details:<br/><br/>${JSON.stringify(
-        newRow
-      )}`,
+      html: applicationConfirmationHTML,
     };
 
     sgMail

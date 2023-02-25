@@ -21,6 +21,7 @@ const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Application_1 = require("../entities/Application");
 const appendApplicationSpreadsheet_1 = __importDefault(require("../utils/appendApplicationSpreadsheet"));
+const emails_1 = require("../utils/emails");
 const sgMail = require("@sendgrid/mail");
 let ApplicationResolver = class ApplicationResolver {
     async submitApplication(userId, firstName, lastName, email, phone, organization, city, state, inPerson, wholeEvent, background, whyUs, howHear, team, linkedIn, dietaryRestrictions, transportation, other) {
@@ -73,7 +74,7 @@ let ApplicationResolver = class ApplicationResolver {
             to: email,
             from: process.env.SENDGRID_EMAIL,
             subject: "health{hacks} 2023 Application Confirmation",
-            html: `Dear ${firstName},<br/><br/>Thank you for your application to health{hacks}! Here are your application details:<br/><br/>${JSON.stringify(newRow)}`,
+            html: emails_1.applicationConfirmationHTML,
         };
         sgMail
             .send(msg)

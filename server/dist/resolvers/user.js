@@ -46,6 +46,7 @@ const typeorm_1 = require("typeorm");
 const uuid_1 = require("uuid");
 const Application_1 = require("../entities/Application");
 const User_1 = require("../entities/User");
+const emails_1 = require("../utils/emails");
 const types_1 = require("../utils/types");
 const sgMail = require("@sendgrid/mail");
 let UserResolver = class UserResolver {
@@ -91,7 +92,6 @@ let UserResolver = class UserResolver {
         return true;
     }
     async resendVerificationEmail(id, email) {
-        const user = await User_1.User.findOne({ where: { id } });
         const token = (0, uuid_1.v4)();
         await (0, typeorm_1.getConnection)()
             .getRepository(User_1.User)
@@ -108,7 +108,7 @@ let UserResolver = class UserResolver {
             to: email,
             from: process.env.SENDGRID_EMAIL,
             subject: "health{hacks} 2023 Email Verification",
-            html: `Dear ${user === null || user === void 0 ? void 0 : user.firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="http://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
+            html: (0, emails_1.verifyHTML)(token),
         };
         sgMail
             .send(msg)
@@ -180,7 +180,7 @@ let UserResolver = class UserResolver {
                 to: email,
                 from: process.env.SENDGRID_EMAIL,
                 subject: "health{hacks} 2023 Email Verification",
-                html: `Dear ${firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="http://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
+                html: (0, emails_1.verifyHTML)(token),
             };
             sgMail
                 .send(msg)

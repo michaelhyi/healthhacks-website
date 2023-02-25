@@ -5,6 +5,7 @@ import { getConnection } from "typeorm";
 import { v4 } from "uuid";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
+import { verifyHTML } from "../utils/emails";
 import { UserResponse, VerificationResponse } from "../utils/types";
 
 const sgMail = require("@sendgrid/mail");
@@ -63,7 +64,6 @@ export class UserResolver {
     @Arg("id", () => Int) id: number,
     @Arg("email") email: string
   ): Promise<Boolean> {
-    const user = await User.findOne({ where: { id } });
     const token = v4();
 
     await getConnection()
@@ -82,7 +82,7 @@ export class UserResolver {
       to: email,
       from: process.env.SENDGRID_EMAIL,
       subject: "health{hacks} 2023 Email Verification",
-      html: `Dear ${user?.firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="http://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
+      html: verifyHTML(token),
     };
 
     sgMail
@@ -116,7 +116,6 @@ export class UserResolver {
     @Arg("firstName") firstName: string,
     @Arg("lastName") lastName: string
   ): Promise<UserResponse> {
-    //some sort of email validity checker
     if (!EmailValidator.validate(email)) {
       return {
         error: {
@@ -173,7 +172,7 @@ export class UserResolver {
         to: email,
         from: process.env.SENDGRID_EMAIL,
         subject: "health{hacks} 2023 Email Verification",
-        html: `Dear ${firstName},<br/><br/>Thank you for creating a health{hacks} account! Please verify your email address <a href="http://localhost:3000/verify/${token}" target="_blank" rel="noreferrer">here</a>. This link will expire in two days.<br/><br/>Best regards,<br/><strong>health{hacks} Team</strong>`,
+        html: verifyHTML(token),
       };
 
       sgMail

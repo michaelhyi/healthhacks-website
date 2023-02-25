@@ -371,9 +371,6 @@ const Apply = () => {
               <Autosave data={form} onSave={updateForm} />
             </form>
             <div className="flex items-center space-x-6 pt-8 pb-24">
-              <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-6 py-3 w-auto rounded-xl text-sm font-medium">
-                Save
-              </button>
               <button
                 onClick={async () => {
                   let errors = false;
