@@ -3,9 +3,6 @@ mutation ReadApplication($userId: Int!) {
     id
     userId
     status
-    firstName
-    middleName
-    lastName
     phone
     organization
     city
@@ -14,12 +11,11 @@ mutation ReadApplication($userId: Int!) {
     wholeEvent
     background
     whyUs
-    trackRanking
     howHear
     team
-    linkedin
-    contact
+    linkedIn
     dietaryRestrictions
+    transportation
     other
   }
 }

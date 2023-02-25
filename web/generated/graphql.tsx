@@ -19,23 +19,19 @@ export type Application = {
   __typename?: 'Application';
   background: Scalars['String'];
   city: Scalars['String'];
-  contact: Scalars['String'];
   createdAt: Scalars['String'];
   dietaryRestrictions: Scalars['String'];
-  firstName: Scalars['String'];
   howHear: Scalars['String'];
   id: Scalars['Float'];
   inPerson: Scalars['String'];
-  lastName: Scalars['String'];
-  linkedin: Scalars['String'];
-  middleName: Scalars['String'];
+  linkedIn: Scalars['String'];
   organization: Scalars['String'];
   other: Scalars['String'];
   phone: Scalars['String'];
   state: Scalars['String'];
   status: Scalars['String'];
   team: Scalars['String'];
-  trackRanking: Scalars['String'];
+  transportation: Scalars['String'];
   updatedAt: Scalars['String'];
   userId: Scalars['Float'];
   wholeEvent: Scalars['String'];
@@ -54,7 +50,10 @@ export type Mutation = {
   login: UserResponse;
   readApplication: Application;
   register: UserResponse;
+  resendVerificationEmail: Scalars['Boolean'];
+  submitApplication: Scalars['Boolean'];
   updateApplication: Scalars['Boolean'];
+  verifyUser: VerificationResponse;
 };
 
 
@@ -77,17 +76,55 @@ export type MutationRegisterArgs = {
 };
 
 
-export type MutationUpdateApplicationArgs = {
+export type MutationResendVerificationEmailArgs = {
+  email: Scalars['String'];
+  id: Scalars['Int'];
+};
+
+
+export type MutationSubmitApplicationArgs = {
+  background: Scalars['String'];
   city: Scalars['String'];
+  dietaryRestrictions: Scalars['String'];
+  email: Scalars['String'];
   firstName: Scalars['String'];
+  howHear: Scalars['String'];
   inPerson: Scalars['String'];
   lastName: Scalars['String'];
-  middleName: Scalars['String'];
+  linkedIn: Scalars['String'];
   organization: Scalars['String'];
+  other: Scalars['String'];
   phone: Scalars['String'];
   state: Scalars['String'];
+  team: Scalars['String'];
+  transportation: Scalars['String'];
   userId: Scalars['Int'];
   wholeEvent: Scalars['String'];
+  whyUs: Scalars['String'];
+};
+
+
+export type MutationUpdateApplicationArgs = {
+  background: Scalars['String'];
+  city: Scalars['String'];
+  dietaryRestrictions: Scalars['String'];
+  howHear: Scalars['String'];
+  inPerson: Scalars['String'];
+  linkedIn: Scalars['String'];
+  organization: Scalars['String'];
+  other: Scalars['String'];
+  phone: Scalars['String'];
+  state: Scalars['String'];
+  team: Scalars['String'];
+  transportation: Scalars['String'];
+  userId: Scalars['Int'];
+  wholeEvent: Scalars['String'];
+  whyUs: Scalars['String'];
+};
+
+
+export type MutationVerifyUserArgs = {
+  token: Scalars['String'];
 };
 
 export type Query = {
@@ -106,10 +143,13 @@ export type User = {
   __typename?: 'User';
   createdAt: Scalars['String'];
   email: Scalars['String'];
+  expiration: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['Float'];
   lastName: Scalars['String'];
+  token: Scalars['String'];
   updatedAt: Scalars['String'];
+  verified: Scalars['Boolean'];
 };
 
 export type UserResponse = {
@@ -118,20 +158,26 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type VerificationResponse = {
+  __typename?: 'VerificationResponse';
+  error?: Maybe<Scalars['String']>;
+  success: Scalars['Boolean'];
+};
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, verified: boolean } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
 export type ReadApplicationMutationVariables = Exact<{
   userId: Scalars['Int'];
 }>;
 
 
-export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, status: string, firstName: string, middleName: string, lastName: string, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: string, whyUs: string, trackRanking: string, howHear: string, team: string, linkedin: string, contact: string, dietaryRestrictions: string, other: string } };
+export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, status: string, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: string, whyUs: string, howHear: string, team: string, linkedIn: string, dietaryRestrictions: string, transportation: string, other: string } };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -143,21 +189,72 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
-export type UpdateApplicationMutationVariables = Exact<{
+export type ResendVerificationEmailMutationVariables = Exact<{
+  id: Scalars['Int'];
+  email: Scalars['String'];
+}>;
+
+
+export type ResendVerificationEmailMutation = { __typename?: 'Mutation', resendVerificationEmail: boolean };
+
+export type SubmitApplicationMutationVariables = Exact<{
   userId: Scalars['Int'];
   firstName: Scalars['String'];
-  middleName: Scalars['String'];
   lastName: Scalars['String'];
+  email: Scalars['String'];
   phone: Scalars['String'];
   organization: Scalars['String'];
   city: Scalars['String'];
   state: Scalars['String'];
   inPerson: Scalars['String'];
   wholeEvent: Scalars['String'];
+  background: Scalars['String'];
+  whyUs: Scalars['String'];
+  howHear: Scalars['String'];
+  team: Scalars['String'];
+  linkedIn: Scalars['String'];
+  dietaryRestrictions: Scalars['String'];
+  transportation: Scalars['String'];
+  other: Scalars['String'];
+}>;
+
+
+export type SubmitApplicationMutation = { __typename?: 'Mutation', submitApplication: boolean };
+
+export type UpdateApplicationMutationVariables = Exact<{
+  userId: Scalars['Int'];
+  phone: Scalars['String'];
+  organization: Scalars['String'];
+  city: Scalars['String'];
+  state: Scalars['String'];
+  inPerson: Scalars['String'];
+  wholeEvent: Scalars['String'];
+  background: Scalars['String'];
+  whyUs: Scalars['String'];
+  howHear: Scalars['String'];
+  team: Scalars['String'];
+  linkedIn: Scalars['String'];
+  dietaryRestrictions: Scalars['String'];
+  transportation: Scalars['String'];
+  other: Scalars['String'];
 }>;
 
 
 export type UpdateApplicationMutation = { __typename?: 'Mutation', updateApplication: boolean };
+
+export type VerifyUserMutationVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type VerifyUserMutation = { __typename?: 'Mutation', verifyUser: { __typename?: 'VerificationResponse', success: boolean, error?: string | null } };
+
+export type ReadUserQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, token: string, expiration: string, createdAt: string, updatedAt: string } };
 
 
 export const LoginDocument = gql`
@@ -168,6 +265,7 @@ export const LoginDocument = gql`
       firstName
       lastName
       email
+      verified
     }
     error {
       field
@@ -186,9 +284,6 @@ export const ReadApplicationDocument = gql`
     id
     userId
     status
-    firstName
-    middleName
-    lastName
     phone
     organization
     city
@@ -197,12 +292,11 @@ export const ReadApplicationDocument = gql`
     wholeEvent
     background
     whyUs
-    trackRanking
     howHear
     team
-    linkedin
-    contact
+    linkedIn
     dietaryRestrictions
+    transportation
     other
   }
 }
@@ -236,23 +330,96 @@ export const RegisterDocument = gql`
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
-export const UpdateApplicationDocument = gql`
-    mutation UpdateApplication($userId: Int!, $firstName: String!, $middleName: String!, $lastName: String!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!) {
-  updateApplication(
+export const ResendVerificationEmailDocument = gql`
+    mutation ResendVerificationEmail($id: Int!, $email: String!) {
+  resendVerificationEmail(id: $id, email: $email)
+}
+    `;
+
+export function useResendVerificationEmailMutation() {
+  return Urql.useMutation<ResendVerificationEmailMutation, ResendVerificationEmailMutationVariables>(ResendVerificationEmailDocument);
+};
+export const SubmitApplicationDocument = gql`
+    mutation SubmitApplication($userId: Int!, $firstName: String!, $lastName: String!, $email: String!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!, $background: String!, $whyUs: String!, $howHear: String!, $team: String!, $linkedIn: String!, $dietaryRestrictions: String!, $transportation: String!, $other: String!) {
+  submitApplication(
     userId: $userId
     firstName: $firstName
-    middleName: $middleName
     lastName: $lastName
+    email: $email
     phone: $phone
     organization: $organization
     city: $city
     state: $state
     inPerson: $inPerson
     wholeEvent: $wholeEvent
+    background: $background
+    whyUs: $whyUs
+    howHear: $howHear
+    team: $team
+    linkedIn: $linkedIn
+    dietaryRestrictions: $dietaryRestrictions
+    transportation: $transportation
+    other: $other
+  )
+}
+    `;
+
+export function useSubmitApplicationMutation() {
+  return Urql.useMutation<SubmitApplicationMutation, SubmitApplicationMutationVariables>(SubmitApplicationDocument);
+};
+export const UpdateApplicationDocument = gql`
+    mutation UpdateApplication($userId: Int!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!, $background: String!, $whyUs: String!, $howHear: String!, $team: String!, $linkedIn: String!, $dietaryRestrictions: String!, $transportation: String!, $other: String!) {
+  updateApplication(
+    userId: $userId
+    phone: $phone
+    organization: $organization
+    city: $city
+    state: $state
+    inPerson: $inPerson
+    wholeEvent: $wholeEvent
+    background: $background
+    whyUs: $whyUs
+    howHear: $howHear
+    team: $team
+    linkedIn: $linkedIn
+    dietaryRestrictions: $dietaryRestrictions
+    transportation: $transportation
+    other: $other
   )
 }
     `;
 
 export function useUpdateApplicationMutation() {
   return Urql.useMutation<UpdateApplicationMutation, UpdateApplicationMutationVariables>(UpdateApplicationDocument);
+};
+export const VerifyUserDocument = gql`
+    mutation VerifyUser($token: String!) {
+  verifyUser(token: $token) {
+    success
+    error
+  }
+}
+    `;
+
+export function useVerifyUserMutation() {
+  return Urql.useMutation<VerifyUserMutation, VerifyUserMutationVariables>(VerifyUserDocument);
+};
+export const ReadUserDocument = gql`
+    query ReadUser($id: Int!) {
+  readUser(id: $id) {
+    id
+    email
+    firstName
+    lastName
+    verified
+    token
+    expiration
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+export function useReadUserQuery(options: Omit<Urql.UseQueryArgs<ReadUserQueryVariables>, 'query'>) {
+  return Urql.useQuery<ReadUserQuery, ReadUserQueryVariables>({ query: ReadUserDocument, ...options });
 };

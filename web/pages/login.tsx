@@ -4,9 +4,12 @@ import Input from "../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { withUrqlClient } from "next-urql";
-import { useContext, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import { useLoginMutation } from "../generated/graphql";
+import {
+  useLoginMutation,
+  useResendVerificationEmailMutation,
+} from "../generated/graphql";
 import Router, { useRouter } from "next/router";
 import Context from "../utils/context";
 import axios from "axios";
@@ -21,27 +24,48 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const [, login] = useLoginMutation();
-
+  const [, resendVerificaitonEmail] = useResendVerificationEmailMutation();
 
   // ADDED CODE BY WILLIAM: From Chat GPT
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    try {
-      const response = await axios.post("/api/signin", {
-        email,
-        password,
-      });
+    const response = await login({ email, password });
+    if (!response.data?.login.error) {
+      if (!response.data?.login.user?.verified) {
+        await resendVerificaitonEmail({
+          id: response!.data!.login.user!.id,
+          email,
+        });
 
-      if (response.data.error) {
-        setEmailError(response.data.error);
+        router.push({
+          pathname: "/verify",
+          query: {
+            id: response.data?.login.user?.id,
+            email,
+          },
+        });
       } else {
-        Router.push("/dashboard");
+        await localStorage.setItem(
+          "user",
+          JSON.stringify(response.data!.login.user!)
+        );
+        setUser(response.data!.login.user!);
+        router.push("/");
       }
-    } catch (error) {
-      setEmailError("An error occurred while signing in. Please try again later.");
+    } else {
+      if (response.data.login.error.field === "Email") {
+        setEmailError(response.data.login.error.message);
+      } else {
+        setEmailError("");
+      }
+      if (response.data.login.error.field === "Password") {
+        setPasswordError(response.data.login.error.message);
+      } else {
+        setPasswordError("");
+      }
     }
-  }
+  };
 
   return (
     <Fade delay={500} up distance="24px">
@@ -64,32 +88,7 @@ const Login = () => {
                 </Link>
               </div>
             </div>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                const response = await login({ email, password });
-                if (!response.data?.login.error) {
-                  await localStorage.setItem(
-                    "user",
-                    JSON.stringify(response.data!.login.user!)
-                  );
-                  setUser(response.data!.login.user!);
-                  router.push("/");
-                } else {
-                  if (response.data.login.error.field === "Email") {
-                    setEmailError(response.data.login.error.message);
-                  } else {
-                    setEmailError("");
-                  }
-                  if (response.data.login.error.field === "Password") {
-                    setPasswordError(response.data.login.error.message);
-                  } else {
-                    setPasswordError("");
-                  }
-                }
-              }}
-              className="mt-4"
-            >
+            <form onSubmit={handleSubmit} className="mt-4">
               <Input
                 value={email}
                 setValue={setEmail}

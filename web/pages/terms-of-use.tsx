@@ -146,18 +146,58 @@ const TermsOfUse = () => {
             <li className="pl-2">Use the Site as part of any effort to compete with us or otherwise use the Siteand/or the Content for any revenue-generating endeavor or commercial enterprise.</li>
             <li className="pl-2">Use the Site to advertise or offer to sell goods and services.</li>
             <li className="pl-2">Sell or otherwise transfer your profile.</li>
-            <li className="pl-2">Upload, post, transmit, share, store or otherwise make available any contentthat we deem to be harmful, threatening, unlawful, defamatory, infringing,abusive, inflammatory, harassing, vulgar, obscene, fraudulent, invasive of privacy or publicity rights, hateful, or racially, ethnically or otherwise objectionable.</li>
-            <li className="pl-2">Register for more than one User account, or operate a User account on behalfof or for the benefit of any person or entity who is not eligible to register for oroperate a User account in their own name</li>
-            <li className="pl-2">Impersonate any person or entity, or falsely state or otherwise misrepresent yourself, or your affiliation with or authority to act on behalf of any person or entity.</li>
-            <li className="pl-2">Upload, post, transmit, share or otherwise make available any unsolicited or unauthorized advertising, solicitations, promotional materials, "junk mail," "spam," "chain letters," "pyramid schemes," or any other form of solicitation.</li>
-            <li className="pl-2">Upload, post, transmit, share or otherwise make available any material that contains software viruses or any other malicious or tracking computer code, files or programs designed to track, interrupt, destroy or limit the functionalityof any computer software or hardware or telecommunications equipment.</li>
-            <li className="pl-2">Upload, post, transmit, share, store or otherwise make available content that would constitute, encourage or provide instructions for a criminal offense, violate the rights of any party, or that would otherwise create liability or violateany local, state, national or international law.</li>
-            <li className="pl-2">Use or attempt to use another's account, service or system without authorization from that person and the Company, or create a false identity on the Services.</li>
-            <li className="pl-2">Upload, post, transmit, share, store or otherwise make available content that, in the sole judgment of the Company, is objectionable or which restricts or inhibits any other person from using or enjoying the Services, or which may expose the Company or its users to any harm or liability of any type.</li>
+            <li className="pl-2">
+              Upload, post, transmit, share, store or otherwise make available
+              any contentthat we deem to be harmful, threatening, unlawful,
+              defamatory, infringing,abusive, inflammatory, harassing, vulgar,
+              obscene, fraudulent, invasive of privacy or publicity rights,
+              hateful, or racially, ethnically or otherwise objectionable.
+            </li>
+            <li className="pl-2">
+              Register for more than one User account, or operate a User account
+              on behalfof or for the benefit of any person or entity who is not
+              eligible to register for oroperate a User account in their own
+              name
+            </li>
+            <li className="pl-2">
+              Impersonate any person or entity, or falsely state or otherwise
+              misrepresent yourself, or your affiliation with or authority to
+              act on behalf of any person or entity.
+            </li>
+            <li className="pl-2">
+              Upload, post, transmit, share or otherwise make available any
+              unsolicited or unauthorized advertising, solicitations,
+              promotional materials, "junk mail," "spam," "chain letters,"
+              "pyramid schemes," or any other form of solicitation.
+            </li>
+            <li className="pl-2">
+              Upload, post, transmit, share or otherwise make available any
+              material that contains software viruses or any other malicious or
+              tracking computer code, files or programs designed to track,
+              interrupt, destroy or limit the functionalityof any computer
+              software or hardware or telecommunications equipment.
+            </li>
+            <li className="pl-2">
+              Upload, post, transmit, share, store or otherwise make available
+              content that would constitute, encourage or provide instructions
+              for a criminal offense, violate the rights of any party, or that
+              would otherwise create liability or violateany local, state,
+              national or international law.
+            </li>
+            <li className="pl-2">
+              Use or attempt to use another's account, service or system without
+              authorization from that person and the Company, or create a false
+              identity on the Services.
+            </li>
+            <li className="pl-2">
+              Upload, post, transmit, share, store or otherwise make available
+              content that, in the sole judgment of the Company, is
+              objectionable or which restricts or inhibits any other person from
+              using or enjoying the Services, or which may expose the Company or
+              its users to any harm or liability of any type.
+            </li>
           </ul>
         </div>
-
-
         <h2 id="6" className="font-semibold text-xl mt-8">
           6. USER GENERATED CONTRIBUTIONS
         </h2>
@@ -183,17 +223,28 @@ const TermsOfUse = () => {
           <br /> <br />
           Any use of the Site in violation of the foregoing violates these Terms of Use and mayresult in, among other things, termination or suspension of your rights to use the Site.
         </div>
-
-
         <h2 id="7" className="font-semibold text-xl mt-8">
           7. CONTRIBUTION LICENSE
         </h2>
         <div className="font-thin text-sm">
           By posting your Contributions to any part of the Site or making Contributions accessible to the Site by linking your account from the Site to any of your social networking accounts, you automatically grant, and you represent and warrant thatyou have the right to grant, to us an unrestricted, unlimited, irrevocable, perpetual, non-exclusive, transferable, royalty-free, fully-paid, worldwide right, and license tohost, use, copy, reproduce, disclose, sell, resell, publish, broadcast, retitle, archive, store, cache, publicly perform, publicly display, reformat, translate, transmit, excerpt (in whole or in part), and distribute such Contributions (including, without limitation, your image and voice) for any purpose, commercial, advertising, or otherwise, and to prepare derivative works of, or incorporate into other works, such Contributions, and grant and authorize sublicenses of the foregoing. The use and distribution may occur in any media formats and through any media channels.
           <br /> <br />
-          This license will apply to any form, media, or technology now known or hereafter developed, and includes our use of your name, company name, and franchise name, as applicable, and any of the trademarks, service marks, trade names, logos, andpersonal and commercial images you provide. You waive all moral rights in your Contributions, and you warrant that moral rights have not otherwise been asserted inyour Contributions.
+          This license will apply to any form, media, or technology now known or
+          hereafter developed, and includes our use of your name, company name,
+          and franchise name, as applicable, and any of the trademarks, service
+          marks, trade names, logos, andpersonal and commercial images you
+          provide. You waive all moral rights in your Contributions, and you
+          warrant that moral rights have not otherwise been asserted inyour
+          Contributions.
           <br /> <br />
-          We do not assert any ownership over your Contributions. You retain full ownership ofall of your Contributions and any intellectual property rights or other proprietary rights associated with your Contributions. We are not liable for any statements or representations in your Contributions provided by you in any area on the Site. Youare solely responsible for your Contributions to the Site and you expressly agree to exonerate us from any and all responsibility and to refrain from any legal action against us regarding your Contributions.
+          We do not assert any ownership over your Contributions. You retain
+          full ownership ofall of your Contributions and any intellectual
+          property rights or other proprietary rights associated with your
+          Contributions. We are not liable for any statements or representations
+          in your Contributions provided by you in any area on the Site. Youare
+          solely responsible for your Contributions to the Site and you
+          expressly agree to exonerate us from any and all responsibility and to
+          refrain from any legal action against us regarding your Contributions.
           <br /> <br />
           We have the right, in our sole and absolute discretion, (1) to edit, redact, or otherwise change any Contributions; (2) to re-categorize any Contributions to place them in more appropriate locations on the Site; and (3) to pre-screen or delete any Contributions at any time and for any reason, without notice. We have no obligation to monitor your Contributions.
         </div>
@@ -350,11 +401,8 @@ const TermsOfUse = () => {
         <div className="font-thin text-sm">
           These Terms of Use and any policies or operating rules posted by us on the Site or in respect to the Site constitute the entire agreement and understanding between you and us. Our failure to exercise or enforce any right or provision of these Terms of Useshall not operate as a waiver of such right or provision. These Terms of Use operate to the fullest extent permissible by law. We may assign any or all of our rights and obligations to others at any time. We shall not be responsible or liable for any loss, damage, delay, or failure to act caused by any cause beyond our reasonable control. If any provision or part of a provision of these Terms of Use is determined to be unlawful, void, or unenforceable, that provision or part of the provision is deemed severable from these Terms of Use and does not affect the validity and enforceability of any remaining provisions. There is no joint venture, partnership, employment or agency relationship created between you and us as a result of these Terms of Use or use of the Site. You agree that these Terms of Use will not be construed against us by virtue of having drafted them. You hereby waive any and all defenses you may have based on the electronic form of these Terms of Use and the lack of signing by the parties hereto to execute these Terms of Use.
         </div>
-
-
         <h2 id="25" className="font-semibold text-xl mt-8">
-          25.
-          CONTACT US
+          25. CONTACT US
         </h2>
         <div className="font-thin text-sm">
           In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at:
@@ -371,7 +419,6 @@ const TermsOfUse = () => {
             info@joinhealthhacks.com
           </strong>
         </div>
-
       </div>
       <Footer />
     </Container >
