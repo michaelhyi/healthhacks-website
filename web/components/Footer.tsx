@@ -5,7 +5,7 @@ import Fade from "react-reveal/Fade";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import * as EmailValidator from "email-validator";
 import { socials } from "../data/socials";
-import Link from "next/link"
+import Link from "next/link";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +33,7 @@ const Footer = () => {
       await doc.loadInfo();
 
       const sheet = doc.sheetsById[SHEET_ID!];
+      console.log(sheet);
       await sheet.addRow(row);
     } catch (e) {
       console.error("Error: ", e);
@@ -82,8 +83,9 @@ const Footer = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 // border-2
-                className={`placeholder-white bg-black  ${error && error.length > 0 ? "border-red-400" : "border-white"
-                  } p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
+                className={`placeholder-white bg-black  ${
+                  error && error.length > 0 ? "border-red-400" : "border-white"
+                } p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
               />
               <button className="hover:cursor-pointer duration-500 hover:opacity-90 flex items-center text-black bg-white px-8 py-4 rounded-[75px] font-semibold sm:text-sm">
                 Subscribe
@@ -96,7 +98,7 @@ const Footer = () => {
             )}
           </div>
         </form>
-        <div className="flex justify-between content-start flex-wrap flex-row w-full text-left gap-y-2 -mt-4 pt-8 px-16 sm:px-8">
+        <div className="flex justify-between content-start flex-wrap flex-row w-full text-left gap-y-2 -mt-4 pt-8 px-16 sm:px-8 2xl:w-[1200px]">
           <div className="w-2/5 mt-8 md:p-4 sm:p-0">
             <img
               src="/health{hacks} - Logo.svg"
@@ -108,13 +110,15 @@ const Footer = () => {
               All Rights Reserved. <br />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
-                href="private-policy">
+                href="private-policy"
+              >
                 Private Policy
               </Link>
               <br />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
-                href="terms-of-use">
+                href="terms-of-use"
+              >
                 Terms of Use
               </Link>
             </div>
@@ -132,7 +136,7 @@ const Footer = () => {
                 {socials.map((s, i) => (
                   <div key={i} className="p-1">
                     <Fade delay={500}>
-                      <a href={s.href}>
+                      <a href={s.href} target="_blank" rel="noreferrer">
                         <img
                           src={s.src}
                           alt={s.id}
