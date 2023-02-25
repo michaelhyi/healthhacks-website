@@ -68,15 +68,17 @@ const Login = () => {
   };
 
   return (
-    <ContainerApp>
-      <Fade delay={500} up distance="24px">
-        <div className="flex flex-col items-center pt-24">
-          <div className="w-[50vw]">
+    <Fade delay={500} up distance="24px">
+      <div className="flex flex-row h-[100vh] justify-center bg-black">
+        <div className=" flex w-0 lg:w-1/2 md:m-0 bg-[url('/loginheader1.png')] items-center justify-center invisible lg:visible bg-cover bg-center" />
+        {/* <div className="w-1/2 h-3/5 bg-[#3339] filter items-center justify-center rounded-2xl backdrop-blur"/> */}
+        <div className="flex flex-col items-center lg:items-start justify-center p-4 w-[100vw] lg:w-1/2">
+          <div className="mx-12">
             <div>
-              <div className="font-bold text-3xl">
+              <div className="font-bold text-3xl text-white">
                 Welcome to {`health{hacks}`}
               </div>
-              <div className="text-sm mt-4 font-medium">
+              <div className="text-sm mt-4 font-medium text-white">
                 Don't have an account?&nbsp;
                 <Link
                   href="/register"
@@ -103,11 +105,11 @@ const Login = () => {
                 <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-4 py-2 rounded-xl text-sm font-semibold">
                   Login
                 </button>
-                <div className="text-sm font-medium">
+                <div className="text-sm font-medium text-white">
                   Forgot Password?&nbsp;
                   <Link
                     href="/login"
-                    className="text-blue-400 hover:cursor-pointer duration-500 hover:opacity-50"
+                    className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
                   >
                     Click here
                   </Link>
@@ -116,8 +118,8 @@ const Login = () => {
             </form>
           </div>
         </div>
-      </Fade>
-    </ContainerApp>
+      </div>
+    </Fade>
   );
 };
 
