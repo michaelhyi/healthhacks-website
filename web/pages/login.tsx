@@ -1,18 +1,17 @@
-import Link from "next/link";
-import ContainerApp from "../components/ContainerApp";
-import Input from "../components/Input";
-//@ts-ignore
-import Fade from "react-reveal/Fade";
 import { withUrqlClient } from "next-urql";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { FormEvent, useContext, useState } from "react";
-import { createUrqlClient } from "../utils/createUrqlClient";
+import Input from "../components/Input";
 import {
   useLoginMutation,
   useResendVerificationEmailMutation,
 } from "../generated/graphql";
-import Router, { useRouter } from "next/router";
 import Context from "../utils/context";
-import axios from "axios";
+import { createUrqlClient } from "../utils/createUrqlClient";
+
+//@ts-ignore
+import Fade from "react-reveal/Fade";
 
 const Login = () => {
   const router = useRouter();

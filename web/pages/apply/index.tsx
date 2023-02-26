@@ -78,6 +78,19 @@ const Apply = () => {
     })();
   }, [user]);
 
+  useEffect(() => {
+    let errors: string[] = [];
+    Object.keys(form).forEach((v) => {
+      if (v === "inPerson" && form[v as keyof FormType] === "No") {
+        errors.push("You must attend in-person!");
+      } else {
+        errors.push("");
+      }
+
+      setError(errors);
+    });
+  }, [form]);
+
   const handleSubmit = async () => {
     setSubmitting(true);
 
@@ -85,7 +98,10 @@ const Apply = () => {
     let errors: string[] = [];
 
     Object.keys(form).forEach((v) => {
-      if (v !== "other" && form[v as keyof FormType].length === 0) {
+      if (v === "inPerson" && form[v as keyof FormType] === "No") {
+        errors.push("You must attend in-person!");
+        found = true;
+      } else if (v !== "other" && form[v as keyof FormType].length === 0) {
         errors.push("This is a required field");
         found = true;
       } else {
@@ -289,7 +305,17 @@ const Apply = () => {
                         <Radio
                           value="No"
                           colorScheme="black"
-                          onClick={() => setForm({ ...form, inPerson: "No" })}
+                          onClick={() => {
+                            setForm({ ...form, inPerson: "No" });
+                            toast({
+                              title: "Sorry, we hope to see you next time.",
+                              description:
+                                "We need all of our participants to be in-person. We currently do not have the bandwith to facilitate a hybrid event. If this is an error, please go back to fix your application!",
+                              status: "error",
+                              duration: 10000,
+                              isClosable: true,
+                            });
+                          }}
                         >
                           No
                         </Radio>
@@ -332,9 +358,17 @@ const Apply = () => {
                         <Radio
                           value="No"
                           colorScheme="black"
-                          onClick={() =>
-                            setForm({ ...form, wholeEvent: "Yes" })
-                          }
+                          onClick={() => {
+                            setForm({ ...form, wholeEvent: "Yes" });
+                            toast({
+                              title: "Are you sure?",
+                              description:
+                                "We prefer our participants to attend the whole event. We believe missing most of the event will be harder to be caught up with the fast pace of the event.               If you must miss a couple of hours, please submit your application. Otherwise, we hope to see you next time!",
+                              status: "warning",
+                              duration: 10000,
+                              isClosable: true,
+                            });
+                          }}
                         >
                           No
                         </Radio>
