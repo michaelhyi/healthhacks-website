@@ -653,7 +653,7 @@ exports.applicationConfirmationHTML = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 
                                     style="padding: 10px"
                                   >
                                     <a
-                                      href="http://example.com"
+                                      href="http://joinhealthhacks.com"
                                       style="text-decoration: none"
                                       ><img
                                         src="images/healthhacks-Email-Logo-0aO.png"

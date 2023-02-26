@@ -10,6 +10,12 @@ const sgMail = require("@sendgrid/mail");
 @Resolver()
 export class ApplicationResolver {
   @Mutation(() => Boolean)
+  async deleteApplications() {
+    await Application.delete({});
+    return true;
+  }
+
+  @Mutation(() => Boolean)
   async submitApplication(
     @Arg("userId", () => Int) userId: number,
     @Arg("firstName", () => String) firstName: string,
@@ -36,6 +42,7 @@ export class ApplicationResolver {
       .getRepository(Application)
       .createQueryBuilder()
       .update({
+        status: "Submitted",
         phone: phone,
         organization: organization,
         city: city,

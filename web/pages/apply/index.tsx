@@ -4,7 +4,7 @@ import { dietary } from "@/data/dietary";
 import { wherefrom } from "@/data/wherefrom";
 import { whyhh } from "@/data/whyhh";
 import { yesno } from "@/data/yesno";
-import { Radio, RadioGroup, useToast } from "@chakra-ui/react";
+import { Radio, RadioGroup, Spinner } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -25,10 +25,10 @@ import { FormType } from "../../utils/types";
 const Apply = () => {
   const router = useRouter();
   const { user } = useContext(Context);
+  const [submitting, setSubmitting] = useState(false);
   const [, readApplication] = useReadApplicationMutation();
   const [, updateApplication] = useUpdateApplicationMutation();
   const [, submitApplication] = useSubmitApplicationMutation();
-  const toast = useToast();
 
   const [form, setForm] = useState({
     phone: "",
@@ -46,23 +46,19 @@ const Apply = () => {
     transportation: "",
     other: "",
   });
-
-  const [error, setError] = useState({
-    phone: "",
-    organization: "",
-    city: "",
-    state: "",
-    inPerson: "",
-    wholeEvent: "",
-    background: "",
-    whyUs: "",
-    howHear: "",
-    team: "",
-    linkedIn: "",
-    dietaryRestrictions: "",
-    transportation: "",
-    other: "",
-  });
+  const [phoneError, setPhoneError] = useState("");
+  const [organizationError, setOrganizationError] = useState("");
+  const [cityError, setCityError] = useState("");
+  const [stateError, setStateError] = useState("");
+  const [inPersonError, setInPersonError] = useState("");
+  const [wholeEventError, setWholeEventError] = useState("");
+  const [backgroundError, setBackgroundError] = useState("");
+  const [whyUsError, setWhyUsError] = useState("");
+  const [howHearError, setHowHearError] = useState("");
+  const [teamError, setTeamError] = useState("");
+  const [linkedinError, setLinkedinError] = useState("");
+  const [dietaryRestrictionsError, setDietaryRestrictionsError] = useState("");
+  const [transportationError, setTransportationError] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -148,7 +144,7 @@ const Apply = () => {
                 <div className="w-[50vw]">
                   <ApplicationInput
                     // userId={user.id}
-                    error={error.phone}
+                    error={phoneError}
                     value={form.phone}
                     setValue={(value) => setForm({ ...form, phone: value })}
                     label="Phone Number"
@@ -157,7 +153,7 @@ const Apply = () => {
                 <div className="w-[50vw]">
                   <ApplicationInput
                     // userId={user.id}
-                    error={error.organization}
+                    error={organizationError}
                     value={form.organization}
                     setValue={(value) =>
                       setForm({ ...form, organization: value })
@@ -172,7 +168,7 @@ const Apply = () => {
                 <div className="w-[50vw]">
                   <ApplicationInput
                     // userId={user.id}
-                    error={error.city}
+                    error={cityError}
                     value={form.city}
                     setValue={(value) => setForm({ ...form, city: value })}
                     label="City"
@@ -373,16 +369,17 @@ const Apply = () => {
             <div className="flex items-center space-x-6 pt-8 pb-24">
               <button
                 onClick={async () => {
-                  let errors = false;
+                  setSubmitting(true);
+
+                  let errors: any[] = [];
 
                   Object.keys(form).forEach((v) => {
                     if (form[v as keyof FormType].length === 0) {
-                      setError({
-                        ...error,
-                        [v]: "This is a required field.",
-                      });
+                      errors.push({ [v]: "This is a required field" });
                     }
                   });
+
+                  setError({ ...error, errors });
 
                   await submitApplication({
                     userId: user.id,
@@ -409,7 +406,7 @@ const Apply = () => {
                 }}
                 className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium"
               >
-                Submit
+                {submitting ? <Spinner size="xs" /> : "Submit"}
               </button>
             </div>
           </div>

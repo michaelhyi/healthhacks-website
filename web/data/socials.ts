@@ -2,7 +2,7 @@ export const socials = [
   {
     id: "instagram",
     src: "/socials/instagram.png",
-    href: "https://www.instagram.com/healthhacks.tech/",
+    href: "https://www.instagram.com/joinhealthhacks/",
   },
   {
     id: "twitter",

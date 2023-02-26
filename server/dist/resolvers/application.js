@@ -24,12 +24,17 @@ const appendApplicationSpreadsheet_1 = __importDefault(require("../utils/appendA
 const emails_1 = require("../utils/emails");
 const sgMail = require("@sendgrid/mail");
 let ApplicationResolver = class ApplicationResolver {
+    async deleteApplications() {
+        await Application_1.Application.delete({});
+        return true;
+    }
     async submitApplication(userId, firstName, lastName, email, phone, organization, city, state, inPerson, wholeEvent, background, whyUs, howHear, team, linkedIn, dietaryRestrictions, transportation, other) {
         console.log("resend initaited");
         await (0, typeorm_1.getConnection)()
             .getRepository(Application_1.Application)
             .createQueryBuilder()
             .update({
+            status: "Submitted",
             phone: phone,
             organization: organization,
             city: city,
@@ -120,6 +125,12 @@ let ApplicationResolver = class ApplicationResolver {
         return application;
     }
 };
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ApplicationResolver.prototype, "deleteApplications", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),

@@ -134,14 +134,14 @@ const Register = () => {
               <div className="text-xs mt-6">
                 By continuing you agree to the {`health{hacks}`}&nbsp;
                 <Link
-                  href="/"
+                  href="/terms-of-use"
                   className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
                 >
                   terms of service
                 </Link>
                 &nbsp;and&nbsp;
                 <Link
-                  href="/"
+                  href="/private-policy"
                   className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
                 >
                   privacy policy

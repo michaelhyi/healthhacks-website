@@ -110,14 +110,14 @@ const Footer = () => {
               All Rights Reserved. <br />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
-                href="private-policy"
+                href="/private-policy"
               >
                 Private Policy
               </Link>
               <br />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
-                href="terms-of-use"
+                href="/terms-of-use"
               >
                 Terms of Use
               </Link>
@@ -147,6 +147,15 @@ const Footer = () => {
                   </div>
                 ))}
               </div>
+              <h4 className="font-semibold sm:text-md md:text-base mt-4">
+                Mail
+              </h4>
+              <a
+                className="hover:cursor-pointer duration-500 hover:opacity-50"
+                href="mailto:info@joinhealthhacks.com"
+              >
+                info@joinhealthhacks.com
+              </a>
             </div>
           </div>
         </div>

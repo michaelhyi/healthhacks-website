@@ -57,8 +57,6 @@ const VerifyFail = () => {
               Having trouble?{" "}
               <a
                 href="mailto: info@joinhealthhacks.com"
-                target="_blank"
-                rel="noreferrer"
                 className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
               >
                 Contact us.
