@@ -55,6 +55,7 @@ export type Mutation = {
   resendVerificationEmail: Scalars['Boolean'];
   submitApplication: Scalars['Boolean'];
   updateApplication: Scalars['Boolean'];
+  updatePassword: Scalars['Boolean'];
   verifyUser: Response;
 };
 
@@ -130,6 +131,12 @@ export type MutationUpdateApplicationArgs = {
 };
 
 
+export type MutationUpdatePasswordArgs = {
+  password: Scalars['String'];
+  token: Scalars['String'];
+};
+
+
 export type MutationVerifyUserArgs = {
   token: Scalars['String'];
 };
@@ -137,8 +144,14 @@ export type MutationVerifyUserArgs = {
 export type Query = {
   __typename?: 'Query';
   readApplications: Array<Application>;
+  readTokenValidity: Response;
   readUser: User;
   readUsers: Array<User>;
+};
+
+
+export type QueryReadTokenValidityArgs = {
+  token: Scalars['String'];
 };
 
 
@@ -157,8 +170,8 @@ export type User = {
   createdAt: Scalars['String'];
   email: Scalars['String'];
   firstName: Scalars['String'];
-  forgotPasswordExpiration?: Maybe<Scalars['String']>;
-  forgotPasswordToken?: Maybe<Scalars['String']>;
+  forgotPasswordExpiration: Scalars['String'];
+  forgotPasswordToken: Scalars['String'];
   id: Scalars['Float'];
   lastName: Scalars['String'];
   updatedAt: Scalars['String'];
@@ -258,6 +271,14 @@ export type UpdateApplicationMutationVariables = Exact<{
 
 export type UpdateApplicationMutation = { __typename?: 'Mutation', updateApplication: boolean };
 
+export type UpdatePasswordMutationVariables = Exact<{
+  token: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type UpdatePasswordMutation = { __typename?: 'Mutation', updatePassword: boolean };
+
 export type VerifyUserMutationVariables = Exact<{
   token: Scalars['String'];
 }>;
@@ -265,12 +286,19 @@ export type VerifyUserMutationVariables = Exact<{
 
 export type VerifyUserMutation = { __typename?: 'Mutation', verifyUser: { __typename?: 'Response', success: boolean, error?: string | null } };
 
+export type ReadTokenValidityQueryVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type ReadTokenValidityQuery = { __typename?: 'Query', readTokenValidity: { __typename?: 'Response', success: boolean, error?: string | null } };
+
 export type ReadUserQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, verifyToken: string, verifyExpiration: string, forgotPasswordToken?: string | null, forgotPasswordExpiration?: string | null, createdAt: string, updatedAt: string } };
+export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, verifyToken: string, verifyExpiration: string, forgotPasswordToken: string, forgotPasswordExpiration: string, createdAt: string, updatedAt: string } };
 
 
 export const ForgotPasswordDocument = gql`
@@ -420,6 +448,15 @@ export const UpdateApplicationDocument = gql`
 export function useUpdateApplicationMutation() {
   return Urql.useMutation<UpdateApplicationMutation, UpdateApplicationMutationVariables>(UpdateApplicationDocument);
 };
+export const UpdatePasswordDocument = gql`
+    mutation UpdatePassword($token: String!, $password: String!) {
+  updatePassword(token: $token, password: $password)
+}
+    `;
+
+export function useUpdatePasswordMutation() {
+  return Urql.useMutation<UpdatePasswordMutation, UpdatePasswordMutationVariables>(UpdatePasswordDocument);
+};
 export const VerifyUserDocument = gql`
     mutation VerifyUser($token: String!) {
   verifyUser(token: $token) {
@@ -431,6 +468,18 @@ export const VerifyUserDocument = gql`
 
 export function useVerifyUserMutation() {
   return Urql.useMutation<VerifyUserMutation, VerifyUserMutationVariables>(VerifyUserDocument);
+};
+export const ReadTokenValidityDocument = gql`
+    query ReadTokenValidity($token: String!) {
+  readTokenValidity(token: $token) {
+    success
+    error
+  }
+}
+    `;
+
+export function useReadTokenValidityQuery(options: Omit<Urql.UseQueryArgs<ReadTokenValidityQueryVariables>, 'query'>) {
+  return Urql.useQuery<ReadTokenValidityQuery, ReadTokenValidityQueryVariables>({ query: ReadTokenValidityDocument, ...options });
 };
 export const ReadUserDocument = gql`
     query ReadUser($id: Int!) {

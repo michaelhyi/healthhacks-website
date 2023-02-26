@@ -12,6 +12,50 @@ const sgMail = require("@sendgrid/mail");
 
 @Resolver()
 export class UserResolver {
+  @Query(() => Response)
+  async readTokenValidity(@Arg("token") token: string): Promise<Response> {
+    const user = await User.findOne({ where: { forgotPasswordToken: token } });
+    const date = new Date().getTime();
+    const expiration = parseInt(user?.forgotPasswordExpiration!);
+
+    if (!user) {
+      return {
+        success: false,
+        error: "Invalid token.",
+      };
+    }
+
+    if (date > expiration) {
+      return {
+        success: false,
+        error: "Token expired.",
+      };
+    }
+
+    return {
+      success: true,
+    };
+  }
+
+  @Mutation(() => Boolean)
+  async updatePassword(
+    @Arg("token") token: string,
+    @Arg("password") password: string
+  ): Promise<boolean> {
+    const user = await User.findOne({ where: { forgotPasswordToken: token } });
+
+    await getConnection()
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({
+        password: await argon2.hash(password),
+      })
+      .where({ id: user!.id })
+      .returning("*")
+      .execute();
+    return true;
+  }
+
   @Mutation(() => Response)
   async forgotPassword(@Arg("email") email: string): Promise<Response> {
     const user = await User.findOne({ where: { email } });

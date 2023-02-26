@@ -50,6 +50,39 @@ const emails_1 = require("../utils/emails");
 const types_1 = require("../utils/types");
 const sgMail = require("@sendgrid/mail");
 let UserResolver = class UserResolver {
+    async readTokenValidity(token) {
+        const user = await User_1.User.findOne({ where: { forgotPasswordToken: token } });
+        const date = new Date().getTime();
+        const expiration = parseInt(user === null || user === void 0 ? void 0 : user.forgotPasswordExpiration);
+        if (!user) {
+            return {
+                success: false,
+                error: "Invalid token.",
+            };
+        }
+        if (date > expiration) {
+            return {
+                success: false,
+                error: "Token expired.",
+            };
+        }
+        return {
+            success: true,
+        };
+    }
+    async updatePassword(token, password) {
+        const user = await User_1.User.findOne({ where: { forgotPasswordToken: token } });
+        await (0, typeorm_1.getConnection)()
+            .getRepository(User_1.User)
+            .createQueryBuilder()
+            .update({
+            password: await argon2_1.default.hash(password),
+        })
+            .where({ id: user.id })
+            .returning("*")
+            .execute();
+        return true;
+    }
     async forgotPassword(email) {
         const user = await User_1.User.findOne({ where: { email } });
         if (!EmailValidator.validate(email) || !user) {
@@ -273,6 +306,21 @@ let UserResolver = class UserResolver {
         };
     }
 };
+__decorate([
+    (0, type_graphql_1.Query)(() => types_1.Response),
+    __param(0, (0, type_graphql_1.Arg)("token")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "readTokenValidity", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("token")),
+    __param(1, (0, type_graphql_1.Arg)("password")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "updatePassword", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => types_1.Response),
     __param(0, (0, type_graphql_1.Arg)("email")),
