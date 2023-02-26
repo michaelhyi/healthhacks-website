@@ -197,7 +197,7 @@ export const verifyHTML = (token: string) => {
                             <tbody>
                               <tr>
                                 <td align="center" valign="top" style="padding: 10px;">
-                                  <a href="http://joinhealthhacks.com" style="text-decoration: none;"><img src="https://www.joinhealthhacks.com/Official%20Logo.JPEG" width="279" height="60" alt="" style="max-width: 100%; border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff; font-size: 14px"></a>
+                                  <a href="http://joinhealthhacks.com" style="text-decoration: none;"><img src="https://www.joinhealthhacks.com/healthhacks-Email-Logo.png" width="279" height="60" alt="" style="max-width: 100%; border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff; font-size: 14px"></a>
                                 </td>
                               </tr>
                             </tbody>
@@ -653,7 +653,7 @@ export const applicationConfirmationHTML = `<!DOCTYPE html PUBLIC "-//W3C//DTD X
                                       href="http://joinhealthhacks.com"
                                       style="text-decoration: none"
                                       ><img
-                                        src="images/healthhacks-Email-Logo-0aO.png"
+                                        src="https://www.joinhealthhacks.com/healthhacks-Email-Logo.png"
                                         width="279"
                                         height="60"
                                         alt=""

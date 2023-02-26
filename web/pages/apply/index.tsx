@@ -4,7 +4,7 @@ import { dietary } from "@/data/dietary";
 import { wherefrom } from "@/data/wherefrom";
 import { whyhh } from "@/data/whyhh";
 import { yesno } from "@/data/yesno";
-import { Radio, RadioGroup, Spinner } from "@chakra-ui/react";
+import { Radio, RadioGroup, Spinner, useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -23,6 +23,7 @@ import { createUrqlClient } from "../../utils/createUrqlClient";
 import { FormType } from "../../utils/types";
 
 const Apply = () => {
+  const toast = useToast();
   const router = useRouter();
   const { user } = useContext(Context);
   const [submitting, setSubmitting] = useState(false);
@@ -46,19 +47,7 @@ const Apply = () => {
     transportation: "",
     other: "",
   });
-  const [phoneError, setPhoneError] = useState("");
-  const [organizationError, setOrganizationError] = useState("");
-  const [cityError, setCityError] = useState("");
-  const [stateError, setStateError] = useState("");
-  const [inPersonError, setInPersonError] = useState("");
-  const [wholeEventError, setWholeEventError] = useState("");
-  const [backgroundError, setBackgroundError] = useState("");
-  const [whyUsError, setWhyUsError] = useState("");
-  const [howHearError, setHowHearError] = useState("");
-  const [teamError, setTeamError] = useState("");
-  const [linkedinError, setLinkedinError] = useState("");
-  const [dietaryRestrictionsError, setDietaryRestrictionsError] = useState("");
-  const [transportationError, setTransportationError] = useState("");
+  const [error, setError] = useState(new Array(13).fill(""));
 
   useEffect(() => {
     (async () => {
@@ -85,6 +74,59 @@ const Apply = () => {
       }
     })();
   }, [user]);
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+
+    let found = false;
+    let errors: string[] = [];
+
+    Object.keys(form).forEach((v) => {
+      if (form[v as keyof FormType].length === 0) {
+        errors.push("This is a required field");
+        found = true;
+      } else {
+        errors.push("");
+      }
+    });
+
+    setError(errors);
+
+    if (!found) {
+      await submitApplication({
+        userId: user!.id,
+        firstName: user!.firstName,
+        lastName: user!.lastName,
+        email: user!.email,
+        phone: form.phone,
+        organization: form.organization,
+        city: form.city,
+        state: form.state,
+        inPerson: form.inPerson,
+        wholeEvent: form.wholeEvent,
+        background: form.background,
+        whyUs: form.whyUs,
+        howHear: form.howHear,
+        team: form.team,
+        linkedIn: form.linkedIn,
+        dietaryRestrictions: form.dietaryRestrictions,
+        transportation: form.transportation,
+        other: form.other,
+      });
+
+      router.push("/apply/success");
+    } else {
+      toast({
+        title: "Error!",
+        description: "You must fill out all required fields!",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      });
+    }
+
+    setSubmitting(false);
+  };
 
   const updateForm = async () => {
     await updateApplication({
@@ -144,7 +186,7 @@ const Apply = () => {
                 <div className="w-[50vw]">
                   <ApplicationInput
                     // userId={user.id}
-                    error={phoneError}
+                    error={error[0]}
                     value={form.phone}
                     setValue={(value) => setForm({ ...form, phone: value })}
                     label="Phone Number"
@@ -153,7 +195,7 @@ const Apply = () => {
                 <div className="w-[50vw]">
                   <ApplicationInput
                     // userId={user.id}
-                    error={organizationError}
+                    error={error[1]}
                     value={form.organization}
                     setValue={(value) =>
                       setForm({ ...form, organization: value })
@@ -168,7 +210,7 @@ const Apply = () => {
                 <div className="w-[50vw]">
                   <ApplicationInput
                     // userId={user.id}
-                    error={cityError}
+                    error={error[2]}
                     value={form.city}
                     setValue={(value) => setForm({ ...form, city: value })}
                     label="City"
@@ -176,6 +218,7 @@ const Apply = () => {
                 </div>
                 <div className="w-[50vw]">
                   <DropDown
+                    error={error[3]}
                     name="State"
                     options={states}
                     value={form.state}
@@ -188,7 +231,9 @@ const Apply = () => {
               <div className="flex space-x-6">
                 <div className="w-[50vw]">
                   <div
-                    className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold`}
+                    className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
+                      error[4].length > 0 ? "text-red-400" : "text-white"
+                    }`}
                   >
                     Can you attend in-person?
                   </div>
@@ -196,7 +241,11 @@ const Apply = () => {
                     onChange={(v) => setForm({ ...form, inPerson: v })}
                     value={form.inPerson}
                   >
-                    <div className="flex items-center space-x-4">
+                    <div
+                      className={`flex items-center space-x-4 ${
+                        error[4].length > 0 ? "text-red-400" : "text-white"
+                      }`}
+                    >
                       <Radio
                         value="Yes"
                         colorScheme="black"
@@ -213,10 +262,17 @@ const Apply = () => {
                       </Radio>
                     </div>
                   </RadioGroup>
+                  {error[4] && error[4].length > 0 && (
+                    <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+                      {error[4]}
+                    </div>
+                  )}
                 </div>
                 <div className="w-[50vw]">
                   <div
-                    className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold`}
+                    className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
+                      error[5].length > 0 ? "text-red-400" : "text-white"
+                    }`}
                   >
                     Can you attend the whole event?
                   </div>
@@ -226,7 +282,11 @@ const Apply = () => {
                     }
                     value={form.wholeEvent}
                   >
-                    <div className="flex items-center space-x-4">
+                    <div
+                      className={`flex items-center space-x-4 ${
+                        error[5].length > 0 ? "text-red-400" : "text-white"
+                      }`}
+                    >
                       <Radio
                         value="Yes"
                         colorScheme="black"
@@ -243,6 +303,11 @@ const Apply = () => {
                       </Radio>
                     </div>
                   </RadioGroup>
+                  {error[5] && error[5].length > 0 && (
+                    <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+                      {error[5]}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -250,6 +315,7 @@ const Apply = () => {
               <div>
                 <div>
                   <MultiSelect
+                    error={error[6]}
                     name="What is your background?"
                     options={background}
                     value={form.background}
@@ -262,6 +328,7 @@ const Apply = () => {
               <div>
                 <div>
                   <MultiSelect
+                    error={error[7]}
                     name="Why do you want to attend health{hacks} 2023?"
                     options={whyhh}
                     value={form.whyUs}
@@ -274,6 +341,7 @@ const Apply = () => {
               <div>
                 <div>
                   <DropDown
+                    error={error[8]}
                     name="How did you hear about health{hacks}"
                     options={wherefrom}
                     value={form.howHear}
@@ -286,6 +354,7 @@ const Apply = () => {
               <div>
                 <div>
                   <DropDown
+                    error={error[9]}
                     name="Do you have a team yet?"
                     options={yesno}
                     value={form.team}
@@ -297,7 +366,7 @@ const Apply = () => {
               {/* LinkedIn Profile */}
               <div>
                 <ApplicationInput
-                  // userId={user.id}
+                  error={error[10]}
                   value={form.linkedIn}
                   setValue={(value) => setForm({ ...form, linkedIn: value })}
                   label="LinkedIn Profile"
@@ -308,6 +377,7 @@ const Apply = () => {
               <div>
                 <div>
                   <DropDown
+                    error={error[11]}
                     name="Any dietary restrictions?"
                     options={dietary}
                     value={form.dietaryRestrictions}
@@ -322,6 +392,7 @@ const Apply = () => {
               <div>
                 <div>
                   <DropDown
+                    error={error[12]}
                     name="Do you need transporation to Stanford?"
                     options={yesno}
                     value={form.transportation}
@@ -368,42 +439,7 @@ const Apply = () => {
             </form>
             <div className="flex items-center space-x-6 pt-8 pb-24">
               <button
-                onClick={async () => {
-                  setSubmitting(true);
-
-                  let errors: any[] = [];
-
-                  Object.keys(form).forEach((v) => {
-                    if (form[v as keyof FormType].length === 0) {
-                      errors.push({ [v]: "This is a required field" });
-                    }
-                  });
-
-                  setError({ ...error, errors });
-
-                  await submitApplication({
-                    userId: user.id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    phone: form.phone,
-                    organization: form.organization,
-                    city: form.city,
-                    state: form.state,
-                    inPerson: form.inPerson,
-                    wholeEvent: form.wholeEvent,
-                    background: form.background,
-                    whyUs: form.whyUs,
-                    howHear: form.howHear,
-                    team: form.team,
-                    linkedIn: form.linkedIn,
-                    dietaryRestrictions: form.dietaryRestrictions,
-                    transportation: form.transportation,
-                    other: form.other,
-                  });
-
-                  router.push("/apply/success");
-                }}
+                onClick={handleSubmit}
                 className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium"
               >
                 {submitting ? <Spinner size="xs" /> : "Submit"}

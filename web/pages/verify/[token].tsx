@@ -33,7 +33,7 @@ const Verify = () => {
 
   if (!result) {
     <ContainerApp>
-      <div className="text-white">loading...</div>
+      <></>
     </ContainerApp>;
   }
 

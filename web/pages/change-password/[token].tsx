@@ -60,7 +60,7 @@ const ChangePassword = () => {
 
   if (!data && fetching) {
     <ContainerApp>
-      <div>loading...</div>
+      <></>
     </ContainerApp>;
   }
 
