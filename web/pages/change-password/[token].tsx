@@ -6,13 +6,12 @@ import Input from "../../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import ChangePasswordFail from "../../components/ChangePasswordFail";
+import ChangePasswordSuccess from "../../components/ChangePasswordSuccess";
 import {
   useReadTokenValidityQuery,
   useUpdatePasswordMutation,
 } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
-import { Container } from "@chakra-ui/react";
-import ChangePasswordSuccess from "../../components/ChangePasswordSuccess";
 
 const ChangePassword = () => {
   const router = useRouter();
@@ -23,6 +22,13 @@ const ChangePassword = () => {
     },
   });
 
+  const [user, setUser] = useState<null | {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    verified: boolean;
+  }>(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -55,8 +61,18 @@ const ChangePassword = () => {
     }
 
     try {
-      await updatePassword({ token: router.query.token as string, password });
+      const response = await updatePassword({
+        token: router.query.token as string,
+        password,
+      });
 
+      setUser({
+        id: response.data?.updatePassword.id!,
+        firstName: response.data?.updatePassword.firstName!,
+        lastName: response.data?.updatePassword.lastName!,
+        email: response.data?.updatePassword.email!,
+        verified: response.data?.updatePassword.verified!,
+      });
       setSuccess(true);
     } catch (e) {
       console.error(e);
@@ -66,7 +82,7 @@ const ChangePassword = () => {
   if (success) {
     return (
       <ContainerApp>
-        <ChangePasswordSuccess />
+        <ChangePasswordSuccess user={user} />
       </ContainerApp>
     );
   }

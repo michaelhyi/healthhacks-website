@@ -38,11 +38,11 @@ export class UserResolver {
     };
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => User)
   async updatePassword(
     @Arg("token") token: string,
     @Arg("password") password: string
-  ): Promise<boolean> {
+  ): Promise<User> {
     const user = await User.findOne({ where: { forgotPasswordToken: token } });
 
     await getConnection()
@@ -54,7 +54,7 @@ export class UserResolver {
       .where({ id: user!.id })
       .returning("*")
       .execute();
-    return true;
+    return user!;
   }
 
   @Mutation(() => Response)
@@ -76,7 +76,7 @@ export class UserResolver {
         forgotPasswordToken: token,
         forgotPasswordExpiration: (
           new Date().getTime() +
-          1000 * 60 * 60 * 24 * 2
+          1000 * 60 * 15
         ).toString(),
       })
       .where({ id: user.id })
@@ -136,6 +136,7 @@ export class UserResolver {
           .execute();
         return {
           success: true,
+          user,
         };
       }
     }
@@ -164,10 +165,7 @@ export class UserResolver {
       .createQueryBuilder()
       .update({
         verifyToken: token,
-        verifyExpiration: (
-          new Date().getTime() +
-          1000 * 60 * 60 * 24 * 2
-        ).toString(),
+        verifyExpiration: (new Date().getTime() + 1000 * 60 * 15).toString(),
       })
       .where({ id })
       .returning("*")
@@ -256,10 +254,7 @@ export class UserResolver {
         firstName,
         lastName,
         verifyToken: token,
-        verifyExpiration: (
-          new Date().getTime() +
-          1000 * 60 * 60 * 24 * 2
-        ).toString(),
+        verifyExpiration: (new Date().getTime() + 1000 * 60 * 15).toString(),
       }).save();
 
       await Application.create({

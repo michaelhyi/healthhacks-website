@@ -55,7 +55,7 @@ export type Mutation = {
   resendVerificationEmail: Scalars['Boolean'];
   submitApplication: Scalars['Boolean'];
   updateApplication: Scalars['Boolean'];
-  updatePassword: Scalars['Boolean'];
+  updatePassword: User;
   verifyUser: Response;
 };
 
@@ -164,6 +164,7 @@ export type Response = {
   email?: Maybe<Scalars['String']>;
   error?: Maybe<Scalars['String']>;
   success: Scalars['Boolean'];
+  user?: Maybe<User>;
 };
 
 export type User = {
@@ -278,14 +279,14 @@ export type UpdatePasswordMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePasswordMutation = { __typename?: 'Mutation', updatePassword: boolean };
+export type UpdatePasswordMutation = { __typename?: 'Mutation', updatePassword: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, verified: boolean } };
 
 export type VerifyUserMutationVariables = Exact<{
   token: Scalars['String'];
 }>;
 
 
-export type VerifyUserMutation = { __typename?: 'Mutation', verifyUser: { __typename?: 'Response', success: boolean, error?: string | null } };
+export type VerifyUserMutation = { __typename?: 'Mutation', verifyUser: { __typename?: 'Response', success: boolean, error?: string | null, user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, verified: boolean } | null } };
 
 export type ReadTokenValidityQueryVariables = Exact<{
   token: Scalars['String'];
@@ -451,7 +452,13 @@ export function useUpdateApplicationMutation() {
 };
 export const UpdatePasswordDocument = gql`
     mutation UpdatePassword($token: String!, $password: String!) {
-  updatePassword(token: $token, password: $password)
+  updatePassword(token: $token, password: $password) {
+    id
+    firstName
+    lastName
+    email
+    verified
+  }
 }
     `;
 
@@ -463,6 +470,13 @@ export const VerifyUserDocument = gql`
   verifyUser(token: $token) {
     success
     error
+    user {
+      id
+      firstName
+      lastName
+      email
+      verified
+    }
   }
 }
     `;

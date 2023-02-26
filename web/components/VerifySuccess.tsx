@@ -1,17 +1,33 @@
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { sleep } from "../utils/sleep";
+import Context from "../utils/context";
 
-const VerifySuccess = () => {
+interface Props {
+  user: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    verified: boolean;
+  } | null;
+}
+
+const VerifySuccess: React.FC<Props> = ({ user }) => {
   const router = useRouter();
+  const { setUser } = useContext(Context);
 
   useEffect(() => {
     (async () => {
+      await localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+
       await sleep(3000);
-      router.push("/login");
+
+      router.push("/apply");
     })();
   }, []);
 
@@ -31,7 +47,7 @@ const VerifySuccess = () => {
             Your account has been verified, and thank you for joining us in
             revolutionizing healthcare.
             <br />
-            You will now be redirected to our login page.
+            You will now be redirected to our application form.
           </p>
         </div>
       </div>

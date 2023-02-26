@@ -11,6 +11,9 @@ export class Response {
 
   @Field({ nullable: true })
   email?: string;
+
+  @Field(() => User, { nullable: true })
+  user?: User;
 }
 
 @ObjectType()

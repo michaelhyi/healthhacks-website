@@ -26,6 +26,10 @@ __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], Response.prototype, "email", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => User_1.User, { nullable: true }),
+    __metadata("design:type", User_1.User)
+], Response.prototype, "user", void 0);
 Response = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], Response);

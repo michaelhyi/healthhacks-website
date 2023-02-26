@@ -35,11 +35,11 @@ export class User extends BaseEntity {
   verified: boolean = false;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   verifyToken: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   verifyExpiration: string;
 
   @Field()
