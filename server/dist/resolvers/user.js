@@ -99,7 +99,7 @@ let UserResolver = class UserResolver {
             .update({
             forgotPasswordToken: token,
             forgotPasswordExpiration: (new Date().getTime() +
-                1000 * 60 * 15).toString(),
+                1000 * 60 * 60 * 2).toString(),
         })
             .where({ id: user.id })
             .returning("*")
@@ -172,7 +172,8 @@ let UserResolver = class UserResolver {
             .createQueryBuilder()
             .update({
             verifyToken: token,
-            verifyExpiration: (new Date().getTime() + 1000 * 60 * 15).toString(),
+            verifyExpiration: (new Date().getTime() +
+                1000 * 60 * 60 * 2).toString(),
         })
             .where({ id })
             .returning("*")
@@ -244,7 +245,8 @@ let UserResolver = class UserResolver {
                 firstName,
                 lastName,
                 verifyToken: token,
-                verifyExpiration: (new Date().getTime() + 1000 * 60 * 15).toString(),
+                verifyExpiration: (new Date().getTime() +
+                    1000 * 60 * 60 * 2).toString(),
             }).save();
             await Application_1.Application.create({
                 userId: user.id,

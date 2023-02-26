@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import Router, { useRouter } from "next/router";
 import ContainerApp from "@/components/ContainerApp";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+//@ts-ignore
 import Fade from "react-reveal/Fade";
-import { socials } from "@/data/socials";
 
 // This page is for if the applicant chooses: I can't make the event in person. We will automatically reject them, but
 // they have a chance to change their application if they accidentally selected this.
 
-const NextTime = () => {
+const Reject = () => {
   const router = useRouter();
-  const [error, setError] = useState("");
 
   return (
     <ContainerApp>
@@ -41,4 +41,4 @@ const NextTime = () => {
   );
 };
 
-export default NextTime;
+export default Reject;

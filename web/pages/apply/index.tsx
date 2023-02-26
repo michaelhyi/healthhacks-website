@@ -78,19 +78,6 @@ const Apply = () => {
     })();
   }, [user]);
 
-  useEffect(() => {
-    let errors: string[] = [];
-    Object.keys(form).forEach((v) => {
-      if (v === "inPerson" && form[v as keyof FormType] === "No") {
-        errors.push("You must attend in-person!");
-      } else {
-        errors.push("");
-      }
-
-      setError(errors);
-    });
-  }, [form]);
-
   const handleSubmit = async () => {
     setSubmitting(true);
 
@@ -98,10 +85,7 @@ const Apply = () => {
     let errors: string[] = [];
 
     Object.keys(form).forEach((v) => {
-      if (v === "inPerson" && form[v as keyof FormType] === "No") {
-        errors.push("You must attend in-person!");
-        found = true;
-      } else if (v !== "other" && form[v as keyof FormType].length === 0) {
+      if (v !== "other" && form[v as keyof FormType].length === 0) {
         errors.push("This is a required field");
         found = true;
       } else {
@@ -112,28 +96,39 @@ const Apply = () => {
     setError(errors);
 
     if (!found) {
-      await submitApplication({
-        userId: user!.id,
-        firstName: user!.firstName,
-        lastName: user!.lastName,
-        email: user!.email,
-        phone: form.phone,
-        organization: form.organization,
-        city: form.city,
-        state: form.state,
-        inPerson: form.inPerson,
-        wholeEvent: form.wholeEvent,
-        background: form.background,
-        whyUs: form.whyUs,
-        howHear: form.howHear,
-        team: form.team,
-        linkedIn: form.linkedIn,
-        dietaryRestrictions: form.dietaryRestrictions,
-        transportation: form.transportation,
-        other: form.other,
-      });
-
-      router.push("/apply/success");
+      if (form.inPerson === "No") {
+        router.push("/apply/reject");
+      } else if (form.wholeEvent === "No") {
+        router.push({
+          pathname: "/apply/warning",
+          query: {
+            user: JSON.stringify(user),
+            form: JSON.stringify(form),
+          },
+        });
+      } else {
+        await submitApplication({
+          userId: user!.id,
+          firstName: user!.firstName,
+          lastName: user!.lastName,
+          email: user!.email,
+          phone: form.phone,
+          organization: form.organization,
+          city: form.city,
+          state: form.state,
+          inPerson: form.inPerson,
+          wholeEvent: form.wholeEvent,
+          background: form.background,
+          whyUs: form.whyUs,
+          howHear: form.howHear,
+          team: form.team,
+          linkedIn: form.linkedIn,
+          dietaryRestrictions: form.dietaryRestrictions,
+          transportation: form.transportation,
+          other: form.other,
+        });
+        router.push("/apply/success");
+      }
     } else {
       toast({
         title: "Error!",

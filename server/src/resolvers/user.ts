@@ -76,7 +76,7 @@ export class UserResolver {
         forgotPasswordToken: token,
         forgotPasswordExpiration: (
           new Date().getTime() +
-          1000 * 60 * 15
+          1000 * 60 * 60 * 2
         ).toString(),
       })
       .where({ id: user.id })
@@ -165,7 +165,10 @@ export class UserResolver {
       .createQueryBuilder()
       .update({
         verifyToken: token,
-        verifyExpiration: (new Date().getTime() + 1000 * 60 * 15).toString(),
+        verifyExpiration: (
+          new Date().getTime() +
+          1000 * 60 * 60 * 2
+        ).toString(),
       })
       .where({ id })
       .returning("*")
@@ -254,7 +257,10 @@ export class UserResolver {
         firstName,
         lastName,
         verifyToken: token,
-        verifyExpiration: (new Date().getTime() + 1000 * 60 * 15).toString(),
+        verifyExpiration: (
+          new Date().getTime() +
+          1000 * 60 * 60 * 2
+        ).toString(),
       }).save();
 
       await Application.create({
