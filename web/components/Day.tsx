@@ -22,9 +22,9 @@ const Day: React.FC<Props> = ({ id, title, desc, icon_name }) => {
       </video>
       {/* Timeline */}
       <div className="flex flex-col">
-        <div className="border-l relative border-opacity-75 border-dashed border-[#aaa] h-0 md:h-[40vh] xl:h-[50vh] 2xl:h-[60vh] w-0 top-0 border-0 left-1/2 justify-center invisible md:visible" />
+        <div className="border-l relative border-opacity-75 border-dashed border-[#aaa] h-0 md:h-[40vh] xl:h-[50vh] 2xl:h-[450px] w-0 top-0 border-0 left-1/2 justify-center invisible md:visible" />
         <div className="rounded-full border-opacity-75 border-[#aaa] w-0 h-0 md:w-[10px] md:h-[10px] lg:w-[15px] lg:h-[15px] border-2 my-2 invisible md:visible" />
-        <div className="border-l relative border-opacity-75 border-dashed border-[#aaa] h-0 md:h-[40vh] xl:h-[50vh] 2xl:h-[60vh] w-0 border-0 left-1/2 justify-center invisible md:visible" />
+        <div className="border-l relative border-opacity-75 border-dashed border-[#aaa] h-0 md:h-[40vh] xl:h-[50vh] 2xl:h-[450px] w-0 border-0 left-1/2 justify-center invisible md:visible" />
       </div>
       {/* Text */}
       <div className="flex flex-col text-center items-center md:items-start md:text-left w-[300px] lg:w-[450px] xl:w-[512px] space-y-2 md:space-y-4 pl-0 md:pl-8 lg:pl-16">

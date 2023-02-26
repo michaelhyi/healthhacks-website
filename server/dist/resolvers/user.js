@@ -42,12 +42,156 @@ exports.UserResolver = void 0;
 const argon2_1 = __importDefault(require("argon2"));
 const EmailValidator = __importStar(require("email-validator"));
 const type_graphql_1 = require("type-graphql");
+const typeorm_1 = require("typeorm");
+const uuid_1 = require("uuid");
 const Application_1 = require("../entities/Application");
 const User_1 = require("../entities/User");
+const emails_1 = require("../utils/emails");
 const types_1 = require("../utils/types");
+const sgMail = require("@sendgrid/mail");
 let UserResolver = class UserResolver {
+    async readTokenValidity(token) {
+        const user = await User_1.User.findOne({ where: { forgotPasswordToken: token } });
+        const date = new Date().getTime();
+        const expiration = parseInt(user === null || user === void 0 ? void 0 : user.forgotPasswordExpiration);
+        if (!user) {
+            return {
+                success: false,
+                error: "Invalid token.",
+            };
+        }
+        if (date > expiration) {
+            return {
+                success: false,
+                error: "Token expired.",
+            };
+        }
+        return {
+            success: true,
+            email: user.email,
+        };
+    }
+    async updatePassword(token, password) {
+        const user = await User_1.User.findOne({ where: { forgotPasswordToken: token } });
+        await (0, typeorm_1.getConnection)()
+            .getRepository(User_1.User)
+            .createQueryBuilder()
+            .update({
+            password: await argon2_1.default.hash(password),
+        })
+            .where({ id: user.id })
+            .returning("*")
+            .execute();
+        return true;
+    }
+    async forgotPassword(email) {
+        const user = await User_1.User.findOne({ where: { email } });
+        if (!EmailValidator.validate(email) || !user) {
+            return {
+                success: false,
+                error: "Invalid Email",
+            };
+        }
+        const token = (0, uuid_1.v4)();
+        await (0, typeorm_1.getConnection)()
+            .getRepository(User_1.User)
+            .createQueryBuilder()
+            .update({
+            forgotPasswordToken: token,
+            forgotPasswordExpiration: (new Date().getTime() +
+                1000 * 60 * 60 * 24 * 2).toString(),
+        })
+            .where({ id: user.id })
+            .returning("*")
+            .execute();
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        const msg = {
+            to: email,
+            from: process.env.SENDGRID_EMAIL,
+            subject: "health{hacks} 2023 Password Change",
+            html: (0, emails_1.forgotPaswordHTML)(token),
+        };
+        sgMail
+            .send(msg)
+            .then(() => {
+            console.log("Email sent");
+        })
+            .catch((error) => {
+            console.error(error);
+        });
+        return {
+            success: true,
+        };
+    }
+    async verifyUser(token) {
+        const user = await User_1.User.findOne({ where: { verifyToken: token } });
+        const date = new Date().getTime();
+        const expiration = parseInt(user === null || user === void 0 ? void 0 : user.verifyExpiration);
+        if (!user) {
+            return {
+                success: false,
+                error: "Invalid token.",
+            };
+        }
+        if (!user.verified) {
+            if (date > expiration) {
+                return {
+                    success: false,
+                    error: "Token expired.",
+                };
+            }
+            else {
+                await (0, typeorm_1.getConnection)()
+                    .getRepository(User_1.User)
+                    .createQueryBuilder()
+                    .update({
+                    verified: true,
+                })
+                    .where({ id: user.id })
+                    .returning("*")
+                    .execute();
+                return {
+                    success: true,
+                };
+            }
+        }
+        return {
+            success: false,
+            error: "User already verified.",
+        };
+    }
     async deleteUsers() {
         await User_1.User.delete({});
+        return true;
+    }
+    async resendVerificationEmail(id, email) {
+        const token = (0, uuid_1.v4)();
+        await (0, typeorm_1.getConnection)()
+            .getRepository(User_1.User)
+            .createQueryBuilder()
+            .update({
+            verifyToken: token,
+            verifyExpiration: (new Date().getTime() +
+                1000 * 60 * 60 * 24 * 2).toString(),
+        })
+            .where({ id })
+            .returning("*")
+            .execute();
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        const msg = {
+            to: email,
+            from: process.env.SENDGRID_EMAIL,
+            subject: "health{hacks} 2023 Email Verification",
+            html: (0, emails_1.verifyHTML)(token),
+        };
+        sgMail
+            .send(msg)
+            .then(() => {
+            console.log("Email sent");
+        })
+            .catch((error) => {
+            console.error(error);
+        });
         return true;
     }
     async readUser(id) {
@@ -92,18 +236,35 @@ let UserResolver = class UserResolver {
             };
         }
         let user;
+        const token = (0, uuid_1.v4)();
         try {
             user = await User_1.User.create({
                 email,
                 password: await argon2_1.default.hash(password),
                 firstName,
                 lastName,
+                verifyToken: token,
+                verifyExpiration: (new Date().getTime() +
+                    1000 * 60 * 60 * 24 * 2).toString(),
             }).save();
             await Application_1.Application.create({
                 userId: user.id,
-                firstName,
-                lastName,
             }).save();
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            const msg = {
+                to: email,
+                from: process.env.SENDGRID_EMAIL,
+                subject: "health{hacks} 2023 Email Verification",
+                html: (0, emails_1.verifyHTML)(token),
+            };
+            sgMail
+                .send(msg)
+                .then(() => {
+                console.log("Email sent");
+            })
+                .catch((error) => {
+                console.error(error);
+            });
         }
         catch (e) {
             if (e.detail.includes("already exists") ||
@@ -148,11 +309,48 @@ let UserResolver = class UserResolver {
     }
 };
 __decorate([
+    (0, type_graphql_1.Query)(() => types_1.Response),
+    __param(0, (0, type_graphql_1.Arg)("token")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "readTokenValidity", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("token")),
+    __param(1, (0, type_graphql_1.Arg)("password")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "updatePassword", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => types_1.Response),
+    __param(0, (0, type_graphql_1.Arg)("email")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "forgotPassword", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => types_1.Response),
+    __param(0, (0, type_graphql_1.Arg)("token")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "verifyUser", null);
+__decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "deleteUsers", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)("email")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "resendVerificationEmail", null);
 __decorate([
     (0, type_graphql_1.Query)(() => User_1.User),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
