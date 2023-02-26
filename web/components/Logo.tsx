@@ -4,11 +4,11 @@ const Logo = () => {
   return (
     <Link
       href="/"
-      className="z-[1000] hover:cursor-pointer duration-500 hover:opacity-50 flex items-center space-x-1"
+      className="z-[1000] hover:cursor-pointer duration-500 hover:opacity-50 flex items-center space-x-2"
     >
       <img
         src="/Official Logo.JPEG"
-        className="sm:h-[35px] sm:w-[35px] lg:h-[50px] lg:w-[50px]"
+        className="sm:h-[30px] sm:w-[30px] lg:h-[40px] lg:w-[40px]"
       />
       <img
         src="/health{hacks} - Logo.svg"
