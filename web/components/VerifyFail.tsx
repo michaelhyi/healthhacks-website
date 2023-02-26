@@ -1,5 +1,4 @@
 import { useToast } from "@chakra-ui/react";
-import { withUrqlClient } from "next-urql";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -7,7 +6,6 @@ import { AiOutlineLeft } from "react-icons/ai";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { useResendVerificationEmailMutation } from "../generated/graphql";
-import { createUrqlClient } from "../utils/createUrqlClient";
 
 interface Props {
   error: string;
@@ -97,4 +95,4 @@ const VerifyFail: React.FC<Props> = ({ error }) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(VerifyFail);
+export default VerifyFail;
