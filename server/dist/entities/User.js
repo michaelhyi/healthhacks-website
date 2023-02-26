@@ -51,12 +51,22 @@ __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], User.prototype, "token", void 0);
+], User.prototype, "verifyToken", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], User.prototype, "expiration", void 0);
+], User.prototype, "verifyExpiration", void 0);
+__decorate([
+    (0, type_graphql_1.Field)({ nullable: true }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "forgotPasswordToken", void 0);
+__decorate([
+    (0, type_graphql_1.Field)({ nullable: true }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "forgotPasswordExpiration", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),

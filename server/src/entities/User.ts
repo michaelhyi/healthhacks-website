@@ -36,11 +36,19 @@ export class User extends BaseEntity {
 
   @Field()
   @Column()
-  token: string;
+  verifyToken: string;
 
   @Field()
   @Column()
-  expiration: string;
+  verifyExpiration: string;
+
+  @Field({ nullable: true })
+  @Column()
+  forgotPasswordToken: string;
+
+  @Field({ nullable: true })
+  @Column()
+  forgotPasswordExpiration: string;
 
   @Field(() => String)
   @CreateDateColumn()

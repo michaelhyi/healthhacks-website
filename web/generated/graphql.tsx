@@ -46,6 +46,7 @@ export type Error = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  deleteApplications: Scalars['Boolean'];
   deleteUsers: Scalars['Boolean'];
   login: UserResponse;
   readApplication: Application;
@@ -143,13 +144,15 @@ export type User = {
   __typename?: 'User';
   createdAt: Scalars['String'];
   email: Scalars['String'];
-  expiration: Scalars['String'];
   firstName: Scalars['String'];
+  forgotPasswordExpiration?: Maybe<Scalars['String']>;
+  forgotPasswordToken?: Maybe<Scalars['String']>;
   id: Scalars['Float'];
   lastName: Scalars['String'];
-  token: Scalars['String'];
   updatedAt: Scalars['String'];
   verified: Scalars['Boolean'];
+  verifyExpiration: Scalars['String'];
+  verifyToken: Scalars['String'];
 };
 
 export type UserResponse = {
@@ -254,7 +257,7 @@ export type ReadUserQueryVariables = Exact<{
 }>;
 
 
-export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, token: string, expiration: string, createdAt: string, updatedAt: string } };
+export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, verifyToken: string, verifyExpiration: string, forgotPasswordToken?: string | null, forgotPasswordExpiration?: string | null, createdAt: string, updatedAt: string } };
 
 
 export const LoginDocument = gql`
@@ -412,8 +415,10 @@ export const ReadUserDocument = gql`
     firstName
     lastName
     verified
-    token
-    expiration
+    verifyToken
+    verifyExpiration
+    forgotPasswordToken
+    forgotPasswordExpiration
     createdAt
     updatedAt
   }

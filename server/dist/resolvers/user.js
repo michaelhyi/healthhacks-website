@@ -51,9 +51,9 @@ const types_1 = require("../utils/types");
 const sgMail = require("@sendgrid/mail");
 let UserResolver = class UserResolver {
     async verifyUser(token) {
-        const user = await User_1.User.findOne({ where: { token } });
+        const user = await User_1.User.findOne({ where: { verifyToken: token } });
         const date = new Date().getTime();
-        const expiration = parseInt(user === null || user === void 0 ? void 0 : user.expiration);
+        const expiration = parseInt(user === null || user === void 0 ? void 0 : user.verifyExpiration);
         if (!user) {
             return {
                 success: false,
@@ -97,8 +97,9 @@ let UserResolver = class UserResolver {
             .getRepository(User_1.User)
             .createQueryBuilder()
             .update({
-            token,
-            expiration: (new Date().getTime() + 1000 * 60 * 60 * 24 * 2).toString(),
+            verifyToken: token,
+            verifyExpiration: (new Date().getTime() +
+                1000 * 60 * 60 * 24 * 2).toString(),
         })
             .where({ id })
             .returning("*")
@@ -169,8 +170,9 @@ let UserResolver = class UserResolver {
                 password: await argon2_1.default.hash(password),
                 firstName,
                 lastName,
-                token,
-                expiration: (new Date().getTime() + 1000 * 60 * 60 * 24 * 2).toString(),
+                verifyToken: token,
+                verifyExpiration: (new Date().getTime() +
+                    1000 * 60 * 60 * 24 * 2).toString(),
             }).save();
             await Application_1.Application.create({
                 userId: user.id,

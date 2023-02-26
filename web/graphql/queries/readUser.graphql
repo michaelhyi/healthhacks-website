@@ -5,8 +5,10 @@ query ReadUser($id: Int!) {
     firstName
     lastName
     verified
-    token
-    expiration
+    verifyToken
+    verifyExpiration
+    forgotPasswordToken
+    forgotPasswordExpiration
     createdAt
     updatedAt
   }
