@@ -1,16 +1,21 @@
 import { useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React from "react";
+import { AiOutlineLeft } from "react-icons/ai";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { useResendVerificationEmailMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 
-const VerifyFail = () => {
+interface Props {
+  error: string;
+}
+
+const VerifyFail: React.FC<Props> = ({ error }) => {
   const toast = useToast();
   const router = useRouter();
-  const [error, setError] = useState("");
   const [, resendVerificationEmail] = useResendVerificationEmailMutation();
 
   const handleResendEmail = async () => {
@@ -42,22 +47,40 @@ const VerifyFail = () => {
         />
         <div className="max-w-lg">
           <h2 className="font-semibold text-4xl w-lg px-8 pt-8 text-left ">
-            Verification Failure...
+            {error === "User already verified."
+              ? "User has already been verified!"
+              : "Verification Failure..."}
           </h2>
-          <p className="font-normal text-base px-8 pt-2  md:text-base  sm:text-sm">
-            Looks like the verification link sent to{" "}
-            <strong>{router.query.email!}</strong> has expired.
-            <br /> No worries, we can send the link again. <br />
-          </p>
-          {error && <p className="error">{error}</p>}
+          {error !== "User already verified." && (
+            <>
+              <p className="font-normal text-base px-8 pt-2  md:text-base  sm:text-sm">
+                Looks like the verification link sent to{" "}
+                <strong>{router.query.email!}</strong> has expired.
+                <br />
+                No worries, we can send the link again.
+                <br />
+              </p>
+            </>
+          )}
+
           <div className="flex md:items-center sm:items-start md:flex-row sm:flex-col px-8">
-            <button
-              className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto md:ml-0 sm:mx-0 my-4 rounded-xl text-sm font-medium"
-              type="button"
-              onClick={handleResendEmail}
-            >
-              Resend Email
-            </button>
+            {error === "User already verified." ? (
+              <Link
+                href="/"
+                className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto md:ml-0 sm:mx-0 my-4 rounded-xl text-sm font-medium flex items-center"
+              >
+                <AiOutlineLeft />
+                &nbsp;Home
+              </Link>
+            ) : (
+              <button
+                className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto md:ml-0 sm:mx-0 my-4 rounded-xl text-sm font-medium"
+                type="button"
+                onClick={handleResendEmail}
+              >
+                Resend Email
+              </button>
+            )}
             <p className="text-left font-medium content-center md:text-base sm:text-sm sm:mx-0 md:mx-6">
               Having trouble?{" "}
               <a

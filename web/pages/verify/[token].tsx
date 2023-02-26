@@ -11,6 +11,7 @@ const Verify = () => {
   const router = useRouter();
   const [, verifyUser] = useVerifyUserMutation();
   const [result, setResult] = useState<any>(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const token = router.query.token;
@@ -24,6 +25,9 @@ const Verify = () => {
           console.log(response);
 
           setResult(response.data?.verifyUser.success);
+
+          if (!response.data?.verifyUser.success)
+            setError(response.data.verifyUser.error!);
         } catch (e) {
           console.error(e);
         }
@@ -38,7 +42,9 @@ const Verify = () => {
   }
 
   return (
-    <ContainerApp>{result ? <VerifySuccess /> : <VerifyFail />}</ContainerApp>
+    <ContainerApp>
+      {result ? <VerifySuccess /> : <VerifyFail error={error} />}
+    </ContainerApp>
   );
 };
 

@@ -148,10 +148,10 @@ const Footer = () => {
                 ))}
               </div>
               <h4 className="font-semibold sm:text-md md:text-base mt-4">
-                Mail
+                Contact Us
               </h4>
               <a
-                className="hover:cursor-pointer duration-500 hover:opacity-50"
+                className="hover:cursor-pointer opacity-50 duration-500 hover:opacity-25"
                 href="mailto:info@joinhealthhacks.com"
               >
                 info@joinhealthhacks.com

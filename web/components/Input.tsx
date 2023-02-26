@@ -34,11 +34,7 @@ const Input: React.FC<Props> = ({
         />
       ) : (
         <input
-          type={`${
-            label === "Password" || label === "Confirm Password"
-              ? "password"
-              : ""
-          }`}
+          type={`${label.includes("Password") ? "password" : ""}`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           className={`w-full bg-black border-[0.5px] ${

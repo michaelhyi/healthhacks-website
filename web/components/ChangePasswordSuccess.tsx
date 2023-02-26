@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { sleep } from "../utils/sleep";
 
-const VerifySuccess = () => {
+const ChangePasswordSuccess = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -25,12 +25,9 @@ const VerifySuccess = () => {
         />
         <div className="flex flex-col mt-8 px-6 items-center justify-center max-w-md  backdrop-blur-2xl backdrop-filter ">
           <h2 className="font-semibold text-3xl lg:text-4xl w-lg text-center ">
-            Welcome to {`health{hacks}`}!
+            Your password has been successfully changed!
           </h2>
           <p className="font-normal text-base px-4 pt-4  md:text-base  sm:text-sm text-center text-hh-[#ccc]">
-            Your account has been verified, and thank you for joining us in
-            revolutionizing healthcare.
-            <br />
             You will now be redirected to our login page.
           </p>
         </div>
@@ -39,4 +36,4 @@ const VerifySuccess = () => {
   );
 };
 
-export default VerifySuccess;
+export default ChangePasswordSuccess;

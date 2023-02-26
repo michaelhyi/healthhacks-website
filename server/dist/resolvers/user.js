@@ -109,6 +109,7 @@ let UserResolver = class UserResolver {
             to: email,
             from: process.env.SENDGRID_EMAIL,
             subject: "health{hacks} 2023 Password Change",
+            html: (0, emails_1.forgotPaswordHTML)(token),
         };
         sgMail
             .send(msg)

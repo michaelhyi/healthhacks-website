@@ -26,6 +26,7 @@ const Apply = () => {
   const toast = useToast();
   const router = useRouter();
   const { user } = useContext(Context);
+  const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [, readApplication] = useReadApplicationMutation();
   const [, updateApplication] = useUpdateApplicationMutation();
@@ -71,6 +72,8 @@ const Apply = () => {
           transportation: response.data?.readApplication.transportation!,
           other: response.data?.readApplication.other!,
         });
+
+        setStatus(response.data?.readApplication.status!);
       }
     })();
   }, [user]);
@@ -82,7 +85,7 @@ const Apply = () => {
     let errors: string[] = [];
 
     Object.keys(form).forEach((v) => {
-      if (form[v as keyof FormType].length === 0) {
+      if (v !== "other" && form[v as keyof FormType].length === 0) {
         errors.push("This is a required field");
         found = true;
       } else {
@@ -160,290 +163,329 @@ const Apply = () => {
         <div className="flex flex-col items-center lg:pt-24 md:pt-12">
           <div className="lg:w-[50vw] md:w-[75vw] sm:w-[75vw]">
             <div className="font-semibold text-5xl">
-              Let's learn more about you,{" "}
+              {status === "Submitted"
+                ? "Thank you for applying to health{hacks},"
+                : "Let's learn more about you,"}{" "}
               <span className="font-semibold text-5xl text-hh-purple">
                 {" "}
                 {user.firstName}.{" "}
               </span>
             </div>
-            <p className="font-base text-md text-[#b9b9b9] mt-2">
-              Fill out this five minute application to attend our event at{" "}
-              <strong> Stanford University on April 14 - 16th, 2023. </strong>{" "}
-            </p>
-            <p className="font-base text-md text-[#b9b9b9] mt-2">
+            {status === "Submitted" ? (
+              <>
+                <p className="font-base text-md text-[#b9b9b9] mt-2">
+                  Your application was received and is currently under review by
+                  our team. We will reach out via email when your application
+                  decision is complete.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="font-base text-md text-[#b9b9b9] mt-2">
+                  Fill out this five minute application to attend our event at{" "}
+                  <strong>
+                    {" "}
+                    Stanford University on April 14 - 16th, 2023.{" "}
+                  </strong>{" "}
+                </p>
+                <p className="font-base text-md text-[#b9b9b9] mt-2">
+                  {" "}
+                  We are assembling leaders from a diverse group of backgrounds,
+                  including healthcare, medicine, business, public policy, and
+                  more! If you are interested in participating, please fill out
+                  this application by{" "}
+                  <strong> Thursday, March 24, 2023 (11:59 pm PT). </strong>
+                  Thank you so much and hope to see you at the event!
+                </p>
+              </>
+            )}
+            <div
+              className={`${
+                status === "Submitted"
+                  ? "hover:cursor-not-allowed"
+                  : "hover:cursor-default"
+              }`}
+            >
               {" "}
-              We are assembling leaders from a diverse group of backgrounds,
-              including healthcare, medicine, business, public policy, and more!
-              If you are interested in participating, please fill out this
-              application by{" "}
-              <strong> Thursday, March 24, 2023 (11:59 pm PT). </strong>
-              Thank you so much and hope to see you at the event!
-            </p>
-
-            <form>
-              {/* PHONE NUMBER AND ORGANIZATION */}
-              <div className="flex space-x-6">
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    // userId={user.id}
-                    error={error[0]}
-                    value={form.phone}
-                    setValue={(value) => setForm({ ...form, phone: value })}
-                    label="Phone Number"
-                  />
-                </div>
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    // userId={user.id}
-                    error={error[1]}
-                    value={form.organization}
-                    setValue={(value) =>
-                      setForm({ ...form, organization: value })
-                    }
-                    label="University / Company"
-                  />
-                </div>
-              </div>
-
-              {/* CITY AND STATE */}
-              <div className="flex space-x-6">
-                <div className="w-[50vw]">
-                  <ApplicationInput
-                    // userId={user.id}
-                    error={error[2]}
-                    value={form.city}
-                    setValue={(value) => setForm({ ...form, city: value })}
-                    label="City"
-                  />
-                </div>
-                <div className="w-[50vw]">
-                  <DropDown
-                    error={error[3]}
-                    name="State"
-                    options={states}
-                    value={form.state}
-                    setValue={(v) => setForm({ ...form, state: v })}
-                  />
-                </div>
-              </div>
-
-              {/* CAN YOU ATTEND EVENT */}
-              <div className="flex space-x-6">
-                <div className="w-[50vw]">
-                  <div
-                    className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-                      error[4].length > 0 ? "text-red-400" : "text-white"
-                    }`}
-                  >
-                    Can you attend in-person?
+              <form
+                className={`${
+                  status === "Submitted"
+                    ? "pointer-events-none"
+                    : "pointer-events-auto"
+                }`}
+              >
+                {/* PHONE NUMBER AND ORGANIZATION */}
+                <div className="flex space-x-6">
+                  <div className="w-[50vw]">
+                    <ApplicationInput
+                      // userId={user.id}
+                      error={error[0]}
+                      value={form.phone}
+                      setValue={(value) => setForm({ ...form, phone: value })}
+                      label="Phone Number"
+                    />
                   </div>
-                  <RadioGroup
-                    onChange={(v) => setForm({ ...form, inPerson: v })}
-                    value={form.inPerson}
-                  >
+                  <div className="w-[50vw]">
+                    <ApplicationInput
+                      // userId={user.id}
+                      error={error[1]}
+                      value={form.organization}
+                      setValue={(value) =>
+                        setForm({ ...form, organization: value })
+                      }
+                      label="University / Company"
+                    />
+                  </div>
+                </div>
+
+                {/* CITY AND STATE */}
+                <div className="flex space-x-6">
+                  <div className="w-[50vw]">
+                    <ApplicationInput
+                      // userId={user.id}
+                      error={error[2]}
+                      value={form.city}
+                      setValue={(value) => setForm({ ...form, city: value })}
+                      label="City"
+                    />
+                  </div>
+                  <div className="w-[50vw]">
+                    <DropDown
+                      error={error[3]}
+                      name="State"
+                      options={states}
+                      value={form.state}
+                      setValue={(v) => setForm({ ...form, state: v })}
+                    />
+                  </div>
+                </div>
+
+                {/* CAN YOU ATTEND EVENT */}
+                <div className="flex space-x-6">
+                  <div className="w-[50vw]">
                     <div
-                      className={`flex items-center space-x-4 ${
+                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
                         error[4].length > 0 ? "text-red-400" : "text-white"
                       }`}
                     >
-                      <Radio
-                        value="Yes"
-                        colorScheme="black"
-                        onClick={() => setForm({ ...form, inPerson: "Yes" })}
-                      >
-                        Yes
-                      </Radio>
-                      <Radio
-                        value="No"
-                        colorScheme="black"
-                        onClick={() => setForm({ ...form, inPerson: "No" })}
-                      >
-                        No
-                      </Radio>
+                      Can you attend in-person?
                     </div>
-                  </RadioGroup>
-                  {error[4] && error[4].length > 0 && (
-                    <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
-                      {error[4]}
-                    </div>
-                  )}
-                </div>
-                <div className="w-[50vw]">
-                  <div
-                    className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-                      error[5].length > 0 ? "text-red-400" : "text-white"
-                    }`}
-                  >
-                    Can you attend the whole event?
+                    <RadioGroup
+                      onChange={(v) => setForm({ ...form, inPerson: v })}
+                      value={form.inPerson}
+                    >
+                      <div
+                        className={`flex items-center space-x-4 ${
+                          error[4].length > 0 ? "text-red-400" : "text-white"
+                        }`}
+                      >
+                        <Radio
+                          value="Yes"
+                          colorScheme="black"
+                          onClick={() => setForm({ ...form, inPerson: "Yes" })}
+                        >
+                          Yes
+                        </Radio>
+                        <Radio
+                          value="No"
+                          colorScheme="black"
+                          onClick={() => setForm({ ...form, inPerson: "No" })}
+                        >
+                          No
+                        </Radio>
+                      </div>
+                    </RadioGroup>
+                    {error[4] && error[4].length > 0 && (
+                      <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+                        {error[4]}
+                      </div>
+                    )}
                   </div>
-                  <RadioGroup
-                    onChange={(value) =>
-                      setForm({ ...form, wholeEvent: value })
-                    }
-                    value={form.wholeEvent}
-                  >
+                  <div className="w-[50vw]">
                     <div
-                      className={`flex items-center space-x-4 ${
+                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
                         error[5].length > 0 ? "text-red-400" : "text-white"
                       }`}
                     >
-                      <Radio
-                        value="Yes"
-                        colorScheme="black"
-                        onClick={() => setForm({ ...form, wholeEvent: "Yes" })}
-                      >
-                        Yes
-                      </Radio>
-                      <Radio
-                        value="No"
-                        colorScheme="black"
-                        onClick={() => setForm({ ...form, wholeEvent: "Yes" })}
-                      >
-                        No
-                      </Radio>
+                      Can you attend the whole event?
                     </div>
-                  </RadioGroup>
-                  {error[5] && error[5].length > 0 && (
-                    <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
-                      {error[5]}
-                    </div>
-                  )}
+                    <RadioGroup
+                      onChange={(value) =>
+                        setForm({ ...form, wholeEvent: value })
+                      }
+                      value={form.wholeEvent}
+                    >
+                      <div
+                        className={`flex items-center space-x-4 ${
+                          error[5].length > 0 ? "text-red-400" : "text-white"
+                        }`}
+                      >
+                        <Radio
+                          value="Yes"
+                          colorScheme="black"
+                          onClick={() =>
+                            setForm({ ...form, wholeEvent: "Yes" })
+                          }
+                        >
+                          Yes
+                        </Radio>
+                        <Radio
+                          value="No"
+                          colorScheme="black"
+                          onClick={() =>
+                            setForm({ ...form, wholeEvent: "Yes" })
+                          }
+                        >
+                          No
+                        </Radio>
+                      </div>
+                    </RadioGroup>
+                    {error[5] && error[5].length > 0 && (
+                      <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+                        {error[5]}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {/* What is your background? */}
-              <div>
+                {/* What is your background? */}
                 <div>
-                  <MultiSelect
-                    error={error[6]}
-                    name="What is your background?"
-                    options={background}
-                    value={form.background}
-                    setValue={(v) => setForm({ ...form, background: v })}
+                  <div>
+                    <MultiSelect
+                      error={error[6]}
+                      name="What is your background?"
+                      options={background}
+                      value={form.background}
+                      setValue={(v) => setForm({ ...form, background: v })}
+                    />
+                  </div>
+                </div>
+
+                {/* Why do you want to attend health{hacks} 2023? */}
+                <div>
+                  <div>
+                    <MultiSelect
+                      error={error[7]}
+                      name="Why do you want to attend health{hacks} 2023?"
+                      options={whyhh}
+                      value={form.whyUs}
+                      setValue={(v) => setForm({ ...form, whyUs: v })}
+                    />
+                  </div>
+                </div>
+
+                {/* How did you hear about health{hacks} */}
+                <div>
+                  <div>
+                    <DropDown
+                      error={error[8]}
+                      name="How did you hear about health{hacks}"
+                      options={wherefrom}
+                      value={form.howHear}
+                      setValue={(v) => setForm({ ...form, howHear: v })}
+                    />
+                  </div>
+                </div>
+
+                {/* Do you have a team yet? */}
+                <div>
+                  <div>
+                    <DropDown
+                      error={error[9]}
+                      name="Do you have a team yet?"
+                      options={yesno}
+                      value={form.team}
+                      setValue={(v) => setForm({ ...form, team: v })}
+                    />
+                  </div>
+                </div>
+
+                {/* LinkedIn Profile */}
+                <div>
+                  <ApplicationInput
+                    error={error[10]}
+                    value={form.linkedIn}
+                    setValue={(value) => setForm({ ...form, linkedIn: value })}
+                    label="LinkedIn Profile"
                   />
                 </div>
-              </div>
 
-              {/* Why do you want to attend health{hacks} 2023? */}
-              <div>
+                {/* Any Dietary Restrictions? */}
                 <div>
-                  <MultiSelect
-                    error={error[7]}
-                    name="Why do you want to attend health{hacks} 2023?"
-                    options={whyhh}
-                    value={form.whyUs}
-                    setValue={(v) => setForm({ ...form, whyUs: v })}
-                  />
+                  <div>
+                    <DropDown
+                      error={error[11]}
+                      name="Any dietary restrictions?"
+                      options={dietary}
+                      value={form.dietaryRestrictions}
+                      setValue={(v) =>
+                        setForm({ ...form, dietaryRestrictions: v })
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* How did you hear about health{hacks} */}
-              <div>
+                {/* Do you need transporation to Stanford? */}
                 <div>
-                  <DropDown
-                    error={error[8]}
-                    name="How did you hear about health{hacks}"
-                    options={wherefrom}
-                    value={form.howHear}
-                    setValue={(v) => setForm({ ...form, howHear: v })}
-                  />
+                  <div>
+                    <DropDown
+                      error={error[12]}
+                      name="Do you need transporation to Stanford?"
+                      options={yesno}
+                      value={form.transportation}
+                      setValue={(v) => setForm({ ...form, transportation: v })}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Do you have a team yet? */}
-              <div>
+                {/* Anything Else? */}
                 <div>
-                  <DropDown
-                    error={error[9]}
-                    name="Do you have a team yet?"
-                    options={yesno}
-                    value={form.team}
-                    setValue={(v) => setForm({ ...form, team: v })}
+                  <p className="mt-8 mb-2 lg:text-lg md:text-small font-semibold">
+                    Anything else you want to tell us?
+                  </p>
+                  <ApplicationInput
+                    textarea
+                    placeholder="We love to hear your thoughts, questions, concerns, and more about our event"
+                    value={form.other}
+                    setValue={(value) => setForm({ ...form, other: value })}
                   />
+                  {/* <Textarea
+                value={form.other}
+                onInput={(e) => setForm({...form, other: e.target.value})}
+                placeholder="We love to hear your thoughts, questions, concerns, and more about our event"
+                textColor="white"
+                size="sm"
+                border="1px"
+                borderRadius="0.75rem"
+                _expanded={{ outline: "0px" }}
+              /> */}
                 </div>
-              </div>
 
-              {/* LinkedIn Profile */}
-              <div>
-                <ApplicationInput
-                  error={error[10]}
-                  value={form.linkedIn}
-                  setValue={(value) => setForm({ ...form, linkedIn: value })}
-                  label="LinkedIn Profile"
-                />
-              </div>
-
-              {/* Any Dietary Restrictions? */}
-              <div>
-                <div>
-                  <DropDown
-                    error={error[11]}
-                    name="Any dietary restrictions?"
-                    options={dietary}
-                    value={form.dietaryRestrictions}
-                    setValue={(v) =>
-                      setForm({ ...form, dietaryRestrictions: v })
-                    }
-                  />
-                </div>
-              </div>
-
-              {/* Do you need transporation to Stanford? */}
-              <div>
-                <div>
-                  <DropDown
-                    error={error[12]}
-                    name="Do you need transporation to Stanford?"
-                    options={yesno}
-                    value={form.transportation}
-                    setValue={(v) => setForm({ ...form, transportation: v })}
-                  />
-                </div>
-              </div>
-
-              {/* Anything Else? */}
-              <div>
-                <p className="mt-8 mb-2 lg:text-lg md:text-small font-semibold">
-                  Anything else you want to tell us?
-                </p>
-                <ApplicationInput
-                  textarea
-                  placeholder="We love to hear your thoughts, questions, concerns, and more about our event"
-                  value={form.other}
-                  setValue={(value) => setForm({ ...form, other: value })}
-                />
-                {/* <Textarea
-                  value={form.other}
-                  onInput={(e) => setForm({...form, other: e.target.value})}
-                  placeholder="We love to hear your thoughts, questions, concerns, and more about our event"
-                  textColor="white"
-                  size="sm"
-                  border="1px"
-                  borderRadius="0.75rem"
-                  _expanded={{ outline: "0px" }}
-                /> */}
-              </div>
-
-              <p className="font-base text-xs text-[#b9b9b9] mt-6">
-                {" "}
-                Please note that this year we will be collecting a{" "}
-                <strong> $5 food voucher fee </strong>
-                when we send out registration confirmations in a couple of
-                weeks. If this will present a barrier, please let us know at
-                <a href="mailto: info@joinhealthhacks.com">
+                <p className="font-base text-xs text-[#b9b9b9] mt-6">
                   {" "}
-                  <u> info@joinhealthhacks.com </u>{" "}
-                </a>
-              </p>
-              <Autosave data={form} onSave={updateForm} />
-            </form>
-            <div className="flex items-center space-x-6 pt-8 pb-24">
-              <button
-                onClick={handleSubmit}
-                className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium"
-              >
-                {submitting ? <Spinner size="xs" /> : "Submit"}
-              </button>
+                  Please note that this year we will be collecting a{" "}
+                  <strong> $5 food voucher fee </strong>
+                  when we send out registration confirmations in a couple of
+                  weeks. If this will present a barrier, please let us know at
+                  <a href="mailto: info@joinhealthhacks.com">
+                    {" "}
+                    <u> info@joinhealthhacks.com </u>{" "}
+                  </a>
+                </p>
+                <Autosave data={form} onSave={updateForm} />
+              </form>
+              <div className="flex items-center space-x-6 pt-8 pb-24">
+                <button
+                  onClick={handleSubmit}
+                  className={`hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium ${
+                    status === "Submitted"
+                      ? "pointer-events-none"
+                      : "pointer-events-auto"
+                  }`}
+                >
+                  {submitting ? <Spinner size="xs" /> : "Submit"}
+                </button>
+              </div>
             </div>
           </div>
         </div>

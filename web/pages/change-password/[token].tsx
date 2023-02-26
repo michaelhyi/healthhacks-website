@@ -5,11 +5,14 @@ import ContainerApp from "../../components/ContainerApp";
 import Input from "../../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
+import ChangePasswordFail from "../../components/ChangePasswordFail";
 import {
   useReadTokenValidityQuery,
   useUpdatePasswordMutation,
 } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
+import { Container } from "@chakra-ui/react";
+import ChangePasswordSuccess from "../../components/ChangePasswordSuccess";
 
 const ChangePassword = () => {
   const router = useRouter();
@@ -24,6 +27,8 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,20 +57,34 @@ const ChangePassword = () => {
     try {
       await updatePassword({ token: router.query.token as string, password });
 
-      //redirect to success page
+      setSuccess(true);
     } catch (e) {
       console.error(e);
     }
   };
 
+  if (success) {
+    return (
+      <ContainerApp>
+        <ChangePasswordSuccess />
+      </ContainerApp>
+    );
+  }
+
   if (!data && fetching) {
-    <ContainerApp>
-      <></>
-    </ContainerApp>;
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
   }
 
   if (!fetching && !data?.readTokenValidity.success) {
-    //return something for custom tokens errors
+    return (
+      <ContainerApp>
+        <ChangePasswordFail />
+      </ContainerApp>
+    );
   }
 
   return (
@@ -83,7 +102,7 @@ const ChangePassword = () => {
                 {/* NOTE: Added email prop here to be displayed in change password form */}
                 <span className="text-hh-purple text-medium">
                   {" "}
-                  {data?.readTokenValidity.email}.
+                  {data?.readTokenValidity.email as string}.
                 </span>
               </div>
             </div>
@@ -113,4 +132,4 @@ const ChangePassword = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(ChangePassword);
+export default withUrqlClient(createUrqlClient)(ChangePassword);

@@ -5,7 +5,7 @@ import { getConnection } from "typeorm";
 import { v4 } from "uuid";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
-import { verifyHTML } from "../utils/emails";
+import { forgotPaswordHTML, verifyHTML } from "../utils/emails";
 import { UserResponse, Response } from "../utils/types";
 
 const sgMail = require("@sendgrid/mail");
@@ -88,7 +88,7 @@ export class UserResolver {
       to: email,
       from: process.env.SENDGRID_EMAIL,
       subject: "health{hacks} 2023 Password Change",
-      // html: verifyHTML(token),
+      html: forgotPaswordHTML(token),
     };
 
     sgMail
