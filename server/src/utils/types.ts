@@ -41,8 +41,8 @@ export type FormType = {
   state: string;
   inPerson: string;
   wholeEvent: string;
-  background: string;
-  whyUs: string;
+  background: string[];
+  whyUs: string[];
   howHear: string;
   team: string;
   linkedIn: string;

@@ -6,8 +6,8 @@ mutation UpdateApplication(
   $state: String!
   $inPerson: String!
   $wholeEvent: String!
-  $background: String!
-  $whyUs: String!
+  $background: [String!]!
+  $whyUs: [String!]!
   $howHear: String!
   $team: String!
   $linkedIn: String!

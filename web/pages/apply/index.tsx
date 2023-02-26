@@ -39,8 +39,8 @@ const Apply = () => {
     state: "",
     inPerson: "",
     wholeEvent: "",
-    background: "",
-    whyUs: "",
+    background: new Array(),
+    whyUs: new Array(),
     howHear: "",
     team: "",
     linkedIn: "",
@@ -384,8 +384,22 @@ const Apply = () => {
                       error={error[6]}
                       name="What is your background?"
                       options={background}
-                      value={form.background}
-                      setValue={(v) => setForm({ ...form, background: v })}
+                      values={form.background}
+                      setValues={(v) => {
+                        if (form.background.includes(v)) {
+                          setForm({
+                            ...form,
+                            background: form.background.filter((value) => {
+                              if (value !== v) return value;
+                            }),
+                          });
+                        } else {
+                          setForm({
+                            ...form,
+                            background: [...form.background, v],
+                          });
+                        }
+                      }}
                     />
                   </div>
                 </div>
@@ -397,8 +411,22 @@ const Apply = () => {
                       error={error[7]}
                       name="Why do you want to attend health{hacks} 2023?"
                       options={whyhh}
-                      value={form.whyUs}
-                      setValue={(v) => setForm({ ...form, whyUs: v })}
+                      values={form.whyUs}
+                      setValues={(v) => {
+                        if (form.whyUs.includes(v)) {
+                          setForm({
+                            ...form,
+                            whyUs: form.whyUs.filter((value) => {
+                              if (value !== v) return value;
+                            }),
+                          });
+                        } else {
+                          setForm({
+                            ...form,
+                            whyUs: [...form.whyUs, v],
+                          });
+                        }
+                      }}
                     />
                   </div>
                 </div>

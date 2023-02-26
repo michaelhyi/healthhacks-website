@@ -28,8 +28,8 @@ export class ApplicationResolver {
     @Arg("state", () => String) state: string,
     @Arg("inPerson", () => String) inPerson: string,
     @Arg("wholeEvent", () => String) wholeEvent: string,
-    @Arg("background", () => String) background: string,
-    @Arg("whyUs", () => String) whyUs: string,
+    @Arg("background", () => [String]) background: string[],
+    @Arg("whyUs", () => [String]) whyUs: string[],
     @Arg("howHear", () => String) howHear: string,
     @Arg("team", () => String) team: string,
     @Arg("linkedIn", () => String) linkedIn: string,
@@ -37,7 +37,6 @@ export class ApplicationResolver {
     @Arg("transportation", () => String) transportation: string,
     @Arg("other", () => String) other: string
   ): Promise<boolean> {
-    console.log("resend initaited");
     await getConnection()
       .getRepository(Application)
       .createQueryBuilder()
@@ -73,8 +72,8 @@ export class ApplicationResolver {
       State: state,
       InPerson: inPerson,
       WholeEvent: wholeEvent,
-      Background: background,
-      WhyUs: whyUs,
+      Background: background.toString(),
+      WhyUs: whyUs.toString(),
       HowHear: howHear,
       Team: team,
       LinkedIn: linkedIn,
@@ -115,8 +114,8 @@ export class ApplicationResolver {
     @Arg("state", () => String) state: string,
     @Arg("inPerson", () => String) inPerson: string,
     @Arg("wholeEvent", () => String) wholeEvent: string,
-    @Arg("background", () => String) background: string,
-    @Arg("whyUs", () => String) whyUs: string,
+    @Arg("background", () => [String]) background: string[],
+    @Arg("whyUs", () => [String]) whyUs: string[],
     @Arg("howHear", () => String) howHear: string,
     @Arg("team", () => String) team: string,
     @Arg("linkedIn", () => String) linkedIn: string,

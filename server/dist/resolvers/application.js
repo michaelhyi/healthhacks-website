@@ -29,7 +29,6 @@ let ApplicationResolver = class ApplicationResolver {
         return true;
     }
     async submitApplication(userId, firstName, lastName, email, phone, organization, city, state, inPerson, wholeEvent, background, whyUs, howHear, team, linkedIn, dietaryRestrictions, transportation, other) {
-        console.log("resend initaited");
         await (0, typeorm_1.getConnection)()
             .getRepository(Application_1.Application)
             .createQueryBuilder()
@@ -64,8 +63,8 @@ let ApplicationResolver = class ApplicationResolver {
             State: state,
             InPerson: inPerson,
             WholeEvent: wholeEvent,
-            Background: background,
-            WhyUs: whyUs,
+            Background: background.toString(),
+            WhyUs: whyUs.toString(),
             HowHear: howHear,
             Team: team,
             LinkedIn: linkedIn,
@@ -143,8 +142,8 @@ __decorate([
     __param(7, (0, type_graphql_1.Arg)("state", () => String)),
     __param(8, (0, type_graphql_1.Arg)("inPerson", () => String)),
     __param(9, (0, type_graphql_1.Arg)("wholeEvent", () => String)),
-    __param(10, (0, type_graphql_1.Arg)("background", () => String)),
-    __param(11, (0, type_graphql_1.Arg)("whyUs", () => String)),
+    __param(10, (0, type_graphql_1.Arg)("background", () => [String])),
+    __param(11, (0, type_graphql_1.Arg)("whyUs", () => [String])),
     __param(12, (0, type_graphql_1.Arg)("howHear", () => String)),
     __param(13, (0, type_graphql_1.Arg)("team", () => String)),
     __param(14, (0, type_graphql_1.Arg)("linkedIn", () => String)),
@@ -152,7 +151,7 @@ __decorate([
     __param(16, (0, type_graphql_1.Arg)("transportation", () => String)),
     __param(17, (0, type_graphql_1.Arg)("other", () => String)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, String, String, String, String, String, String, String, String, String, String, String]),
+    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, String, String, String, Array, Array, String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], ApplicationResolver.prototype, "submitApplication", null);
 __decorate([
@@ -164,8 +163,8 @@ __decorate([
     __param(4, (0, type_graphql_1.Arg)("state", () => String)),
     __param(5, (0, type_graphql_1.Arg)("inPerson", () => String)),
     __param(6, (0, type_graphql_1.Arg)("wholeEvent", () => String)),
-    __param(7, (0, type_graphql_1.Arg)("background", () => String)),
-    __param(8, (0, type_graphql_1.Arg)("whyUs", () => String)),
+    __param(7, (0, type_graphql_1.Arg)("background", () => [String])),
+    __param(8, (0, type_graphql_1.Arg)("whyUs", () => [String])),
     __param(9, (0, type_graphql_1.Arg)("howHear", () => String)),
     __param(10, (0, type_graphql_1.Arg)("team", () => String)),
     __param(11, (0, type_graphql_1.Arg)("linkedIn", () => String)),
@@ -173,7 +172,7 @@ __decorate([
     __param(13, (0, type_graphql_1.Arg)("transportation", () => String)),
     __param(14, (0, type_graphql_1.Arg)("other", () => String)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, String, String, String, String, String, String, String, String]),
+    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, Array, Array, String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], ApplicationResolver.prototype, "updateApplication", null);
 __decorate([

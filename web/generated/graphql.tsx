@@ -17,7 +17,7 @@ export type Scalars = {
 
 export type Application = {
   __typename?: 'Application';
-  background: Scalars['String'];
+  background: Array<Scalars['String']>;
   city: Scalars['String'];
   createdAt: Scalars['String'];
   dietaryRestrictions: Scalars['String'];
@@ -35,7 +35,7 @@ export type Application = {
   updatedAt: Scalars['String'];
   userId: Scalars['Float'];
   wholeEvent: Scalars['String'];
-  whyUs: Scalars['String'];
+  whyUs: Array<Scalars['String']>;
 };
 
 export type Error = {
@@ -91,7 +91,7 @@ export type MutationResendVerificationEmailArgs = {
 
 
 export type MutationSubmitApplicationArgs = {
-  background: Scalars['String'];
+  background: Array<Scalars['String']>;
   city: Scalars['String'];
   dietaryRestrictions: Scalars['String'];
   email: Scalars['String'];
@@ -108,12 +108,12 @@ export type MutationSubmitApplicationArgs = {
   transportation: Scalars['String'];
   userId: Scalars['Int'];
   wholeEvent: Scalars['String'];
-  whyUs: Scalars['String'];
+  whyUs: Array<Scalars['String']>;
 };
 
 
 export type MutationUpdateApplicationArgs = {
-  background: Scalars['String'];
+  background: Array<Scalars['String']>;
   city: Scalars['String'];
   dietaryRestrictions: Scalars['String'];
   howHear: Scalars['String'];
@@ -127,7 +127,7 @@ export type MutationUpdateApplicationArgs = {
   transportation: Scalars['String'];
   userId: Scalars['Int'];
   wholeEvent: Scalars['String'];
-  whyUs: Scalars['String'];
+  whyUs: Array<Scalars['String']>;
 };
 
 
@@ -208,7 +208,7 @@ export type ReadApplicationMutationVariables = Exact<{
 }>;
 
 
-export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, status: string, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: string, whyUs: string, howHear: string, team: string, linkedIn: string, dietaryRestrictions: string, transportation: string, other: string } };
+export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, status: string, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: Array<string>, whyUs: Array<string>, howHear: string, team: string, linkedIn: string, dietaryRestrictions: string, transportation: string, other: string } };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -239,8 +239,8 @@ export type SubmitApplicationMutationVariables = Exact<{
   state: Scalars['String'];
   inPerson: Scalars['String'];
   wholeEvent: Scalars['String'];
-  background: Scalars['String'];
-  whyUs: Scalars['String'];
+  background: Array<Scalars['String']> | Scalars['String'];
+  whyUs: Array<Scalars['String']> | Scalars['String'];
   howHear: Scalars['String'];
   team: Scalars['String'];
   linkedIn: Scalars['String'];
@@ -260,8 +260,8 @@ export type UpdateApplicationMutationVariables = Exact<{
   state: Scalars['String'];
   inPerson: Scalars['String'];
   wholeEvent: Scalars['String'];
-  background: Scalars['String'];
-  whyUs: Scalars['String'];
+  background: Array<Scalars['String']> | Scalars['String'];
+  whyUs: Array<Scalars['String']> | Scalars['String'];
   howHear: Scalars['String'];
   team: Scalars['String'];
   linkedIn: Scalars['String'];
@@ -398,7 +398,7 @@ export function useResendVerificationEmailMutation() {
   return Urql.useMutation<ResendVerificationEmailMutation, ResendVerificationEmailMutationVariables>(ResendVerificationEmailDocument);
 };
 export const SubmitApplicationDocument = gql`
-    mutation SubmitApplication($userId: Int!, $firstName: String!, $lastName: String!, $email: String!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!, $background: String!, $whyUs: String!, $howHear: String!, $team: String!, $linkedIn: String!, $dietaryRestrictions: String!, $transportation: String!, $other: String!) {
+    mutation SubmitApplication($userId: Int!, $firstName: String!, $lastName: String!, $email: String!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!, $background: [String!]!, $whyUs: [String!]!, $howHear: String!, $team: String!, $linkedIn: String!, $dietaryRestrictions: String!, $transportation: String!, $other: String!) {
   submitApplication(
     userId: $userId
     firstName: $firstName
@@ -426,7 +426,7 @@ export function useSubmitApplicationMutation() {
   return Urql.useMutation<SubmitApplicationMutation, SubmitApplicationMutationVariables>(SubmitApplicationDocument);
 };
 export const UpdateApplicationDocument = gql`
-    mutation UpdateApplication($userId: Int!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!, $background: String!, $whyUs: String!, $howHear: String!, $team: String!, $linkedIn: String!, $dietaryRestrictions: String!, $transportation: String!, $other: String!) {
+    mutation UpdateApplication($userId: Int!, $phone: String!, $organization: String!, $city: String!, $state: String!, $inPerson: String!, $wholeEvent: String!, $background: [String!]!, $whyUs: [String!]!, $howHear: String!, $team: String!, $linkedIn: String!, $dietaryRestrictions: String!, $transportation: String!, $other: String!) {
   updateApplication(
     userId: $userId
     phone: $phone

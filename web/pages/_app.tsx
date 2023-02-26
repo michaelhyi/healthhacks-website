@@ -3,16 +3,18 @@ import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import Helmet from "../components/Helmet";
-import Context from "../utils/context";
+import Context, { User } from "../utils/context";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [user, setUser] = useState<null | string>(null);
+  const [user, setUser] = useState<null | User>(null);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setUser(JSON.parse(user));
-    }
+    (async () => {
+      const user = await localStorage.getItem("user");
+      if (user) {
+        setUser(JSON.parse(user));
+      }
+    })();
   }, []);
 
   return (

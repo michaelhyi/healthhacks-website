@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-type User = {
+export type User = {
   id: number;
   email: string;
   firstName: string;
@@ -9,7 +9,7 @@ type User = {
 
 type ContextType = {
   user: User | null;
-  setUser: (user: User | null) => void;
+  setUser: (user: User) => void;
 };
 
 const Context = createContext<ContextType>({
