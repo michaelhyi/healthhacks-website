@@ -50,6 +50,44 @@ const emails_1 = require("../utils/emails");
 const types_1 = require("../utils/types");
 const sgMail = require("@sendgrid/mail");
 let UserResolver = class UserResolver {
+    async forgotPassword(email) {
+        const user = await User_1.User.findOne({ where: { email } });
+        if (!EmailValidator.validate(email) || !user) {
+            return {
+                success: false,
+                error: "Invalid Email",
+            };
+        }
+        const token = (0, uuid_1.v4)();
+        await (0, typeorm_1.getConnection)()
+            .getRepository(User_1.User)
+            .createQueryBuilder()
+            .update({
+            forgotPasswordToken: token,
+            forgotPasswordExpiration: (new Date().getTime() +
+                1000 * 60 * 60 * 24 * 2).toString(),
+        })
+            .where({ id: user.id })
+            .returning("*")
+            .execute();
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        const msg = {
+            to: email,
+            from: process.env.SENDGRID_EMAIL,
+            subject: "health{hacks} 2023 Password Change",
+        };
+        sgMail
+            .send(msg)
+            .then(() => {
+            console.log("Email sent");
+        })
+            .catch((error) => {
+            console.error(error);
+        });
+        return {
+            success: true,
+        };
+    }
     async verifyUser(token) {
         const user = await User_1.User.findOne({ where: { verifyToken: token } });
         const date = new Date().getTime();
@@ -236,7 +274,14 @@ let UserResolver = class UserResolver {
     }
 };
 __decorate([
-    (0, type_graphql_1.Mutation)(() => types_1.VerificationResponse),
+    (0, type_graphql_1.Mutation)(() => types_1.Response),
+    __param(0, (0, type_graphql_1.Arg)("email")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "forgotPassword", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => types_1.Response),
     __param(0, (0, type_graphql_1.Arg)("token")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

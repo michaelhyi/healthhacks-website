@@ -42,12 +42,12 @@ export class User extends BaseEntity {
   @Column()
   verifyExpiration: string;
 
-  @Field({ nullable: true })
-  @Column()
+  @Field()
+  @Column({ nullable: true })
   forgotPasswordToken: string;
 
-  @Field({ nullable: true })
-  @Column()
+  @Field()
+  @Column({ nullable: true })
   forgotPasswordExpiration: string;
 
   @Field(() => String)

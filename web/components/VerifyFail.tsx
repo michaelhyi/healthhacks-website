@@ -1,4 +1,4 @@
-import ContainerApp from "@/components/ContainerApp";
+import { useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -8,22 +8,27 @@ import { useResendVerificationEmailMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 
 const VerifyFail = () => {
+  const toast = useToast();
   const router = useRouter();
   const [error, setError] = useState("");
   const [, resendVerificationEmail] = useResendVerificationEmailMutation();
 
   const handleResendEmail = async () => {
     try {
-      // await resendVerificationEmail({
-      //   id: parseInt(router.query.id! as string),
-      //   email: router.query.email! as string,
-      // });
-      // setError("");
-      // console.log("hi");
-    } catch (error) {
-      setError(
-        "An error occurred while resending the verification email. Please try again later."
-      );
+      await resendVerificationEmail({
+        id: parseInt(router.query.id! as string),
+        email: router.query.email! as string,
+      });
+
+      toast({
+        title: "Success!",
+        description: "We have sent you another email!",
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -69,4 +74,4 @@ const VerifyFail = () => {
   );
 };
 
-export default VerifyFail;
+export default withUrqlClient(createUrqlClient)(VerifyFail);

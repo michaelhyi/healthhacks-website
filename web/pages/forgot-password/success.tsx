@@ -2,22 +2,19 @@ import ContainerApp from "@/components/ContainerApp";
 import { useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import { useState } from "react";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import { useResendVerificationEmailMutation } from "../../generated/graphql";
+import { useForgotPasswordMutation } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 
-const Verify = () => {
+const Success = () => {
   const toast = useToast();
   const router = useRouter();
-  const [error, setError] = useState("");
-  const [, resendVerificationEmail] = useResendVerificationEmailMutation();
+  const [, forgotPassword] = useForgotPasswordMutation();
 
   const handleResendEmail = async () => {
     try {
-      await resendVerificationEmail({
-        id: parseInt(router.query.id! as string),
+      await forgotPassword({
         email: router.query.email! as string,
       });
 
@@ -44,7 +41,7 @@ const Verify = () => {
           />
           <div className="max-w-lg">
             <h2 className="font-semibold text-4xl w-lg px-8 pt-8 text-left ">
-              Please verify your email.
+              Success!
             </h2>
             <p className="font-normal text-base px-8 pt-2  md:text-base  sm:text-sm">
               We have sent an email to <strong>{router.query.email!}</strong>.
@@ -54,7 +51,6 @@ const Verify = () => {
             <p className="font-normal text-base px-8 pt-4  md:text-base sm:text-sm">
               If you don't see it, make sure to also check your spam folder.
             </p>
-            {error && <p className="error">{error}</p>}
             <div className="flex md:items-center sm:items-start md:flex-row sm:flex-col px-8">
               <button
                 className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto md:ml-0 sm:mx-0 my-4 rounded-xl text-sm font-medium"
@@ -80,4 +76,4 @@ const Verify = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(Verify);
+export default withUrqlClient(createUrqlClient)(Success);

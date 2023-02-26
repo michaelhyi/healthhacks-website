@@ -48,13 +48,19 @@ export type Mutation = {
   __typename?: 'Mutation';
   deleteApplications: Scalars['Boolean'];
   deleteUsers: Scalars['Boolean'];
+  forgotPassword: Response;
   login: UserResponse;
   readApplication: Application;
   register: UserResponse;
   resendVerificationEmail: Scalars['Boolean'];
   submitApplication: Scalars['Boolean'];
   updateApplication: Scalars['Boolean'];
-  verifyUser: VerificationResponse;
+  verifyUser: Response;
+};
+
+
+export type MutationForgotPasswordArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -140,6 +146,12 @@ export type QueryReadUserArgs = {
   id: Scalars['Int'];
 };
 
+export type Response = {
+  __typename?: 'Response';
+  error?: Maybe<Scalars['String']>;
+  success: Scalars['Boolean'];
+};
+
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['String'];
@@ -161,11 +173,12 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
-export type VerificationResponse = {
-  __typename?: 'VerificationResponse';
-  error?: Maybe<Scalars['String']>;
-  success: Scalars['Boolean'];
-};
+export type ForgotPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: { __typename?: 'Response', success: boolean, error?: string | null } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -250,7 +263,7 @@ export type VerifyUserMutationVariables = Exact<{
 }>;
 
 
-export type VerifyUserMutation = { __typename?: 'Mutation', verifyUser: { __typename?: 'VerificationResponse', success: boolean, error?: string | null } };
+export type VerifyUserMutation = { __typename?: 'Mutation', verifyUser: { __typename?: 'Response', success: boolean, error?: string | null } };
 
 export type ReadUserQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -260,6 +273,18 @@ export type ReadUserQueryVariables = Exact<{
 export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, verifyToken: string, verifyExpiration: string, forgotPasswordToken?: string | null, forgotPasswordExpiration?: string | null, createdAt: string, updatedAt: string } };
 
 
+export const ForgotPasswordDocument = gql`
+    mutation ForgotPassword($email: String!) {
+  forgotPassword(email: $email) {
+    success
+    error
+  }
+}
+    `;
+
+export function useForgotPasswordMutation() {
+  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument);
+};
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

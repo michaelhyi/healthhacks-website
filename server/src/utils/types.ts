@@ -2,7 +2,7 @@ import { Field, ObjectType } from "type-graphql";
 import { User } from "../entities/User";
 
 @ObjectType()
-export class VerificationResponse {
+export class Response {
   @Field()
   success: boolean;
 

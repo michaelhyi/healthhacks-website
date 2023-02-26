@@ -1,41 +1,46 @@
-import Link from "next/link";
-import ContainerApp from "../components/ContainerApp";
-import Input from "../components/Input";
-import * as EmailValidator from "email-validator";
 import { withUrqlClient } from "next-urql";
-import { useRouter } from "next/router";
-import { FormEvent, useContext, useState } from "react";
+import Link from "next/link";
+import { FormEvent, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
+import ContainerApp from "../../components/ContainerApp";
+import Input from "../../components/Input";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import {
-  useLoginMutation,
-  useResendVerificationEmailMutation,
-} from "../generated/graphql";
-import Context from "../utils/context";
-import { createUrqlClient } from "../utils/createUrqlClient";
+import { createUrqlClient } from "../../utils/createUrqlClient";
+import { useForgotPasswordMutation } from "../../generated/graphql";
+import { useRouter } from "next/router";
 
 const ForgotPassword = () => {
   const router = useRouter();
-  const { setUser } = useContext(Context);
-
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-
-  const [, login] = useLoginMutation();
-  const [, resendVerificaitonEmail] = useResendVerificationEmailMutation();
+  const [error, setError] = useState("");
+  const [, forgotPassword] = useForgotPasswordMutation();
 
   // ADDED CODE BY WILLIAM: From Chat GPT
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!EmailValidator.validate(email)) {
-      setEmailError("Invalid email.");
-    } else {
+    if (email.length === 0) {
+      setError("This is a required field.");
+      return;
     }
 
     try {
-    } catch (e) {}
+      const response = await forgotPassword({ email });
+
+      if (response.data?.forgotPassword.success) {
+        router.push({
+          pathname: "/forgot-password/success",
+          query: {
+            email,
+          },
+        });
+      } else {
+        setError(response.data?.forgotPassword.error!);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -58,7 +63,7 @@ const ForgotPassword = () => {
                 value={email}
                 setValue={setEmail}
                 label="Email"
-                error={emailError}
+                error={error}
               />
               <div className="flex items-center mt-6 space-x-4">
                 <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-4 py-2 rounded-xl text-sm font-semibold">
