@@ -8,6 +8,9 @@ export class Response {
 
   @Field({ nullable: true })
   error?: string;
+
+  @Field({ nullable: true })
+  email?: string;
 }
 
 @ObjectType()

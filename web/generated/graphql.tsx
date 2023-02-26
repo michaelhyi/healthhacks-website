@@ -161,6 +161,7 @@ export type QueryReadUserArgs = {
 
 export type Response = {
   __typename?: 'Response';
+  email?: Maybe<Scalars['String']>;
   error?: Maybe<Scalars['String']>;
   success: Scalars['Boolean'];
 };
@@ -291,7 +292,7 @@ export type ReadTokenValidityQueryVariables = Exact<{
 }>;
 
 
-export type ReadTokenValidityQuery = { __typename?: 'Query', readTokenValidity: { __typename?: 'Response', success: boolean, error?: string | null } };
+export type ReadTokenValidityQuery = { __typename?: 'Query', readTokenValidity: { __typename?: 'Response', success: boolean, error?: string | null, email?: string | null } };
 
 export type ReadUserQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -474,6 +475,7 @@ export const ReadTokenValidityDocument = gql`
   readTokenValidity(token: $token) {
     success
     error
+    email
   }
 }
     `;

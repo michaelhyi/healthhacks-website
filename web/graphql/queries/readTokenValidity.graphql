@@ -2,5 +2,6 @@ query ReadTokenValidity($token: String!) {
   readTokenValidity(token: $token) {
     success
     error
+    email
   }
 }

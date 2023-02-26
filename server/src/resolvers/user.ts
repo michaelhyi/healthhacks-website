@@ -34,6 +34,7 @@ export class UserResolver {
 
     return {
       success: true,
+      email: user.email,
     };
   }
 
