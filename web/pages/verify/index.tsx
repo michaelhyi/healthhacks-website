@@ -2,7 +2,7 @@ import ContainerApp from "@/components/ContainerApp";
 import { useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { useResendVerificationEmailMutation } from "../../generated/graphql";
@@ -13,6 +13,12 @@ const Verify = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [, resendVerificationEmail] = useResendVerificationEmailMutation();
+
+  useEffect(() => {
+    if (Object.keys(router.query).length === 0) {
+      router.push("/login");
+    }
+  }, [router.query]);
 
   const handleResendEmail = async () => {
     try {

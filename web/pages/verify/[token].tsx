@@ -51,7 +51,11 @@ const Verify = () => {
 
   return (
     <ContainerApp>
-      {result ? <VerifySuccess user={user} /> : <VerifyFail error={error} />}
+      {result ? (
+        <VerifySuccess user={user} />
+      ) : (
+        <VerifyFail user={user} error={error} />
+      )}
     </ContainerApp>
   );
 };

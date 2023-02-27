@@ -35,8 +35,12 @@ const Apply = () => {
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
-      if (response) setUser(JSON.parse(response));
-      setFetching(false);
+      if (response) {
+        setUser(JSON.parse(response));
+        setFetching(false);
+      } else {
+        router.push("/login");
+      }
     })();
   }, []);
 
@@ -105,7 +109,12 @@ const Apply = () => {
 
     if (!found) {
       if (form.inPerson === "No") {
-        router.push("/apply/reject");
+        router.push({
+          pathname: "/apply/reject",
+          query: {
+            form: JSON.stringify(form),
+          },
+        });
       } else if (form.wholeEvent === "No") {
         router.push({
           pathname: "/apply/warning",
@@ -116,7 +125,7 @@ const Apply = () => {
         });
       } else {
         await submitApplication({
-          userId: user!.id,
+          userId: user!.id!,
           firstName: user!.firstName,
           lastName: user!.lastName,
           email: user!.email,
@@ -151,23 +160,24 @@ const Apply = () => {
   };
 
   const updateForm = async () => {
-    await updateApplication({
-      userId: user!.id,
-      phone: form.phone,
-      organization: form.organization,
-      city: form.city,
-      state: form.state,
-      inPerson: form.inPerson,
-      wholeEvent: form.wholeEvent,
-      background: form.background,
-      whyUs: form.whyUs,
-      howHear: form.howHear,
-      team: form.team,
-      linkedIn: form.linkedIn,
-      dietaryRestrictions: form.dietaryRestrictions,
-      transportation: form.transportation,
-      other: form.other,
-    });
+    if (user)
+      await updateApplication({
+        userId: user!.id!,
+        phone: form.phone,
+        organization: form.organization,
+        city: form.city,
+        state: form.state,
+        inPerson: form.inPerson,
+        wholeEvent: form.wholeEvent,
+        background: form.background,
+        whyUs: form.whyUs,
+        howHear: form.howHear,
+        team: form.team,
+        linkedIn: form.linkedIn,
+        dietaryRestrictions: form.dietaryRestrictions,
+        transportation: form.transportation,
+        other: form.other,
+      });
   };
 
   useAutosave({ data: form, onSave: updateForm });
@@ -191,7 +201,7 @@ const Apply = () => {
                 : "Let's learn more about you,"}{" "}
               <span className="font-semibold text-5xl text-hh-purple">
                 {" "}
-                {user.firstName}.{" "}
+                {user!.firstName}.{" "}
               </span>
             </div>
             {status === "Submitted" ? (

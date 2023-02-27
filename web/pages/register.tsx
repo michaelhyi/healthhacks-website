@@ -3,7 +3,7 @@ import ContainerApp from "../components/ContainerApp";
 import Input from "../components/Input";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 
@@ -12,6 +12,9 @@ import Fade from "react-reveal/Fade";
 
 const Register = () => {
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +28,25 @@ const Register = () => {
   const [confirmError, setConfirmError] = useState("");
 
   const [, register] = useRegisterMutation();
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        setUser(JSON.parse(response));
+        router.push("/");
+      }
+      setFetching(false);
+    })();
+  }, []);
+
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
 
   return (
     <ContainerApp>

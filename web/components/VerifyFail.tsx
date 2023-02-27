@@ -8,10 +8,17 @@ import Fade from "react-reveal/Fade";
 import { useResendVerificationEmailMutation } from "../generated/graphql";
 
 interface Props {
+  user: null | {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    verified: boolean;
+  };
   error: string;
 }
 
-const VerifyFail: React.FC<Props> = ({ error }) => {
+const VerifyFail: React.FC<Props> = ({ user, error }) => {
   const toast = useToast();
   const router = useRouter();
   const [, resendVerificationEmail] = useResendVerificationEmailMutation();
@@ -19,8 +26,8 @@ const VerifyFail: React.FC<Props> = ({ error }) => {
   const handleResendEmail = async () => {
     try {
       await resendVerificationEmail({
-        id: parseInt(router.query.id! as string),
-        email: router.query.email! as string,
+        id: user!.id,
+        email: user!.email,
       });
 
       toast({
@@ -53,7 +60,8 @@ const VerifyFail: React.FC<Props> = ({ error }) => {
             <>
               <p className="font-normal text-base px-8 pt-2  md:text-base  sm:text-sm">
                 Looks like the verification link sent to{" "}
-                <strong>{router.query.email!}</strong> has expired.
+                <strong>{router.query.email!}</strong> has expired or is
+                invalid.
                 <br />
                 No worries, we can send the link again.
                 <br />

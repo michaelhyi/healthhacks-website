@@ -1,20 +1,38 @@
 import ContainerApp from "@/components/ContainerApp";
 import { socials } from "@/data/socials";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useReadApplicationMutation } from "../../generated/graphql";
+import { UserType } from "../../utils/types";
 
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import { UserType } from "../../utils/types";
 
 const Success = () => {
+  const router = useRouter();
   const [user, setUser] = useState<UserType | null>(null);
   const [fetching, setFetching] = useState(true);
+  const [, readApplication] = useReadApplicationMutation();
 
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
-      if (response) setUser(JSON.parse(response));
-      setFetching(false);
+      if (response) {
+        const application = await readApplication({
+          userId: JSON.parse(response).id,
+        });
+
+        if (application.data?.readApplication.status !== "Submitted") {
+          router.push("/apply");
+          return;
+        }
+
+        setUser(JSON.parse(response));
+        setFetching(false);
+      } else {
+        router.push("/login");
+        return;
+      }
     })();
   }, []);
 

@@ -1,6 +1,6 @@
 import ContainerApp from "@/components/ContainerApp";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //@ts-ignore
 import Fade from "react-reveal/Fade";
@@ -10,6 +10,44 @@ import Fade from "react-reveal/Fade";
 
 const Reject = () => {
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        if (Object.keys(router.query).length === 0) {
+          router.push("/apply");
+          return;
+        } else {
+          try {
+            const form = JSON.parse(router.query.form as string);
+            if (form.inPerson === "Yes") {
+              router.push("/apply");
+              return;
+            }
+          } catch (e) {
+            router.push("/apply");
+            return;
+          }
+        }
+        setUser(JSON.parse(response));
+        setFetching(false);
+      } else {
+        router.push("/login");
+        return;
+      }
+    })();
+  }, [router.query]);
+
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
 
   return (
     <ContainerApp>

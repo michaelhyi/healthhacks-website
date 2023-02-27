@@ -3,7 +3,7 @@ import { Spinner } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //@ts-ignore
 import Fade from "react-reveal/Fade";
@@ -15,8 +15,36 @@ import { createUrqlClient } from "../../utils/createUrqlClient";
 
 const Warning = () => {
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [, submitApplication] = useSubmitApplicationMutation();
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+
+      if (response) {
+        setUser(JSON.parse(response));
+        setFetching(false);
+
+        if (Object.keys(router.query).length === 0) {
+          router.push("/apply");
+          return;
+        } else if (
+          router.query.form &&
+          router.query.user &&
+          (router.query.form!.length === 0 || router.query.user!.length === 0)
+        ) {
+          router.push("/apply");
+          return;
+        }
+      } else {
+        router.push("/login");
+        return;
+      }
+    })();
+  }, [router.query]);
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -51,6 +79,14 @@ const Warning = () => {
       console.error(e);
     }
   };
+
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
 
   return (
     <ContainerApp>

@@ -1,7 +1,7 @@
 import { withUrqlClient } from "next-urql";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Input from "../components/Input";
 import {
   useLoginMutation,
@@ -14,6 +14,8 @@ import Fade from "react-reveal/Fade";
 
 const Login = () => {
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +25,17 @@ const Login = () => {
   const [, login] = useLoginMutation();
   const [, resendVerificaitonEmail] = useResendVerificationEmailMutation();
 
-  // ADDED CODE BY WILLIAM: From Chat GPT
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        setUser(JSON.parse(response));
+        router.push("/");
+      }
+      setFetching(false);
+    })();
+  }, []);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -62,6 +74,8 @@ const Login = () => {
       }
     }
   };
+
+  if (fetching) return <></>;
 
   return (
     <Fade delay={500} up distance="24px">
