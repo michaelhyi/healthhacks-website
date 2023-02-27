@@ -1,19 +1,17 @@
 import Link from "next/link";
 import ContainerApp from "../components/ContainerApp";
 import Input from "../components/Input";
+import { withUrqlClient } from "next-urql";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useRegisterMutation } from "../generated/graphql";
+import { createUrqlClient } from "../utils/createUrqlClient";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import { useContext, useState } from "react";
-import { useRegisterMutation } from "../generated/graphql";
-import { useRouter } from "next/router";
-import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/createUrqlClient";
-import Context from "../utils/context";
 
 const Register = () => {
   const router = useRouter();
-  const { setUser } = useContext(Context);
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +24,7 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmError, setConfirmError] = useState("");
 
-  const [result, register] = useRegisterMutation();
+  const [, register] = useRegisterMutation();
 
   return (
     <ContainerApp>

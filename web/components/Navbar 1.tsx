@@ -1,14 +1,10 @@
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { AiOutlineRight } from "react-icons/ai";
 import { Link as SmoothLink } from "react-scroll";
-import { AiFillCaretDown, AiOutlineRight } from "react-icons/ai";
-import Context from "../utils/context";
 import Logo from "./Logo";
 import NavbarLink from "./NavbarLink";
 
 const Navbar = () => {
-  const { user, setUser } = useContext(Context);
   const router = useRouter();
 
   return (

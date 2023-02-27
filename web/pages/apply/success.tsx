@@ -1,13 +1,30 @@
 import ContainerApp from "@/components/ContainerApp";
 import { socials } from "@/data/socials";
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import Context from "../../utils/context";
+import { UserType } from "../../utils/types";
 
 const Success = () => {
-  const { user } = useContext(Context);
+  const [user, setUser] = useState<UserType | null>(null);
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) setUser(JSON.parse(response));
+      setFetching(false);
+    })();
+  }, []);
+
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
 
   return (
     <ContainerApp>

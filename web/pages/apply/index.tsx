@@ -7,7 +7,7 @@ import { yesno } from "@/data/yesno";
 import { Radio, RadioGroup, Spinner, useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Autosave, useAutosave } from "react-autosave";
 import ApplicationInput from "../../components/ApplicationInput";
 import ContainerApp from "../../components/ContainerApp";
@@ -18,19 +18,27 @@ import {
   useSubmitApplicationMutation,
   useUpdateApplicationMutation,
 } from "../../generated/graphql";
-import Context from "../../utils/context";
 import { createUrqlClient } from "../../utils/createUrqlClient";
-import { FormType } from "../../utils/types";
+import { FormType, UserType } from "../../utils/types";
 
 const Apply = () => {
   const toast = useToast();
   const router = useRouter();
-  const { user } = useContext(Context);
+  const [user, setUser] = useState<UserType | null>(null);
+  const [fetching, setFetching] = useState<boolean>(true);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [, readApplication] = useReadApplicationMutation();
   const [, updateApplication] = useUpdateApplicationMutation();
   const [, submitApplication] = useSubmitApplicationMutation();
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) setUser(JSON.parse(response));
+      setFetching(false);
+    })();
+  }, []);
 
   const [form, setForm] = useState({
     phone: "",
@@ -164,8 +172,12 @@ const Apply = () => {
 
   useAutosave({ data: form, onSave: updateForm });
 
-  if (!user) {
-    return <div>You must be signed in</div>;
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
   }
 
   return (

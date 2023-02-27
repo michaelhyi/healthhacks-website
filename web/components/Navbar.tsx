@@ -1,14 +1,27 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import { Link as SmoothLink } from "react-scroll";
-import Context from "../utils/context";
+import ContainerApp from "./ContainerApp";
 import Logo from "./Logo";
 import NavbarLink from "./NavbarLink";
 
 const Navbar = () => {
-  const { user, setUser } = useContext(Context);
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+
+      if (response) setUser(JSON.parse(response));
+
+      setFetching(false);
+    })();
+  }, []);
+
+  if (fetching) return <></>;
 
   return (
     <div className="flex justify-between sm:flex-col sm:space-y-12 md:space-y-0 md:flex-row items-center p-8 w-full sticky top-0 z-50 bg-black">

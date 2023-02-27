@@ -1,10 +1,9 @@
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { sleep } from "../utils/sleep";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import React, { useContext } from "react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { sleep } from "../utils/sleep";
-import Context from "../utils/context";
 
 interface Props {
   user: {
@@ -18,15 +17,11 @@ interface Props {
 
 const VerifySuccess: React.FC<Props> = ({ user }) => {
   const router = useRouter();
-  const { setUser } = useContext(Context);
 
   useEffect(() => {
     (async () => {
       await localStorage.setItem("user", JSON.stringify(user));
-      setUser(user);
-
       await sleep(3000);
-
       router.push("/apply");
     })();
   }, []);
