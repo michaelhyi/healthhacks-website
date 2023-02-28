@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Link as SmoothLink } from "react-scroll";
-import ContainerApp from "./ContainerApp";
 import Logo from "./Logo";
 import NavbarLink from "./NavbarLink";
 
@@ -14,9 +13,7 @@ const Navbar = () => {
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
-
       if (response) setUser(JSON.parse(response));
-
       setFetching(false);
     })();
   }, []);

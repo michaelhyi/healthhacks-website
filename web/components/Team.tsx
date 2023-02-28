@@ -1,4 +1,5 @@
 import { team } from "../data/team";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 

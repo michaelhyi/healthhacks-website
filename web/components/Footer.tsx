@@ -1,11 +1,12 @@
 import { useToast } from "@chakra-ui/react";
+import * as EmailValidator from "email-validator";
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { socials } from "../data/socials";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import * as EmailValidator from "email-validator";
-import { socials } from "../data/socials";
-import Link from "next/link";
 
 const Footer = () => {
   const [email, setEmail] = useState("");

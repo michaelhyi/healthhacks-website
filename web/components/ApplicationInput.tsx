@@ -1,14 +1,12 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 
 interface Props {
   label?: string;
   value: string;
-  //setValue: Dispatch<SetStateAction<string>>;
   setValue: (value: string) => void;
   error?: string;
   textarea?: boolean;
   placeholder?: string;
-  // userId: number;
 }
 
 const ApplicationInput: React.FC<Props> = ({
@@ -18,7 +16,6 @@ const ApplicationInput: React.FC<Props> = ({
   error,
   textarea,
   placeholder,
-  // userId,
 }) => {
   return (
     <div>

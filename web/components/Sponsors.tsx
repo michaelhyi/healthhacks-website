@@ -1,4 +1,5 @@
 import { sponsors } from "../data/sponsors";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 

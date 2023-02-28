@@ -58,20 +58,7 @@ const Warning = () => {
         firstName: user!.firstName,
         lastName: user!.lastName,
         email: user!.email,
-        phone: form.phone,
-        organization: form.organization,
-        city: form.city,
-        state: form.state,
-        inPerson: form.inPerson,
-        wholeEvent: form.wholeEvent,
-        background: form.background,
-        whyUs: form.whyUs,
-        howHear: form.howHear,
-        team: form.team,
-        linkedIn: form.linkedIn,
-        dietaryRestrictions: form.dietaryRestrictions,
-        transportation: form.transportation,
-        other: form.other,
+        form,
       });
 
       router.push("/apply/success");

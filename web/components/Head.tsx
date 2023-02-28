@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AiOutlineRight } from "react-icons/ai";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 
