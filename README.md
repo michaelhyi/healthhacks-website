@@ -13,3 +13,4 @@ Backend/API:
 - GraphQL
 - Typeorm
 - URQL
+- Twilio SendGrid

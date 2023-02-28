@@ -1,13 +1,50 @@
 import ContainerApp from "@/components/ContainerApp";
 import { socials } from "@/data/socials";
-import { useContext } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useReadApplicationMutation } from "../../generated/graphql";
+import { UserType } from "../../utils/types";
 
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import Context from "../../utils/context";
+import { withUrqlClient } from "next-urql";
+import { createUrqlClient } from "../../utils/createUrqlClient";
 
 const Success = () => {
-  const { user } = useContext(Context);
+  const router = useRouter();
+  const [user, setUser] = useState<UserType | null>(null);
+  const [fetching, setFetching] = useState(true);
+  const [, readApplication] = useReadApplicationMutation();
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        const application = await readApplication({
+          userId: JSON.parse(response).id,
+        });
+
+        if (application.data?.readApplication.status !== "Submitted") {
+          router.push("/apply");
+          return;
+        }
+
+        setUser(JSON.parse(response));
+        setFetching(false);
+      } else {
+        router.push("/login");
+        return;
+      }
+    })();
+  }, []);
+
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
 
   return (
     <ContainerApp>
@@ -60,4 +97,4 @@ const Success = () => {
   );
 };
 
-export default Success;
+export default withUrqlClient(createUrqlClient)(Success);

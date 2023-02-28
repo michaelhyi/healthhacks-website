@@ -8,14 +8,12 @@ const appendApplicationSpreadsheet = async (row) => {
     const GOOGLE_SERVICE_PRIVATE_KEY = process.env.GOOGLE_SERVICE_PRIVATE_KEY;
     const doc = new google_spreadsheet_1.GoogleSpreadsheet(SPREADSHEET_ID);
     try {
-        console.log(row);
         await doc.useServiceAccountAuth({
             client_email: GOOGLE_CLIENT_EMAIL,
             private_key: GOOGLE_SERVICE_PRIVATE_KEY.replace(/\\n/g, "\n"),
         });
         await doc.loadInfo();
         const sheet = doc.sheetsById[SHEET_ID];
-        console.log(sheet);
         await sheet.addRow(row);
     }
     catch (e) {

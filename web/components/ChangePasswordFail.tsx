@@ -1,6 +1,6 @@
-import { useToast } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 

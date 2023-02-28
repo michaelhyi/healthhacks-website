@@ -47,13 +47,13 @@ export class Application extends BaseEntity {
   @Column("text", { default: "" })
   wholeEvent: string = "";
 
-  @Field()
-  @Column("text", { default: "" })
-  background: string = "";
+  @Field(() => [String])
+  @Column("text", { array: true, default: [] })
+  background: string[] = [];
 
-  @Field()
-  @Column("text", { default: "" })
-  whyUs: string = "";
+  @Field(() => [String])
+  @Column("text", { array: true, default: [] })
+  whyUs: string[] = [];
 
   @Field()
   @Column("text", { default: "" })

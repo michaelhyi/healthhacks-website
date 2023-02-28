@@ -6,7 +6,7 @@ import { v4 } from "uuid";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
 import { forgotPaswordHTML, verifyHTML } from "../utils/emails";
-import { UserResponse, Response } from "../utils/types";
+import { Response, UserResponse } from "../utils/types";
 
 const sgMail = require("@sendgrid/mail");
 
@@ -76,7 +76,7 @@ export class UserResolver {
         forgotPasswordToken: token,
         forgotPasswordExpiration: (
           new Date().getTime() +
-          1000 * 60 * 15
+          1000 * 60 * 60 * 2
         ).toString(),
       })
       .where({ id: user.id })
@@ -165,7 +165,10 @@ export class UserResolver {
       .createQueryBuilder()
       .update({
         verifyToken: token,
-        verifyExpiration: (new Date().getTime() + 1000 * 60 * 15).toString(),
+        verifyExpiration: (
+          new Date().getTime() +
+          1000 * 60 * 60 * 2
+        ).toString(),
       })
       .where({ id })
       .returning("*")
@@ -254,7 +257,10 @@ export class UserResolver {
         firstName,
         lastName,
         verifyToken: token,
-        verifyExpiration: (new Date().getTime() + 1000 * 60 * 15).toString(),
+        verifyExpiration: (
+          new Date().getTime() +
+          1000 * 60 * 60 * 2
+        ).toString(),
       }).save();
 
       await Application.create({

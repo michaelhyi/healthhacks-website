@@ -1,22 +1,21 @@
-import Link from "next/link";
-import ContainerApp from "../components/ContainerApp";
-import Input from "../components/Input";
-//@ts-ignore
-import Fade from "react-reveal/Fade";
 import { withUrqlClient } from "next-urql";
-import { FormEvent, useContext, useState } from "react";
-import { createUrqlClient } from "../utils/createUrqlClient";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FormEvent, useEffect, useState } from "react";
+import Input from "../components/Input";
 import {
   useLoginMutation,
   useResendVerificationEmailMutation,
 } from "../generated/graphql";
-import Router, { useRouter } from "next/router";
-import Context from "../utils/context";
-import axios from "axios";
+import { createUrqlClient } from "../utils/createUrqlClient";
+
+//@ts-ignore
+import Fade from "react-reveal/Fade";
 
 const Login = () => {
   const router = useRouter();
-  const { setUser } = useContext(Context);
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +25,17 @@ const Login = () => {
   const [, login] = useLoginMutation();
   const [, resendVerificaitonEmail] = useResendVerificationEmailMutation();
 
-  // ADDED CODE BY WILLIAM: From Chat GPT
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        setUser(JSON.parse(response));
+        router.push("/");
+      }
+      setFetching(false);
+    })();
+  }, []);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -50,7 +59,6 @@ const Login = () => {
           "user",
           JSON.stringify(response.data!.login.user!)
         );
-        setUser(response.data!.login.user!);
         router.push("/");
       }
     } else {
@@ -67,10 +75,12 @@ const Login = () => {
     }
   };
 
+  if (fetching) return <></>;
+
   return (
     <Fade delay={500} up distance="24px">
       <div className="flex flex-row h-[100vh] justify-center bg-black">
-        <div className=" flex w-0 lg:w-1/2 md:m-0 bg-[url('/loginheader1.png')] bg-cover items-center justify-center invisible lg:visible bg-cover bg-center" />
+        <div className=" flex w-0 lg:w-1/2 md:m-0 bg-[url('/loginheader1.png')] bg-cover items-center justify-center invisible lg:visible bg-center" />
         {/* <div className="w-1/2 h-3/5 bg-[#3339] filter items-center justify-center rounded-2xl backdrop-blur"/> */}
         <div className="flex flex-col items-center lg:items-start justify-center p-4 w-[100vw] lg:w-1/2">
           <div className="mx-12">

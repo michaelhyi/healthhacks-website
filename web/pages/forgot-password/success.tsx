@@ -2,6 +2,7 @@ import ContainerApp from "@/components/ContainerApp";
 import { useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { useForgotPasswordMutation } from "../../generated/graphql";
@@ -11,6 +12,12 @@ const Success = () => {
   const toast = useToast();
   const router = useRouter();
   const [, forgotPassword] = useForgotPasswordMutation();
+
+  useEffect(() => {
+    if (Object.keys(router.query).length === 0) {
+      router.push("/login");
+    }
+  }, [router.query]);
 
   const handleResendEmail = async () => {
     try {
