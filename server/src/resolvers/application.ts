@@ -4,6 +4,7 @@ import { getConnection } from "typeorm";
 import { Application } from "../entities/Application";
 import appendApplicationSpreadsheet from "../utils/appendApplicationSpreadsheet";
 import { applicationConfirmationHTML } from "../utils/emails";
+import { Form } from "../utils/types";
 
 const sgMail = require("@sendgrid/mail");
 
@@ -21,41 +22,27 @@ export class ApplicationResolver {
     @Arg("firstName", () => String) firstName: string,
     @Arg("lastName", () => String) lastName: string,
     @Arg("email", () => String) email: string,
-    @Arg("phone", () => String) phone: string,
-    @Arg("organization", () => String)
-    organization: string,
-    @Arg("city", () => String) city: string,
-    @Arg("state", () => String) state: string,
-    @Arg("inPerson", () => String) inPerson: string,
-    @Arg("wholeEvent", () => String) wholeEvent: string,
-    @Arg("background", () => [String]) background: string[],
-    @Arg("whyUs", () => [String]) whyUs: string[],
-    @Arg("howHear", () => String) howHear: string,
-    @Arg("team", () => String) team: string,
-    @Arg("linkedIn", () => String) linkedIn: string,
-    @Arg("dietaryRestrictions", () => String) dietaryRestrictions: string,
-    @Arg("transportation", () => String) transportation: string,
-    @Arg("other", () => String) other: string
+    @Arg("form", () => Form) form: Form
   ): Promise<boolean> {
     await getConnection()
       .getRepository(Application)
       .createQueryBuilder()
       .update({
         status: "Submitted",
-        phone: phone,
-        organization: organization,
-        city: city,
-        state: state,
-        inPerson: inPerson,
-        wholeEvent: wholeEvent,
-        background: background,
-        whyUs: whyUs,
-        howHear: howHear,
-        team: team,
-        linkedIn: linkedIn,
-        dietaryRestrictions: dietaryRestrictions,
-        transportation: transportation,
-        other: other,
+        phone: form.phone,
+        organization: form.organization,
+        city: form.city,
+        state: form.state,
+        inPerson: form.inPerson,
+        wholeEvent: form.wholeEvent,
+        background: form.background,
+        whyUs: form.whyUs,
+        howHear: form.howHear,
+        team: form.team,
+        linkedIn: form.linkedIn,
+        dietaryRestrictions: form.dietaryRestrictions,
+        transportation: form.transportation,
+        other: form.other,
       })
       .where({ userId })
       .returning("*")
@@ -66,20 +53,20 @@ export class ApplicationResolver {
       FirstName: firstName,
       LastName: lastName,
       Email: email,
-      Phone: phone,
-      Organization: organization,
-      City: city,
-      State: state,
-      InPerson: inPerson,
-      WholeEvent: wholeEvent,
-      Background: background.toString(),
-      WhyUs: whyUs.toString(),
-      HowHear: howHear,
-      Team: team,
-      LinkedIn: linkedIn,
-      DietaryRestrictions: dietaryRestrictions,
-      Transportation: transportation,
-      Other: other,
+      Phone: form.phone,
+      Organization: form.organization,
+      City: form.city,
+      State: form.state,
+      InPerson: form.inPerson,
+      WholeEvent: form.wholeEvent,
+      Background: form.background.toString(),
+      WhyUs: form.whyUs.toString(),
+      HowHear: form.howHear,
+      Team: form.team,
+      LinkedIn: form.linkedIn,
+      DietaryRestrictions: form.dietaryRestrictions,
+      Transportation: form.transportation,
+      Other: form.other,
     };
 
     await appendApplicationSpreadsheet(newRow);
@@ -107,40 +94,26 @@ export class ApplicationResolver {
   @Mutation(() => Boolean)
   async updateApplication(
     @Arg("userId", () => Int) userId: number,
-    @Arg("phone", () => String) phone: string,
-    @Arg("organization", () => String)
-    organization: string,
-    @Arg("city", () => String) city: string,
-    @Arg("state", () => String) state: string,
-    @Arg("inPerson", () => String) inPerson: string,
-    @Arg("wholeEvent", () => String) wholeEvent: string,
-    @Arg("background", () => [String]) background: string[],
-    @Arg("whyUs", () => [String]) whyUs: string[],
-    @Arg("howHear", () => String) howHear: string,
-    @Arg("team", () => String) team: string,
-    @Arg("linkedIn", () => String) linkedIn: string,
-    @Arg("dietaryRestrictions", () => String) dietaryRestrictions: string,
-    @Arg("transportation", () => String) transportation: string,
-    @Arg("other", () => String) other: string
+    @Arg("form", () => Form) form: Form
   ): Promise<boolean> {
     await getConnection()
       .getRepository(Application)
       .createQueryBuilder()
       .update({
-        phone,
-        organization,
-        city,
-        state,
-        inPerson,
-        wholeEvent,
-        background,
-        whyUs,
-        howHear,
-        team,
-        linkedIn,
-        dietaryRestrictions,
-        transportation,
-        other,
+        phone: form.phone,
+        organization: form.organization,
+        city: form.city,
+        state: form.state,
+        inPerson: form.inPerson,
+        wholeEvent: form.wholeEvent,
+        background: form.background,
+        whyUs: form.whyUs,
+        howHear: form.howHear,
+        team: form.team,
+        linkedIn: form.linkedIn,
+        dietaryRestrictions: form.dietaryRestrictions,
+        transportation: form.transportation,
+        other: form.other,
       })
       .where({ userId })
       .returning("*")

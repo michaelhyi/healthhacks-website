@@ -6,7 +6,7 @@ import { v4 } from "uuid";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
 import { forgotPaswordHTML, verifyHTML } from "../utils/emails";
-import { UserResponse, Response } from "../utils/types";
+import { Response, UserResponse } from "../utils/types";
 
 const sgMail = require("@sendgrid/mail");
 

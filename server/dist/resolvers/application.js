@@ -22,32 +22,33 @@ const typeorm_1 = require("typeorm");
 const Application_1 = require("../entities/Application");
 const appendApplicationSpreadsheet_1 = __importDefault(require("../utils/appendApplicationSpreadsheet"));
 const emails_1 = require("../utils/emails");
+const types_1 = require("../utils/types");
 const sgMail = require("@sendgrid/mail");
 let ApplicationResolver = class ApplicationResolver {
     async deleteApplications() {
         await Application_1.Application.delete({});
         return true;
     }
-    async submitApplication(userId, firstName, lastName, email, phone, organization, city, state, inPerson, wholeEvent, background, whyUs, howHear, team, linkedIn, dietaryRestrictions, transportation, other) {
+    async submitApplication(userId, firstName, lastName, email, form) {
         await (0, typeorm_1.getConnection)()
             .getRepository(Application_1.Application)
             .createQueryBuilder()
             .update({
             status: "Submitted",
-            phone: phone,
-            organization: organization,
-            city: city,
-            state: state,
-            inPerson: inPerson,
-            wholeEvent: wholeEvent,
-            background: background,
-            whyUs: whyUs,
-            howHear: howHear,
-            team: team,
-            linkedIn: linkedIn,
-            dietaryRestrictions: dietaryRestrictions,
-            transportation: transportation,
-            other: other,
+            phone: form.phone,
+            organization: form.organization,
+            city: form.city,
+            state: form.state,
+            inPerson: form.inPerson,
+            wholeEvent: form.wholeEvent,
+            background: form.background,
+            whyUs: form.whyUs,
+            howHear: form.howHear,
+            team: form.team,
+            linkedIn: form.linkedIn,
+            dietaryRestrictions: form.dietaryRestrictions,
+            transportation: form.transportation,
+            other: form.other,
         })
             .where({ userId })
             .returning("*")
@@ -57,20 +58,20 @@ let ApplicationResolver = class ApplicationResolver {
             FirstName: firstName,
             LastName: lastName,
             Email: email,
-            Phone: phone,
-            Organization: organization,
-            City: city,
-            State: state,
-            InPerson: inPerson,
-            WholeEvent: wholeEvent,
-            Background: background.toString(),
-            WhyUs: whyUs.toString(),
-            HowHear: howHear,
-            Team: team,
-            LinkedIn: linkedIn,
-            DietaryRestrictions: dietaryRestrictions,
-            Transportation: transportation,
-            Other: other,
+            Phone: form.phone,
+            Organization: form.organization,
+            City: form.city,
+            State: form.state,
+            InPerson: form.inPerson,
+            WholeEvent: form.wholeEvent,
+            Background: form.background.toString(),
+            WhyUs: form.whyUs.toString(),
+            HowHear: form.howHear,
+            Team: form.team,
+            LinkedIn: form.linkedIn,
+            DietaryRestrictions: form.dietaryRestrictions,
+            Transportation: form.transportation,
+            Other: form.other,
         };
         await (0, appendApplicationSpreadsheet_1.default)(newRow);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -90,25 +91,25 @@ let ApplicationResolver = class ApplicationResolver {
         });
         return true;
     }
-    async updateApplication(userId, phone, organization, city, state, inPerson, wholeEvent, background, whyUs, howHear, team, linkedIn, dietaryRestrictions, transportation, other) {
+    async updateApplication(userId, form) {
         await (0, typeorm_1.getConnection)()
             .getRepository(Application_1.Application)
             .createQueryBuilder()
             .update({
-            phone,
-            organization,
-            city,
-            state,
-            inPerson,
-            wholeEvent,
-            background,
-            whyUs,
-            howHear,
-            team,
-            linkedIn,
-            dietaryRestrictions,
-            transportation,
-            other,
+            phone: form.phone,
+            organization: form.organization,
+            city: form.city,
+            state: form.state,
+            inPerson: form.inPerson,
+            wholeEvent: form.wholeEvent,
+            background: form.background,
+            whyUs: form.whyUs,
+            howHear: form.howHear,
+            team: form.team,
+            linkedIn: form.linkedIn,
+            dietaryRestrictions: form.dietaryRestrictions,
+            transportation: form.transportation,
+            other: form.other,
         })
             .where({ userId })
             .returning("*")
@@ -136,43 +137,17 @@ __decorate([
     __param(1, (0, type_graphql_1.Arg)("firstName", () => String)),
     __param(2, (0, type_graphql_1.Arg)("lastName", () => String)),
     __param(3, (0, type_graphql_1.Arg)("email", () => String)),
-    __param(4, (0, type_graphql_1.Arg)("phone", () => String)),
-    __param(5, (0, type_graphql_1.Arg)("organization", () => String)),
-    __param(6, (0, type_graphql_1.Arg)("city", () => String)),
-    __param(7, (0, type_graphql_1.Arg)("state", () => String)),
-    __param(8, (0, type_graphql_1.Arg)("inPerson", () => String)),
-    __param(9, (0, type_graphql_1.Arg)("wholeEvent", () => String)),
-    __param(10, (0, type_graphql_1.Arg)("background", () => [String])),
-    __param(11, (0, type_graphql_1.Arg)("whyUs", () => [String])),
-    __param(12, (0, type_graphql_1.Arg)("howHear", () => String)),
-    __param(13, (0, type_graphql_1.Arg)("team", () => String)),
-    __param(14, (0, type_graphql_1.Arg)("linkedIn", () => String)),
-    __param(15, (0, type_graphql_1.Arg)("dietaryRestrictions", () => String)),
-    __param(16, (0, type_graphql_1.Arg)("transportation", () => String)),
-    __param(17, (0, type_graphql_1.Arg)("other", () => String)),
+    __param(4, (0, type_graphql_1.Arg)("form", () => types_1.Form)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, String, String, String, Array, Array, String, String, String, String, String, String]),
+    __metadata("design:paramtypes", [Number, String, String, String, types_1.Form]),
     __metadata("design:returntype", Promise)
 ], ApplicationResolver.prototype, "submitApplication", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),
-    __param(1, (0, type_graphql_1.Arg)("phone", () => String)),
-    __param(2, (0, type_graphql_1.Arg)("organization", () => String)),
-    __param(3, (0, type_graphql_1.Arg)("city", () => String)),
-    __param(4, (0, type_graphql_1.Arg)("state", () => String)),
-    __param(5, (0, type_graphql_1.Arg)("inPerson", () => String)),
-    __param(6, (0, type_graphql_1.Arg)("wholeEvent", () => String)),
-    __param(7, (0, type_graphql_1.Arg)("background", () => [String])),
-    __param(8, (0, type_graphql_1.Arg)("whyUs", () => [String])),
-    __param(9, (0, type_graphql_1.Arg)("howHear", () => String)),
-    __param(10, (0, type_graphql_1.Arg)("team", () => String)),
-    __param(11, (0, type_graphql_1.Arg)("linkedIn", () => String)),
-    __param(12, (0, type_graphql_1.Arg)("dietaryRestrictions", () => String)),
-    __param(13, (0, type_graphql_1.Arg)("transportation", () => String)),
-    __param(14, (0, type_graphql_1.Arg)("other", () => String)),
+    __param(1, (0, type_graphql_1.Arg)("form", () => types_1.Form)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, Array, Array, String, String, String, String, String, String]),
+    __metadata("design:paramtypes", [Number, types_1.Form]),
     __metadata("design:returntype", Promise)
 ], ApplicationResolver.prototype, "updateApplication", null);
 __decorate([
