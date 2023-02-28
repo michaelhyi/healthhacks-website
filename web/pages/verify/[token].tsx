@@ -29,7 +29,6 @@ const Verify = () => {
           const response = await verifyUser({
             token: router.query.token as string,
           });
-          console.log(response);
 
           setResult(response.data?.verifyUser.success);
           setUser(response.data?.verifyUser.user!);

@@ -12,7 +12,6 @@ export const appendApplicationSpreadsheet = async (row: RowType) => {
   const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
   try {
-    console.log(row);
     await doc.useServiceAccountAuth({
       client_email: GOOGLE_CLIENT_EMAIL!,
       private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
@@ -20,7 +19,6 @@ export const appendApplicationSpreadsheet = async (row: RowType) => {
     await doc.loadInfo();
 
     const sheet = doc.sheetsById[SHEET_ID!];
-    console.log(sheet);
     await sheet.addRow(row);
   } catch (e) {
     console.error("Error: ", e);

@@ -7,6 +7,8 @@ import { UserType } from "../../utils/types";
 
 //@ts-ignore
 import Fade from "react-reveal/Fade";
+import { withUrqlClient } from "next-urql";
+import { createUrqlClient } from "../../utils/createUrqlClient";
 
 const Success = () => {
   const router = useRouter();
@@ -95,4 +97,4 @@ const Success = () => {
   );
 };
 
-export default Success;
+export default withUrqlClient(createUrqlClient)(Success);
