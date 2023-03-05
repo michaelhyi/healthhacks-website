@@ -26,7 +26,12 @@ const main = async () => {
   const app = express();
   app.set("trust proxy", 1);
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: process.env.ORIGIN,
+      credentials: false,
+    })
+  );
 
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],

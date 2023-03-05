@@ -54,7 +54,7 @@ const ForgotPassword = () => {
                 Forgot Your Password?
               </div>
               <div className="text-sm mt-4 font-medium text-white">
-                Please enter the email address and we'll send you a link to
+                Please enter the email address and we&apos;ll send you a link to
                 reset your password.
               </div>
             </div>

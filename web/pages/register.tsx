@@ -55,7 +55,7 @@ const Register = () => {
           <div className="lg:w-[50vw] md:w-[75vw] sm:w-[75vw]">
             <div>
               <div className="font-semibold text-3xl">
-                Let's Create An Account
+                Let&apos;s Create An Account
               </div>
               <div className="mt-2 opacity-50 text-semibold text-sm">
                 {`health{hacks}`} connects diverse creators to build the next

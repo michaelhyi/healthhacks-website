@@ -89,7 +89,7 @@ const Login = () => {
                 Welcome to {`health{hacks}`}
               </div>
               <div className="text-sm mt-4 font-medium text-white">
-                Don't have an account?&nbsp;
+                Don&apos;t have an account?&nbsp;
                 <Link
                   href="/register"
                   className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"

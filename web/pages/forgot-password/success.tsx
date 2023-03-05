@@ -56,7 +56,8 @@ const Success = () => {
               start your registration form.
             </p>
             <p className="font-normal text-base px-8 pt-4  md:text-base sm:text-sm">
-              If you don't see it, make sure to also check your spam folder.
+              If you don&apos;t see it, make sure to also check your spam
+              folder.
             </p>
             <div className="flex md:items-center sm:items-start md:flex-row sm:flex-col px-8">
               <button
