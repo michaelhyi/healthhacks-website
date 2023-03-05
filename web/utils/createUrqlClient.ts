@@ -3,7 +3,7 @@ import { dedupExchange, fetchExchange } from "urql";
 
 export const createUrqlClient = () => {
   return {
-    url: "http://localhost:4000/graphql",
+    url: process.env.NEXT_PUBLIC_API_URL,
     exchanges: [
       dedupExchange,
       cacheExchange({

@@ -243,7 +243,7 @@ export const verifyHTML = (token: string) => {
                                     <tbody>
                                       <tr>
                                         <td style="padding: 13px 17px; border-radius: 8px; background-color: #8d58b0" bgcolor="#8d58b0" valign="top" align="center">
-                                          <a href="http://localhost:3000/verify/${token}" style="line-height: 1.5; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff">Verify</a>
+                                          <a href="${process.env.ORIGIN}/verify/${token}" style="line-height: 1.5; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff">Verify</a>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -1205,7 +1205,7 @@ export const forgotPaswordHTML = (token: string) => {
                                     <tbody>
                                       <tr>
                                         <td style="padding: 13px 17px; border-radius: 8px; background-color: #8d58b0" bgcolor="#8d58b0" valign="top" align="center">
-                                          <a href="http://localhost:3000/change-password/${token}" style="line-height: 1.5; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff">Change Password</a>
+                                          <a href="${process.env.ORIGIN}/change-password/${token}" style="line-height: 1.5; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff">Change Password</a>
                                         </td>
                                       </tr>
                                     </tbody>
