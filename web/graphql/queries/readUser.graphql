@@ -1,0 +1,15 @@
+query ReadUser($id: Int!) {
+  readUser(id: $id) {
+    id
+    email
+    firstName
+    lastName
+    verified
+    verifyToken
+    verifyExpiration
+    forgotPasswordToken
+    forgotPasswordExpiration
+    createdAt
+    updatedAt
+  }
+}

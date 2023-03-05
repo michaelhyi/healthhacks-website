@@ -1,0 +1,3 @@
+mutation UpdateApplication($userId: Int!, $form: Form!) {
+  updateApplication(userId: $userId, form: $form)
+}

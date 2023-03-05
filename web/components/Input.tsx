@@ -30,16 +30,16 @@ const Input: React.FC<Props> = ({
           onChange={(e) => setValue(e.target.value)}
           className={`w-full bg-black border-[0.5px] ${
             error && error.length > 0 ? "border-red-400" : "border-white"
-          } py-2 rounded-xl px-4 min-h-[25vh]`}
+          } py-2 rounded-xl px-4 min-h-[25vh] text-white`}
         />
       ) : (
         <input
-          type={`${label === "Password" ? "password" : ""}`}
+          type={`${label.includes("Password") ? "password" : ""}`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           className={`w-full bg-black border-[0.5px] ${
             error && error.length > 0 ? "border-red-400" : "border-white"
-          } py-2 rounded-xl px-4`}
+          } py-2 rounded-xl px-4 text-white`}
         />
       )}
 

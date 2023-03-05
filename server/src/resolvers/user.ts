@@ -1,15 +1,196 @@
 import argon2 from "argon2";
 import * as EmailValidator from "email-validator";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { getConnection } from "typeorm";
+import { v4 } from "uuid";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
-import { UserResponse } from "../utils/types";
+import { forgotPaswordHTML, verifyHTML } from "../utils/emails";
+import { Response, UserResponse } from "../utils/types";
+
+const sgMail = require("@sendgrid/mail");
 
 @Resolver()
 export class UserResolver {
+  @Query(() => Response)
+  async readTokenValidity(@Arg("token") token: string): Promise<Response> {
+    const user = await User.findOne({ where: { forgotPasswordToken: token } });
+    const date = new Date().getTime();
+    const expiration = parseInt(user?.forgotPasswordExpiration!);
+
+    if (!user) {
+      return {
+        success: false,
+        error: "Invalid token.",
+      };
+    }
+
+    if (date > expiration) {
+      return {
+        success: false,
+        error: "Token expired.",
+      };
+    }
+
+    return {
+      success: true,
+      email: user.email,
+    };
+  }
+
+  @Mutation(() => User)
+  async updatePassword(
+    @Arg("token") token: string,
+    @Arg("password") password: string
+  ): Promise<User> {
+    const user = await User.findOne({ where: { forgotPasswordToken: token } });
+
+    await getConnection()
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({
+        password: await argon2.hash(password),
+      })
+      .where({ id: user!.id })
+      .returning("*")
+      .execute();
+    return user!;
+  }
+
+  @Mutation(() => Response)
+  async forgotPassword(@Arg("email") email: string): Promise<Response> {
+    const user = await User.findOne({ where: { email } });
+
+    if (!EmailValidator.validate(email) || !user) {
+      return {
+        success: false,
+        error: "Invalid Email",
+      };
+    }
+
+    const token = v4();
+    await getConnection()
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({
+        forgotPasswordToken: token,
+        forgotPasswordExpiration: (
+          new Date().getTime() +
+          1000 * 60 * 60 * 2
+        ).toString(),
+      })
+      .where({ id: user.id })
+      .returning("*")
+      .execute();
+
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+      to: email,
+      from: process.env.SENDGRID_EMAIL,
+      subject: "health{hacks} 2023 Password Change",
+      html: forgotPaswordHTML(token),
+    };
+
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log("Email sent");
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+
+    return {
+      success: true,
+    };
+  }
+
+  @Mutation(() => Response)
+  async verifyUser(@Arg("token") token: string): Promise<Response> {
+    const user = await User.findOne({ where: { verifyToken: token } });
+    const date = new Date().getTime();
+    const expiration = parseInt(user?.verifyExpiration!);
+
+    if (!user) {
+      return {
+        success: false,
+        error: "Invalid token.",
+      };
+    }
+
+    if (!user!.verified) {
+      if (date > expiration) {
+        return {
+          success: false,
+          error: "Token expired.",
+        };
+      } else {
+        await getConnection()
+          .getRepository(User)
+          .createQueryBuilder()
+          .update({
+            verified: true,
+          })
+          .where({ id: user!.id })
+          .returning("*")
+          .execute();
+        return {
+          success: true,
+          user,
+        };
+      }
+    }
+
+    return {
+      success: false,
+      error: "User already verified.",
+    };
+  }
+
   @Mutation(() => Boolean)
   async deleteUsers() {
     await User.delete({});
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async resendVerificationEmail(
+    @Arg("id", () => Int) id: number,
+    @Arg("email") email: string
+  ): Promise<Boolean> {
+    const token = v4();
+
+    await getConnection()
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({
+        verifyToken: token,
+        verifyExpiration: (
+          new Date().getTime() +
+          1000 * 60 * 60 * 2
+        ).toString(),
+      })
+      .where({ id })
+      .returning("*")
+      .execute();
+
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+      to: email,
+      from: process.env.SENDGRID_EMAIL,
+      subject: "health{hacks} 2023 Email Verification",
+      html: verifyHTML(token),
+    };
+
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log("Email sent");
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+
     return true;
   }
 
@@ -32,7 +213,6 @@ export class UserResolver {
     @Arg("firstName") firstName: string,
     @Arg("lastName") lastName: string
   ): Promise<UserResponse> {
-    //some sort of email validity checker
     if (!EmailValidator.validate(email)) {
       return {
         error: {
@@ -68,19 +248,41 @@ export class UserResolver {
     }
 
     let user;
+    const token = v4();
+
     try {
       user = await User.create({
         email,
         password: await argon2.hash(password),
         firstName,
         lastName,
+        verifyToken: token,
+        verifyExpiration: (
+          new Date().getTime() +
+          1000 * 60 * 60 * 2
+        ).toString(),
       }).save();
 
       await Application.create({
         userId: user.id,
-        firstName,
-        lastName,
       }).save();
+
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
+        to: email,
+        from: process.env.SENDGRID_EMAIL,
+        subject: "health{hacks} 2023 Email Verification",
+        html: verifyHTML(token),
+      };
+
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log("Email sent");
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
     } catch (e) {
       if (
         e.detail.includes("already exists") ||

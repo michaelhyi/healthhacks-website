@@ -30,6 +30,26 @@ export class User extends BaseEntity {
   @Column()
   lastName!: string;
 
+  @Field()
+  @Column("boolean", { default: false })
+  verified: boolean = false;
+
+  @Field()
+  @Column({ nullable: true })
+  verifyToken: string;
+
+  @Field()
+  @Column({ nullable: true })
+  verifyExpiration: string;
+
+  @Field()
+  @Column({ nullable: true })
+  forgotPasswordToken: string;
+
+  @Field()
+  @Column({ nullable: true })
+  forgotPasswordExpiration: string;
+
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;

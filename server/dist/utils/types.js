@@ -9,9 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserResponse = exports.Error = void 0;
+exports.Form = exports.UserResponse = exports.Error = exports.Response = void 0;
 const type_graphql_1 = require("type-graphql");
 const User_1 = require("../entities/User");
+let Response = class Response {
+};
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", Boolean)
+], Response.prototype, "success", void 0);
+__decorate([
+    (0, type_graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], Response.prototype, "error", void 0);
+__decorate([
+    (0, type_graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], Response.prototype, "email", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => User_1.User, { nullable: true }),
+    __metadata("design:type", User_1.User)
+], Response.prototype, "user", void 0);
+Response = __decorate([
+    (0, type_graphql_1.ObjectType)()
+], Response);
+exports.Response = Response;
 let Error = class Error {
 };
 __decorate([
@@ -40,4 +62,66 @@ UserResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], UserResponse);
 exports.UserResponse = UserResponse;
+let Form = class Form {
+};
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "phone", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "organization", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "city", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "state", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "inPerson", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "wholeEvent", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => [String]),
+    __metadata("design:type", Array)
+], Form.prototype, "background", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => [String]),
+    __metadata("design:type", Array)
+], Form.prototype, "whyUs", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "howHear", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "team", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "linkedIn", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "dietaryRestrictions", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "transportation", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "other", void 0);
+Form = __decorate([
+    (0, type_graphql_1.InputType)()
+], Form);
+exports.Form = Form;
 //# sourceMappingURL=types.js.map

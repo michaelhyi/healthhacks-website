@@ -1,0 +1,45 @@
+export type FormType = {
+  phone: string;
+  organization: string;
+  city: string;
+  state: string;
+  inPerson: string;
+  wholeEvent: string;
+  background: string[];
+  whyUs: string[];
+  howHear: string;
+  team: string;
+  linkedIn: string;
+  dietaryRestrictions: string;
+  transportation: string;
+  other: string;
+};
+
+export type UserType = {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  verified: string;
+};
+
+export type RowType = {
+  Timestamp: string;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Phone: string;
+  Organization: string;
+  City: string;
+  State: string;
+  InPerson: string;
+  WholeEvent: string;
+  Background: string;
+  WhyUs: string;
+  HowHear: string;
+  Team: string;
+  LinkedIn: string;
+  DietaryRestrictions: string;
+  Transportation: string;
+  Other: string;
+};

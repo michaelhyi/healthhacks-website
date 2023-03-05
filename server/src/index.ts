@@ -1,8 +1,9 @@
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
-import "dotenv/config";
+import "dotenv-safe/config";
 import express from "express";
+import path from "path";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
@@ -12,19 +13,25 @@ import { ApplicationResolver } from "./resolvers/application";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
-  await createConnection({
+  const conn = await createConnection({
     type: "postgres",
-    database: "healthhacks",
-    username: "postgres",
-    password: "postgres",
+    url: process.env.DATABASE_URL,
     logging: true,
-    synchronize: true,
     entities: [User, Application],
+    migrations: [path.join(__dirname, "./migrations/*")],
   });
 
-  const app = express();
+  await conn.runMigrations();
 
-  app.use(cors());
+  const app = express();
+  app.set("trust proxy", 1);
+
+  app.use(
+    cors({
+      origin: process.env.ORIGIN,
+      credentials: false,
+    })
+  );
 
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
@@ -41,7 +48,7 @@ const main = async () => {
     cors: false,
   });
 
-  app.listen(4000, () => {
+  app.listen(parseInt(process.env.PORT), () => {
     console.log("Server started on localhost:4000");
   });
 };

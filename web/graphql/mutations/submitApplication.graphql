@@ -1,0 +1,15 @@
+mutation SubmitApplication(
+  $userId: Int!
+  $firstName: String!
+  $lastName: String!
+  $email: String!
+  $form: Form!
+) {
+  submitApplication(
+    userId: $userId
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+    form: $form
+  )
+}

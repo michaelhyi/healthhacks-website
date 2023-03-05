@@ -11,26 +11,105 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationResolver = void 0;
+const date_fns_1 = require("date-fns");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Application_1 = require("../entities/Application");
+const appendApplicationSpreadsheet_1 = __importDefault(require("../utils/appendApplicationSpreadsheet"));
+const emails_1 = require("../utils/emails");
+const types_1 = require("../utils/types");
+const sgMail = require("@sendgrid/mail");
 let ApplicationResolver = class ApplicationResolver {
-    async updateApplication(userId, firstName, middleName, lastName, phone, organization, city, state, inPerson, wholeEvent) {
+    async deleteApplications() {
+        await Application_1.Application.delete({});
+        return true;
+    }
+    async submitApplication(userId, firstName, lastName, email, form) {
         await (0, typeorm_1.getConnection)()
             .getRepository(Application_1.Application)
             .createQueryBuilder()
             .update({
-            firstName,
-            middleName,
-            lastName,
-            phone,
-            organization,
-            city,
-            state,
-            inPerson,
-            wholeEvent,
+            status: "Submitted",
+            phone: form.phone,
+            organization: form.organization,
+            city: form.city,
+            state: form.state,
+            inPerson: form.inPerson,
+            wholeEvent: form.wholeEvent,
+            background: form.background,
+            whyUs: form.whyUs,
+            howHear: form.howHear,
+            team: form.team,
+            linkedIn: form.linkedIn,
+            dietaryRestrictions: form.dietaryRestrictions,
+            transportation: form.transportation,
+            other: form.other,
+        })
+            .where({ userId })
+            .returning("*")
+            .execute();
+        const newRow = {
+            Timestamp: (0, date_fns_1.format)(new Date(), "Pp"),
+            FirstName: firstName,
+            LastName: lastName,
+            Email: email,
+            Phone: form.phone,
+            Organization: form.organization,
+            City: form.city,
+            State: form.state,
+            InPerson: form.inPerson,
+            WholeEvent: form.wholeEvent,
+            Background: form.background.toString(),
+            WhyUs: form.whyUs.toString(),
+            HowHear: form.howHear,
+            Team: form.team,
+            LinkedIn: form.linkedIn,
+            DietaryRestrictions: form.dietaryRestrictions,
+            Transportation: form.transportation,
+            Other: form.other,
+        };
+        await (0, appendApplicationSpreadsheet_1.default)(newRow);
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        const msg = {
+            to: email,
+            from: process.env.SENDGRID_EMAIL,
+            subject: "health{hacks} 2023 Application Confirmation",
+            html: emails_1.applicationConfirmationHTML,
+        };
+        sgMail
+            .send(msg)
+            .then(() => {
+            console.log("Email sent");
+        })
+            .catch((error) => {
+            console.error(error);
+        });
+        return true;
+    }
+    async updateApplication(userId, form) {
+        await (0, typeorm_1.getConnection)()
+            .getRepository(Application_1.Application)
+            .createQueryBuilder()
+            .update({
+            phone: form.phone,
+            organization: form.organization,
+            city: form.city,
+            state: form.state,
+            inPerson: form.inPerson,
+            wholeEvent: form.wholeEvent,
+            background: form.background,
+            whyUs: form.whyUs,
+            howHear: form.howHear,
+            team: form.team,
+            linkedIn: form.linkedIn,
+            dietaryRestrictions: form.dietaryRestrictions,
+            transportation: form.transportation,
+            other: form.other,
         })
             .where({ userId })
             .returning("*")
@@ -48,18 +127,27 @@ let ApplicationResolver = class ApplicationResolver {
 };
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ApplicationResolver.prototype, "deleteApplications", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),
     __param(1, (0, type_graphql_1.Arg)("firstName", () => String)),
-    __param(2, (0, type_graphql_1.Arg)("middleName", () => String)),
-    __param(3, (0, type_graphql_1.Arg)("lastName", () => String)),
-    __param(4, (0, type_graphql_1.Arg)("phone", () => String)),
-    __param(5, (0, type_graphql_1.Arg)("organization", () => String)),
-    __param(6, (0, type_graphql_1.Arg)("city", () => String)),
-    __param(7, (0, type_graphql_1.Arg)("state", () => String)),
-    __param(8, (0, type_graphql_1.Arg)("inPerson", () => String)),
-    __param(9, (0, type_graphql_1.Arg)("wholeEvent", () => String)),
+    __param(2, (0, type_graphql_1.Arg)("lastName", () => String)),
+    __param(3, (0, type_graphql_1.Arg)("email", () => String)),
+    __param(4, (0, type_graphql_1.Arg)("form", () => types_1.Form)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, String, String, String]),
+    __metadata("design:paramtypes", [Number, String, String, String, types_1.Form]),
+    __metadata("design:returntype", Promise)
+], ApplicationResolver.prototype, "submitApplication", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)("form", () => types_1.Form)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, types_1.Form]),
     __metadata("design:returntype", Promise)
 ], ApplicationResolver.prototype, "updateApplication", null);
 __decorate([

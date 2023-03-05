@@ -1,34 +1,32 @@
 import { useToast } from "@chakra-ui/react";
+import * as EmailValidator from "email-validator";
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { socials } from "../data/socials";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import * as EmailValidator from "email-validator";
-import { socials } from "../data/socials";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const toast = useToast();
 
-  // Config variables
   const SPREADSHEET_ID = process.env.NEXT_PUBLIC_SPREADSHEET_ID;
   const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
   const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL;
   const GOOGLE_SERVICE_PRIVATE_KEY =
     process.env.NEXT_PUBLIC_GOOGLE_SERVICE_PRIVATE_KEY;
 
-  // GoogleSpreadsheet Initialize
   const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
-  // Append Function
   const appendSpreadsheet = async (row: { Email: string }) => {
     try {
       await doc.useServiceAccountAuth({
         client_email: GOOGLE_CLIENT_EMAIL!,
         private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
       });
-      // loads document properties and worksheets
       await doc.loadInfo();
 
       const sheet = doc.sheetsById[SHEET_ID!];
@@ -96,14 +94,30 @@ const Footer = () => {
             )}
           </div>
         </form>
-        <div className="flex justify-between content-start flex-wrap flex-row w-full text-left gap-y-2 -mt-4 pt-8 px-16 sm:px-8">
+        <div className="flex justify-between content-start flex-wrap flex-row w-full text-left gap-y-2 -mt-4 pt-8 px-16 sm:px-8 2xl:w-[1200px]">
           <div className="w-2/5 mt-8 md:p-4 sm:p-0">
             <img
               src="/health{hacks} - Logo.svg"
               alt="logo"
               className="w-[250px] sm:w-[150px]"
             ></img>
-            <div className="pb-12 pt-2 sm:text-sm">{`© 2023 health{hacks} All Rights Reserved.`}</div>
+            <div className="pb-12 pt-2 sm:text-sm">
+              © 2023 {`health{hacks}`} <br />
+              All Rights Reserved. <br />
+              <Link
+                className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
+                href="/private-policy"
+              >
+                Private Policy
+              </Link>
+              <br />
+              <Link
+                className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
+                href="/terms-of-use"
+              >
+                Terms of Use
+              </Link>
+            </div>
           </div>
           <div className="flex flex-wrap justify-end gap-8 mt-8 md:p-4 sm:p-0 w-2/5">
             {/* <div className="cursor-pointer">
@@ -118,7 +132,7 @@ const Footer = () => {
                 {socials.map((s, i) => (
                   <div key={i} className="p-1">
                     <Fade delay={500}>
-                      <a href={s.href}>
+                      <a href={s.href} target="_blank" rel="noreferrer">
                         <img
                           src={s.src}
                           alt={s.id}
@@ -129,6 +143,15 @@ const Footer = () => {
                   </div>
                 ))}
               </div>
+              <h4 className="font-semibold sm:text-md md:text-base mt-4">
+                Contact Us
+              </h4>
+              <a
+                className="hover:cursor-pointer opacity-50 duration-500 hover:opacity-25"
+                href="mailto:info@joinhealthhacks.com"
+              >
+                info@joinhealthhacks.com
+              </a>
             </div>
           </div>
         </div>

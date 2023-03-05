@@ -24,18 +24,6 @@ export class Application extends BaseEntity {
   status: string = "pending";
 
   @Field()
-  @Column()
-  firstName!: string;
-
-  @Field()
-  @Column("text", { default: "" })
-  middleName: string = "";
-
-  @Field()
-  @Column()
-  lastName!: string;
-
-  @Field()
   @Column("text", { default: "" })
   phone: string = "";
 
@@ -59,17 +47,13 @@ export class Application extends BaseEntity {
   @Column("text", { default: "" })
   wholeEvent: string = "";
 
-  @Field()
-  @Column("text", { default: "" })
-  background: string = "";
+  @Field(() => [String])
+  @Column("text", { array: true, default: [] })
+  background: string[] = [];
 
-  @Field()
-  @Column("text", { default: "" })
-  whyUs: string = "";
-
-  @Field()
-  @Column("text", { default: "" })
-  trackRanking: string = "";
+  @Field(() => [String])
+  @Column("text", { array: true, default: [] })
+  whyUs: string[] = [];
 
   @Field()
   @Column("text", { default: "" })
@@ -81,15 +65,15 @@ export class Application extends BaseEntity {
 
   @Field()
   @Column("text", { default: "" })
-  linkedin: string = "";
-
-  @Field()
-  @Column("text", { default: "" })
-  contact: string = "";
+  linkedIn: string = "";
 
   @Field()
   @Column("text", { default: "" })
   dietaryRestrictions: string = "";
+
+  @Field()
+  @Column("text", { default: "" })
+  transportation: string = "";
 
   @Field()
   @Column("text", { default: "" })

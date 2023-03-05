@@ -16,21 +16,19 @@ let Application = class Application extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
         this.status = "pending";
-        this.middleName = "";
         this.phone = "";
         this.organization = "";
         this.city = "";
         this.state = "";
         this.inPerson = "";
         this.wholeEvent = "";
-        this.background = "";
-        this.whyUs = "";
-        this.trackRanking = "";
+        this.background = [];
+        this.whyUs = [];
         this.howHear = "";
         this.team = "";
-        this.linkedin = "";
-        this.contact = "";
+        this.linkedIn = "";
         this.dietaryRestrictions = "";
+        this.transportation = "";
         this.other = "";
     }
 };
@@ -49,21 +47,6 @@ __decorate([
     (0, typeorm_1.Column)("text", { default: "pending" }),
     __metadata("design:type", String)
 ], Application.prototype, "status", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Application.prototype, "firstName", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "" }),
-    __metadata("design:type", String)
-], Application.prototype, "middleName", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Application.prototype, "lastName", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)("text", { default: "" }),
@@ -95,20 +78,15 @@ __decorate([
     __metadata("design:type", String)
 ], Application.prototype, "wholeEvent", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "" }),
-    __metadata("design:type", String)
+    (0, type_graphql_1.Field)(() => [String]),
+    (0, typeorm_1.Column)("text", { array: true, default: [] }),
+    __metadata("design:type", Array)
 ], Application.prototype, "background", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "" }),
-    __metadata("design:type", String)
+    (0, type_graphql_1.Field)(() => [String]),
+    (0, typeorm_1.Column)("text", { array: true, default: [] }),
+    __metadata("design:type", Array)
 ], Application.prototype, "whyUs", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "" }),
-    __metadata("design:type", String)
-], Application.prototype, "trackRanking", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)("text", { default: "" }),
@@ -123,17 +101,17 @@ __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)("text", { default: "" }),
     __metadata("design:type", String)
-], Application.prototype, "linkedin", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "" }),
-    __metadata("design:type", String)
-], Application.prototype, "contact", void 0);
+], Application.prototype, "linkedIn", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)("text", { default: "" }),
     __metadata("design:type", String)
 ], Application.prototype, "dietaryRestrictions", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)("text", { default: "" }),
+    __metadata("design:type", String)
+], Application.prototype, "transportation", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)("text", { default: "" }),
