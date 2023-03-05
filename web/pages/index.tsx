@@ -12,6 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
+      console.log(process.env.NEXT_PUBLIC_API_URL);
       const response = await localStorage.getItem("user");
       if (response) setUser(JSON.parse(response));
       setFetching(false);
