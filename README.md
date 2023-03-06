@@ -14,3 +14,10 @@ Backend/API:
 - Typeorm
 - URQL
 - Twilio SendGrid
+
+Deployment:
+
+- Vercel
+- DigitalOcean
+- Docker
+- Dokku
