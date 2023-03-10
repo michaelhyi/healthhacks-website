@@ -1,7 +1,7 @@
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
-import "dotenv-safe/config";
+import "dotenv/config";
 import express from "express";
 import path from "path";
 import "reflect-metadata";
