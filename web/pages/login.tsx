@@ -79,7 +79,7 @@ const Login = () => {
 
   return (
     <Fade delay={500} up distance="24px">
-      <div className="flex flex-row h-[100vh] justify-center bg-black">
+      <div className="flex flex-row h-[100vh] justify-center bg-black font-inter">
         <div className=" flex w-0 lg:w-1/2 md:m-0 bg-[url('/loginheader1.png')] bg-cover items-center justify-center invisible lg:visible bg-center" />
         {/* <div className="w-1/2 h-3/5 bg-[#3339] filter items-center justify-center rounded-2xl backdrop-blur"/> */}
         <div className="flex flex-col items-center lg:items-start justify-center p-4 w-[100vw] lg:w-1/2">

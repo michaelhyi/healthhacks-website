@@ -104,6 +104,7 @@ const Footer = () => {
             <div className="pb-12 pt-2 sm:text-sm">
               © 2023 {`health{hacks}`} <br />
               All Rights Reserved. <br />
+              <div className="mt-4" />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
                 href="/private-policy"

@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import moment from "moment";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Application } from "../entities/Application";
@@ -49,7 +49,7 @@ export class ApplicationResolver {
       .execute();
 
     const newRow = {
-      Timestamp: format(new Date(), "Pp"),
+      Timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
       FirstName: firstName,
       LastName: lastName,
       Email: email,
