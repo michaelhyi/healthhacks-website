@@ -15,6 +15,15 @@ export type FormType = {
   other: string;
 };
 
+export type ConfirmType = {
+  inPerson: string;
+  tracks1: string;
+  tracks2: string;
+  liability: string;
+  liabilityDate: string;
+  other: string;
+};
+
 export type UserType = {
   id: number;
   email: string;
