@@ -82,7 +82,7 @@ let UserResolver = class UserResolver {
             .where({ id: user.id })
             .returning("*")
             .execute();
-        return true;
+        return user;
     }
     async forgotPassword(email) {
         const user = await User_1.User.findOne({ where: { email } });
@@ -99,7 +99,7 @@ let UserResolver = class UserResolver {
             .update({
             forgotPasswordToken: token,
             forgotPasswordExpiration: (new Date().getTime() +
-                1000 * 60 * 60 * 24 * 2).toString(),
+                1000 * 60 * 60 * 2).toString(),
         })
             .where({ id: user.id })
             .returning("*")
@@ -152,6 +152,7 @@ let UserResolver = class UserResolver {
                     .execute();
                 return {
                     success: true,
+                    user,
                 };
             }
         }
@@ -172,7 +173,7 @@ let UserResolver = class UserResolver {
             .update({
             verifyToken: token,
             verifyExpiration: (new Date().getTime() +
-                1000 * 60 * 60 * 24 * 2).toString(),
+                1000 * 60 * 60 * 2).toString(),
         })
             .where({ id })
             .returning("*")
@@ -245,7 +246,7 @@ let UserResolver = class UserResolver {
                 lastName,
                 verifyToken: token,
                 verifyExpiration: (new Date().getTime() +
-                    1000 * 60 * 60 * 24 * 2).toString(),
+                    1000 * 60 * 60 * 2).toString(),
             }).save();
             await Application_1.Application.create({
                 userId: user.id,
@@ -316,7 +317,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "readTokenValidity", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => Boolean),
+    (0, type_graphql_1.Mutation)(() => User_1.User),
     __param(0, (0, type_graphql_1.Arg)("token")),
     __param(1, (0, type_graphql_1.Arg)("password")),
     __metadata("design:type", Function),

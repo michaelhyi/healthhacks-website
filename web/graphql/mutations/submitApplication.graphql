@@ -3,39 +3,13 @@ mutation SubmitApplication(
   $firstName: String!
   $lastName: String!
   $email: String!
-  $phone: String!
-  $organization: String!
-  $city: String!
-  $state: String!
-  $inPerson: String!
-  $wholeEvent: String!
-  $background: String!
-  $whyUs: String!
-  $howHear: String!
-  $team: String!
-  $linkedIn: String!
-  $dietaryRestrictions: String!
-  $transportation: String!
-  $other: String!
+  $form: Form!
 ) {
   submitApplication(
     userId: $userId
     firstName: $firstName
     lastName: $lastName
     email: $email
-    phone: $phone
-    organization: $organization
-    city: $city
-    state: $state
-    inPerson: $inPerson
-    wholeEvent: $wholeEvent
-    background: $background
-    whyUs: $whyUs
-    howHear: $howHear
-    team: $team
-    linkedIn: $linkedIn
-    dietaryRestrictions: $dietaryRestrictions
-    transportation: $transportation
-    other: $other
+    form: $form
   )
 }

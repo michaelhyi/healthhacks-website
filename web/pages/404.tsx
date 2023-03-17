@@ -26,7 +26,7 @@ const Error404 = () => {
             </Link>
           </Link>
         </div>
-        <div className=" flex w-0 lg:w-1/2 md:m-0 bg-[url('/blogbackground.png')] bg-cover items-center justify-center invisible lg:visible bg-center shadow-404" />
+        <div className=" flex w-0 lg:w-1/2 md:m-0 bg-[url('/blog/blogbackground.png')] bg-cover items-center justify-center invisible lg:visible bg-center shadow-404" />
       </div>
     </Container>
   );

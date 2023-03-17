@@ -1,4 +1,6 @@
-# Tech Stack
+# joinhealthhacks.com
+
+## Tech Stack
 
 Frontend:
 
@@ -13,3 +15,11 @@ Backend/API:
 - GraphQL
 - Typeorm
 - URQL
+- Twilio SendGrid
+
+Deployment:
+
+- Vercel
+- DigitalOcean
+- Docker
+- Dokku

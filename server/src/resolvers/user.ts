@@ -6,7 +6,7 @@ import { v4 } from "uuid";
 import { Application } from "../entities/Application";
 import { User } from "../entities/User";
 import { forgotPaswordHTML, verifyHTML } from "../utils/emails";
-import { UserResponse, Response } from "../utils/types";
+import { Response, UserResponse } from "../utils/types";
 
 const sgMail = require("@sendgrid/mail");
 
@@ -38,11 +38,11 @@ export class UserResolver {
     };
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => User)
   async updatePassword(
     @Arg("token") token: string,
     @Arg("password") password: string
-  ): Promise<boolean> {
+  ): Promise<User> {
     const user = await User.findOne({ where: { forgotPasswordToken: token } });
 
     await getConnection()
@@ -54,7 +54,7 @@ export class UserResolver {
       .where({ id: user!.id })
       .returning("*")
       .execute();
-    return true;
+    return user!;
   }
 
   @Mutation(() => Response)
@@ -76,7 +76,7 @@ export class UserResolver {
         forgotPasswordToken: token,
         forgotPasswordExpiration: (
           new Date().getTime() +
-          1000 * 60 * 60 * 24 * 2
+          1000 * 60 * 60 * 2
         ).toString(),
       })
       .where({ id: user.id })
@@ -136,6 +136,7 @@ export class UserResolver {
           .execute();
         return {
           success: true,
+          user,
         };
       }
     }
@@ -166,7 +167,7 @@ export class UserResolver {
         verifyToken: token,
         verifyExpiration: (
           new Date().getTime() +
-          1000 * 60 * 60 * 24 * 2
+          1000 * 60 * 60 * 2
         ).toString(),
       })
       .where({ id })
@@ -258,7 +259,7 @@ export class UserResolver {
         verifyToken: token,
         verifyExpiration: (
           new Date().getTime() +
-          1000 * 60 * 60 * 24 * 2
+          1000 * 60 * 60 * 2
         ).toString(),
       }).save();
 
