@@ -23,7 +23,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const [, login] = useLoginMutation();
-  const [, resendVerificaitonEmail] = useResendVerificationEmailMutation();
+  const [, resendVerificationEmail] = useResendVerificationEmailMutation();
 
   useEffect(() => {
     (async () => {
@@ -42,7 +42,7 @@ const Login = () => {
     const response = await login({ email, password });
     if (!response.data?.login.error) {
       if (!response.data?.login.user?.verified) {
-        await resendVerificaitonEmail({
+        await resendVerificationEmail({
           id: response!.data!.login.user!.id,
           email,
         });

@@ -16,7 +16,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationResolver = void 0;
-const date_fns_1 = require("date-fns");
+const moment_1 = __importDefault(require("moment"));
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Application_1 = require("../entities/Application");
@@ -54,7 +54,7 @@ let ApplicationResolver = class ApplicationResolver {
             .returning("*")
             .execute();
         const newRow = {
-            Timestamp: (0, date_fns_1.format)(new Date(), "Pp"),
+            Timestamp: (0, moment_1.default)().format("MMMM Do YYYY, h:mm:ss a"),
             FirstName: firstName,
             LastName: lastName,
             Email: email,
