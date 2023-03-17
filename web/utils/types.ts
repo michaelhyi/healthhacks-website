@@ -14,3 +14,12 @@ export type FormType = {
   transportation: string;
   other: string;
 };
+
+export type ConfirmType = {
+  inPerson: string;
+  tracks1: string;
+  tracks2: string;
+  liability: string;
+  liabilityDate: string;
+  other: string;
+};
