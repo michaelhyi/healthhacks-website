@@ -21,6 +21,7 @@
     "@emotion/styled": "^11.10.5",
     "@loadable/component": "^5.15.3",
     "@next/font": "13.1.5",
+    "@stripe/react-stripe-js": "^2.0.0",
     "@stripe/stripe-js": "^1.49.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
