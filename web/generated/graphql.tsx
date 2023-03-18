@@ -39,7 +39,7 @@ export type Application = {
 };
 
 export type Confirmation = {
-  __typename?: 'Application';
+  __typename?: 'Confirmation';
   id: Scalars['Float'];
   inPerson: Scalars['String'];
   tracks1: Scalars['String'];
@@ -49,6 +49,7 @@ export type Confirmation = {
   updatedAt: Scalars['String'];
   userId: Scalars['Float'];
 };
+
 export type Error = {
   __typename?: 'Error';
   field: Scalars['String'];

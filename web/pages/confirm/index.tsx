@@ -1,35 +1,43 @@
-import MultiSelect from "@/components/MultiSelect";
 import { tracks } from "@/data/tracks";
-import { dietary } from "@/data/dietary";
-import { wherefrom } from "@/data/wherefrom";
-import { whyhh } from "@/data/whyhh";
-import { yesno } from "@/data/yesno";
 import { Radio, RadioGroup, Spinner, useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Autosave, useAutosave } from "react-autosave";
-import ApplicationInput from "../components/ApplicationInput";
-import ContainerApp from "../components/ContainerApp";
-import DropDown from "../components/DropDown";
+import ApplicationInput from "../../components/ApplicationInput";
+import ContainerApp from "../../components/ContainerApp";
+import DropDown from "../../components/DropDown";
 import {
   useReadConfirmationMutation,
   useSubmitConfirmationMutation,
   useUpdateConfirmationMutation,
-} from "../generated/graphql";
-import Context from "../utils/context";
-import { createUrqlClient } from "../utils/createUrqlClient";
-import { ConfirmType } from "../utils/types"; 
+} from "../../generated/graphql";
+import { createUrqlClient } from "../../utils/createUrqlClient";
+import { ConfirmType, UserType } from "../../utils/types";
 
-const Apply = () => {
+
+const Confirm = () => {
   const toast = useToast();
   const router = useRouter();
-  const { user } = useContext(Context);
+  const [user, setUser] = useState<UserType | null>(null);
+  const [fetching, setFetching] = useState<boolean>(true);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [, readConfirmation] = useReadConfirmationMutation(); 
   const [, updateConfirmation] = useUpdateConfirmationMutation(); 
   const [, submitConfirmation] = useSubmitConfirmationMutation(); 
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        setUser(JSON.parse(response));
+        setFetching(false);
+      } else {
+        router.push("/login");
+      }
+    })();
+  }, []);
 
   const [form, setForm] = useState({
     inPerson: "",
@@ -87,8 +95,7 @@ const Apply = () => {
         liabilityDate: form.liabilityDate,
         other: form.other,
       });
-
-      router.push("/apply/success");
+      router.push("/confirm/success");
     } else {
       toast({
         title: "Error!",
@@ -103,24 +110,29 @@ const Apply = () => {
   };
 
   const updateForm = async () => {
-    await updateConfirmation({
-      userId: user!.id,
-      inPerson: form.inPerson,
-      tracks1: form.tracks1,
-      tracks2: form.tracks2,
-      liability: form.liability,
-      liabilityDate: form.liabilityDate,
-      other: form.other,
-    });
+    if (user)
+      await updateConfirmation({
+        userId: user!.id!,
+        inPerson: form.inPerson,
+        tracks1: form.tracks1,
+        tracks2: form.tracks2,
+        liability: form.liability,
+        liabilityDate: form.liabilityDate,
+        other: form.other,
+      });
   };
 
 
   // NOTE: WILLIAM COMMENTED THIS OUT 
-  // useAutosave({ data: form, onSave: updateForm });
+  useAutosave({ data: form, onSave: updateForm });
 
-  // if (!user) {
-  //   return <div>You must be signed in</div>;
-  // }
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
 
   return (
     <ContainerApp>
@@ -133,7 +145,7 @@ const Apply = () => {
                 : "Welcome to health{hacks} 2023,"}{" "}
               <span className="font-semibold text-5xl text-hh-purple">
                 {" "}
-                {/* {user.firstName}.{" "} */}
+                {user!.firstName}.{" "}
               </span>
             </div>
             {status === "Submitted" ? (
@@ -218,7 +230,7 @@ const Apply = () => {
                 {/* What is your first track selection */}
                 <div>
                   <div>
-                    <MultiSelect
+                    <DropDown
                       error={error[1]}
                       name="What is your first track choice?"
                       options={tracks}
@@ -231,7 +243,7 @@ const Apply = () => {
                 {/* What is your second track selection */}
                 <div>
                   <div>
-                    <MultiSelect
+                    <DropDown
                       error={error[2]}
                       name="What is your second track choice?"
                       options={tracks}
@@ -299,9 +311,8 @@ const Apply = () => {
                   To confirm your spot as our participant, we will be collecting a{" "}
                   <strong> $5 food voucher fee </strong>  {" "}prior to our event. Please checkout here:
                 </p>
-
-                {/* // NOTE: WILLIAM COMMENTED THIS OUT  */}
-                {/* <Autosave data={form} onSave={updateForm} /> */}
+                
+                <Autosave data={form} onSave={updateForm} />
               </form>
               <div className="flex items-center space-x-6 pt-8 pb-24">
                 <button
@@ -323,4 +334,4 @@ const Apply = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Apply);
+export default withUrqlClient(createUrqlClient, { ssr: true })(Confirm);
