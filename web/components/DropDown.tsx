@@ -2,6 +2,8 @@ import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import React from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 
+import { useEffect, useState } from "react";
+
 interface Props {
   name: string;
   options: string[];
@@ -17,6 +19,8 @@ const DropDown: React.FC<Props> = ({
   setValue,
   error,
 }) => {
+  
+
   return (
     <div>
       <div
@@ -45,7 +49,7 @@ const DropDown: React.FC<Props> = ({
             <div
               className={`${error.length > 0 ? "text-red-400" : "text-white"}`}
             >
-              {value.length > 0 ? value : "Select"}
+              {value && value.length > 0 ? value : "Select"}
             </div>
             <AiFillCaretDown color="white" />
           </div>

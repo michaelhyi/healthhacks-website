@@ -7,6 +7,8 @@ import { Autosave, useAutosave } from "react-autosave";
 import ApplicationInput from "../../components/ApplicationInput";
 import ContainerApp from "../../components/ContainerApp";
 import DropDown from "../../components/DropDown";
+
+import { loadStripe } from '@stripe/stripe-js';
 import {
   useReadConfirmationMutation,
   useSubmitConfirmationMutation,
@@ -50,11 +52,12 @@ const Confirm = () => {
   const [error, setError] = useState(new Array(5).fill(""));
 
   useEffect(() => {
+
     (async () => {
       if (user) {
         const response = await readConfirmation({ userId: user.id }); 
 
-        setForm({
+        await setForm({
           inPerson: response.data?.readConfirmation.inPerson!, 
           tracks1: response.data?.readConfirmation.tracks1!, 
           tracks2: response.data?.readConfirmation.tracks2!, 
@@ -63,28 +66,47 @@ const Confirm = () => {
           other: response.data?.readConfirmation.other!,
         });
 
+        console.log(form.tracks1.length)
+
         setStatus(response.data?.readConfirmation.status!); 
       }
     })();
   }, [user]);
+
+  const redirectToCheckout = async () => {
+    const priceId = 'price_1Mn6OOEJJDG8LJHisqyFE9hJ'; // Replace with your actual price ID
+    
+    
+    const res = await fetch('../api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ priceId }),
+    });
+  
+    const { sessionId } = await res.json();
+    const stripe = await loadStripe('pk_test_51Ml1VPEJJDG8LJHibi4ZwdJEMFpLWQt4fNOWsRxED8zNAaaLW0SuCBYjJ8boW4A60HF7LPTCo57FHuOYbCf69Cdu00GVxZZ9MV'); // Replace with your actual publishable key
+    if(!(stripe == null)) await stripe.redirectToCheckout({ sessionId: sessionId });
+  };
 
   const handleSubmit = async () => {
     setSubmitting(true);
 
     let found = false;
     let errors: string[] = [];
-
+    
+    
     Object.keys(form).forEach((v) => {
-      if (v !== "other" && form[v as keyof ConfirmType].length === 0) {
+      if (v !== "other" && form[v as keyof ConfirmType] === undefined) {
         errors.push("This is a required field");
         found = true;
       } else {
         errors.push("");
       }
     });
-
+    
     setError(errors);
 
+    
     if (!found) {
       await submitConfirmation({
         userId: user!.id,
@@ -95,7 +117,7 @@ const Confirm = () => {
         liabilityDate: form.liabilityDate,
         other: form.other,
       });
-      router.push("/confirm/success");
+      redirectToCheckout()
     } else {
       toast({
         title: "Error!",
@@ -122,8 +144,6 @@ const Confirm = () => {
       });
   };
 
-
-  // NOTE: WILLIAM COMMENTED THIS OUT 
   useAutosave({ data: form, onSave: updateForm });
 
   if (fetching) {
@@ -230,6 +250,7 @@ const Confirm = () => {
                 {/* What is your first track selection */}
                 <div>
                   <div>
+                    
                     <DropDown
                       error={error[1]}
                       name="What is your first track choice?"
@@ -237,19 +258,23 @@ const Confirm = () => {
                       value={form.tracks1}
                       setValue={(v) => setForm({ ...form, tracks1: v })}
                     />
+                    
                   </div>
                 </div>
 
                 {/* What is your second track selection */}
                 <div>
                   <div>
+
+                    {/* value = form["tracks2"] */}
                     <DropDown
                       error={error[2]}
                       name="What is your second track choice?"
                       options={tracks}
                       value={form.tracks2}
                       setValue={(v) => setForm({ ...form, tracks2: v })}
-                    />
+                    /> 
+                    
                   </div>
                 </div>
 
