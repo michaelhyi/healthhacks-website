@@ -10,8 +10,15 @@ import { createUrqlClient } from "../utils/createUrqlClient";
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 
-const Register = () => {
+type SetStringValue = React.Dispatch<React.SetStateAction<string>>;
+
+const OneTimeRegister = () => {
   const router = useRouter();
+
+  const [sheetData, setSheetData] = useState([]);
+  const [id, setId] = useState("");
+  const [locked, setLocked] = useState(false);
+
   const [user, setUser] = useState(null);
   const [fetching, setFetching] = useState(true);
 
@@ -29,15 +36,62 @@ const Register = () => {
 
   const [, register] = useRegisterMutation();
 
+  const updateStringValue = (value: string | string[] | undefined, setValue : SetStringValue) => {
+    if (!value){
+        return ;
+    }
+    else if (Array.isArray(value)) {
+      // Handle the case when value is a string array
+      // You can use the first element or join the elements, depending on your use case
+      setValue(value[0]);
+    } else {
+      // Set the value directly when it's a string
+      setValue(value);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
+      const res = await fetch('/api/googlesheets');
+      const data = await res.json();
+      setSheetData(data.values);
+    };
+  
+    if (router.isReady) {
+      fetchData();
+    }
+  }, [router.isReady]);
+  
+  useEffect(() => {
+    if (sheetData && router.isReady) {
+      updateStringValue(router.query["id"], setId);
+      if(router.query["id"]){
+        //updates email, first, and last name
+        //and locks those values
+        for (const key in sheetData) {
+            let currRow = sheetData[key];
+            if (currRow[1] == id) {
+                setLocked(true)
+                updateStringValue(currRow[2], setEmail);
+                updateStringValue(currRow[3], setFirstName);
+                updateStringValue(currRow[4], setLastName);
+            }
+          }
+      }
+    }
+  }, [sheetData, router.isReady]);
+  
+  useEffect(() => {
+    const checkLocalStorage = async () => {
       const response = await localStorage.getItem("user");
       if (response) {
         setUser(JSON.parse(response));
         router.push("/");
       }
       setFetching(false);
-    })();
+    };
+  
+    checkLocalStorage();
   }, []);
 
   if (fetching) {
@@ -48,6 +102,13 @@ const Register = () => {
     );
   }
 
+  if (!router.isReady) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
   return (
     <ContainerApp>
       <Fade delay={500} up distance="24px">
@@ -55,7 +116,7 @@ const Register = () => {
           <div className="lg:w-[50vw] md:w-[75vw] sm:w-[75vw]">
             <div>
               <div className="font-semibold text-3xl">
-                Let&apos;s Create An Account
+                {!locked ? "Let's Create An Account" : "Register for an account"}
               </div>
               <div className="mt-2 opacity-50 text-semibold text-sm">
                 {`health{hacks}`} connects diverse creators to build the next
@@ -120,8 +181,8 @@ const Register = () => {
                   <Input
                     error={firstNameError}
                     value={firstName}
+                    readOnly={locked}
                     setValue={setFirstName}
-                    readOnly={false}
                     label="First Name"
                   />
                 </div>
@@ -129,8 +190,8 @@ const Register = () => {
                   <Input
                     error={lastNameError}
                     value={lastName}
+                    readOnly={locked}
                     setValue={setLastName}
-                    readOnly={false}
                     label="Last Name"
                   />
                 </div>
@@ -139,21 +200,19 @@ const Register = () => {
                 value={email}
                 setValue={setEmail}
                 label="Email"
-                readOnly={false}
+                readOnly={locked}
                 error={emailError}
               />
               <Input
                 value={password}
                 setValue={setPassword}
                 label="Password"
-                readOnly={false}
                 error={passwordError}
               />
               <Input
                 value={confirm}
                 setValue={setConfirm}
                 label="Confirm Password"
-                readOnly={false}
                 error={confirmError}
               />
               <div className="text-xs mt-6">
@@ -195,4 +254,4 @@ const Register = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(Register);
+export default withUrqlClient(createUrqlClient)(OneTimeRegister);

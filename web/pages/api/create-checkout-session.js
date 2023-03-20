@@ -13,7 +13,7 @@ handler.post(async (req, res) => {
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${req.headers.origin}/?purchased=true`, // ./success?session_id={CHECKOUT_SESSION_ID}
+      success_url: `${req.headers.origin}/confirm/success?paid=true`, // ./success?session_id={CHECKOUT_SESSION_ID}
       cancel_url: `${req.headers.origin}/`,
     });
 

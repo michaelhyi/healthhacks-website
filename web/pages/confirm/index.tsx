@@ -108,6 +108,8 @@ const Confirm = () => {
 
     
     if (!found) {
+
+      redirectToCheckout()
       await submitConfirmation({
         userId: user!.id,
         inPerson: form.inPerson,
@@ -117,7 +119,6 @@ const Confirm = () => {
         liabilityDate: form.liabilityDate,
         other: form.other,
       });
-      redirectToCheckout()
     } else {
       toast({
         title: "Error!",
@@ -348,7 +349,7 @@ const Confirm = () => {
                       : "pointer-events-auto"
                   }`}
                 >
-                  {submitting ? <Spinner size="xs" /> : "Submit"}
+                  {submitting ? <Spinner size="xs" /> : "Pay"}
                 </button>
               </div>
             </div>
