@@ -35,7 +35,7 @@ export class ConfirmationResolver {
         liability: cform.liability,
         liabilityDate: cform.liabilityDate,
         other: cform.other,
-        paid: cform.other,
+        paid: cform.paid,
       })
       .where({ userId })
       .returning("*")
@@ -52,7 +52,7 @@ export class ConfirmationResolver {
       Liability: cform.liability,
       LiabilityDate: cform.liabilityDate,
       Other: cform.other,
-      Paid: cform.other,
+      Paid: cform.paid,
     };
 
     await appendConfirmationSpreadsheet(newRow);
@@ -92,7 +92,7 @@ export class ConfirmationResolver {
         liability: cform.liability,
         liabilityDate: cform.liabilityDate,
         other: cform.other,
-        paid: cform.other,
+        paid: cform.paid,
       })
       .where({ userId })
       .returning("*")
@@ -103,15 +103,15 @@ export class ConfirmationResolver {
 
   @Query(() => [Confirmation])
   async readConfirmations(): Promise<Confirmation[]> {
-    const applications = await Confirmation.find();
-    return applications;
+    const confirmations = await Confirmation.find();
+    return confirmations;
   }
 
   @Mutation(() => Confirmation)
   async readConfirmation(
     @Arg("userId", () => Int) userId: number
   ): Promise<Confirmation> {
-    const application = await Confirmation.findOne({ where: { userId } });
-    return application!;
+    const confirmation = await Confirmation.findOne({ where: { userId } });
+    return confirmation!;
   }
 }

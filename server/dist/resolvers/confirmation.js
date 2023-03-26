@@ -41,7 +41,7 @@ let ConfirmationResolver = class ConfirmationResolver {
             liability: cform.liability,
             liabilityDate: cform.liabilityDate,
             other: cform.other,
-            paid: cform.other,
+            paid: cform.paid,
         })
             .where({ userId })
             .returning("*")
@@ -57,7 +57,7 @@ let ConfirmationResolver = class ConfirmationResolver {
             Liability: cform.liability,
             LiabilityDate: cform.liabilityDate,
             Other: cform.other,
-            Paid: cform.other,
+            Paid: cform.paid,
         };
         await (0, appendConfirmationSpreadsheet_1.default)(newRow);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -88,7 +88,7 @@ let ConfirmationResolver = class ConfirmationResolver {
             liability: cform.liability,
             liabilityDate: cform.liabilityDate,
             other: cform.other,
-            paid: cform.other,
+            paid: cform.paid,
         })
             .where({ userId })
             .returning("*")
@@ -96,12 +96,12 @@ let ConfirmationResolver = class ConfirmationResolver {
         return true;
     }
     async readConfirmations() {
-        const applications = await Confirmation_1.Confirmation.find();
-        return applications;
+        const confirmations = await Confirmation_1.Confirmation.find();
+        return confirmations;
     }
     async readConfirmation(userId) {
-        const application = await Confirmation_1.Confirmation.findOne({ where: { userId } });
-        return application;
+        const confirmation = await Confirmation_1.Confirmation.findOne({ where: { userId } });
+        return confirmation;
     }
 };
 __decorate([
