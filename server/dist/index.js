@@ -13,9 +13,9 @@ require("reflect-metadata");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Application_1 = require("./entities/Application");
+const Confirmation_1 = require("./entities/Confirmation");
 const User_1 = require("./entities/User");
 const application_1 = require("./resolvers/application");
-const Confirmation_1 = require("./entities/Confirmation");
 const confirmation_1 = require("./resolvers/confirmation");
 const user_1 = require("./resolvers/user");
 const main = async () => {

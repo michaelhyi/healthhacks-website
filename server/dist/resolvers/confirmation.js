@@ -29,19 +29,19 @@ let ConfirmationResolver = class ConfirmationResolver {
         await Confirmation_1.Confirmation.delete({});
         return true;
     }
-    async submitConfirmation(userId, firstName, lastName, email, form) {
+    async submitConfirmation(userId, firstName, lastName, email, cform) {
         await (0, typeorm_1.getConnection)()
             .getRepository(Confirmation_1.Confirmation)
             .createQueryBuilder()
             .update({
             status: "Submitted",
-            inPerson: form.inPerson,
-            tracks1: form.tracks1,
-            tracks2: form.tracks2,
-            liability: form.liability,
-            liabilityDate: form.liabilityDate,
-            other: form.other,
-            paid: form.paid,
+            inPerson: cform.inPerson,
+            tracks1: cform.tracks1,
+            tracks2: cform.tracks2,
+            liability: cform.liability,
+            liabilityDate: cform.liabilityDate,
+            other: cform.other,
+            paid: cform.other,
         })
             .where({ userId })
             .returning("*")
@@ -51,15 +51,15 @@ let ConfirmationResolver = class ConfirmationResolver {
             FirstName: firstName,
             LastName: lastName,
             Email: email,
-            InPerson: form.inPerson,
-            Tracks1: form.tracks1,
-            Tracks2: form.tracks2,
-            Liability: form.liability,
-            LiabilityDate: form.liabilityDate,
-            Other: form.other,
-            Paid: form.paid,
+            InPerson: cform.inPerson,
+            Tracks1: cform.tracks1,
+            Tracks2: cform.tracks2,
+            Liability: cform.liability,
+            LiabilityDate: cform.liabilityDate,
+            Other: cform.other,
+            Paid: cform.other,
         };
-        await (0, appendConfirmationnSpreadsheet_1.default)(newRow);
+        await (0, appendConfirmationSpreadsheet_1.default)(newRow);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const msg = {
             to: email,
@@ -77,31 +77,31 @@ let ConfirmationResolver = class ConfirmationResolver {
         });
         return true;
     }
-    async updateConfirmation(userId, form) {
+    async updateConfirmation(userId, cform) {
         await (0, typeorm_1.getConnection)()
             .getRepository(Confirmation_1.Confirmation)
             .createQueryBuilder()
             .update({
-            inPerson: form.inPerson,
-            tracks1: form.tracks1,
-            tracks2: form.tracks2,
-            liability: form.liability,
-            liabilityDate: form.liabilityDate,
-            other: form.other,
-            paid: form.paid,
+            inPerson: cform.inPerson,
+            tracks1: cform.tracks1,
+            tracks2: cform.tracks2,
+            liability: cform.liability,
+            liabilityDate: cform.liabilityDate,
+            other: cform.other,
+            paid: cform.other,
         })
             .where({ userId })
             .returning("*")
             .execute();
         return true;
     }
-    async readConfirmation() {
-        const confirmations = await Confirmation_1.Confirmation.find();
-        return confirmations;
+    async readConfirmations() {
+        const applications = await Confirmation_1.Confirmation.find();
+        return applications;
     }
     async readConfirmation(userId) {
-        const confirmation = await Confirmation_1.Confirmation.findOne({ where: { userId } });
-        return confirmation;
+        const application = await Confirmation_1.Confirmation.findOne({ where: { userId } });
+        return application;
     }
 };
 __decorate([
@@ -116,7 +116,7 @@ __decorate([
     __param(1, (0, type_graphql_1.Arg)("firstName", () => String)),
     __param(2, (0, type_graphql_1.Arg)("lastName", () => String)),
     __param(3, (0, type_graphql_1.Arg)("email", () => String)),
-    __param(4, (0, type_graphql_1.Arg)("form", () => types_1.CForm)),
+    __param(4, (0, type_graphql_1.Arg)("cform", () => types_1.CForm)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, String, String, String, types_1.CForm]),
     __metadata("design:returntype", Promise)
@@ -124,7 +124,7 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),
-    __param(1, (0, type_graphql_1.Arg)("form", () => types_1.CForm)),
+    __param(1, (0, type_graphql_1.Arg)("cform", () => types_1.CForm)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, types_1.CForm]),
     __metadata("design:returntype", Promise)
