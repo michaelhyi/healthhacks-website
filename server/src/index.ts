@@ -8,8 +8,10 @@ import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import { Application } from "./entities/Application";
+import { Confirmation } from "./entities/Confirmation";
 import { User } from "./entities/User";
 import { ApplicationResolver } from "./resolvers/application";
+import { ConfirmationResolver } from "./resolvers/confirmation";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
@@ -17,12 +19,13 @@ const main = async () => {
     type: "postgres",
     url: process.env.DATABASE_URL,
     logging: true,
-    entities: [User, Application],
+    entities: [User, Application, Confirmation],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
 
   await User.delete({});
   await Application.delete({});
+  await Confirmation.delete({});
   await conn.runMigrations();
 
   const app = express();
@@ -38,7 +41,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [UserResolver, ApplicationResolver],
+      resolvers: [UserResolver, ApplicationResolver, ConfirmationResolver],
       validate: false,
     }),
   });
