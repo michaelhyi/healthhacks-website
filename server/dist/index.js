@@ -15,17 +15,20 @@ const typeorm_1 = require("typeorm");
 const Application_1 = require("./entities/Application");
 const User_1 = require("./entities/User");
 const application_1 = require("./resolvers/application");
+const Confirmation_1 = require("./entities/Confirmation");
+const confirmation_1 = require("./resolvers/confirmation");
 const user_1 = require("./resolvers/user");
 const main = async () => {
     const conn = await (0, typeorm_1.createConnection)({
         type: "postgres",
         url: process.env.DATABASE_URL,
         logging: true,
-        entities: [User_1.User, Application_1.Application],
+        entities: [User_1.User, Application_1.Application, Confirmation_1.Confirmation],
         migrations: [path_1.default.join(__dirname, "./migrations/*")],
     });
     await User_1.User.delete({});
     await Application_1.Application.delete({});
+    await Confirmation_1.Confirmation.delete({});
     await conn.runMigrations();
     const app = (0, express_1.default)();
     app.set("trust proxy", 1);
@@ -36,7 +39,7 @@ const main = async () => {
     const apolloServer = new apollo_server_express_1.ApolloServer({
         plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()],
         schema: await (0, type_graphql_1.buildSchema)({
-            resolvers: [user_1.UserResolver, application_1.ApplicationResolver],
+            resolvers: [user_1.UserResolver, application_1.ApplicationResolver, confirmation_1.ConfirmationResolver],
             validate: false,
         }),
     });
