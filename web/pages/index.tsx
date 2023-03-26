@@ -44,7 +44,6 @@ export default function Home() {
   
   return (
     <Container>
-      { purchased == 'true' ? ( <Purchased/>) : null}
       <Head user={user}/>
       <Statistics />
       <Days />
