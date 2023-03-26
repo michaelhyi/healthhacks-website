@@ -9,5 +9,6 @@ mutation ReadConfirmation($userId: Int!) {
     liability
     liabilityDate
     other
+    paid
   }
 }

@@ -257,7 +257,7 @@ export type ReadConfirmationMutationVariables = Exact<{
 }>;
 
 
-export type ReadConfirmationMutation = { __typename?: 'Mutation', readConfirmation: { __typename?: 'Confirmation', id: number, userId: number, status: string, inPerson: string, tracks1: string, tracks2: string, liability: string, liabilityDate: string, other: string } };
+export type ReadConfirmationMutation = { __typename?: 'Mutation', readConfirmation: { __typename?: 'Confirmation', id: number, userId: number, status: string, inPerson: string, tracks1: string, tracks2: string, liability: string, liabilityDate: string, other: string, paid: string } };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -417,6 +417,7 @@ export const ReadConfirmationDocument = gql`
     liability
     liabilityDate
     other
+    paid
   }
 }
     `;
