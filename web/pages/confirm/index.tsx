@@ -41,13 +41,14 @@ const Confirm = () => {
     })();
   }, []);
 
-  const [form, setForm] = useState({
+  const [cform, setCForm] = useState({
     inPerson: "",
     tracks1: "",
     tracks2: "",
     liability: "",
     liabilityDate: "",
     other: "",
+    paid: "",
   });
   const [error, setError] = useState(new Array(5).fill(""));
 
@@ -57,16 +58,17 @@ const Confirm = () => {
       if (user) {
         const response = await readConfirmation({ userId: user.id }); 
 
-        await setForm({
+        setCForm({
           inPerson: response.data?.readConfirmation.inPerson!, 
           tracks1: response.data?.readConfirmation.tracks1!, 
           tracks2: response.data?.readConfirmation.tracks2!, 
           liability: response.data?.readConfirmation.liability!,
           liabilityDate: response.data?.readConfirmation.liabilityDate!,
           other: response.data?.readConfirmation.other!,
+          paid: response.data?.readConfirmation.paid!,
         });
 
-        console.log(form.tracks1.length)
+        console.log(cform.tracks1.length)
 
         setStatus(response.data?.readConfirmation.status!); 
       }
@@ -95,8 +97,8 @@ const Confirm = () => {
     let errors: string[] = [];
     
     
-    Object.keys(form).forEach((v) => {
-      if (v !== "other" && form[v as keyof ConfirmType] === undefined) {
+    Object.keys(cform).forEach((v) => {
+      if (v !== "other" && cform[v as keyof ConfirmType] === undefined) {
         errors.push("This is a required field");
         found = true;
       } else {
@@ -111,13 +113,11 @@ const Confirm = () => {
 
       redirectToCheckout()
       await submitConfirmation({
-        userId: user!.id,
-        inPerson: form.inPerson,
-        tracks1: form.tracks1,
-        tracks2: form.tracks2,
-        liability: form.liability,
-        liabilityDate: form.liabilityDate,
-        other: form.other,
+        userId: user!.id!,
+        firstName: user!.firstName,
+        lastName: user!.lastName,
+        email: user!.email,
+        cform,
       });
     } else {
       toast({
@@ -136,16 +136,11 @@ const Confirm = () => {
     if (user)
       await updateConfirmation({
         userId: user!.id!,
-        inPerson: form.inPerson,
-        tracks1: form.tracks1,
-        tracks2: form.tracks2,
-        liability: form.liability,
-        liabilityDate: form.liabilityDate,
-        other: form.other,
+        cform,
       });
   };
 
-  useAutosave({ data: form, onSave: updateForm });
+  useAutosave({ data: cform, onSave: updateForm });
 
   if (fetching) {
     return (
@@ -216,8 +211,8 @@ const Confirm = () => {
                       Can you still attend our event on April 14 - 16, 2023?
                     </div>
                     <RadioGroup
-                      onChange={(v) => setForm({ ...form, inPerson: v })}
-                      value={form.inPerson}
+                      onChange={(v) => setCForm({ ...cform, inPerson: v })}
+                      value={cform.inPerson}
                     >
                       <div
                         className={`flex items-center space-x-4 ${
@@ -227,14 +222,14 @@ const Confirm = () => {
                         <Radio
                           value="Yes"
                           colorScheme="black"
-                          onClick={() => setForm({ ...form, inPerson: "Yes" })}
+                          onClick={() => setCForm({ ...cform, inPerson: "Yes" })}
                         >
                           Yes
                         </Radio>
                         <Radio
                           value="No"
                           colorScheme="black"
-                          onClick={() => setForm({ ...form, inPerson: "No" })}
+                          onClick={() => setCForm({ ...cform, inPerson: "No" })}
                         >
                           No
                         </Radio>
@@ -256,8 +251,8 @@ const Confirm = () => {
                       error={error[1]}
                       name="What is your first track choice?"
                       options={tracks}
-                      value={form.tracks1}
-                      setValue={(v) => setForm({ ...form, tracks1: v })}
+                      value={cform.tracks1}
+                      setValue={(v) => setCForm({ ...cform, tracks1: v })}
                     />
                     
                   </div>
@@ -272,8 +267,8 @@ const Confirm = () => {
                       error={error[2]}
                       name="What is your second track choice?"
                       options={tracks}
-                      value={form.tracks2}
-                      setValue={(v) => setForm({ ...form, tracks2: v })}
+                      value={cform.tracks2}
+                      setValue={(v) => setCForm({ ...cform, tracks2: v })}
                     /> 
                     
                   </div>
@@ -300,8 +295,8 @@ const Confirm = () => {
                 <div>
                   <ApplicationInput
                     error={error[3]}
-                    value={form.liability}
-                    setValue={(value) => setForm({ ...form, liability: value })}
+                    value={cform.liability}
+                    setValue={(value) => setCForm({ ...cform, liability: value })}
                     label="Please write your full name as your signature to confirm your acceptance of our liability and photo release waiver."
                   />
                 </div>
@@ -310,8 +305,8 @@ const Confirm = () => {
                 <div>
                   <ApplicationInput
                     error={error[4]}
-                    value={form.liabilityDate}
-                    setValue={(value) => setForm({ ...form, liabilityDate: value })}
+                    value={cform.liabilityDate}
+                    setValue={(value) => setCForm({ ...cform, liabilityDate: value })}
                     label="Please include the date of you signing this form."
                   />
                 </div>
@@ -324,8 +319,8 @@ const Confirm = () => {
                   <ApplicationInput
                     textarea
                     placeholder="We love to hear your thoughts, questions, concerns, and more about our event"
-                    value={form.other}
-                    setValue={(value) => setForm({ ...form, other: value })}
+                    value={cform.other}
+                    setValue={(value) => setCForm({ ...cform, other: value })}
                   />
                 </div>
 
@@ -338,7 +333,7 @@ const Confirm = () => {
                   <strong> $5 food voucher fee </strong>  {" "}prior to our event. Please checkout here:
                 </p>
                 
-                <Autosave data={form} onSave={updateForm} />
+                <Autosave data={cform} onSave={updateForm} />
               </form>
               <div className="flex items-center space-x-6 pt-8 pb-24">
                 <button
