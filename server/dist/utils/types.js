@@ -124,4 +124,38 @@ Form = __decorate([
     (0, type_graphql_1.InputType)()
 ], Form);
 exports.Form = Form;
+let CForm = class CForm {
+};
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "inPerson", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "tracks1", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "tracks2", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "liability", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "liabilityDate", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "other", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Form.prototype, "paid", void 0);
 //# sourceMappingURL=types.js.map

@@ -24,6 +24,8 @@ const main = async () => {
         entities: [User_1.User, Application_1.Application],
         migrations: [path_1.default.join(__dirname, "./migrations/*")],
     });
+    await User_1.User.delete({});
+    await Application_1.Application.delete({});
     await conn.runMigrations();
     const app = (0, express_1.default)();
     app.set("trust proxy", 1);

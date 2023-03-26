@@ -21,6 +21,8 @@ const main = async () => {
     migrations: [path.join(__dirname, "./migrations/*")],
   });
 
+  await User.delete({});
+  await Application.delete({});
   await conn.runMigrations();
 
   const app = express();

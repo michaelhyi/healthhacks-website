@@ -1,0 +1,19 @@
+mutation UpdateConfirmation(
+  $userId: Int!, 
+  $inPerson: String!, 
+  $tracks1: String!, 
+  $tracks2: String!, 
+  $liability: String!, 
+  $liabilityDate: String!, 
+  $other: String!
+) {
+  updateConfirmation(
+    userId: $userId
+    inPerson: $inPerson
+    tracks1: $tracks1
+    tracks2: $tracks2
+    liability: $liability
+    liabilityDate: $liabilityDate
+    other: $other
+  )
+}

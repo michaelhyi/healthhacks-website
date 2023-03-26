@@ -1,0 +1,13 @@
+mutation ReadConfirmation($userId: Int!) {
+  readConfirmation(userId: $userId) {
+    id
+    userId
+    status
+    inPerson
+    tracks1
+    tracks2
+    liability
+    liabilityDate
+    other
+  }
+}
