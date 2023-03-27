@@ -68,8 +68,6 @@ const Confirm = () => {
           paid: response.data?.readConfirmation.paid!,
         });
 
-        console.log(cform.tracks1.length)
-
         setStatus(response.data?.readConfirmation.status!); 
       }
     })();
@@ -91,26 +89,25 @@ const Confirm = () => {
   };
 
   const handleSubmit = async () => {
+    console.log("bruh")
     setSubmitting(true);
-
+  
     let found = false;
     let errors: string[] = [];
     
-    
     Object.keys(cform).forEach((v) => {
-      if (v !== "other" && cform[v as keyof ConfirmType] === undefined) {
+      if (v !== "other" && v !== "paid" && cform[v as keyof ConfirmType] === undefined) {
         errors.push("This is a required field");
         found = true;
+        
       } else {
         errors.push("");
       }
     });
     
     setError(errors);
-
-    
+  
     if (!found) {
-
       redirectToCheckout()
       await submitConfirmation({
         userId: user!.id!,
@@ -119,16 +116,7 @@ const Confirm = () => {
         email: user!.email,
         cform,
       });
-    } else {
-      toast({
-        title: "Error!",
-        description: "You must fill out all required fields!",
-        status: "error",
-        duration: 10000,
-        isClosable: true,
-      });
     }
-
     setSubmitting(false);
   };
 
