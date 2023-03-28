@@ -2,6 +2,7 @@ import moment from "moment";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Confirmation } from "../entities/Confirmation";
+import { User } from "../entities/User";
 import appendConfirmationSpreadsheet from "../utils/appendConfirmationSpreadsheet";
 import { attendeeConfirmationHTML } from "../utils/emails";
 import { CForm } from "../utils/types";
@@ -28,7 +29,7 @@ export class ConfirmationResolver {
       .getRepository(Confirmation)
       .createQueryBuilder()
       .update({
-        status: "Submitted",
+        // status: "Submitted",
         inPerson: cform.inPerson,
         tracks1: cform.tracks1,
         tracks2: cform.tracks2,
@@ -36,6 +37,16 @@ export class ConfirmationResolver {
         liabilityDate: cform.liabilityDate,
         other: cform.other,
         paid: cform.paid,
+      })
+      .where({ userId })
+      .returning("*")
+      .execute();
+
+    await getConnection()
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({
+        status: "not-paid"
       })
       .where({ userId })
       .returning("*")
@@ -101,6 +112,26 @@ export class ConfirmationResolver {
     return true;
   }
 
+  @Mutation(() => Boolean)
+  async updatePayment(
+    @Arg("email", () => String) email: string,
+    @Arg("paid", () => Boolean) paid: boolean
+  ): Promise<boolean> {
+    if (paid) {
+      await getConnection()
+        .getRepository(User)
+        .createQueryBuilder()
+        .update({
+          status: "paid",
+        })
+        .where({ email })
+        .returning("*")
+        .execute();
+
+      return true;
+    }
+    return false;
+  }
   @Query(() => [Confirmation])
   async readConfirmations(): Promise<Confirmation[]> {
     const confirmations = await Confirmation.find();

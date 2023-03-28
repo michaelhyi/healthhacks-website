@@ -50,6 +50,10 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   forgotPasswordExpiration: string;
 
+  @Field()
+  @Column("text", { default: "pending", nullable: true })
+  status: string = "pending";
+
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;

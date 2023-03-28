@@ -67,20 +67,18 @@ const Confirm = () => {
           other: response.data?.readConfirmation.other!,
           paid: response.data?.readConfirmation.paid!,
         });
-
-        setStatus(response.data?.readConfirmation.status!); 
       }
     })();
   }, [user]);
 
-  const redirectToCheckout = async () => {
+  const redirectToCheckout = async (email : string) => {
     const priceId = 'price_1Mn6OOEJJDG8LJHisqyFE9hJ'; // Replace with your actual price ID
     
     
     const res = await fetch('../api/create-checkout-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priceId }),
+      body: JSON.stringify({ priceId , email }),
     });
   
     const { sessionId } = await res.json();
@@ -89,7 +87,6 @@ const Confirm = () => {
   };
 
   const handleSubmit = async () => {
-    console.log("bruh")
     setSubmitting(true);
   
     let found = false;
@@ -99,7 +96,6 @@ const Confirm = () => {
       if (v !== "other" && v !== "paid" && cform[v as keyof ConfirmType] === undefined) {
         errors.push("This is a required field");
         found = true;
-        
       } else {
         errors.push("");
       }
@@ -108,7 +104,7 @@ const Confirm = () => {
     setError(errors);
   
     if (!found) {
-      redirectToCheckout()
+      redirectToCheckout(user!.email)
       await submitConfirmation({
         userId: user!.id!,
         firstName: user!.firstName,

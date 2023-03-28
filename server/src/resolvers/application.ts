@@ -2,6 +2,7 @@ import moment from "moment";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Application } from "../entities/Application";
+import { User } from "../entities/User";
 import appendApplicationSpreadsheet from "../utils/appendApplicationSpreadsheet";
 import { applicationConfirmationHTML } from "../utils/emails";
 import { Form } from "../utils/types";
@@ -28,7 +29,7 @@ export class ApplicationResolver {
       .getRepository(Application)
       .createQueryBuilder()
       .update({
-        status: "Submitted",
+        // status: "Submitted",
         phone: form.phone,
         organization: form.organization,
         city: form.city,
@@ -43,6 +44,16 @@ export class ApplicationResolver {
         dietaryRestrictions: form.dietaryRestrictions,
         transportation: form.transportation,
         other: form.other,
+      })
+      .where({ userId })
+      .returning("*")
+      .execute();
+
+    await getConnection()
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({
+        status: "applied"
       })
       .where({ userId })
       .returning("*")

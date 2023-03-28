@@ -108,6 +108,7 @@ export type UserType = {
   email: string;
   firstName: string;
   lastName: string;
+  status: string;
 };
 
 export type RowType = {

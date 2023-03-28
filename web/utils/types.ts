@@ -31,6 +31,7 @@ export type UserType = {
   firstName: string;
   lastName: string;
   verified: string;
+  status: string;
 };
 
 export type RowType = {

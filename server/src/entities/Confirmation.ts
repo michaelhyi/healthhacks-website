@@ -19,9 +19,9 @@ export class Confirmation extends BaseEntity {
   @Column({ unique: true })
   userId!: number;
 
-  @Field()
-  @Column("text", { default: "pending" })
-  status: string = "pending";
+  // @Field()
+  // @Column("text", { default: "pending" })
+  // status: string = "pending";
 
   @Field()
   @Column("text", { default: "" })

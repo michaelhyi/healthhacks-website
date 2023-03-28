@@ -15,7 +15,6 @@ const typeorm_1 = require("typeorm");
 let Confirmation = class Confirmation extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
-        this.status = "pending";
         this.inPerson = "";
         this.tracks1 = "";
         this.tracks2 = "";
@@ -35,11 +34,6 @@ __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", Number)
 ], Confirmation.prototype, "userId", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "pending" }),
-    __metadata("design:type", String)
-], Confirmation.prototype, "status", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)("text", { default: "" }),

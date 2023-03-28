@@ -16,6 +16,7 @@ let User = class User extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
         this.verified = false;
+        this.status = "pending";
     }
 };
 __decorate([
@@ -67,6 +68,11 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "forgotPasswordExpiration", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)("text", { default: "pending", nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "status", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),
