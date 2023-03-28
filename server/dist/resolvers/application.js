@@ -35,6 +35,7 @@ let ApplicationResolver = class ApplicationResolver {
             .getRepository(Application_1.Application)
             .createQueryBuilder()
             .update({
+            status: "Submitted",
             phone: form.phone,
             organization: form.organization,
             city: form.city,

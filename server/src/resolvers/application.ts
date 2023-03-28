@@ -29,7 +29,7 @@ export class ApplicationResolver {
       .getRepository(Application)
       .createQueryBuilder()
       .update({
-        // status: "Submitted",
+        status: "Submitted",
         phone: form.phone,
         organization: form.organization,
         city: form.city,

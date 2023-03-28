@@ -2,7 +2,6 @@ import ContainerApp from "@/components/ContainerApp";
 import { socials } from "@/data/socials";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useReadConfirmationMutation } from "../../generated/graphql";
 import { UserType } from "../../utils/types";
 
 //@ts-ignore
@@ -14,23 +13,17 @@ const Success = () => {
   const router = useRouter();
   const [user, setUser] = useState<UserType | null>(null);
   const [fetching, setFetching] = useState(true);
-  const [, readConfirmation] = useReadConfirmationMutation();
 
   useEffect(() => {
     (async () => {
-      const response = await localStorage.getItem("user");
-      if (response) {
-        const confirmation = await readConfirmation({
-          userId: JSON.parse(response).id,
-        });
-
-        // William added new "Whitelisted" status
-        if (confirmation.data?.user.status !== "paid") {
+      const user = await localStorage.getItem("user");
+      if (user) {
+        if (JSON.parse(user).status !== "paid") {
           router.push("/confirm");
           return;
         }
 
-        setUser(JSON.parse(response));
+        setUser(JSON.parse(user));
         setFetching(false);
       } else {
         router.push("/login");

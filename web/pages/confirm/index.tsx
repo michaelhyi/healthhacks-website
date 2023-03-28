@@ -35,6 +35,11 @@ const Confirm = () => {
       if (response) {
         setUser(JSON.parse(response));
         setFetching(false);
+
+        if (JSON.parse(response).status !== "whitelisted" || JSON.parse(response).status !== "not-paid" || JSON.parse(response).status !== "paid") {
+          router.push("/404");
+          return;
+        }
       } else {
         router.push("/login");
       }

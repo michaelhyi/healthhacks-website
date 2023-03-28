@@ -112,29 +112,6 @@ export class ConfirmationResolver {
     return true;
   }
 
-  @Mutation(() => Boolean)
-  async updatePayment(
-    @Arg("email", () => String) email: string,
-    @Arg("paid", () => Boolean) paid: boolean
-  ): Promise<boolean> {
-    if (paid) {
-      
-      await getConnection()
-        .getRepository(User)
-        .createQueryBuilder()
-        .update({
-          status: "paid",
-        })
-        .where({ email })
-        .returning("*")
-        .execute();
-
-      return true;
-      
-    }
-    return false;
-  }
-  
   @Query(() => [Confirmation])
   async readConfirmations(): Promise<Confirmation[]> {
     const confirmations = await Confirmation.find();

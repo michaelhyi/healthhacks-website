@@ -29,6 +29,7 @@ export type Application = {
   other: Scalars['String'];
   phone: Scalars['String'];
   state: Scalars['String'];
+  status: Scalars['String'];
   team: Scalars['String'];
   transportation: Scalars['String'];
   updatedAt: Scalars['String'];
@@ -256,7 +257,7 @@ export type ReadApplicationMutationVariables = Exact<{
 }>;
 
 
-export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: Array<string>, whyUs: Array<string>, howHear: string, team: string, linkedIn: string, dietaryRestrictions: string, transportation: string, other: string } };
+export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: Array<string>, whyUs: Array<string>, howHear: string, team: string, linkedIn: string, dietaryRestrictions: string, transportation: string, other: string, status: string } };
 
 export type ReadConfirmationMutationVariables = Exact<{
   userId: Scalars['Int'];
@@ -356,7 +357,7 @@ export type ReadUserQueryVariables = Exact<{
 }>;
 
 
-export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, verifyToken: string, verifyExpiration: string, forgotPasswordToken: string, forgotPasswordExpiration: string, createdAt: string, updatedAt: string } };
+export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, verifyToken: string, verifyExpiration: string, forgotPasswordToken: string, forgotPasswordExpiration: string, status: string, createdAt: string, updatedAt: string } };
 
 
 export const ForgotPasswordDocument = gql`
@@ -411,6 +412,7 @@ export const ReadApplicationDocument = gql`
     dietaryRestrictions
     transportation
     other
+    status
   }
 }
     `;
@@ -587,6 +589,7 @@ export const ReadUserDocument = gql`
     verifyExpiration
     forgotPasswordToken
     forgotPasswordExpiration
+    status
     createdAt
     updatedAt
   }

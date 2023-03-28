@@ -15,6 +15,7 @@ const typeorm_1 = require("typeorm");
 let Application = class Application extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
+        this.status = "pending";
         this.phone = "";
         this.organization = "";
         this.city = "";
@@ -39,6 +40,11 @@ __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", Number)
 ], Application.prototype, "userId", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)("text", { default: "pending" }),
+    __metadata("design:type", String)
+], Application.prototype, "status", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)("text", { default: "" }),

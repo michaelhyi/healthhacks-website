@@ -79,8 +79,7 @@ const Apply = () => {
           howHear: response.data?.readApplication.howHear!,
           team: response.data?.readApplication.team!,
           linkedIn: response.data?.readApplication.linkedIn!,
-          dietaryRestrictions:
-            response.data?.readApplication.dietaryRestrictions!,
+          dietaryRestrictions: response.data?.readApplication.dietaryRestrictions!,
           transportation: response.data?.readApplication.transportation!,
           other: response.data?.readApplication.other!,
         });

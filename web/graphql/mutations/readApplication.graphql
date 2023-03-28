@@ -16,5 +16,6 @@ mutation ReadApplication($userId: Int!) {
     dietaryRestrictions
     transportation
     other
+    status
   }
 }
