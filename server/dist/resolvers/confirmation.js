@@ -24,6 +24,7 @@ const User_1 = require("../entities/User");
 const appendConfirmationSpreadsheet_1 = __importDefault(require("../utils/appendConfirmationSpreadsheet"));
 const emails_1 = require("../utils/emails");
 const types_1 = require("../utils/types");
+const updatePaid_1 = __importDefault(require("../utils/updatePaid"));
 const sgMail = require("@sendgrid/mail");
 let ConfirmationResolver = class ConfirmationResolver {
     async deleteConfirmations() {
@@ -104,6 +105,28 @@ let ConfirmationResolver = class ConfirmationResolver {
             .execute();
         return true;
     }
+    async updatePayment(email, paid) {
+        if (paid) {
+            try {
+                await (0, updatePaid_1.default)(email, paid);
+                await (0, typeorm_1.getConnection)()
+                    .getRepository(User_1.User)
+                    .createQueryBuilder()
+                    .update({
+                    status: "pending",
+                })
+                    .where({ email })
+                    .returning("*")
+                    .execute();
+                return true;
+            }
+            catch (error) {
+                console.error("Error updating payment status:", error);
+                return false;
+            }
+        }
+        return false;
+    }
     async readConfirmations() {
         const confirmations = await Confirmation_1.Confirmation.find();
         return confirmations;
@@ -138,6 +161,14 @@ __decorate([
     __metadata("design:paramtypes", [Number, types_1.CForm]),
     __metadata("design:returntype", Promise)
 ], ConfirmationResolver.prototype, "updateConfirmation", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("email", () => String)),
+    __param(1, (0, type_graphql_1.Arg)("paid", () => Boolean)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Boolean]),
+    __metadata("design:returntype", Promise)
+], ConfirmationResolver.prototype, "updatePayment", null);
 __decorate([
     (0, type_graphql_1.Query)(() => [Confirmation_1.Confirmation]),
     __metadata("design:type", Function),

@@ -77,7 +77,7 @@ const Confirm = () => {
   }, [user]);
 
   const redirectToCheckout = async (email : string) => {
-    const priceId = 'price_1Mn6OOEJJDG8LJHisqyFE9hJ'; // Replace with your actual price ID
+    const priceId = process.env.NEXT_PUBLIC_PRICE_ID_TEST; // Replace with your actual price ID
     
     
     const res = await fetch('../api/create-checkout-session', {
@@ -87,7 +87,7 @@ const Confirm = () => {
     });
   
     const { sessionId } = await res.json();
-    const stripe = await loadStripe('pk_test_51Ml1VPEJJDG8LJHibi4ZwdJEMFpLWQt4fNOWsRxED8zNAaaLW0SuCBYjJ8boW4A60HF7LPTCo57FHuOYbCf69Cdu00GVxZZ9MV'); // Replace with your actual publishable key
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY_TEST!); // Replace with your actual publishable key
     if(!(stripe == null)) await stripe.redirectToCheckout({ sessionId: sessionId });
   };
 

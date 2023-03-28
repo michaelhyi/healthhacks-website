@@ -6,6 +6,7 @@ import { User } from "../entities/User";
 import appendConfirmationSpreadsheet from "../utils/appendConfirmationSpreadsheet";
 import { attendeeConfirmationHTML } from "../utils/emails";
 import { CForm } from "../utils/types";
+import updatePaid from "../utils/updatePaid";
 
 const sgMail = require("@sendgrid/mail");
 
@@ -112,6 +113,34 @@ export class ConfirmationResolver {
     return true;
   }
 
+  @Mutation(() => Boolean)
+  async updatePayment(
+    @Arg("email", () => String) email: string,
+    @Arg("paid", () => Boolean) paid: boolean
+  ): Promise<boolean> {
+    if (paid) {
+      try {
+        await updatePaid(email, paid)
+
+        await getConnection()
+          .getRepository(User)
+          .createQueryBuilder()
+          .update({
+            status: "pending",
+          })
+          .where({ email })
+          .returning("*")
+          .execute();
+
+        return true;
+      } catch(error) {
+        console.error("Error updating payment status:", error);
+        return false;
+      }
+    }
+    return false;
+  }
+  
   @Query(() => [Confirmation])
   async readConfirmations(): Promise<Confirmation[]> {
     const confirmations = await Confirmation.find();
