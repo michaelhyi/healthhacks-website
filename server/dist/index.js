@@ -25,11 +25,8 @@ const main = async () => {
         logging: true,
         entities: [User_1.User, Application_1.Application, Confirmation_1.Confirmation],
         migrations: [path_1.default.join(__dirname, "./migrations/*")],
+        synchronize: true
     });
-    await User_1.User.delete({});
-    await Application_1.Application.delete({});
-    await Confirmation_1.Confirmation.delete({});
-    await conn.runMigrations();
     const app = (0, express_1.default)();
     app.set("trust proxy", 1);
     app.use((0, cors_1.default)({

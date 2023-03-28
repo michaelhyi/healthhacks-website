@@ -34,11 +34,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               },
               body: JSON.stringify({
                 query: `
-                  mutation updatePayment($email: String!, $status: Boolean!) {
-                    updatePayment(email: $email, status: $boolean) {
-                      email
-                      paid
-                    }
+                  mutation updatePayment($email: String!, $paid: Boolean!) {
+                    updatePayment(email: $email, paid: $paid)
                   }
                 `,
                 variables: {

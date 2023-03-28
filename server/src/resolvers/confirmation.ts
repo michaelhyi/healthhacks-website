@@ -118,6 +118,7 @@ export class ConfirmationResolver {
     @Arg("paid", () => Boolean) paid: boolean
   ): Promise<boolean> {
     if (paid) {
+      
       await getConnection()
         .getRepository(User)
         .createQueryBuilder()
@@ -129,9 +130,11 @@ export class ConfirmationResolver {
         .execute();
 
       return true;
+      
     }
     return false;
   }
+  
   @Query(() => [Confirmation])
   async readConfirmations(): Promise<Confirmation[]> {
     const confirmations = await Confirmation.find();

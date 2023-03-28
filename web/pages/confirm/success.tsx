@@ -25,7 +25,7 @@ const Success = () => {
         });
 
         // William added new "Whitelisted" status
-        if (confirmation.data?.readConfirmation.status !== "paid") {
+        if (confirmation.data?.user.status !== "paid") {
           router.push("/confirm");
           return;
         }
