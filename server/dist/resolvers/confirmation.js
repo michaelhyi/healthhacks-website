@@ -55,6 +55,7 @@ let ConfirmationResolver = class ConfirmationResolver {
             .catch((error) => {
             console.error(error);
         });
+        console.log(userId);
         return true;
     }
     async updatePayment(email, paid) {

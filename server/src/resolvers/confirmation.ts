@@ -1,17 +1,15 @@
 import moment from "moment";
-import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Int, Mutation, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 import { User } from "../entities/User";
 import appendConfirmationSpreadsheet from "../utils/appendConfirmationSpreadsheet";
 import { attendeeConfirmationHTML } from "../utils/emails";
-import { CForm } from "../utils/types";
 import updatePaid from "../utils/updatePaid";
 
 const sgMail = require("@sendgrid/mail");
 
 @Resolver()
 export class ConfirmationResolver {
-
   @Mutation(() => Boolean)
   async submitConfirmation(
     @Arg("userId", () => Int) userId: number,
@@ -24,7 +22,7 @@ export class ConfirmationResolver {
     @Arg("other", () => String) other: string,
     @Arg("paid", () => String) paid: string,
     @Arg("tracks1", () => String) tracks1: string,
-    @Arg("tracks2", () => String) tracks2: string,
+    @Arg("tracks2", () => String) tracks2: string
   ): Promise<boolean> {
     const newRow = {
       Timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
@@ -39,7 +37,7 @@ export class ConfirmationResolver {
       Other: other,
       Paid: paid,
     };
-    
+
     await appendConfirmationSpreadsheet(newRow);
 
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -59,6 +57,8 @@ export class ConfirmationResolver {
         console.error(error);
       });
 
+    console.log(userId);
+
     return true;
   }
 
@@ -69,7 +69,7 @@ export class ConfirmationResolver {
   ): Promise<boolean> {
     if (paid) {
       try {
-        await updatePaid(email, paid)
+        await updatePaid(email, paid);
 
         await getConnection()
           .getRepository(User)
@@ -82,28 +82,27 @@ export class ConfirmationResolver {
           .execute();
 
         return true;
-      } catch(error) {
+      } catch (error) {
         console.error("Error updating payment status:", error);
         return false;
       }
     }
     return false;
   }
-  
 
   @Mutation(() => Boolean)
   async setUserPaidPending(
     @Arg("userId", () => String) email: string
   ): Promise<Boolean> {
     await getConnection()
-        .getRepository(User)
-        .createQueryBuilder()
-        .update({
-          status: "pending",
-        })
-        .where({ email })
-        .returning("*")
-        .execute();
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({
+        status: "pending",
+      })
+      .where({ email })
+      .returning("*")
+      .execute();
 
     return true;
   }
