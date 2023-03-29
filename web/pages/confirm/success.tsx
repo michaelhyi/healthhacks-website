@@ -17,17 +17,17 @@ const Success = () => {
   useEffect(() => {
     (async () => {
       const res = await localStorage.getItem("user");
-      const currEmail = JSON.parse(res!).email
+      const currEmail = JSON.parse(res!).email;
 
-      const APIres = await fetch('/api/allParticipantSheets');
+      const APIres = await fetch("/api/allParticipantSheets");
       const data = await APIres.json();
 
-      const personRow = data.values.find(row => row[4] === currEmail);
+      const personRow = data.values.find((row: any) => row[4] === currEmail);
 
       //console.log(personRow)
 
-      if(personRow){
-        const status = personRow[6]
+      if (personRow) {
+        const status = personRow[6];
         //console.log(status)
         if (!status) {
           router.push("/confirm");
@@ -36,11 +36,10 @@ const Success = () => {
 
         setUser(JSON.parse(res!));
         setFetching(false);
-      }else{
+      } else {
         router.push("/login");
         return;
       }
-      
     })();
   }, []);
 
@@ -73,7 +72,8 @@ const Success = () => {
               </span>
             </p>
             <p className="font-normal text-base pl-8 pt-4  md:text-base sm:text-sm text-hh-lightgray">
-              See you in a couple of weeks, and we can't wait for you to come to our event
+              See you in a couple of weeks, and we can&apos;t wait for you to
+              come to our event
             </p>
             <p className="font-normal text-base px-8 pt-4  md:text-base sm:text-sm text-hh-lightgray">
               In the meantime, follow us on social media:

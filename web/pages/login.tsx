@@ -41,10 +41,10 @@ const Login = () => {
 
     const response = await login({ email, password });
 
-    const res = await fetch('/api/allParticipantSheets');
+    const res = await fetch("/api/allParticipantSheets");
     const data = await res.json();
 
-    const personRow = data.values.find(row => row[4] === email);
+    const personRow = data.values.find((row: any) => row[4] === email);
 
     const isWhitelisted = personRow[5] === "whitelisted";
 
@@ -69,7 +69,7 @@ const Login = () => {
             email,
           },
         });
-      // Will force user to confirm if they are whitelisted
+        // Will force user to confirm if they are whitelisted
       } else if (isWhitelisted) {
         await localStorage.setItem(
           "user",
@@ -82,7 +82,6 @@ const Login = () => {
             email,
           },
         });
-      
       } else {
         await localStorage.setItem(
           "user",
