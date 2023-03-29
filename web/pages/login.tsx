@@ -44,11 +44,11 @@ const Login = () => {
     const res = await fetch("/api/allParticipantSheets");
     const data = await res.json();
 
-    const personRow = data.values.find((row: any) => row[4] === email);
-
-    const isWhitelisted = personRow[5] === "whitelisted";
-
     if (!response.data?.login.error) {
+      const personRow = data.values.find((row: any) => row[4] === email);
+
+      const isWhitelisted = personRow[5] === "whitelisted";
+      
       if (!response.data?.login.user?.verified) {
         await resendVerificationEmail({
           id: response!.data!.login.user!.id,
