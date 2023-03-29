@@ -18,6 +18,7 @@ import { createUrqlClient } from "../../utils/createUrqlClient";
 import { ConfirmType, UserType } from "../../utils/types";
 
 
+
 const Confirm = () => {
   const toast = useToast();
   const router = useRouter();
@@ -27,23 +28,43 @@ const Confirm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [, readConfirmation] = useReadConfirmationMutation(); 
   const [, updateConfirmation] = useUpdateConfirmationMutation(); 
-  const [, submitConfirmation] = useSubmitConfirmationMutation(); 
+  const [, submitConfirmation] = useSubmitConfirmationMutation();
+
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
+      setFetching(true);
       const response = await localStorage.getItem("user");
       if (response) {
-        setUser(JSON.parse(response));
-        setFetching(false);
+        await setUser(JSON.parse(response));
 
-        if (JSON.parse(response).status !== "whitelisted" || JSON.parse(response).status !== "not-paid" || JSON.parse(response).status !== "paid") {
+        const currEmail = JSON.parse(response).email;
+
+        const res = await fetch('/api/allParticipantSheets');
+        const data = await res.json();
+
+        const personRow = data.values.find(row => row[4] === currEmail);
+
+        const isWhitelisted = personRow[5] === "whitelisted"
+        
+        // Ensuring that 'data.values' is available and 'user' is defined
+        
+        console.log(JSON.parse(response))
+
+        if (!isWhitelisted || JSON.parse(response).status === "paid"){//|| JSON.parse(response).status !== "not-paid" || JSON.parse(response).status !== "paid") {
           router.push("/404");
           return;
         }
+
       } else {
         router.push("/login");
       }
-    })();
+      setFetching(false);
+    };
+    
+    fetchData();
+    setIsReady(true);
   }, []);
 
   const [cform, setCForm] = useState({
@@ -77,7 +98,7 @@ const Confirm = () => {
   }, [user]);
 
   const redirectToCheckout = async (email : string) => {
-    const priceId = process.env.NEXT_PUBLIC_PRICE_ID_TEST; // Replace with your actual price ID
+    const priceId = process.env.NEXT_PUBLIC_PRICE_ID_TEST; // Replace with your actual price I
     
     
     const res = await fetch('../api/create-checkout-session', {
@@ -131,7 +152,7 @@ const Confirm = () => {
 
   useAutosave({ data: cform, onSave: updateForm });
 
-  if (fetching) {
+  if (fetching || !isReady) {
     return (
       <ContainerApp>
         <></>

@@ -40,6 +40,7 @@ const Login = () => {
     e.preventDefault();
 
     const response = await login({ email, password });
+    console.log(response)
     if (!response.data?.login.error) {
       // Will force user to verify
       if (!response.data?.login.user?.verified) {
