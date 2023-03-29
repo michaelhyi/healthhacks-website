@@ -10,13 +10,10 @@ import DropDown from "../../components/DropDown";
 
 import { loadStripe } from '@stripe/stripe-js';
 import {
-  useReadConfirmationMutation,
   useSubmitConfirmationMutation,
-  useUpdateConfirmationMutation,
 } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { ConfirmType, UserType } from "../../utils/types";
-
 
 const Confirm = () => {
   const toast = useToast();
@@ -25,78 +22,79 @@ const Confirm = () => {
   const [fetching, setFetching] = useState<boolean>(true);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [, readConfirmation] = useReadConfirmationMutation(); 
-  const [, updateConfirmation] = useUpdateConfirmationMutation(); 
-  const [, submitConfirmation] = useSubmitConfirmationMutation(); 
+  const [, submitConfirmation] = useSubmitConfirmationMutation();
+
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
+      setFetching(true);
       const response = await localStorage.getItem("user");
       if (response) {
-        setUser(JSON.parse(response));
-        setFetching(false);
+        await setUser(JSON.parse(response));
+
+        const currEmail = JSON.parse(response).email;
+
+        const res = await fetch('/api/allParticipantSheets');
+        const data = await res.json();
+
+        const personRow = data.values.find(row => row[4] === currEmail);
+
+        const isWhitelisted = personRow[5] === "whitelisted"
+        const isPaid = personRow[6] === "TRUE"
+        // Ensuring that 'data.values' is available and 'user' is defined
+        
+        //console.log(JSON.parse(response))
+
+        if (!isWhitelisted || isPaid){//|| JSON.parse(response).status !== "not-paid" || JSON.parse(response).status !== "paid") {
+          router.push("/404");
+          return;
+        }
+
       } else {
         router.push("/login");
       }
-    })();
+      setFetching(false);
+    };
+    
+    fetchData();
+    setIsReady(true);
   }, []);
 
-  const [form, setForm] = useState({
+  const [cform, setCForm] = useState({
     inPerson: "",
     tracks1: "",
     tracks2: "",
     liability: "",
     liabilityDate: "",
     other: "",
+    paid: "",
   });
   const [error, setError] = useState(new Array(5).fill(""));
 
-  useEffect(() => {
-
-    (async () => {
-      if (user) {
-        const response = await readConfirmation({ userId: user.id }); 
-
-        await setForm({
-          inPerson: response.data?.readConfirmation.inPerson!, 
-          tracks1: response.data?.readConfirmation.tracks1!, 
-          tracks2: response.data?.readConfirmation.tracks2!, 
-          liability: response.data?.readConfirmation.liability!,
-          liabilityDate: response.data?.readConfirmation.liabilityDate!,
-          other: response.data?.readConfirmation.other!,
-        });
-
-        console.log(form.tracks1.length)
-
-        setStatus(response.data?.readConfirmation.status!); 
-      }
-    })();
-  }, [user]);
-
-  const redirectToCheckout = async () => {
-    const priceId = 'price_1Mn6OOEJJDG8LJHisqyFE9hJ'; // Replace with your actual price ID
+  const redirectToCheckout = async (email : string) => {
+    const priceId = process.env.NEXT_PUBLIC_PRICE_ID_TEST; // Replace with your actual price I
     
     
     const res = await fetch('../api/create-checkout-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priceId }),
+      body: JSON.stringify({ priceId , email }),
     });
   
     const { sessionId } = await res.json();
-    const stripe = await loadStripe('pk_test_51Ml1VPEJJDG8LJHibi4ZwdJEMFpLWQt4fNOWsRxED8zNAaaLW0SuCBYjJ8boW4A60HF7LPTCo57FHuOYbCf69Cdu00GVxZZ9MV'); // Replace with your actual publishable key
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY_TEST!); // Replace with your actual publishable key
     if(!(stripe == null)) await stripe.redirectToCheckout({ sessionId: sessionId });
   };
 
   const handleSubmit = async () => {
     setSubmitting(true);
-
+  
     let found = false;
     let errors: string[] = [];
     
-    
-    Object.keys(form).forEach((v) => {
-      if (v !== "other" && form[v as keyof ConfirmType] === undefined) {
+    Object.keys(cform).forEach((v) => {
+      if (v !== "other" && v !== "paid" && cform[v as keyof ConfirmType] === undefined) {
         errors.push("This is a required field");
         found = true;
       } else {
@@ -105,48 +103,31 @@ const Confirm = () => {
     });
     
     setError(errors);
-
-    
+  
     if (!found) {
-      await submitConfirmation({
-        userId: user!.id,
-        inPerson: form.inPerson,
-        tracks1: form.tracks1,
-        tracks2: form.tracks2,
-        liability: form.liability,
-        liabilityDate: form.liabilityDate,
-        other: form.other,
-      });
-      redirectToCheckout()
-    } else {
-      toast({
-        title: "Error!",
-        description: "You must fill out all required fields!",
-        status: "error",
-        duration: 10000,
-        isClosable: true,
-      });
-    }
+      redirectToCheckout(user!.email)
+      console.log(cform)
+      const response = await submitConfirmation({
+        userId: user!.id!,
+        firstName: user!.firstName,
+        lastName: user!.lastName,
+        email: user!.email,
+        inPerson: cform.inPerson,
+        liability: cform.liability,
+        liabilityDate: cform.liabilityDate,
+        other: cform.other,
+        paid: cform.paid,
+        tracks1: cform.tracks1,
+        tracks2: cform.tracks2,
 
+      });
+      console.log(response)
+    }
     setSubmitting(false);
   };
 
-  const updateForm = async () => {
-    if (user)
-      await updateConfirmation({
-        userId: user!.id!,
-        inPerson: form.inPerson,
-        tracks1: form.tracks1,
-        tracks2: form.tracks2,
-        liability: form.liability,
-        liabilityDate: form.liabilityDate,
-        other: form.other,
-      });
-  };
 
-  useAutosave({ data: form, onSave: updateForm });
-
-  if (fetching) {
+  if (fetching || !isReady) {
     return (
       <ContainerApp>
         <></>
@@ -165,14 +146,13 @@ const Confirm = () => {
                 : "Welcome to health{hacks} 2023,"}{" "}
               <span className="font-semibold text-5xl text-hh-purple">
                 {" "}
-                {user!.firstName}.{" "}
+                {user ? user!.firstName : ''}.{" "}
               </span>
             </div>
             {status === "Submitted" ? (
               <>
                 <p className="font-base text-md text-[#b9b9b9] mt-2">
-                  We have confirmed your spot to our event and please email <a href="mailto:info@joinhealthhacks.com">info@joinhealthhacks.com</a>
-                  if you have any additional questions
+                  We have confirmed your spot to our event and please email <a href="mailto:info@joinhealthhacks.com">info@joinhealthhacks.com</a> if you have any additional questions.
                 </p>
               </>
             ) : (
@@ -215,8 +195,8 @@ const Confirm = () => {
                       Can you still attend our event on April 14 - 16, 2023?
                     </div>
                     <RadioGroup
-                      onChange={(v) => setForm({ ...form, inPerson: v })}
-                      value={form.inPerson}
+                      onChange={(v) => setCForm({ ...cform, inPerson: v })}
+                      value={cform.inPerson}
                     >
                       <div
                         className={`flex items-center space-x-4 ${
@@ -226,14 +206,14 @@ const Confirm = () => {
                         <Radio
                           value="Yes"
                           colorScheme="black"
-                          onClick={() => setForm({ ...form, inPerson: "Yes" })}
+                          onClick={() => setCForm({ ...cform, inPerson: "Yes" })}
                         >
                           Yes
                         </Radio>
                         <Radio
                           value="No"
                           colorScheme="black"
-                          onClick={() => setForm({ ...form, inPerson: "No" })}
+                          onClick={() => setCForm({ ...cform, inPerson: "No" })}
                         >
                           No
                         </Radio>
@@ -247,6 +227,16 @@ const Confirm = () => {
                   </div>
                 </div>
 
+                <p className="mt-8 mb-2 lg:text-lg md:text-small font-semibold">
+                  {`health{hacks}`} each year has three flagship tracks for our participants to join: {" "}
+                </p>
+                <ol className="font-base text-md text-[#b9b9b9]">
+                  <li className="pt-2"><b>Aging & Longevity:</b> As the world's population continues to age, it is important to consider the unique healthcare needs and challenges faced by this population. This track will focus on exploring innovations and solutions that can help improve the health and well-being of the aging population, including preventative care, chronic disease management, and technology-based solutions.</li>
+                  <li className="pt-2"><b>Population & Preventative Health:</b> Traditional medicine has focused heavily on treating illnesses and diseases, but what if we focused on preventing them in the first place? This track will explore ways to promote and encourage preventative health measures, such as exercise, healthy eating, monitor good sleep schedules, and stress management, in order to improve overall health.</li>
+                  <li className="pt-2"><b>Mental Health & Addiction:</b> Mental health is an important aspect of overall health and well-being, but it is often overlooked or stigmatized. This track will focus on exploring innovations and solutions that can help improve mental health, with a particular focus on issues related to addiction. This may include therapy and support programs, technology-based solutions, and community-based approaches.</li>
+                </ol>
+
+
                 {/* What is your first track selection */}
                 <div>
                   <div>
@@ -255,8 +245,8 @@ const Confirm = () => {
                       error={error[1]}
                       name="What is your first track choice?"
                       options={tracks}
-                      value={form.tracks1}
-                      setValue={(v) => setForm({ ...form, tracks1: v })}
+                      value={cform.tracks1}
+                      setValue={(v) => setCForm({ ...cform, tracks1: v })}
                     />
                     
                   </div>
@@ -271,8 +261,8 @@ const Confirm = () => {
                       error={error[2]}
                       name="What is your second track choice?"
                       options={tracks}
-                      value={form.tracks2}
-                      setValue={(v) => setForm({ ...form, tracks2: v })}
+                      value={cform.tracks2}
+                      setValue={(v) => setCForm({ ...cform, tracks2: v })}
                     /> 
                     
                   </div>
@@ -299,8 +289,8 @@ const Confirm = () => {
                 <div>
                   <ApplicationInput
                     error={error[3]}
-                    value={form.liability}
-                    setValue={(value) => setForm({ ...form, liability: value })}
+                    value={cform.liability}
+                    setValue={(value) => setCForm({ ...cform, liability: value })}
                     label="Please write your full name as your signature to confirm your acceptance of our liability and photo release waiver."
                   />
                 </div>
@@ -309,8 +299,8 @@ const Confirm = () => {
                 <div>
                   <ApplicationInput
                     error={error[4]}
-                    value={form.liabilityDate}
-                    setValue={(value) => setForm({ ...form, liabilityDate: value })}
+                    value={cform.liabilityDate}
+                    setValue={(value) => setCForm({ ...cform, liabilityDate: value })}
                     label="Please include the date of you signing this form."
                   />
                 </div>
@@ -323,8 +313,8 @@ const Confirm = () => {
                   <ApplicationInput
                     textarea
                     placeholder="We love to hear your thoughts, questions, concerns, and more about our event"
-                    value={form.other}
-                    setValue={(value) => setForm({ ...form, other: value })}
+                    value={cform.other}
+                    setValue={(value) => setCForm({ ...cform, other: value })}
                   />
                 </div>
 
@@ -337,7 +327,6 @@ const Confirm = () => {
                   <strong> $5 food voucher fee </strong>  {" "}prior to our event. Please checkout here:
                 </p>
                 
-                <Autosave data={form} onSave={updateForm} />
               </form>
               <div className="flex items-center space-x-6 pt-8 pb-24">
                 <button
@@ -348,7 +337,7 @@ const Confirm = () => {
                       : "pointer-events-auto"
                   }`}
                 >
-                  {submitting ? <Spinner size="xs" /> : "Submit"}
+                  {submitting ? <Spinner size="xs" /> : "Pay"}
                 </button>
               </div>
             </div>

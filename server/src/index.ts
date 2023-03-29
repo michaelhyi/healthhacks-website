@@ -10,9 +10,11 @@ import { createConnection } from "typeorm";
 import { Application } from "./entities/Application";
 import { User } from "./entities/User";
 import { ApplicationResolver } from "./resolvers/application";
+import { ConfirmationResolver } from "./resolvers/confirmation";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
+  
   const conn = await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL,
@@ -20,7 +22,11 @@ const main = async () => {
     entities: [User, Application],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
+  
 
+  //await User.delete({});
+  //await Application.delete({});
+  //await Confirmation.delete({});
   await conn.runMigrations();
 
   const app = express();
@@ -36,7 +42,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [UserResolver, ApplicationResolver],
+      resolvers: [UserResolver, ApplicationResolver, ConfirmationResolver],
       validate: false,
     }),
   });

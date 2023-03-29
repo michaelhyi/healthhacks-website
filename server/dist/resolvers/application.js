@@ -20,6 +20,7 @@ const moment_1 = __importDefault(require("moment"));
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Application_1 = require("../entities/Application");
+const User_1 = require("../entities/User");
 const appendApplicationSpreadsheet_1 = __importDefault(require("../utils/appendApplicationSpreadsheet"));
 const emails_1 = require("../utils/emails");
 const types_1 = require("../utils/types");
@@ -49,6 +50,15 @@ let ApplicationResolver = class ApplicationResolver {
             dietaryRestrictions: form.dietaryRestrictions,
             transportation: form.transportation,
             other: form.other,
+        })
+            .where({ userId })
+            .returning("*")
+            .execute();
+        await (0, typeorm_1.getConnection)()
+            .getRepository(User_1.User)
+            .createQueryBuilder()
+            .update({
+            status: "applied"
         })
             .where({ userId })
             .returning("*")

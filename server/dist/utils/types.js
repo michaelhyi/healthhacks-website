@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Form = exports.UserResponse = exports.Error = exports.Response = void 0;
+exports.CForm = exports.Form = exports.UserResponse = exports.Error = exports.Response = void 0;
 const type_graphql_1 = require("type-graphql");
 const User_1 = require("../entities/User");
 let Response = class Response {
@@ -124,4 +124,38 @@ Form = __decorate([
     (0, type_graphql_1.InputType)()
 ], Form);
 exports.Form = Form;
+let CForm = class CForm {
+};
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CForm.prototype, "inPerson", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CForm.prototype, "tracks1", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CForm.prototype, "tracks2", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CForm.prototype, "liability", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CForm.prototype, "liabilityDate", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CForm.prototype, "other", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CForm.prototype, "paid", void 0);
+CForm = __decorate([
+    (0, type_graphql_1.InputType)()
+], CForm);
+exports.CForm = CForm;
 //# sourceMappingURL=types.js.map

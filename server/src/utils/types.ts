@@ -79,11 +79,36 @@ export class Form {
   other: string;
 }
 
+@InputType()
+export class CForm {
+  @Field()
+  inPerson: string;
+
+  @Field()
+  tracks1: string;
+
+  @Field()
+  tracks2: string;
+
+  @Field()
+  liability: string;
+
+  @Field()
+  liabilityDate: string;
+
+  @Field()
+  other: string;
+
+  @Field()
+  paid: string;
+}
+
 export type UserType = {
   id: number;
   email: string;
   firstName: string;
   lastName: string;
+  status: string;
 };
 
 export type RowType = {
@@ -105,4 +130,18 @@ export type RowType = {
   DietaryRestrictions: string;
   Transportation: string;
   Other: string;
+};
+
+export type CRowType = {
+  Timestamp: string;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  InPerson: string,
+  Tracks1: string,
+  Tracks2: string,
+  Liability: string,
+  LiabilityDate: string,
+  Other: string,
+  Paid: string,
 };

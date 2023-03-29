@@ -2,7 +2,6 @@ mutation ReadApplication($userId: Int!) {
   readApplication(userId: $userId) {
     id
     userId
-    status
     phone
     organization
     city
@@ -17,5 +16,6 @@ mutation ReadApplication($userId: Int!) {
     dietaryRestrictions
     transportation
     other
+    status
   }
 }

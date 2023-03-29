@@ -5,7 +5,6 @@ import Days from "../components/Days";
 import Footer from "../components/Footer";
 import Head from "../components/Head";
 import Statistics from "../components/Statistics";
-import Purchased from "../components/Purchased";
 
 import { useRouter } from 'next/router';
 
@@ -45,7 +44,6 @@ export default function Home() {
   
   return (
     <Container>
-      { purchased == 'true' ? ( <Purchased/>) : null}
       <Head user={user}/>
       <Statistics />
       <Days />

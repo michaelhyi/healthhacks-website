@@ -9,83 +9,79 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Confirmation = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
-let User = class User extends typeorm_1.BaseEntity {
+let Confirmation = class Confirmation extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
-        this.verified = false;
-        this.status = "pending";
+        this.inPerson = "";
+        this.tracks1 = "";
+        this.tracks2 = "";
+        this.liability = "";
+        this.liabilityDate = "";
+        this.other = "";
+        this.paid = "";
     }
 };
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], Confirmation.prototype, "id", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)({ unique: true }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
+    __metadata("design:type", Number)
+], Confirmation.prototype, "userId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)("text", { default: "" }),
     __metadata("design:type", String)
-], User.prototype, "firstName", void 0);
+], Confirmation.prototype, "inPerson", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)("text", { default: "" }),
     __metadata("design:type", String)
-], User.prototype, "lastName", void 0);
+], Confirmation.prototype, "tracks1", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("boolean", { default: false }),
-    __metadata("design:type", Boolean)
-], User.prototype, "verified", void 0);
+    (0, typeorm_1.Column)("text", { default: "" }),
+    __metadata("design:type", String)
+], Confirmation.prototype, "tracks2", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)("text", { default: "" }),
     __metadata("design:type", String)
-], User.prototype, "verifyToken", void 0);
+], Confirmation.prototype, "liability", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)("text", { default: "" }),
     __metadata("design:type", String)
-], User.prototype, "verifyExpiration", void 0);
+], Confirmation.prototype, "liabilityDate", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)("text", { default: "" }),
     __metadata("design:type", String)
-], User.prototype, "forgotPasswordToken", void 0);
+], Confirmation.prototype, "other", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)("text", { default: "" }),
     __metadata("design:type", String)
-], User.prototype, "forgotPasswordExpiration", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "pending", nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "status", void 0);
+], Confirmation.prototype, "paid", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
+], Confirmation.prototype, "createdAt", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "updatedAt", void 0);
-User = __decorate([
+], Confirmation.prototype, "updatedAt", void 0);
+Confirmation = __decorate([
     (0, type_graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)()
-], User);
-exports.User = User;
-//# sourceMappingURL=User.js.map
+], Confirmation);
+exports.Confirmation = Confirmation;
+//# sourceMappingURL=Confirmation.js.map

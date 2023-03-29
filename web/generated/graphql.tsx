@@ -38,18 +38,6 @@ export type Application = {
   whyUs: Array<Scalars['String']>;
 };
 
-export type Confirmation = {
-  __typename?: 'Confirmation';
-  id: Scalars['Float'];
-  inPerson: Scalars['String'];
-  tracks1: Scalars['String'];
-  tracks2: Scalars['String'];
-  other: Scalars['String'];
-  status: Scalars['String'];
-  updatedAt: Scalars['String'];
-  userId: Scalars['Float'];
-};
-
 export type Error = {
   __typename?: 'Error';
   field: Scalars['String'];
@@ -80,14 +68,14 @@ export type Mutation = {
   forgotPassword: Response;
   login: UserResponse;
   readApplication: Application;
-  readConfirmation: Confirmation;
   register: UserResponse;
   resendVerificationEmail: Scalars['Boolean'];
+  setUserPaidPending: Scalars['Boolean'];
   submitApplication: Scalars['Boolean'];
-  updateApplication: Scalars['Boolean'];
   submitConfirmation: Scalars['Boolean'];
-  updateConfirmation: Scalars['Boolean'];
+  updateApplication: Scalars['Boolean'];
   updatePassword: User;
+  updatePayment: Scalars['Boolean'];
   verifyUser: Response;
 };
 
@@ -122,11 +110,31 @@ export type MutationResendVerificationEmailArgs = {
 };
 
 
+export type MutationSetUserPaidPendingArgs = {
+  userId: Scalars['String'];
+};
+
+
 export type MutationSubmitApplicationArgs = {
   email: Scalars['String'];
   firstName: Scalars['String'];
   form: Form;
   lastName: Scalars['String'];
+  userId: Scalars['Int'];
+};
+
+
+export type MutationSubmitConfirmationArgs = {
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  inPerson: Scalars['String'];
+  lastName: Scalars['String'];
+  liability: Scalars['String'];
+  liabilityDate: Scalars['String'];
+  other: Scalars['String'];
+  paid: Scalars['String'];
+  tracks1: Scalars['String'];
+  tracks2: Scalars['String'];
   userId: Scalars['Int'];
 };
 
@@ -143,13 +151,19 @@ export type MutationUpdatePasswordArgs = {
 };
 
 
+export type MutationUpdatePaymentArgs = {
+  email: Scalars['String'];
+  paid: Scalars['Boolean'];
+};
+
+
 export type MutationVerifyUserArgs = {
   token: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  readConfirmations: Array<Application>;
+  readApplications: Array<Application>;
   readTokenValidity: Response;
   readUser: User;
   readUsers: Array<User>;
@@ -182,6 +196,7 @@ export type User = {
   forgotPasswordToken: Scalars['String'];
   id: Scalars['Float'];
   lastName: Scalars['String'];
+  status: Scalars['String'];
   updatedAt: Scalars['String'];
   verified: Scalars['Boolean'];
   verifyExpiration: Scalars['String'];
@@ -207,22 +222,14 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, verified: boolean } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, verified: boolean, status: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
 export type ReadApplicationMutationVariables = Exact<{
   userId: Scalars['Int'];
 }>;
 
 
-export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, status: string, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: Array<string>, whyUs: Array<string>, howHear: string, team: string, linkedIn: string, dietaryRestrictions: string, transportation: string, other: string } };
-
-export type ReadConfirmationMutationVariables = Exact<{
-  userId: Scalars['Int'];
-}>;
-
-
-export type ReadConfirmationMutation = { __typename?: 'Mutation', readConfirmation: { __typename?: 'Confirmation', id: number, userId: number, status: string, inPerson: string, tracks1: string, tracks2: string, liability: string, liabilityDate: string, other: string } };
-
+export type ReadApplicationMutation = { __typename?: 'Mutation', readApplication: { __typename?: 'Application', id: number, userId: number, phone: string, organization: string, city: string, state: string, inPerson: string, wholeEvent: string, background: Array<string>, whyUs: Array<string>, howHear: string, team: string, linkedIn: string, dietaryRestrictions: string, transportation: string, other: string, status: string } };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -253,6 +260,23 @@ export type SubmitApplicationMutationVariables = Exact<{
 
 export type SubmitApplicationMutation = { __typename?: 'Mutation', submitApplication: boolean };
 
+export type SubmitConfirmationMutationVariables = Exact<{
+  userId: Scalars['Int'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  inPerson: Scalars['String'];
+  liability: Scalars['String'];
+  liabilityDate: Scalars['String'];
+  other: Scalars['String'];
+  paid: Scalars['String'];
+  tracks1: Scalars['String'];
+  tracks2: Scalars['String'];
+}>;
+
+
+export type SubmitConfirmationMutation = { __typename?: 'Mutation', submitConfirmation: boolean };
+
 export type UpdateApplicationMutationVariables = Exact<{
   userId: Scalars['Int'];
   form: Form;
@@ -267,34 +291,15 @@ export type UpdatePasswordMutationVariables = Exact<{
 }>;
 
 
-export type SubmitConfirmationMutationVariables = Exact<{
-  userId: Scalars['Int'];
-  inPerson: Scalars['String'];
-  tracks1: Scalars['String'];
-  tracks2: Scalars['String'];  
-  liability: Scalars['String'];
-  liabilityDate: Scalars['String'];
-  other: Scalars['String'];
-}>;
-
-
-export type SubmitConfirmationMutation = { __typename?: 'Mutation', submitApplication: boolean };
-
-
-export type UpdateConfirmationMutationVariables = Exact<{
-  userId: Scalars['Int'];
-  inPerson: Scalars['String'];
-  tracks1: Scalars['String'];
-  tracks2: Scalars['String'];  
-  liability: Scalars['String'];
-  liabilityDate: Scalars['String'];
-  other: Scalars['String'];
-}>;
-
-export type UpdateConfirmationMutation = { __typename?: 'Mutation', updateConfirmation: boolean };
-
-
 export type UpdatePasswordMutation = { __typename?: 'Mutation', updatePassword: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, verified: boolean } };
+
+export type UpdatePaymentMutationVariables = Exact<{
+  email: Scalars['String'];
+  paid: Scalars['Boolean'];
+}>;
+
+
+export type UpdatePaymentMutation = { __typename?: 'Mutation', updatePayment: boolean };
 
 export type VerifyUserMutationVariables = Exact<{
   token: Scalars['String'];
@@ -315,7 +320,7 @@ export type ReadUserQueryVariables = Exact<{
 }>;
 
 
-export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, verifyToken: string, verifyExpiration: string, forgotPasswordToken: string, forgotPasswordExpiration: string, createdAt: string, updatedAt: string } };
+export type ReadUserQuery = { __typename?: 'Query', readUser: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, verified: boolean, verifyToken: string, verifyExpiration: string, forgotPasswordToken: string, forgotPasswordExpiration: string, status: string, createdAt: string, updatedAt: string } };
 
 
 export const ForgotPasswordDocument = gql`
@@ -339,6 +344,7 @@ export const LoginDocument = gql`
       lastName
       email
       verified
+      status
     }
     error {
       field
@@ -356,7 +362,6 @@ export const ReadApplicationDocument = gql`
   readApplication(userId: $userId) {
     id
     userId
-    status
     phone
     organization
     city
@@ -371,6 +376,7 @@ export const ReadApplicationDocument = gql`
     dietaryRestrictions
     transportation
     other
+    status
   }
 }
     `;
@@ -399,26 +405,6 @@ export const RegisterDocument = gql`
   }
 }
     `;
-export const ReadConfirmationDocument = gql`
-    mutation ReadConfirmation($userId: Int!) {
-  readConfirmation(userId: $userId) {
-    id
-    userId
-    status
-    inPerson
-    tracks1
-    tracks2
-    liability
-    liabilityDate
-    other
-  }
-}
-    `;
-
-export function useReadConfirmationMutation() {
-  return Urql.useMutation<ReadConfirmationMutation, ReadConfirmationMutationVariables>(ReadConfirmationDocument);
-};
-
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
@@ -447,6 +433,27 @@ export const SubmitApplicationDocument = gql`
 export function useSubmitApplicationMutation() {
   return Urql.useMutation<SubmitApplicationMutation, SubmitApplicationMutationVariables>(SubmitApplicationDocument);
 };
+export const SubmitConfirmationDocument = gql`
+    mutation SubmitConfirmation($userId: Int!, $firstName: String!, $lastName: String!, $email: String!, $inPerson: String!, $liability: String!, $liabilityDate: String!, $other: String!, $paid: String!, $tracks1: String!, $tracks2: String!) {
+  submitConfirmation(
+    userId: $userId
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+    inPerson: $inPerson
+    liability: $liability
+    liabilityDate: $liabilityDate
+    other: $other
+    paid: $paid
+    tracks1: $tracks1
+    tracks2: $tracks2
+  )
+}
+    `;
+
+export function useSubmitConfirmationMutation() {
+  return Urql.useMutation<SubmitConfirmationMutation, SubmitConfirmationMutationVariables>(SubmitConfirmationDocument);
+};
 export const UpdateApplicationDocument = gql`
     mutation UpdateApplication($userId: Int!, $form: Form!) {
   updateApplication(userId: $userId, form: $form)
@@ -458,52 +465,27 @@ export function useUpdateApplicationMutation() {
 };
 export const UpdatePasswordDocument = gql`
     mutation UpdatePassword($token: String!, $password: String!) {
-      updatePassword(token: $token, password: $password) {
-        id
-        firstName
-        lastName
-        email
-        verified
-      }
+  updatePassword(token: $token, password: $password) {
+    id
+    firstName
+    lastName
+    email
+    verified
+  }
 }
     `;
-export const SubmitConfirmationDocument = gql`
-    mutation SubmitConfirmation($userId: Int!, $inPerson: String!, $tracks1: String!, $tracks2: String!, $liability: String!, $liabilityDate: String!, $other: String!) {
-  submitConfirmation(
-    userId: $userId
-    inPerson: $inPerson
-    tracks1: $tracks1
-    tracks2: $tracks2
-    liability: $liability
-    liabilityDate: $liabilityDate
-    other: $other
-  )
-}
-    `;
-
-export function useSubmitConfirmationMutation() {
-  return Urql.useMutation<SubmitConfirmationMutation, SubmitConfirmationMutationVariables>(SubmitConfirmationDocument);
-};
-export const UpdateConfirmationDocument = gql`
-    mutation UpdateConfirmation($userId: Int!, $inPerson: String!, $tracks1: String!, $tracks2: String!, $liability: String!, $liabilityDate: String!, $other: String!) {
-  updateConfirmation(
-    userId: $userId
-    inPerson: $inPerson
-    tracks1: $tracks1
-    tracks2: $tracks2
-    liability: $liability
-    liabilityDate: $liabilityDate
-    other: $other
-  )
-}
-    `;
-
-export function useUpdateConfirmationMutation() {
-  return Urql.useMutation<UpdateConfirmationMutation, UpdateConfirmationMutationVariables>(UpdateConfirmationDocument);
-};
 
 export function useUpdatePasswordMutation() {
   return Urql.useMutation<UpdatePasswordMutation, UpdatePasswordMutationVariables>(UpdatePasswordDocument);
+};
+export const UpdatePaymentDocument = gql`
+    mutation UpdatePayment($email: String!, $paid: Boolean!) {
+  updatePayment(email: $email, paid: $paid)
+}
+    `;
+
+export function useUpdatePaymentMutation() {
+  return Urql.useMutation<UpdatePaymentMutation, UpdatePaymentMutationVariables>(UpdatePaymentDocument);
 };
 export const VerifyUserDocument = gql`
     mutation VerifyUser($token: String!) {
@@ -549,6 +531,7 @@ export const ReadUserDocument = gql`
     verifyExpiration
     forgotPasswordToken
     forgotPasswordExpiration
+    status
     createdAt
     updatedAt
   }

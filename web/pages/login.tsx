@@ -40,6 +40,14 @@ const Login = () => {
     e.preventDefault();
 
     const response = await login({ email, password });
+
+    const res = await fetch('/api/allParticipantSheets');
+    const data = await res.json();
+
+    const personRow = data.values.find(row => row[4] === email);
+
+    const isWhitelisted = personRow[5] === "whitelisted";
+
     if (!response.data?.login.error) {
       if (!response.data?.login.user?.verified) {
         await resendVerificationEmail({
@@ -54,6 +62,27 @@ const Login = () => {
             email,
           },
         });
+        router.push({
+          pathname: "/verify",
+          query: {
+            id: response.data?.login.user?.id,
+            email,
+          },
+        });
+      // Will force user to confirm if they are whitelisted
+      } else if (isWhitelisted) {
+        await localStorage.setItem(
+          "user",
+          JSON.stringify(response.data!.login.user!)
+        );
+        router.push({
+          pathname: "/confirm",
+          query: {
+            id: response.data?.login.user?.id,
+            email,
+          },
+        });
+      
       } else {
         await localStorage.setItem(
           "user",

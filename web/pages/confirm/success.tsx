@@ -2,7 +2,6 @@ import ContainerApp from "@/components/ContainerApp";
 import { socials } from "@/data/socials";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useReadConfirmationMutation } from "../../generated/graphql";
 import { UserType } from "../../utils/types";
 
 //@ts-ignore
@@ -14,28 +13,34 @@ const Success = () => {
   const router = useRouter();
   const [user, setUser] = useState<UserType | null>(null);
   const [fetching, setFetching] = useState(true);
-  const [, readConfirmation] = useReadConfirmationMutation();
 
   useEffect(() => {
     (async () => {
-      const response = await localStorage.getItem("user");
-      if (response) {
-        const confirmation = await readConfirmation({
-          userId: JSON.parse(response).id,
-        });
+      const res = await localStorage.getItem("user");
+      const currEmail = JSON.parse(res!).email
 
-        // William added new "Whitelisted" status
-        if (confirmation.data?.readConfirmation.status !== "Whitelisted") {
-          router.push("/apply");
+      const APIres = await fetch('/api/allParticipantSheets');
+      const data = await APIres.json();
+
+      const personRow = data.values.find(row => row[4] === currEmail);
+
+      //console.log(personRow)
+
+      if(personRow){
+        const status = personRow[6]
+        //console.log(status)
+        if (!status) {
+          router.push("/confirm");
           return;
         }
 
-        setUser(JSON.parse(response));
+        setUser(JSON.parse(res!));
         setFetching(false);
-      } else {
+      }else{
         router.push("/login");
         return;
       }
+      
     })();
   }, []);
 

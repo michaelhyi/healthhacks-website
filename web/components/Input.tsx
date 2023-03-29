@@ -4,6 +4,7 @@ interface Props {
   label: string;
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
+  readOnly?: boolean;
   error?: string;
   textarea?: boolean;
 }
@@ -14,6 +15,7 @@ const Input: React.FC<Props> = ({
   setValue,
   error,
   textarea,
+  readOnly = false,
 }) => {
   return (
     <div>
@@ -30,16 +32,17 @@ const Input: React.FC<Props> = ({
           onChange={(e) => setValue(e.target.value)}
           className={`w-full bg-black border-[0.5px] ${
             error && error.length > 0 ? "border-red-400" : "border-white"
-          } py-2 rounded-xl px-4 min-h-[25vh] text-white`}
+          } py-2 rounded-xl px-4 min-h-[25vh] text-white `}
         />
       ) : (
         <input
           type={`${label.includes("Password") ? "password" : ""}`}
           value={value}
+          readOnly={readOnly}
           onChange={(e) => setValue(e.target.value)}
           className={`w-full bg-black border-[0.5px] ${
             error && error.length > 0 ? "border-red-400" : "border-white"
-          } py-2 rounded-xl px-4 text-white`}
+          } py-2 rounded-xl px-4 text-white ${readOnly ? "cursor-not-allowed" : ""}`}
         />
       )}
 

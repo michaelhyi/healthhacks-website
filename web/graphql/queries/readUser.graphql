@@ -9,6 +9,7 @@ query ReadUser($id: Int!) {
     verifyExpiration
     forgotPasswordToken
     forgotPasswordExpiration
+    status
     createdAt
     updatedAt
   }

@@ -22,6 +22,7 @@ export type ConfirmType = {
   liability: string;
   liabilityDate: string;
   other: string;
+  paid: string;
 };
 
 export type UserType = {
@@ -30,6 +31,7 @@ export type UserType = {
   firstName: string;
   lastName: string;
   verified: string;
+  status: string;
 };
 
 export type RowType = {
