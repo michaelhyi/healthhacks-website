@@ -97,6 +97,7 @@ export type Mutation = {
   readConfirmation: Confirmation;
   register: UserResponse;
   resendVerificationEmail: Scalars['Boolean'];
+  setUserPaidPending: Scalars['Boolean'];
   submitApplication: Scalars['Boolean'];
   submitConfirmation: Scalars['Boolean'];
   updateApplication: Scalars['Boolean'];
@@ -139,6 +140,11 @@ export type MutationRegisterArgs = {
 export type MutationResendVerificationEmailArgs = {
   email: Scalars['String'];
   id: Scalars['Int'];
+};
+
+
+export type MutationSetUserPaidPendingArgs = {
+  userId: Scalars['String'];
 };
 
 

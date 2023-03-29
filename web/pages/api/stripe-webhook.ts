@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             });
 
             const json = await response.json();
-
+            await localStorage.setItem("status", "paid");
             if (json.errors) {
               console.error(`GraphQL error: ${JSON.stringify(json.errors)}`);
             } else {

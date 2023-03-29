@@ -32,6 +32,7 @@ let ConfirmationResolver = class ConfirmationResolver {
         return true;
     }
     async submitConfirmation(userId, firstName, lastName, email, cform) {
+        console.log("ran");
         await (0, typeorm_1.getConnection)()
             .getRepository(Confirmation_1.Confirmation)
             .createQueryBuilder()
@@ -47,6 +48,7 @@ let ConfirmationResolver = class ConfirmationResolver {
             .where({ userId })
             .returning("*")
             .execute();
+        console.log("ran2");
         await (0, typeorm_1.getConnection)()
             .getRepository(User_1.User)
             .createQueryBuilder()
@@ -56,6 +58,7 @@ let ConfirmationResolver = class ConfirmationResolver {
             .where({ userId })
             .returning("*")
             .execute();
+        console.log("ran3");
         const newRow = {
             Timestamp: (0, moment_1.default)().format("MMMM Do YYYY, h:mm:ss a"),
             FirstName: firstName,
@@ -69,6 +72,7 @@ let ConfirmationResolver = class ConfirmationResolver {
             Other: cform.other,
             Paid: cform.paid,
         };
+        console.log(newRow);
         await (0, appendConfirmationSpreadsheet_1.default)(newRow);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const msg = {
@@ -113,7 +117,7 @@ let ConfirmationResolver = class ConfirmationResolver {
                     .getRepository(User_1.User)
                     .createQueryBuilder()
                     .update({
-                    status: "pending",
+                    status: "paid",
                 })
                     .where({ email })
                     .returning("*")
@@ -134,6 +138,18 @@ let ConfirmationResolver = class ConfirmationResolver {
     async readConfirmation(userId) {
         const confirmation = await Confirmation_1.Confirmation.findOne({ where: { userId } });
         return confirmation;
+    }
+    async setUserPaidPending(email) {
+        await (0, typeorm_1.getConnection)()
+            .getRepository(User_1.User)
+            .createQueryBuilder()
+            .update({
+            status: "pending",
+        })
+            .where({ email })
+            .returning("*")
+            .execute();
+        return true;
     }
 };
 __decorate([
@@ -182,6 +198,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ConfirmationResolver.prototype, "readConfirmation", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("userId", () => String)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ConfirmationResolver.prototype, "setUserPaidPending", null);
 ConfirmationResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], ConfirmationResolver);

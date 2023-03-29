@@ -17,8 +17,6 @@ import {
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { ConfirmType, UserType } from "../../utils/types";
 
-
-
 const Confirm = () => {
   const toast = useToast();
   const router = useRouter();
@@ -47,12 +45,12 @@ const Confirm = () => {
         const personRow = data.values.find(row => row[4] === currEmail);
 
         const isWhitelisted = personRow[5] === "whitelisted"
-        
+        const isPaid = personRow[6] === "TRUE"
         // Ensuring that 'data.values' is available and 'user' is defined
         
-        console.log(JSON.parse(response))
+        //console.log(JSON.parse(response))
 
-        if (!isWhitelisted || JSON.parse(response).status === "paid"){//|| JSON.parse(response).status !== "not-paid" || JSON.parse(response).status !== "paid") {
+        if (!isWhitelisted || isPaid){//|| JSON.parse(response).status !== "not-paid" || JSON.parse(response).status !== "paid") {
           router.push("/404");
           return;
         }

@@ -26,6 +26,7 @@ export class ConfirmationResolver {
     @Arg("email", () => String) email: string,
     @Arg("cform", () => CForm) cform: CForm,
   ): Promise<boolean> {
+    console.log("ran")
     await getConnection()
       .getRepository(Confirmation)
       .createQueryBuilder()
@@ -42,7 +43,7 @@ export class ConfirmationResolver {
       .where({ userId })
       .returning("*")
       .execute();
-
+      console.log("ran2")
     await getConnection()
       .getRepository(User)
       .createQueryBuilder()
@@ -52,7 +53,7 @@ export class ConfirmationResolver {
       .where({ userId })
       .returning("*")
       .execute();
-
+      console.log("ran3")
     const newRow = {
       Timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
       FirstName: firstName,
@@ -66,7 +67,7 @@ export class ConfirmationResolver {
       Other: cform.other,
       Paid: cform.paid,
     };
-
+    console.log(newRow)
     await appendConfirmationSpreadsheet(newRow);
 
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -126,7 +127,7 @@ export class ConfirmationResolver {
           .getRepository(User)
           .createQueryBuilder()
           .update({
-            status: "pending",
+            status: "paid",
           })
           .where({ email })
           .returning("*")
@@ -153,5 +154,22 @@ export class ConfirmationResolver {
   ): Promise<Confirmation> {
     const confirmation = await Confirmation.findOne({ where: { userId } });
     return confirmation!;
+  }
+
+  @Mutation(() => Boolean)
+  async setUserPaidPending(
+    @Arg("userId", () => String) email: string
+  ): Promise<Boolean> {
+    await getConnection()
+        .getRepository(User)
+        .createQueryBuilder()
+        .update({
+          status: "pending",
+        })
+        .where({ email })
+        .returning("*")
+        .execute();
+
+    return true;
   }
 }

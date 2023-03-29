@@ -16,19 +16,31 @@ const Success = () => {
 
   useEffect(() => {
     (async () => {
-      const user = await localStorage.getItem("user");
-      if (user) {
-        if (JSON.parse(user).status !== "paid") {
+      const res = await localStorage.getItem("user");
+      const currEmail = JSON.parse(res!).email
+
+      const APIres = await fetch('/api/allParticipantSheets');
+      const data = await APIres.json();
+
+      const personRow = data.values.find(row => row[4] === currEmail);
+
+      //console.log(personRow)
+
+      if(personRow){
+        const status = personRow[6]
+        //console.log(status)
+        if (!status) {
           router.push("/confirm");
           return;
         }
 
-        setUser(JSON.parse(user));
+        setUser(JSON.parse(res!));
         setFetching(false);
-      } else {
+      }else{
         router.push("/login");
         return;
       }
+      
     })();
   }, []);
 

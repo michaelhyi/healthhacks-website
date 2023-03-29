@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const google_spreadsheet_1 = require("google-spreadsheet");
 const appendConfirmationSpreadsheet = async (crow) => {
     const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
-    const SHEET_ID = process.env.SHEET_ID;
+    const SHEET_ID = process.env.CONFIRMATION_SHEET_ID;
     const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL;
     const GOOGLE_SERVICE_PRIVATE_KEY = process.env.GOOGLE_SERVICE_PRIVATE_KEY;
     const doc = new google_spreadsheet_1.GoogleSpreadsheet(SPREADSHEET_ID);
