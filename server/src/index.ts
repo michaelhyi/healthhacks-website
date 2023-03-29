@@ -14,7 +14,6 @@ import { ConfirmationResolver } from "./resolvers/confirmation";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
-  
   const conn = await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL,
@@ -22,11 +21,7 @@ const main = async () => {
     entities: [User, Application],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
-  
 
-  //await User.delete({});
-  //await Application.delete({});
-  //await Confirmation.delete({});
   await conn.runMigrations();
 
   const app = express();
