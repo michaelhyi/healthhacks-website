@@ -24,6 +24,7 @@ const main = async () => {
         logging: true,
         entities: [User_1.User, Application_1.Application],
         migrations: [path_1.default.join(__dirname, "./migrations/*")],
+        synchronize: false,
     });
     await conn.runMigrations();
     const app = (0, express_1.default)();

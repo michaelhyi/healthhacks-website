@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Initial1680081349390 = void 0;
-class Initial1680081349390 {
+exports.Initial1680132374899 = void 0;
+class Initial1680132374899 {
     constructor() {
-        this.name = 'Initial1680081349390';
+        this.name = 'Initial1680132374899';
     }
     async up(queryRunner) {
         await queryRunner.query(`ALTER TABLE "application" ALTER COLUMN "background" SET DEFAULT ARRAY[]::text[]`);
@@ -14,5 +14,5 @@ class Initial1680081349390 {
         await queryRunner.query(`ALTER TABLE "application" ALTER COLUMN "background" SET DEFAULT ARRAY[]`);
     }
 }
-exports.Initial1680081349390 = Initial1680081349390;
-//# sourceMappingURL=1680081349390-Initial.js.map
+exports.Initial1680132374899 = Initial1680132374899;
+//# sourceMappingURL=1680132374899-Initial.js.map
