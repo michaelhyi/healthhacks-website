@@ -169,7 +169,7 @@ const Confirm = () => {
                 : "Welcome to health{hacks} 2023,"}{" "}
               <span className="font-semibold text-5xl text-hh-purple">
                 {" "}
-                {user!.firstName}.{" "}
+                {user ? user!.firstName : ''}.{" "}
               </span>
             </div>
             {status === "Submitted" ? (

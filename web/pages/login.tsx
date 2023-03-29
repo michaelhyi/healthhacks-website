@@ -40,9 +40,15 @@ const Login = () => {
     e.preventDefault();
 
     const response = await login({ email, password });
-    console.log(response)
+
+    const res = await fetch('/api/allParticipantSheets');
+    const data = await res.json();
+
+    const personRow = data.values.find(row => row[4] === email);
+
+    const isWhitelisted = personRow[5] === "whitelisted";
+
     if (!response.data?.login.error) {
-      // Will force user to verify
       if (!response.data?.login.user?.verified) {
         await resendVerificationEmail({
           id: response!.data!.login.user!.id,
@@ -56,8 +62,19 @@ const Login = () => {
             email,
           },
         });
+        router.push({
+          pathname: "/verify",
+          query: {
+            id: response.data?.login.user?.id,
+            email,
+          },
+        });
       // Will force user to confirm if they are whitelisted
-      } else if (response.data?.login.user?.status === "whitelisted") {
+      } else if (isWhitelisted) {
+        await localStorage.setItem(
+          "user",
+          JSON.stringify(response.data!.login.user!)
+        );
         router.push({
           pathname: "/confirm",
           query: {
@@ -65,14 +82,13 @@ const Login = () => {
             email,
           },
         });
-      }
-      // Will force user to apply if they haven't at all or if they are not whitelisted
-      else {
+      
+      } else {
         await localStorage.setItem(
           "user",
           JSON.stringify(response.data!.login.user!)
         );
-        router.push("/apply");
+        router.push("/");
       }
     } else {
       if (response.data.login.error.field === "Email") {
