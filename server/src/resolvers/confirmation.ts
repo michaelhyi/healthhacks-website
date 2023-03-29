@@ -39,7 +39,7 @@ export class ConfirmationResolver {
       Other: other,
       Paid: paid,
     };
-    console.log(newRow)
+    
     await appendConfirmationSpreadsheet(newRow);
 
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);

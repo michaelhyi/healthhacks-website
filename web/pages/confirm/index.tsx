@@ -105,7 +105,7 @@ const Confirm = () => {
     setError(errors);
   
     if (!found) {
-      //redirectToCheckout(user!.email)
+      redirectToCheckout(user!.email)
       console.log(cform)
       const response = await submitConfirmation({
         userId: user!.id!,

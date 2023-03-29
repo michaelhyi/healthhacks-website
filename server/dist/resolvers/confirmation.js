@@ -39,7 +39,6 @@ let ConfirmationResolver = class ConfirmationResolver {
             Other: other,
             Paid: paid,
         };
-        console.log(newRow);
         await (0, appendConfirmationSpreadsheet_1.default)(newRow);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const msg = {
