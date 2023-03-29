@@ -175,8 +175,7 @@ const Confirm = () => {
             {status === "Submitted" ? (
               <>
                 <p className="font-base text-md text-[#b9b9b9] mt-2">
-                  We have confirmed your spot to our event and please email <a href="mailto:info@joinhealthhacks.com">info@joinhealthhacks.com</a>
-                  if you have any additional questions
+                  We have confirmed your spot to our event and please email <a href="mailto:info@joinhealthhacks.com">info@joinhealthhacks.com</a> if you have any additional questions.
                 </p>
               </>
             ) : (
@@ -250,6 +249,16 @@ const Confirm = () => {
                     )}
                   </div>
                 </div>
+
+                <p className="mt-8 mb-2 lg:text-lg md:text-small font-semibold">
+                  {`health{hacks}`} each year has three flagship tracks for our participants to join: {" "}
+                </p>
+                <ol className="font-base text-md text-[#b9b9b9]">
+                  <li className="pt-2"><b>Aging & Longevity:</b> As the world's population continues to age, it is important to consider the unique healthcare needs and challenges faced by this population. This track will focus on exploring innovations and solutions that can help improve the health and well-being of the aging population, including preventative care, chronic disease management, and technology-based solutions.</li>
+                  <li className="pt-2"><b>Population & Preventative Health:</b> Traditional medicine has focused heavily on treating illnesses and diseases, but what if we focused on preventing them in the first place? This track will explore ways to promote and encourage preventative health measures, such as exercise, healthy eating, monitor good sleep schedules, and stress management, in order to improve overall health.</li>
+                  <li className="pt-2"><b>Mental Health & Addiction:</b> Mental health is an important aspect of overall health and well-being, but it is often overlooked or stigmatized. This track will focus on exploring innovations and solutions that can help improve mental health, with a particular focus on issues related to addiction. This may include therapy and support programs, technology-based solutions, and community-based approaches.</li>
+                </ol>
+
 
                 {/* What is your first track selection */}
                 <div>
