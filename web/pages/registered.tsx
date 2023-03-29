@@ -73,8 +73,8 @@ const OneTimeRegister = () => {
             if (currRow[1] == id) {
                 setLocked(true)
                 updateStringValue(currRow[2], setEmail);
-                updateStringValue(currRow[3], setFirstName);
-                updateStringValue(currRow[4], setLastName);
+                updateStringValue(currRow[5], setFirstName);
+                updateStringValue(currRow[6], setLastName);
             }
           }
       }
