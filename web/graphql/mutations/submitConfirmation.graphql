@@ -3,13 +3,25 @@ mutation SubmitConfirmation(
   $firstName: String!
   $lastName: String!
   $email: String!
-  $cform: CForm!
+  $inPerson: String!,
+  $liability: String!,
+  $liabilityDate: String!,
+  $other: String!,
+  $paid: String!,
+  $tracks1: String!,
+  $tracks2: String!,
 ) {
   submitConfirmation(
     userId: $userId
     firstName: $firstName
     lastName: $lastName
     email: $email
-    cform: $cform
+    inPerson: $inPerson
+    liability: $liability
+    liabilityDate: $liabilityDate
+    other: $other
+    paid: $paid
+    tracks1: $tracks1
+    tracks2: $tracks2
   )
 }

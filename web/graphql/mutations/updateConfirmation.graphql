@@ -1,3 +1,0 @@
-mutation UpdateConfirmation($userId: Int!, $cform: CForm!) {
-  updateConfirmation(userId: $userId, cform: $cform)
-}

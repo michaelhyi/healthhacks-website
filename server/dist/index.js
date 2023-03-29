@@ -13,7 +13,6 @@ require("reflect-metadata");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Application_1 = require("./entities/Application");
-const Confirmation_1 = require("./entities/Confirmation");
 const User_1 = require("./entities/User");
 const application_1 = require("./resolvers/application");
 const confirmation_1 = require("./resolvers/confirmation");
@@ -23,10 +22,10 @@ const main = async () => {
         type: "postgres",
         url: process.env.DATABASE_URL,
         logging: true,
-        entities: [User_1.User, Application_1.Application, Confirmation_1.Confirmation],
+        entities: [User_1.User, Application_1.Application],
         migrations: [path_1.default.join(__dirname, "./migrations/*")],
-        synchronize: true
     });
+    await conn.runMigrations();
     const app = (0, express_1.default)();
     app.set("trust proxy", 1);
     app.use((0, cors_1.default)({

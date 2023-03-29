@@ -10,6 +10,21 @@ export class Initial1677998655366 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE "user" ("id" SERIAL NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, "firstName" character varying NOT NULL, "lastName" character varying NOT NULL, "verified" boolean NOT NULL DEFAULT false, "verifyToken" character varying, "verifyExpiration" character varying, "forgotPasswordToken" character varying, "forgotPasswordExpiration" character varying, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE ("email"), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`
     );
+    await queryRunner.query(
+      `CREATE TABLE IF NOT EXISTS confirmation (
+        id SERIAL PRIMARY KEY,
+        "userId" integer UNIQUE,
+        inPerson text DEFAULT '',
+        tracks1 text DEFAULT '',
+        tracks2 text DEFAULT '',
+        liability text DEFAULT '',
+        "liabilityDate" text DEFAULT '',
+        other text DEFAULT '',
+        paid text DEFAULT '',
+        "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
+        "updatedAt" TIMESTAMP NOT NULL DEFAULT now()
+      );`
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

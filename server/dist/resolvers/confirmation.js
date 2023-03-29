@@ -19,58 +19,25 @@ exports.ConfirmationResolver = void 0;
 const moment_1 = __importDefault(require("moment"));
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
-const Confirmation_1 = require("../entities/Confirmation");
 const User_1 = require("../entities/User");
 const appendConfirmationSpreadsheet_1 = __importDefault(require("../utils/appendConfirmationSpreadsheet"));
 const emails_1 = require("../utils/emails");
-const types_1 = require("../utils/types");
 const updatePaid_1 = __importDefault(require("../utils/updatePaid"));
 const sgMail = require("@sendgrid/mail");
 let ConfirmationResolver = class ConfirmationResolver {
-    async deleteConfirmations() {
-        await Confirmation_1.Confirmation.delete({});
-        return true;
-    }
-    async submitConfirmation(userId, firstName, lastName, email, cform) {
-        console.log("ran");
-        await (0, typeorm_1.getConnection)()
-            .getRepository(Confirmation_1.Confirmation)
-            .createQueryBuilder()
-            .update({
-            inPerson: cform.inPerson,
-            tracks1: cform.tracks1,
-            tracks2: cform.tracks2,
-            liability: cform.liability,
-            liabilityDate: cform.liabilityDate,
-            other: cform.other,
-            paid: cform.paid,
-        })
-            .where({ userId })
-            .returning("*")
-            .execute();
-        console.log("ran2");
-        await (0, typeorm_1.getConnection)()
-            .getRepository(User_1.User)
-            .createQueryBuilder()
-            .update({
-            status: "not-paid"
-        })
-            .where({ userId })
-            .returning("*")
-            .execute();
-        console.log("ran3");
+    async submitConfirmation(userId, firstName, lastName, email, inPerson, liability, liabilityDate, other, paid, tracks1, tracks2) {
         const newRow = {
             Timestamp: (0, moment_1.default)().format("MMMM Do YYYY, h:mm:ss a"),
             FirstName: firstName,
             LastName: lastName,
             Email: email,
-            InPerson: cform.inPerson,
-            Tracks1: cform.tracks1,
-            Tracks2: cform.tracks2,
-            Liability: cform.liability,
-            LiabilityDate: cform.liabilityDate,
-            Other: cform.other,
-            Paid: cform.paid,
+            InPerson: inPerson,
+            Tracks1: tracks1,
+            Tracks2: tracks2,
+            Liability: liability,
+            LiabilityDate: liabilityDate,
+            Other: other,
+            Paid: paid,
         };
         console.log(newRow);
         await (0, appendConfirmationSpreadsheet_1.default)(newRow);
@@ -89,24 +56,6 @@ let ConfirmationResolver = class ConfirmationResolver {
             .catch((error) => {
             console.error(error);
         });
-        return true;
-    }
-    async updateConfirmation(userId, cform) {
-        await (0, typeorm_1.getConnection)()
-            .getRepository(Confirmation_1.Confirmation)
-            .createQueryBuilder()
-            .update({
-            inPerson: cform.inPerson,
-            tracks1: cform.tracks1,
-            tracks2: cform.tracks2,
-            liability: cform.liability,
-            liabilityDate: cform.liabilityDate,
-            other: cform.other,
-            paid: cform.paid,
-        })
-            .where({ userId })
-            .returning("*")
-            .execute();
         return true;
     }
     async updatePayment(email, paid) {
@@ -131,14 +80,6 @@ let ConfirmationResolver = class ConfirmationResolver {
         }
         return false;
     }
-    async readConfirmations() {
-        const confirmations = await Confirmation_1.Confirmation.find();
-        return confirmations;
-    }
-    async readConfirmation(userId) {
-        const confirmation = await Confirmation_1.Confirmation.findOne({ where: { userId } });
-        return confirmation;
-    }
     async setUserPaidPending(email) {
         await (0, typeorm_1.getConnection)()
             .getRepository(User_1.User)
@@ -154,29 +95,21 @@ let ConfirmationResolver = class ConfirmationResolver {
 };
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], ConfirmationResolver.prototype, "deleteConfirmations", null);
-__decorate([
-    (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),
     __param(1, (0, type_graphql_1.Arg)("firstName", () => String)),
     __param(2, (0, type_graphql_1.Arg)("lastName", () => String)),
     __param(3, (0, type_graphql_1.Arg)("email", () => String)),
-    __param(4, (0, type_graphql_1.Arg)("cform", () => types_1.CForm)),
+    __param(4, (0, type_graphql_1.Arg)("inPerson", () => String)),
+    __param(5, (0, type_graphql_1.Arg)("liability", () => String)),
+    __param(6, (0, type_graphql_1.Arg)("liabilityDate", () => String)),
+    __param(7, (0, type_graphql_1.Arg)("other", () => String)),
+    __param(8, (0, type_graphql_1.Arg)("paid", () => String)),
+    __param(9, (0, type_graphql_1.Arg)("tracks1", () => String)),
+    __param(10, (0, type_graphql_1.Arg)("tracks2", () => String)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String, String, String, types_1.CForm]),
+    __metadata("design:paramtypes", [Number, String, String, String, String, String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], ConfirmationResolver.prototype, "submitConfirmation", null);
-__decorate([
-    (0, type_graphql_1.Mutation)(() => Boolean),
-    __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),
-    __param(1, (0, type_graphql_1.Arg)("cform", () => types_1.CForm)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, types_1.CForm]),
-    __metadata("design:returntype", Promise)
-], ConfirmationResolver.prototype, "updateConfirmation", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("email", () => String)),
@@ -185,19 +118,6 @@ __decorate([
     __metadata("design:paramtypes", [String, Boolean]),
     __metadata("design:returntype", Promise)
 ], ConfirmationResolver.prototype, "updatePayment", null);
-__decorate([
-    (0, type_graphql_1.Query)(() => [Confirmation_1.Confirmation]),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], ConfirmationResolver.prototype, "readConfirmations", null);
-__decorate([
-    (0, type_graphql_1.Mutation)(() => Confirmation_1.Confirmation),
-    __param(0, (0, type_graphql_1.Arg)("userId", () => type_graphql_1.Int)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
-], ConfirmationResolver.prototype, "readConfirmation", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("userId", () => String)),

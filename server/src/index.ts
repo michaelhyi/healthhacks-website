@@ -8,7 +8,6 @@ import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import { Application } from "./entities/Application";
-import { Confirmation } from "./entities/Confirmation";
 import { User } from "./entities/User";
 import { ApplicationResolver } from "./resolvers/application";
 import { ConfirmationResolver } from "./resolvers/confirmation";
@@ -20,16 +19,15 @@ const main = async () => {
     type: "postgres",
     url: process.env.DATABASE_URL,
     logging: true,
-    entities: [User, Application, Confirmation],
+    entities: [User, Application],
     migrations: [path.join(__dirname, "./migrations/*")],
-    synchronize: true
   });
   
 
   //await User.delete({});
   //await Application.delete({});
   //await Confirmation.delete({});
-  //await conn.runMigrations();
+  await conn.runMigrations();
 
   const app = express();
   app.set("trust proxy", 1);

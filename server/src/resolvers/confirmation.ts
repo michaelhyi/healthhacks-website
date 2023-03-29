@@ -1,7 +1,6 @@
 import moment from "moment";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
-import { Confirmation } from "../entities/Confirmation";
 import { User } from "../entities/User";
 import appendConfirmationSpreadsheet from "../utils/appendConfirmationSpreadsheet";
 import { attendeeConfirmationHTML } from "../utils/emails";
@@ -12,11 +11,6 @@ const sgMail = require("@sendgrid/mail");
 
 @Resolver()
 export class ConfirmationResolver {
-  @Mutation(() => Boolean)
-  async deleteConfirmations() {
-    await Confirmation.delete({});
-    return true;
-  }
 
   @Mutation(() => Boolean)
   async submitConfirmation(
@@ -24,48 +18,26 @@ export class ConfirmationResolver {
     @Arg("firstName", () => String) firstName: string,
     @Arg("lastName", () => String) lastName: string,
     @Arg("email", () => String) email: string,
-    @Arg("cform", () => CForm) cform: CForm,
+    @Arg("inPerson", () => String) inPerson: string,
+    @Arg("liability", () => String) liability: string,
+    @Arg("liabilityDate", () => String) liabilityDate: string,
+    @Arg("other", () => String) other: string,
+    @Arg("paid", () => String) paid: string,
+    @Arg("tracks1", () => String) tracks1: string,
+    @Arg("tracks2", () => String) tracks2: string,
   ): Promise<boolean> {
-    console.log("ran")
-    await getConnection()
-      .getRepository(Confirmation)
-      .createQueryBuilder()
-      .update({
-        // status: "Submitted",
-        inPerson: cform.inPerson,
-        tracks1: cform.tracks1,
-        tracks2: cform.tracks2,
-        liability: cform.liability,
-        liabilityDate: cform.liabilityDate,
-        other: cform.other,
-        paid: cform.paid,
-      })
-      .where({ userId })
-      .returning("*")
-      .execute();
-      console.log("ran2")
-    await getConnection()
-      .getRepository(User)
-      .createQueryBuilder()
-      .update({
-        status: "not-paid"
-      })
-      .where({ userId })
-      .returning("*")
-      .execute();
-      console.log("ran3")
     const newRow = {
       Timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
       FirstName: firstName,
       LastName: lastName,
       Email: email,
-      InPerson: cform.inPerson,
-      Tracks1: cform.tracks1,
-      Tracks2: cform.tracks2,
-      Liability: cform.liability,
-      LiabilityDate: cform.liabilityDate,
-      Other: cform.other,
-      Paid: cform.paid,
+      InPerson: inPerson,
+      Tracks1: tracks1,
+      Tracks2: tracks2,
+      Liability: liability,
+      LiabilityDate: liabilityDate,
+      Other: other,
+      Paid: paid,
     };
     console.log(newRow)
     await appendConfirmationSpreadsheet(newRow);
@@ -86,30 +58,6 @@ export class ConfirmationResolver {
       .catch((error: any) => {
         console.error(error);
       });
-
-    return true;
-  }
-
-  @Mutation(() => Boolean)
-  async updateConfirmation(
-    @Arg("userId", () => Int) userId: number,
-    @Arg("cform", () => CForm) cform: CForm
-  ): Promise<boolean> {
-    await getConnection()
-      .getRepository(Confirmation)
-      .createQueryBuilder()
-      .update({
-        inPerson: cform.inPerson,
-        tracks1: cform.tracks1,
-        tracks2: cform.tracks2,
-        liability: cform.liability,
-        liabilityDate: cform.liabilityDate,
-        other: cform.other,
-        paid: cform.paid,
-      })
-      .where({ userId })
-      .returning("*")
-      .execute();
 
     return true;
   }
@@ -142,19 +90,6 @@ export class ConfirmationResolver {
     return false;
   }
   
-  @Query(() => [Confirmation])
-  async readConfirmations(): Promise<Confirmation[]> {
-    const confirmations = await Confirmation.find();
-    return confirmations;
-  }
-
-  @Mutation(() => Confirmation)
-  async readConfirmation(
-    @Arg("userId", () => Int) userId: number
-  ): Promise<Confirmation> {
-    const confirmation = await Confirmation.findOne({ where: { userId } });
-    return confirmation!;
-  }
 
   @Mutation(() => Boolean)
   async setUserPaidPending(

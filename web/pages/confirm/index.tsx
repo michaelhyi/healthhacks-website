@@ -10,9 +10,7 @@ import DropDown from "../../components/DropDown";
 
 import { loadStripe } from '@stripe/stripe-js';
 import {
-  useReadConfirmationMutation,
   useSubmitConfirmationMutation,
-  useUpdateConfirmationMutation,
 } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { ConfirmType, UserType } from "../../utils/types";
@@ -24,8 +22,6 @@ const Confirm = () => {
   const [fetching, setFetching] = useState<boolean>(true);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [, readConfirmation] = useReadConfirmationMutation(); 
-  const [, updateConfirmation] = useUpdateConfirmationMutation(); 
   const [, submitConfirmation] = useSubmitConfirmationMutation();
 
   const [isReady, setIsReady] = useState(false);
@@ -76,25 +72,6 @@ const Confirm = () => {
   });
   const [error, setError] = useState(new Array(5).fill(""));
 
-  useEffect(() => {
-
-    (async () => {
-      if (user) {
-        const response = await readConfirmation({ userId: user.id }); 
-
-        setCForm({
-          inPerson: response.data?.readConfirmation.inPerson!, 
-          tracks1: response.data?.readConfirmation.tracks1!, 
-          tracks2: response.data?.readConfirmation.tracks2!, 
-          liability: response.data?.readConfirmation.liability!,
-          liabilityDate: response.data?.readConfirmation.liabilityDate!,
-          other: response.data?.readConfirmation.other!,
-          paid: response.data?.readConfirmation.paid!,
-        });
-      }
-    })();
-  }, [user]);
-
   const redirectToCheckout = async (email : string) => {
     const priceId = process.env.NEXT_PUBLIC_PRICE_ID_TEST; // Replace with your actual price I
     
@@ -128,27 +105,27 @@ const Confirm = () => {
     setError(errors);
   
     if (!found) {
-      redirectToCheckout(user!.email)
-      await submitConfirmation({
+      //redirectToCheckout(user!.email)
+      console.log(cform)
+      const response = await submitConfirmation({
         userId: user!.id!,
         firstName: user!.firstName,
         lastName: user!.lastName,
         email: user!.email,
-        cform,
+        inPerson: cform.inPerson,
+        liability: cform.liability,
+        liabilityDate: cform.liabilityDate,
+        other: cform.other,
+        paid: cform.paid,
+        tracks1: cform.tracks1,
+        tracks2: cform.tracks2,
+
       });
+      console.log(response)
     }
     setSubmitting(false);
   };
 
-  const updateForm = async () => {
-    if (user)
-      await updateConfirmation({
-        userId: user!.id!,
-        cform,
-      });
-  };
-
-  useAutosave({ data: cform, onSave: updateForm });
 
   if (fetching || !isReady) {
     return (
@@ -350,7 +327,6 @@ const Confirm = () => {
                   <strong> $5 food voucher fee </strong>  {" "}prior to our event. Please checkout here:
                 </p>
                 
-                <Autosave data={cform} onSave={updateForm} />
               </form>
               <div className="flex items-center space-x-6 pt-8 pb-24">
                 <button
