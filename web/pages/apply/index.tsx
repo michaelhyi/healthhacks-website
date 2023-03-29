@@ -7,7 +7,7 @@ import { yesno } from "@/data/yesno";
 import { Radio, RadioGroup, Spinner, useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Autosave, useAutosave } from "react-autosave";
 import ApplicationInput from "../../components/ApplicationInput";
 import ContainerApp from "../../components/ContainerApp";
@@ -18,29 +18,41 @@ import {
   useSubmitApplicationMutation,
   useUpdateApplicationMutation,
 } from "../../generated/graphql";
-import Context from "../../utils/context";
 import { createUrqlClient } from "../../utils/createUrqlClient";
-import { FormType } from "../../utils/types";
+import { FormType, UserType } from "../../utils/types";
 
 const Apply = () => {
   const toast = useToast();
   const router = useRouter();
-  const { user } = useContext(Context);
+  const [user, setUser] = useState<UserType | null>(null);
+  const [fetching, setFetching] = useState<boolean>(true);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [, readApplication] = useReadApplicationMutation();
   const [, updateApplication] = useUpdateApplicationMutation();
   const [, submitApplication] = useSubmitApplicationMutation();
 
-  const [form, setForm] = useState({
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        setUser(JSON.parse(response));
+        setFetching(false);
+      } else {
+        router.push("/login");
+      }
+    })();
+  }, []);
+
+  const [form, setForm] = useState<FormType>({
     phone: "",
     organization: "",
     city: "",
     state: "",
     inPerson: "",
     wholeEvent: "",
-    background: "",
-    whyUs: "",
+    background: new Array(),
+    whyUs: new Array(),
     howHear: "",
     team: "",
     linkedIn: "",
@@ -67,8 +79,7 @@ const Apply = () => {
           howHear: response.data?.readApplication.howHear!,
           team: response.data?.readApplication.team!,
           linkedIn: response.data?.readApplication.linkedIn!,
-          dietaryRestrictions:
-            response.data?.readApplication.dietaryRestrictions!,
+          dietaryRestrictions: response.data?.readApplication.dietaryRestrictions!,
           transportation: response.data?.readApplication.transportation!,
           other: response.data?.readApplication.other!,
         });
@@ -96,28 +107,31 @@ const Apply = () => {
     setError(errors);
 
     if (!found) {
-      await submitApplication({
-        userId: user!.id,
-        firstName: user!.firstName,
-        lastName: user!.lastName,
-        email: user!.email,
-        phone: form.phone,
-        organization: form.organization,
-        city: form.city,
-        state: form.state,
-        inPerson: form.inPerson,
-        wholeEvent: form.wholeEvent,
-        background: form.background,
-        whyUs: form.whyUs,
-        howHear: form.howHear,
-        team: form.team,
-        linkedIn: form.linkedIn,
-        dietaryRestrictions: form.dietaryRestrictions,
-        transportation: form.transportation,
-        other: form.other,
-      });
-
-      router.push("/apply/success");
+      if (form.inPerson === "No") {
+        router.push({
+          pathname: "/apply/reject",
+          query: {
+            form: JSON.stringify(form),
+          },
+        });
+      } else if (form.wholeEvent === "No") {
+        router.push({
+          pathname: "/apply/warning",
+          query: {
+            user: JSON.stringify(user),
+            form: JSON.stringify(form),
+          },
+        });
+      } else {
+        await submitApplication({
+          userId: user!.id!,
+          firstName: user!.firstName,
+          lastName: user!.lastName,
+          email: user!.email,
+          form,
+        });
+        router.push("/apply/success");
+      }
     } else {
       toast({
         title: "Error!",
@@ -132,29 +146,21 @@ const Apply = () => {
   };
 
   const updateForm = async () => {
-    await updateApplication({
-      userId: user!.id,
-      phone: form.phone,
-      organization: form.organization,
-      city: form.city,
-      state: form.state,
-      inPerson: form.inPerson,
-      wholeEvent: form.wholeEvent,
-      background: form.background,
-      whyUs: form.whyUs,
-      howHear: form.howHear,
-      team: form.team,
-      linkedIn: form.linkedIn,
-      dietaryRestrictions: form.dietaryRestrictions,
-      transportation: form.transportation,
-      other: form.other,
-    });
+    if (user)
+      await updateApplication({
+        userId: user!.id!,
+        form,
+      });
   };
 
   useAutosave({ data: form, onSave: updateForm });
 
-  if (!user) {
-    return <div>You must be signed in</div>;
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
   }
 
   return (
@@ -168,7 +174,7 @@ const Apply = () => {
                 : "Let's learn more about you,"}{" "}
               <span className="font-semibold text-5xl text-hh-purple">
                 {" "}
-                {user.firstName}.{" "}
+                {user!.firstName}.{" "}
               </span>
             </div>
             {status === "Submitted" ? (
@@ -289,7 +295,17 @@ const Apply = () => {
                         <Radio
                           value="No"
                           colorScheme="black"
-                          onClick={() => setForm({ ...form, inPerson: "No" })}
+                          onClick={() => {
+                            setForm({ ...form, inPerson: "No" });
+                            toast({
+                              title: "Sorry, we hope to see you next time.",
+                              description:
+                                "We need all of our participants to be in-person. We currently do not have the bandwith to facilitate a hybrid event. If this is an error, please go back to fix your application!",
+                              status: "error",
+                              duration: 10000,
+                              isClosable: true,
+                            });
+                          }}
                         >
                           No
                         </Radio>
@@ -332,9 +348,17 @@ const Apply = () => {
                         <Radio
                           value="No"
                           colorScheme="black"
-                          onClick={() =>
-                            setForm({ ...form, wholeEvent: "Yes" })
-                          }
+                          onClick={() => {
+                            setForm({ ...form, wholeEvent: "Yes" });
+                            toast({
+                              title: "Are you sure?",
+                              description:
+                                "We prefer our participants to attend the whole event. We believe missing most of the event will be harder to be caught up with the fast pace of the event.               If you must miss a couple of hours, please submit your application. Otherwise, we hope to see you next time!",
+                              status: "warning",
+                              duration: 10000,
+                              isClosable: true,
+                            });
+                          }}
                         >
                           No
                         </Radio>
@@ -355,8 +379,22 @@ const Apply = () => {
                       error={error[6]}
                       name="What is your background?"
                       options={background}
-                      value={form.background}
-                      setValue={(v) => setForm({ ...form, background: v })}
+                      values={form.background}
+                      setValues={(v) => {
+                        if (form.background.includes(v)) {
+                          setForm({
+                            ...form,
+                            background: form.background.filter((value) => {
+                              if (value !== v) return value;
+                            }),
+                          });
+                        } else {
+                          setForm({
+                            ...form,
+                            background: [...form.background, v],
+                          });
+                        }
+                      }}
                     />
                   </div>
                 </div>
@@ -368,8 +406,22 @@ const Apply = () => {
                       error={error[7]}
                       name="Why do you want to attend health{hacks} 2023?"
                       options={whyhh}
-                      value={form.whyUs}
-                      setValue={(v) => setForm({ ...form, whyUs: v })}
+                      values={form.whyUs}
+                      setValues={(v) => {
+                        if (form.whyUs.includes(v)) {
+                          setForm({
+                            ...form,
+                            whyUs: form.whyUs.filter((value) => {
+                              if (value !== v) return value;
+                            }),
+                          });
+                        } else {
+                          setForm({
+                            ...form,
+                            whyUs: [...form.whyUs, v],
+                          });
+                        }
+                      }}
                     />
                   </div>
                 </div>

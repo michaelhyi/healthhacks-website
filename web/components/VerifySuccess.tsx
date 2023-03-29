@@ -1,17 +1,28 @@
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { sleep } from "../utils/sleep";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { sleep } from "../utils/sleep";
+interface Props {
+  user: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    verified: boolean;
+  } | null;
+}
 
-const VerifySuccess = () => {
+const VerifySuccess: React.FC<Props> = ({ user }) => {
   const router = useRouter();
 
   useEffect(() => {
     (async () => {
+      await localStorage.setItem("user", JSON.stringify(user));
       await sleep(3000);
-      router.push("/login");
+      router.push("/apply");
     })();
   }, []);
 
@@ -31,7 +42,7 @@ const VerifySuccess = () => {
             Your account has been verified, and thank you for joining us in
             revolutionizing healthcare.
             <br />
-            You will now be redirected to our login page.
+            You will now be redirected to our application form.
           </p>
         </div>
       </div>

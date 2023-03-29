@@ -1,5 +1,3 @@
-import { RxRocket } from "react-icons/rx"
-
 export const days = [
   {
     id: 1,

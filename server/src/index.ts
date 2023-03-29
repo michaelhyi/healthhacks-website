@@ -3,33 +3,46 @@ import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
+import path from "path";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import { Application } from "./entities/Application";
 import { User } from "./entities/User";
 import { ApplicationResolver } from "./resolvers/application";
+import { ConfirmationResolver } from "./resolvers/confirmation";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
-  await createConnection({
+  
+  const conn = await createConnection({
     type: "postgres",
-    database: "healthhacks",
-    username: "postgres",
-    password: "postgres",
+    url: process.env.DATABASE_URL,
     logging: true,
-    synchronize: true,
     entities: [User, Application],
+    migrations: [path.join(__dirname, "./migrations/*")],
   });
+  
+
+  //await User.delete({});
+  //await Application.delete({});
+  //await Confirmation.delete({});
+  await conn.runMigrations();
 
   const app = express();
+  app.set("trust proxy", 1);
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: process.env.ORIGIN,
+      credentials: false,
+    })
+  );
 
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [UserResolver, ApplicationResolver],
+      resolvers: [UserResolver, ApplicationResolver, ConfirmationResolver],
       validate: false,
     }),
   });
@@ -41,7 +54,7 @@ const main = async () => {
     cors: false,
   });
 
-  app.listen(4000, () => {
+  app.listen(parseInt(process.env.PORT), () => {
     console.log("Server started on localhost:4000");
   });
 };

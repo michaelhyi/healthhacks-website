@@ -1,35 +1,3 @@
-mutation UpdateApplication(
-  $userId: Int!
-  $phone: String!
-  $organization: String!
-  $city: String!
-  $state: String!
-  $inPerson: String!
-  $wholeEvent: String!
-  $background: String!
-  $whyUs: String!
-  $howHear: String!
-  $team: String!
-  $linkedIn: String!
-  $dietaryRestrictions: String!
-  $transportation: String!
-  $other: String!
-) {
-  updateApplication(
-    userId: $userId
-    phone: $phone
-    organization: $organization
-    city: $city
-    state: $state
-    inPerson: $inPerson
-    wholeEvent: $wholeEvent
-    background: $background
-    whyUs: $whyUs
-    howHear: $howHear
-    team: $team
-    linkedIn: $linkedIn
-    dietaryRestrictions: $dietaryRestrictions
-    transportation: $transportation
-    other: $other
-  )
+mutation UpdateApplication($userId: Int!, $form: Form!) {
+  updateApplication(userId: $userId, form: $form)
 }

@@ -1,9 +1,16 @@
 import Link from "next/link";
+import React from "react";
 import { AiOutlineRight } from "react-icons/ai";
+import { UserType } from "../utils/types";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 
-const Head = () => {
+interface Props {
+  user: UserType | null;
+}
+
+const Head: React.FC<Props> = ({ user }) => {
   return (
     <Fade delay={500} up distance="25px">
       <div className="flex flex-col items-center justify-center pt-12 p-4 pb-16 bg-[url('/headergradient.svg')] bg-cover">
@@ -25,23 +32,18 @@ const Head = () => {
               {`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}
             </div>
           </Fade>
-          {/* <Link href="/register"> */}
-          <div className="hover:cursor-pointer duration-500 hover:opacity-70">
-            <Fade delay={500} up distance="25px">
-              <a
-                href="https://forms.gle/NUiwgzowasc6GjGv5"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl"
-              >
-                <div className="font-semibold">Start Now</div>
-                <div className="opacity-75">
-                  <AiOutlineRight size={15} />
+          <Link href={`${user ? "/apply" : "/login"}`}>
+            <div className="hover:cursor-pointer duration-500 hover:opacity-70">
+              <Fade delay={500} up distance="25px">
+                <div className="mt-6 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
+                  <div className="font-semibold">Start Now</div>
+                  <div className="opacity-75">
+                    <AiOutlineRight size={15} />
+                  </div>
                 </div>
-              </a>
-            </Fade>
-          </div>
-          {/* </Link> */}
+              </Fade>
+            </div>
+          </Link>
         </div>
       </div>
     </Fade>

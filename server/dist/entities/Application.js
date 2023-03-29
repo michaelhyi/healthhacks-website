@@ -22,8 +22,6 @@ let Application = class Application extends typeorm_1.BaseEntity {
         this.state = "";
         this.inPerson = "";
         this.wholeEvent = "";
-        this.background = "";
-        this.whyUs = "";
         this.howHear = "";
         this.team = "";
         this.linkedIn = "";
@@ -78,14 +76,14 @@ __decorate([
     __metadata("design:type", String)
 ], Application.prototype, "wholeEvent", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "" }),
-    __metadata("design:type", String)
+    (0, type_graphql_1.Field)(() => [String]),
+    (0, typeorm_1.Column)("text", { array: true, default: () => "ARRAY[]::text[]" }),
+    __metadata("design:type", Array)
 ], Application.prototype, "background", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)("text", { default: "" }),
-    __metadata("design:type", String)
+    (0, type_graphql_1.Field)(() => [String]),
+    (0, typeorm_1.Column)("text", { array: true, default: () => "ARRAY[]::text[]" }),
+    __metadata("design:type", Array)
 ], Application.prototype, "whyUs", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),

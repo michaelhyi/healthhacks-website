@@ -1,39 +1,35 @@
 import { useToast } from "@chakra-ui/react";
+import * as EmailValidator from "email-validator";
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { socials } from "../data/socials";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import * as EmailValidator from "email-validator";
-import { socials } from "../data/socials";
-import Link from "next/link";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const toast = useToast();
 
-  // Config variables
   const SPREADSHEET_ID = process.env.NEXT_PUBLIC_SPREADSHEET_ID;
   const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
   const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL;
   const GOOGLE_SERVICE_PRIVATE_KEY =
     process.env.NEXT_PUBLIC_GOOGLE_SERVICE_PRIVATE_KEY;
 
-  // GoogleSpreadsheet Initialize
   const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
-  // Append Function
   const appendSpreadsheet = async (row: { Email: string }) => {
     try {
       await doc.useServiceAccountAuth({
         client_email: GOOGLE_CLIENT_EMAIL!,
         private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
       });
-      // loads document properties and worksheets
       await doc.loadInfo();
 
       const sheet = doc.sheetsById[SHEET_ID!];
-      console.log(sheet);
       await sheet.addRow(row);
     } catch (e) {
       console.error("Error: ", e);
@@ -108,6 +104,7 @@ const Footer = () => {
             <div className="pb-12 pt-2 sm:text-sm">
               © 2023 {`health{hacks}`} <br />
               All Rights Reserved. <br />
+              <div className="mt-4" />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
                 href="/private-policy"

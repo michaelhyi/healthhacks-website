@@ -1,15 +1,53 @@
-import React, { useState } from "react";
-import Router, { useRouter } from "next/router";
 import ContainerApp from "@/components/ContainerApp";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
+//@ts-ignore
 import Fade from "react-reveal/Fade";
-import { socials } from "@/data/socials";
 
 // This page is for if the applicant chooses: I can't make the event in person. We will automatically reject them, but
 // they have a chance to change their application if they accidentally selected this.
 
-const NextTime = () => {
+const Reject = () => {
   const router = useRouter();
-  const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        if (Object.keys(router.query).length === 0) {
+          router.push("/apply");
+          return;
+        } else {
+          try {
+            const form = JSON.parse(router.query.form as string);
+            if (form.inPerson === "Yes") {
+              router.push("/apply");
+              return;
+            }
+          } catch (e) {
+            router.push("/apply");
+            return;
+          }
+        }
+        setUser(JSON.parse(response));
+        setFetching(false);
+      } else {
+        router.push("/login");
+        return;
+      }
+    })();
+  }, [router.query]);
+
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
 
   return (
     <ContainerApp>
@@ -41,4 +79,4 @@ const NextTime = () => {
   );
 };
 
-export default NextTime;
+export default Reject;

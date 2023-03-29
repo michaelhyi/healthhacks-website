@@ -35,11 +35,11 @@ export class User extends BaseEntity {
   verified: boolean = false;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   verifyToken: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   verifyExpiration: string;
 
   @Field()
@@ -49,6 +49,10 @@ export class User extends BaseEntity {
   @Field()
   @Column({ nullable: true })
   forgotPasswordExpiration: string;
+
+  @Field()
+  @Column("text", { default: "pending", nullable: true })
+  status: string = "pending";
 
   @Field(() => String)
   @CreateDateColumn()

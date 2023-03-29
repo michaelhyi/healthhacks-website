@@ -4,16 +4,16 @@ import React from "react";
 interface Props {
   name: string;
   options: string[];
-  value: string;
-  setValue: (v: string) => void;
+  values: string[];
+  setValues: (v: string) => void;
   error: string;
 }
 
 const MultiSelect: React.FC<Props> = ({
   name,
   options,
-  value,
-  setValue,
+  values,
+  setValues,
   error,
 }) => {
   return (
@@ -34,12 +34,8 @@ const MultiSelect: React.FC<Props> = ({
           >
             {options.map((v, i) => (
               <Checkbox
-                isChecked={v === value}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setValue(v);
-                  }
-                }}
+                isChecked={values.includes(v)}
+                onChange={() => setValues(v)}
                 key={i.toString()}
                 colorScheme="purple"
                 spacing="1rem"

@@ -1,18 +1,19 @@
 import Link from "next/link";
 import ContainerApp from "../components/ContainerApp";
 import Input from "../components/Input";
+import { withUrqlClient } from "next-urql";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useRegisterMutation } from "../generated/graphql";
+import { createUrqlClient } from "../utils/createUrqlClient";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
-import { useContext, useState } from "react";
-import { useRegisterMutation } from "../generated/graphql";
-import { useRouter } from "next/router";
-import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/createUrqlClient";
-import Context from "../utils/context";
 
 const Register = () => {
   const router = useRouter();
-  const { setUser } = useContext(Context);
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -26,7 +27,26 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmError, setConfirmError] = useState("");
 
-  const [result, register] = useRegisterMutation();
+  const [, register] = useRegisterMutation();
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        setUser(JSON.parse(response));
+        router.push("/");
+      }
+      setFetching(false);
+    })();
+  }, []);
+
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
 
   return (
     <ContainerApp>
@@ -35,7 +55,7 @@ const Register = () => {
           <div className="lg:w-[50vw] md:w-[75vw] sm:w-[75vw]">
             <div>
               <div className="font-semibold text-3xl">
-                Let's Create An Account
+                Let&apos;s Create An Account
               </div>
               <div className="mt-2 opacity-50 text-semibold text-sm">
                 {`health{hacks}`} connects diverse creators to build the next
@@ -101,6 +121,7 @@ const Register = () => {
                     error={firstNameError}
                     value={firstName}
                     setValue={setFirstName}
+                    readOnly={false}
                     label="First Name"
                   />
                 </div>
@@ -109,6 +130,7 @@ const Register = () => {
                     error={lastNameError}
                     value={lastName}
                     setValue={setLastName}
+                    readOnly={false}
                     label="Last Name"
                   />
                 </div>
@@ -117,18 +139,21 @@ const Register = () => {
                 value={email}
                 setValue={setEmail}
                 label="Email"
+                readOnly={false}
                 error={emailError}
               />
               <Input
                 value={password}
                 setValue={setPassword}
                 label="Password"
+                readOnly={false}
                 error={passwordError}
               />
               <Input
                 value={confirm}
                 setValue={setConfirm}
                 label="Confirm Password"
+                readOnly={false}
                 error={confirmError}
               />
               <div className="text-xs mt-6">

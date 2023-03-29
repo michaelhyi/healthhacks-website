@@ -1,4 +1,5 @@
 import Stat from "./Stat";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 

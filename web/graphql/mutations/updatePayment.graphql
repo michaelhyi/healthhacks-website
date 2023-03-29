@@ -1,0 +1,3 @@
+mutation UpdatePayment($email: String!, $paid: Boolean!) {
+  updatePayment(email: $email, paid: $paid)
+}
