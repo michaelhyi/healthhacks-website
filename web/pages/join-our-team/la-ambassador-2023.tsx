@@ -7,8 +7,15 @@ import ContainerApp from "../../components/ContainerApp";
 import DropDown from "../../components/DropDown";
 import { useSubmitConfirmationMutation } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
-import { ConfirmType, UserType } from "../../utils/types";
+import { AmbassadorApplicationType } from "../../utils/types";
 import { wherefrom } from "../../data/wherefrom";
+import { GoogleSpreadsheet } from "google-spreadsheet";
+
+
+const SPREADSHEET_ID = process.env.NEXT_PUBLIC_2023_AMBASSADOR_SPREADSHEET_ID;
+const SHEET_ID = process.env.NEXT_PUBLIC_2023_AMBASSADOR_SHEET_ID;
+const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_AMBASSADOR_CLIENT_EMAIL;
+const GOOGLE_SERVICE_PRIVATE_KEY = process.env.NEXT_PUBLIC_GOOGLE_AMBASSADOR_SERVICE_PRIVATE_KEY;
 
 const LAAmbassador = () => {
   const toast = useToast();
@@ -23,8 +30,6 @@ const LAAmbassador = () => {
     lastName: "",
     email: "",
     organization: "",
-    year: "",
-    affiliation: "",
     background: "",
     why: "",
     experience: "",
@@ -32,7 +37,7 @@ const LAAmbassador = () => {
     howHear: "",
     other: "",
   });
-  const [error, setError] = useState(new Array(100).fill(""));
+  const [error, setError] = useState(new Array(8).fill(""));
 
   // Functions allows the job description to be expanded even more
   const handleReadMore = () => {
@@ -54,9 +59,9 @@ const LAAmbassador = () => {
 
     Object.keys(teamForm).forEach((v) => {
       if (
-        v !== "other" &&
-        v !== "paid" &&
-        teamForm[v as keyof ConfirmType] === undefined
+        !(v === "other" ||
+          v === "experience") &&
+        teamForm[v as keyof AmbassadorApplicationType].length === 0
       ) {
         errors.push("This is a required field");
         found = true;
@@ -69,20 +74,32 @@ const LAAmbassador = () => {
 
     if (!found) {
       console.log(teamForm);
-      const response = await submitConfirmation({
-        userId: user!.id!,
-        firstName: user!.firstName,
-        lastName: user!.lastName,
-        email: user!.email,
-        inPerson: teamForm.inPerson,
-        liability: teamForm.liability,
-        liabilityDate: teamForm.liabilityDate,
-        other: teamForm.other,
-        paid: teamForm.paid,
-        tracks1: teamForm.tracks1,
-        tracks2: teamForm.tracks2,
+
+      const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+
+      try {
+        await doc.useServiceAccountAuth({
+          client_email: GOOGLE_CLIENT_EMAIL!,
+          private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+        });
+        await doc.loadInfo();
+        console.log("test");
+
+        const sheet = await doc.sheetsById[SHEET_ID!];
+
+        await sheet.addRow(teamForm);
+
+      } catch (e) {
+        console.error("Error: ", e);
+      };
+    } else {
+      toast({
+        title: "Error!",
+        description: "You must fill out all required fields!",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
       });
-      console.log(response);
     }
     setSubmitting(false);
   };
@@ -108,15 +125,14 @@ const LAAmbassador = () => {
               <div>
                 <b>Responsibilities:</b>
                 <ul className="list-disc list-outside md:pl-12 sm:pl-6">
-                  <li className="pl-2"> Participate in the {`health{hacks}`}2023 LA Ambassadorship Program via Slack channels and email communication</li>
-                  <li className="pl-2"> Promote {`health{hacks}`}events and initiatives on your college campus and beyond</li>
+                  <li className="pl-2"> Participate in the {`health{hacks}`} 2023 LA Ambassadorship Program via Slack channels and email communication</li>
+                  <li className="pl-2"> Promote {`health{hacks}`} events and initiatives on your college campus and beyond</li>
                   <li className="pl-2"> Attend bi-monthly meetings to stay updated on planning process</li>
-                  <li className="pl-2"> Use word-of-mouth to publicize events (e.g., have at least 2 professors help publicize the event to their students)</li>
+                  <li className="pl-2"> Use word-of-mouth to publicize events</li>
                   <li className="pl-2"> Post flyers on school campuses and submit potential ideas for the event via a form</li>
-                  <li className="pl-2"> Leverage connections with potential sponsors (if interning at a company)</li>
                   <li className="pl-2"> Repost, like, and comment on graphics on social media</li>
                   <li className="pl-2"> Maintain a commitment of 1 hour per week</li>
-                  <li className="pl-2"> Help to recruit more diverse participants for {`health{hacks}`}events</li>
+                  <li className="pl-2"> Help to recruit more diverse participants for {`health{hacks}`} events</li>
                   <li className="pl-2"> Provide feedback on the event and suggest ideas for future events</li>
                 </ul>
                 <br />
@@ -141,7 +157,7 @@ const LAAmbassador = () => {
                 <ul className="list-disc list-outside md:pl-12 sm:pl-6">
                   <li className="pl-2"> Applications will open Tuesday, March 27 and the deadline to apply for the ambassadorship program will be Friday, June 9.</li>
                   <li className="pl-2"> Ambassadors will be accepted on a rolling basis, but are encouraged to apply early.</li>
-                  <li className="pl-2"> Applicants will be screened by the VP of Marketing, LA Managing Director, and the executive team based on the information provided on the application form.</li>
+                  <li className="pl-2"> Applicants will be screened by the {`health{hacks}`} executive team based on the information provided in the form. You will be contacted via email regarding the status of your application with 2 weeks of your submission.</li>
                 </ul>
                 <br />
 
@@ -201,7 +217,7 @@ const LAAmbassador = () => {
                   <div className="w-[50vw]">
                     <ApplicationInput
                       // userId={user.id}
-                      error={error[0]}
+                      error={error[2]}
                       value={teamForm.email}
                       setValue={(value) => setTeamForm({ ...teamForm, email: value })}
                       label="Email"
@@ -210,12 +226,12 @@ const LAAmbassador = () => {
                   <div className="w-[50vw]">
                     <ApplicationInput
                       // userId={user.id}
-                      error={error[1]}
+                      error={error[3]}
                       value={teamForm.organization}
                       setValue={(value) =>
                         setTeamForm({ ...teamForm, organization: value })
                       }
-                      label="University"
+                      label="University & Year"
                     />
                   </div>
                 </div>
@@ -228,7 +244,7 @@ const LAAmbassador = () => {
                 {/* Background */}
                 <div>
                   <ApplicationInput
-                    error={error[10]}
+                    error={error[4]}
                     value={teamForm.background}
                     setValue={(value) => setTeamForm({ ...teamForm, background: value })}
                     label="What is your major / background?"
@@ -237,11 +253,13 @@ const LAAmbassador = () => {
 
                 {/* Why */}
                 <div>
-                  <p className="mt-8 -mb-6 lg:text-lg md:text-small font-semibold">
+                  <p className={`mt-8 -mb-6 lg:text-lg md:text-small font-semibold ${error[5].length > 0 ? "text-red-400" : "text-white"
+                    }`}>
                     Why do you want to be an ambassador for {`health{hacks}`}? (Max 100 words)
                   </p>
                   <ApplicationInput
                     textarea
+                    error={error[5]}
                     placeholder=""
                     value={teamForm.why}
                     setValue={(value) => setTeamForm({ ...teamForm, why: value })}
@@ -269,7 +287,7 @@ const LAAmbassador = () => {
                 {/* LinkedIn Profile */}
                 <div>
                   <ApplicationInput
-                    error={error[10]}
+                    error={error[6]}
                     value={teamForm.linkedin}
                     setValue={(value) => setTeamForm({ ...teamForm, linkedin: value })}
                     label="LinkedIn Profile"
@@ -281,7 +299,7 @@ const LAAmbassador = () => {
                 <div>
                   <div>
                     <DropDown
-                      error={error[8]}
+                      error={error[7]}
                       name="How did you hear about health{hacks}"
                       options={wherefrom}
                       value={teamForm.howHear}
