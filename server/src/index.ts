@@ -30,7 +30,13 @@ const main = async () => {
   app.use(
     cors({
       origin: process.env.ORIGIN,
-      credentials: false,
+      credentials: true,
+      exposedHeaders: [
+        "access-token",
+        "refresh-token",
+        "content-type",
+        "content-length",
+      ],
     })
   );
 
@@ -50,7 +56,7 @@ const main = async () => {
   });
 
   app.listen(parseInt(process.env.PORT), () => {
-    console.log("Server started on localhost:4000");
+    console.log(`Server started on localhost:${process.env.PORT}`);
   });
 };
 
