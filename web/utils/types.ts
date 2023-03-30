@@ -35,16 +35,16 @@ export type UserType = {
 };
 
 export type AmbassadorApplicationType = {
-  firstName: string,
-  lastName: string,
-  email: string,
-  organization: string,
-  background: string,
-  why: string,
-  experience: string,
-  linkedin: string,
-  howHear: string,
-  other: string,
+  firstName: string;
+  lastName: string;
+  email: string;
+  organization: string;
+  background: string;
+  why: string;
+  experience: string;
+  linkedin: string;
+  howHear: string;
+  other: string;
 };
 
 export type RowType = {
@@ -66,4 +66,18 @@ export type RowType = {
   DietaryRestrictions: string;
   Transportation: string;
   Other: string;
+};
+
+export type AmbassadorRowType = {
+  email: string;
+  submitTime: string;
+  firstName: string;
+  lastName: string;
+  organization: string;
+  background: string;
+  experience: string;
+  why: string;
+  linkedin: string;
+  howHear: string;
+  other: string;
 };
