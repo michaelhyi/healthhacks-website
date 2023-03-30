@@ -48,12 +48,12 @@ export class Application extends BaseEntity {
   wholeEvent: string = "";
 
   @Field(() => [String])
-  @Column("text", { array: true, default: () => "ARRAY[]::text[]" })
-  background: string[];
+  @Column("text", { array: true, default: [] })
+  background: string[] = [];
 
   @Field(() => [String])
-  @Column("text", { array: true, default: () => "ARRAY[]::text[]" })
-  whyUs: string[];
+  @Column("text", { array: true, default: [] })
+  whyUs: string[] = [];
 
   @Field()
   @Column("text", { default: "" })

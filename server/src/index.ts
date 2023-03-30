@@ -10,6 +10,7 @@ import { createConnection } from "typeorm";
 import { Application } from "./entities/Application";
 import { User } from "./entities/User";
 import { ApplicationResolver } from "./resolvers/application";
+import { ConfirmationResolver } from "./resolvers/confirmation";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
@@ -29,14 +30,14 @@ const main = async () => {
   app.use(
     cors({
       origin: process.env.ORIGIN,
-      credentials: true,
+      credentials: false,
     })
   );
 
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [UserResolver, ApplicationResolver],
+      resolvers: [UserResolver, ApplicationResolver, ConfirmationResolver],
       validate: false,
     }),
   });

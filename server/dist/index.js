@@ -29,7 +29,7 @@ const main = async () => {
     app.set("trust proxy", 1);
     app.use((0, cors_1.default)({
         origin: process.env.ORIGIN,
-        credentials: true,
+        credentials: false,
     }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()],
@@ -44,7 +44,7 @@ const main = async () => {
         cors: false,
     });
     app.listen(parseInt(process.env.PORT), () => {
-        console.log("Server started on localhost:4000");
+        console.log(`Server started on localhost:${process.env.PORT}`);
     });
 };
 main().catch((e) => console.error(e));
