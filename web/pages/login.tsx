@@ -41,12 +41,12 @@ const Login = () => {
 
     const response = await login({ email, password });
 
-    const res = await fetch("/api/allParticipantSheets");
-    const data = await res.json();
+    //const res = await fetch("/api/allParticipantSheets");
+    //const data = await res.json();
 
-    const personRow = data.values.find((row: any) => row[4] === email);
+    //const personRow = data.values.find((row: any) => row[4] === email);
 
-    const isWhitelisted = personRow[5] === "whitelisted";
+    //const isWhitelisted = personRow[5] === "whitelisted";
 
     if (!response.data?.login.error) {
       if (!response.data?.login.user?.verified) {
@@ -70,7 +70,7 @@ const Login = () => {
           },
         });
         // Will force user to confirm if they are whitelisted
-      } else if (isWhitelisted) {
+      } else {
         await localStorage.setItem(
           "user",
           JSON.stringify(response.data!.login.user!)
@@ -82,12 +82,6 @@ const Login = () => {
             email,
           },
         });
-      } else {
-        await localStorage.setItem(
-          "user",
-          JSON.stringify(response.data!.login.user!)
-        );
-        router.push("/");
       }
     } else {
       if (response.data.login.error.field === "Email") {
