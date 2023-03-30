@@ -15,12 +15,36 @@ export type FormType = {
   other: string;
 };
 
+export type ConfirmType = {
+  inPerson: string;
+  tracks1: string;
+  tracks2: string;
+  liability: string;
+  liabilityDate: string;
+  other: string;
+  paid: string;
+};
+
 export type UserType = {
   id: number;
   email: string;
   firstName: string;
   lastName: string;
   verified: string;
+  status: string;
+};
+
+export type AmbassadorApplicationType = {
+  firstName: string,
+  lastName: string,
+  email: string,
+  organization: string,
+  background: string,
+  why: string,
+  experience: string,
+  linkedin: string,
+  howHear: string,
+  other: string,
 };
 
 export type RowType = {
