@@ -34,6 +34,19 @@ export type UserType = {
   status: string;
 };
 
+export type AmbassadorApplicationType = {
+  firstName: string,
+  lastName: string,
+  email: string,
+  organization: string,
+  background: string,
+  why: string,
+  experience: string,
+  linkedin: string,
+  howHear: string,
+  other: string,
+};
+
 export type RowType = {
   Timestamp: string;
   FirstName: string;

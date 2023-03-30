@@ -107,6 +107,13 @@ const Footer = () => {
               <div className="mt-4" />
               <Link
                 className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
+                href="/join-our-team"
+              >
+                Join Our Team
+              </Link>
+              <br />
+              <Link
+                className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
                 href="/private-policy"
               >
                 Private Policy

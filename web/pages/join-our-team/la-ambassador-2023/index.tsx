@@ -2,20 +2,20 @@ import { Spinner, useToast } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import ApplicationInput from "../../components/ApplicationInput";
-import ContainerApp from "../../components/ContainerApp";
-import DropDown from "../../components/DropDown";
-import { useSubmitConfirmationMutation } from "../../generated/graphql";
-import { createUrqlClient } from "../../utils/createUrqlClient";
-import { AmbassadorApplicationType } from "../../utils/types";
-import { wherefrom } from "../../data/wherefrom";
+import ApplicationInput from "../../../components/ApplicationInput";
+import ContainerApp from "../../../components/ContainerApp";
+import DropDown from "../../../components/DropDown";
+import { useSubmitConfirmationMutation } from "../../../generated/graphql";
+import { createUrqlClient } from "../../../utils/createUrqlClient";
+import { AmbassadorApplicationType } from "../../../utils/types";
+import { wherefrom } from "../../../data/wherefrom";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 
 
 const SPREADSHEET_ID = process.env.NEXT_PUBLIC_2023_AMBASSADOR_SPREADSHEET_ID;
 const SHEET_ID = process.env.NEXT_PUBLIC_2023_AMBASSADOR_SHEET_ID;
-const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_AMBASSADOR_CLIENT_EMAIL;
-const GOOGLE_SERVICE_PRIVATE_KEY = process.env.NEXT_PUBLIC_GOOGLE_AMBASSADOR_SERVICE_PRIVATE_KEY;
+const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_BAY_AREA_CLIENT_EMAIL
+const GOOGLE_SERVICE_PRIVATE_KEY = process.env.NEXT_PUBLIC_GOOGLE_BAY_AREA_SERVICE_PRIVATE_KEY;
 
 const LAAmbassador = () => {
   const toast = useToast();
@@ -73,21 +73,38 @@ const LAAmbassador = () => {
     setError(errors);
 
     if (!found) {
-      console.log(teamForm);
 
       const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
       try {
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+        const submit = {
+          submitTime: time,
+          firstName: teamForm.firstName,
+          lastName: teamForm.lastName,
+          email: teamForm.email,
+          organization: teamForm.organization,
+          background: teamForm.background,
+          why: teamForm.why,
+          experience: teamForm.experience,
+          linkedin: teamForm.linkedin,
+          howHear: teamForm.howHear,
+          other: teamForm.other,
+        }
+
+        console.log(submit);
+
         await doc.useServiceAccountAuth({
           client_email: GOOGLE_CLIENT_EMAIL!,
           private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
         });
         await doc.loadInfo();
-        console.log("test");
 
         const sheet = await doc.sheetsById[SHEET_ID!];
 
-        await sheet.addRow(teamForm);
+        await sheet.addRow(submit);
 
       } catch (e) {
         console.error("Error: ", e);
@@ -102,6 +119,7 @@ const LAAmbassador = () => {
       });
     }
     setSubmitting(false);
+    router.push("/join-our-team/success");
   };
 
 
