@@ -29,7 +29,7 @@ const main = async () => {
   app.use(
     cors({
       origin: process.env.ORIGIN,
-      credentials: false,
+      credentials: true,
     })
   );
 
