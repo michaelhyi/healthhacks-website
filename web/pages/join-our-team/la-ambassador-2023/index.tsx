@@ -3,6 +3,7 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import * as EmailValidator from "email-validator";
 import ApplicationInput from "../../../components/ApplicationInput";
 import ContainerApp from "../../../components/ContainerApp";
 import DropDown from "../../../components/DropDown";
@@ -13,12 +14,6 @@ import {
   AmbassadorApplicationType,
   AmbassadorRowType,
 } from "../../../utils/types";
-
-const SPREADSHEET_ID = process.env.NEXT_PUBLIC_2023_AMBASSADOR_SPREADSHEET_ID;
-const SHEET_ID = process.env.NEXT_PUBLIC_2023_AMBASSADOR_SHEET_ID;
-const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL;
-const GOOGLE_SERVICE_PRIVATE_KEY =
-  process.env.NEXT_PUBLIC_GOOGLE_SERVICE_PRIVATE_KEY;
 
 const LAAmbassador = () => {
   const toast = useToast();
@@ -83,7 +78,11 @@ const LAAmbassador = () => {
     let errors: string[] = [];
 
     Object.keys(teamForm).forEach((v) => {
-      if (
+      if (v === "email" && !EmailValidator.validate(teamForm.email)) {
+        errors.push("Please input a valid email")
+        found = true;
+      }
+      else if (
         !(v === "other" || v === "experience") &&
         teamForm[v as keyof AmbassadorApplicationType].length === 0
       ) {
@@ -122,9 +121,10 @@ const LAAmbassador = () => {
           other: teamForm.other,
         };
 
-        console.log(submit);
-
         appendSpreadsheet(submit);
+
+        setSubmitting(false);
+        router.push("/join-our-team/success");
       } catch (e) {
         console.error("Error: ", e);
       }
@@ -138,7 +138,6 @@ const LAAmbassador = () => {
       });
     }
     setSubmitting(false);
-    router.push("/join-our-team/success");
   };
 
   return (
@@ -349,7 +348,6 @@ const LAAmbassador = () => {
                 <div className="flex space-x-6">
                   <div className="w-[50vw]">
                     <ApplicationInput
-                      // userId={user.id}
                       error={error[2]}
                       value={teamForm.email}
                       setValue={(value) =>
@@ -360,7 +358,6 @@ const LAAmbassador = () => {
                   </div>
                   <div className="w-[50vw]">
                     <ApplicationInput
-                      // userId={user.id}
                       error={error[3]}
                       value={teamForm.organization}
                       setValue={(value) =>
