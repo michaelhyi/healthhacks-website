@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import Fade from "react-reveal/Fade";
 import { useSubmitApplicationMutation } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
-import { closed } from "./isClosed.js";
 
 // This page is for if the applicant chooses: I can't make the whole event. We will give them a warning that they
 // can attend our event, however, if they miss most of the event, we would rather have them come next time.
@@ -28,7 +27,7 @@ const Warning = () => {
       if (response) {
 
         // COMMENT OUT TO UNCLOSE THE APPLICATION
-        if (closed) {
+        if (true) {
           router.push("/apply/closed");
         }
 

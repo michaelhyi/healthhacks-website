@@ -9,7 +9,6 @@ import { UserType } from "../../utils/types";
 import Fade from "react-reveal/Fade";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
-import { closed } from "./isClosed.js";
 
 const Success = () => {
   const router = useRouter();
@@ -23,7 +22,7 @@ const Success = () => {
       if (response) {
 
         // COMMENT OUT TO UNCLOSE THE APPLICATION
-        if (closed) {
+        if (true) {
           router.push("/apply/closed");
         }
 

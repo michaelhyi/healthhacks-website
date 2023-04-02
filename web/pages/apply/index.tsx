@@ -20,7 +20,6 @@ import {
 } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { FormType, UserType } from "../../utils/types";
-import { closed } from "./isClosed.js";
 
 const Apply = () => {
   const toast = useToast();
@@ -41,7 +40,7 @@ const Apply = () => {
         setUser(JSON.parse(response));
       }
       // COMMENT OUT TO UNCLOSE THE APPLICATION
-      if (closed) {
+      if (true) {
         router.push("/apply/closed");
       }
       else {
