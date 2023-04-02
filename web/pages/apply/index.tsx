@@ -20,6 +20,7 @@ import {
 } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { FormType, UserType } from "../../utils/types";
+import { closed } from "./isClosed.js";
 
 const Apply = () => {
   const toast = useToast();
@@ -35,12 +36,18 @@ const Apply = () => {
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
+
       if (response) {
         setUser(JSON.parse(response));
-        setFetching(false);
-      } else {
+      }
+      // COMMENT OUT TO UNCLOSE THE APPLICATION
+      if (closed) {
+        router.push("/apply/closed");
+      }
+      else {
         router.push("/login");
       }
+      setFetching(false);
     })();
   }, []);
 
@@ -207,19 +214,17 @@ const Apply = () => {
               </>
             )}
             <div
-              className={`${
-                status === "Submitted"
+              className={`${status === "Submitted"
                   ? "hover:cursor-not-allowed"
                   : "hover:cursor-default"
-              }`}
+                }`}
             >
               {" "}
               <form
-                className={`${
-                  status === "Submitted"
+                className={`${status === "Submitted"
                     ? "pointer-events-none"
                     : "pointer-events-auto"
-                }`}
+                  }`}
               >
                 {/* PHONE NUMBER AND ORGANIZATION */}
                 <div className="flex space-x-6">
@@ -271,9 +276,8 @@ const Apply = () => {
                 <div className="flex space-x-6">
                   <div className="w-[50vw]">
                     <div
-                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-                        error[4].length > 0 ? "text-red-400" : "text-white"
-                      }`}
+                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${error[4].length > 0 ? "text-red-400" : "text-white"
+                        }`}
                     >
                       Can you attend in-person?
                     </div>
@@ -282,9 +286,8 @@ const Apply = () => {
                       value={form.inPerson}
                     >
                       <div
-                        className={`flex items-center space-x-4 ${
-                          error[4].length > 0 ? "text-red-400" : "text-white"
-                        }`}
+                        className={`flex items-center space-x-4 ${error[4].length > 0 ? "text-red-400" : "text-white"
+                          }`}
                       >
                         <Radio
                           value="Yes"
@@ -320,9 +323,8 @@ const Apply = () => {
                   </div>
                   <div className="w-[50vw]">
                     <div
-                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-                        error[5].length > 0 ? "text-red-400" : "text-white"
-                      }`}
+                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${error[5].length > 0 ? "text-red-400" : "text-white"
+                        }`}
                     >
                       Can you attend the whole event?
                     </div>
@@ -333,9 +335,8 @@ const Apply = () => {
                       value={form.wholeEvent}
                     >
                       <div
-                        className={`flex items-center space-x-4 ${
-                          error[5].length > 0 ? "text-red-400" : "text-white"
-                        }`}
+                        className={`flex items-center space-x-4 ${error[5].length > 0 ? "text-red-400" : "text-white"
+                          }`}
                       >
                         <Radio
                           value="Yes"
@@ -530,11 +531,10 @@ const Apply = () => {
               <div className="flex items-center space-x-6 pt-8 pb-24">
                 <button
                   onClick={handleSubmit}
-                  className={`hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium ${
-                    status === "Submitted"
+                  className={`hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium ${status === "Submitted"
                       ? "pointer-events-none"
                       : "pointer-events-auto"
-                  }`}
+                    }`}
                 >
                   {submitting ? <Spinner size="xs" /> : "Submit"}
                 </button>

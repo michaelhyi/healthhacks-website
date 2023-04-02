@@ -9,6 +9,7 @@ import { UserType } from "../../utils/types";
 import Fade from "react-reveal/Fade";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
+import { closed } from "./isClosed.js";
 
 const Success = () => {
   const router = useRouter();
@@ -20,6 +21,12 @@ const Success = () => {
     (async () => {
       const response = await localStorage.getItem("user");
       if (response) {
+
+        // COMMENT OUT TO UNCLOSE THE APPLICATION
+        if (closed) {
+          router.push("/apply/closed");
+        }
+
         const application = await readApplication({
           userId: JSON.parse(response).id,
         });

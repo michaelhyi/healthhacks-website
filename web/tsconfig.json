@@ -20,6 +20,6 @@
     },
     "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/apply/closed.js"],
   "exclude": ["node_modules"]
 }

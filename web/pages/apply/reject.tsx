@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 //@ts-ignore
 import Fade from "react-reveal/Fade";
+import { closed } from "./isClosed.js";
 
 // This page is for if the applicant chooses: I can't make the event in person. We will automatically reject them, but
 // they have a chance to change their application if they accidentally selected this.
@@ -17,6 +18,12 @@ const Reject = () => {
     (async () => {
       const response = await localStorage.getItem("user");
       if (response) {
+
+        // COMMENT OUT TO UNCLOSE THE APPLICATION
+        if (closed) {
+          router.push("/apply/closed");
+        }
+
         if (Object.keys(router.query).length === 0) {
           router.push("/apply");
           return;
