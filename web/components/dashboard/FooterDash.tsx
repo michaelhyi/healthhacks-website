@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <div className="flex flex-col items-center justify-center text-center border-t-[0.5px] border-white border-opacity-50 mt-24 bg-hh-gray">
-      <Fade up delay={500} distance="12px">
+      <Fade up delay={500} distance="0px">
         <div className="flex justify-start items-center content-start flex-wrap flex-row text-left w-full 2xl:w-[1200px] -mb-2">
           <div className="p-4">
             <Link
