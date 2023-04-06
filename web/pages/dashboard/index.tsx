@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import Container from "../../components/Container";
+import NavbarContainer from "../../components/dashboard/NavbarContainer";
 import ContainerApp from "../../components/ContainerApp";
-import Footer from "../../components/Footer";
-import Head from "../../components/Head";
+import Footer from "../../components/dashboard/FooterDash";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -22,10 +21,13 @@ export default function Dashboard() {
         <></>
       </ContainerApp>
     );
+
   return (
-    <Container>
-      <Head user={user} />
+    <NavbarContainer>
+      <div className="flex md:flex-row flex-col">
+
+      </div>
       <Footer />
-    </Container>
+    </NavbarContainer>
   );
 }
