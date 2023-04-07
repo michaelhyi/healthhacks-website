@@ -14,6 +14,7 @@ Backend/API:
 - Typeorm
 - URQL
 - Twilio SendGrid
+- Google Sheets API
 
 Deployment:
 
