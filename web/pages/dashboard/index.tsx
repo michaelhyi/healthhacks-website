@@ -4,6 +4,7 @@ import ContainerApp from "../../components/ContainerApp";
 import Footer from "../../components/dashboard/FooterDash";
 import EventCountdown from "../../components/dashboard/home/EventCountdown";
 import EventHelp from "../../components/dashboard/home/EventHelp";
+import Scheduler from "../../components/dashboard/home/EventSchedule";
 import TitleDash from "../../components/dashboard/TitleDash";
 
 export default function Dashboard() {
@@ -27,11 +28,13 @@ export default function Dashboard() {
 
   return (
     <NavbarContainer>
-      <div className="m-16">
+      <div className="m-8 lg:m-16">
         <TitleDash title="Participant Dashboard" />
-        <div className="flex flex-col md:flex-row h-[50vh]">
-          <div className="w-1/2"></div>
-          <div className="flex flex-col w-1/2 gap-y-4">
+        <div className="flex flex-col lg:flex-row h-full gap-x-8">
+          <div className="w-full xl:w-1/2 h-[90vh]">
+            <Scheduler/>
+          </div>
+          <div className="flex flex-col w-full xl:w-1/2 gap-y-8">
             <div className="">
               <EventCountdown />
             </div>
