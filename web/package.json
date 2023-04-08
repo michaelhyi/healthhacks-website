@@ -39,6 +39,8 @@
     "googleapis": "^113.0.0",
     "graphql": "^16.6.0",
     "http2": "^3.3.7",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "next": "^13.1.6",
     "next-connect": "^0.13.0",
     "next-urql": "^4.0.2",
