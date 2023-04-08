@@ -43,11 +43,7 @@ const PdfUploadComponent: React.FC = () => {
   return (
     <div
       {...getRootProps()}
-      style={{
-        border: "2px dashed gray",
-        padding: "20px",
-        textAlign: "center",
-      }}
+      className="rounded-2xl border-2 border-dashed border-gray-400 p-8 lg:p-20 text-center"
     >
       <input {...getInputProps()} />
       {isDragActive ? (
