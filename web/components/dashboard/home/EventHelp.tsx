@@ -9,7 +9,7 @@ const EventHelp = () => {
         Participant HQ:
       </p> */}
       <SubtitleDash title="Launch Pad" />
-      <div className="flex flex-wrap gap-x-4 gap-y-4">
+      <div className="flex flex-wrap gap-x-2 gap-y-2">
         <button className="text-center bg-white text-black px-4 py-2 w-auto rounded-3xl text-xs md:text-sm font-bold opacity-100 hover:cursor-pointer duration-500 hover:opacity-75">
           Participant Handbook
         </button>

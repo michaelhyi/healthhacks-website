@@ -28,13 +28,13 @@ export default function Dashboard() {
 
   return (
     <NavbarContainer>
-      <div className="m-8 lg:m-16">
+      <div className="m-8 lg:m-12 xl:m-16">
         <TitleDash title="Participant Dashboard" />
-        <div className="flex flex-col lg:flex-row h-full gap-x-8">
-          <div className="w-full xl:w-1/2 h-[90vh]">
+        <div className="flex flex-col lg:flex-row h-full gap-x-8 gap-y-8">
+          <div className="w-full lg:w-1/2 h-[60vh]">
             <Scheduler/>
           </div>
-          <div className="flex flex-col w-full xl:w-1/2 gap-y-8">
+          <div className="flex flex-col w-full lg:w-1/2 gap-y-8">
             <div className="">
               <EventCountdown />
             </div>
