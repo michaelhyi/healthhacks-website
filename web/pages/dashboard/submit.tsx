@@ -18,25 +18,15 @@ const App: React.FC = () => {
   const [status, setStatus] = useState("");
 
   const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [fetching, setFetching] = useState(true);
+  const [fetching, setFetching] = useState<boolean>(true);
 
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
-      if (response) {
-        setUser(JSON.parse(response));
-      } else {
-        router.push("/login");
-      }
+      if (!response) router.push("/login");
       setFetching(false);
     })();
   }, []);
-
-  const handleSubmit = async () => {
-    setSubmitting(true);
-    setSubmitting(false);
-  };
 
   if (fetching) {
     return (
@@ -45,6 +35,11 @@ const App: React.FC = () => {
       </ContainerApp>
     );
   }
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    setSubmitting(false);
+  };
 
   return (
     <NavbarContainer>

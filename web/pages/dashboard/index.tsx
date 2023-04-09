@@ -1,35 +1,31 @@
-import { useEffect, useState } from "react";
-import ContainerApp from "../../components/ContainerApp";
+import { useRouter } from "next/router";
 import NavbarContainer from "../../components/dashboard/NavbarContainer";
 import TitleDash from "../../components/dashboard/TitleDash";
 import EventCountdown from "../../components/dashboard/home/EventCountdown";
 import EventHelp from "../../components/dashboard/home/EventHelp";
 import Scheduler from "../../components/dashboard/home/EventSchedule";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import ContainerApp from "../../components/ContainerApp";
 
 export default function Dashboard() {
   const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [fetching, setFetching] = useState(true);
+  const [fetching, setFetching] = useState<boolean>(true);
 
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
-      if (response) {
-        setUser(JSON.parse(response));
-      } else {
-        router.push("/login");
-      }
+      if (!response) router.push("/login");
       setFetching(false);
     })();
   }, []);
 
-  if (fetching)
+  if (fetching) {
     return (
       <ContainerApp>
         <></>
       </ContainerApp>
     );
+  }
 
   return (
     <NavbarContainer>

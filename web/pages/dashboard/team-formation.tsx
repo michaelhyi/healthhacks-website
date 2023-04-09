@@ -6,17 +6,12 @@ import ContainerApp from "../../components/ContainerApp";
 
 const App: React.FC = () => {
   const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [fetching, setFetching] = useState(true);
+  const [fetching, setFetching] = useState<boolean>(true);
 
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
-      if (response) {
-        setUser(JSON.parse(response));
-      } else {
-        router.push("/login");
-      }
+      if (!response) router.push("/login");
       setFetching(false);
     })();
   }, []);
