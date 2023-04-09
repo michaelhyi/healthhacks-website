@@ -6,6 +6,8 @@ import NavbarContainer from "../../components/dashboard/NavbarContainer";
 import TitleDash from "../../components/dashboard/TitleDash";
 import ApplicationInput from "@/components/ApplicationInput";
 import { Spinner, useToast } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import ContainerApp from "../../components/ContainerApp";
 
 const App: React.FC = () => {
   const [presentation, setPresentation] = useState("");
@@ -15,16 +17,42 @@ const App: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState("");
 
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const response = await localStorage.getItem("user");
+      if (response) {
+        setUser(JSON.parse(response));
+      } else {
+        router.push("/login");
+      }
+      setFetching(false);
+    })();
+  }, []);
+
   const handleSubmit = async () => {
     setSubmitting(true);
     setSubmitting(false);
   };
 
+  if (fetching) {
+    return (
+      <ContainerApp>
+        <></>
+      </ContainerApp>
+    );
+  }
+
   return (
     <NavbarContainer>
       <div className="m-8 lg:m-12 xl:m-16 2xl:m-auto 2xl:mt-16 2xl:w-[50vw]">
         <TitleDash title="Final Submission" />
-        <h1 className="mb-2 font-semibold">Upload Your Final Presentation Slides</h1>
+        <h1 className="mb-2 font-semibold">
+          Upload Your Final Presentation Slides
+        </h1>
         <PdfUploadComponent />
         <div>
           <ApplicationInput
@@ -47,10 +75,11 @@ const App: React.FC = () => {
         <div className="flex items-center space-x-6 pt-6">
           <button
             onClick={handleSubmit}
-            className={`hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium ${status === "Submitted"
+            className={`hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium ${
+              status === "Submitted"
                 ? "pointer-events-none"
                 : "pointer-events-auto"
-              }`}
+            }`}
           >
             Submit
             {/* {submitting ? <Spinner size="xs" /> : "Submit"} */}

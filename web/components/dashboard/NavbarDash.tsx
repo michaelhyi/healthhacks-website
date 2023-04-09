@@ -24,10 +24,25 @@ const NavbarDash = () => {
     <div className="flex justify-between flex-row items-center p-4 w-full sticky top-0 z-50 bg-hh-gray border-b-[0.5px] border-white border-opacity-50">
       <div className="flex flex-col">
         <Logo />
-        <div className="mx-auto flex  space-x-2  md:space-x-4 z-[-1000] mt-2">
-          <NavbarLink page="Home" />
-          <NavbarLink page="Team" />
-          <NavbarLink page="Submit" />
+        <div className="mx-auto flex  space-x-2  md:space-x-4 z-[2000] mt-2">
+          <Link
+            href="/dashboard"
+            className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm md:text-base"
+          >
+            Home
+          </Link>
+          <Link
+            href="/dashboard/team-formation"
+            className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm md:text-base"
+          >
+            Team
+          </Link>
+          <Link
+            href="/dashboard/submit"
+            className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm md:text-base"
+          >
+            Submit
+          </Link>
         </div>
       </div>
 
@@ -46,7 +61,6 @@ const NavbarDash = () => {
         >
           Log Out
         </button>
-
       </div>
     </div>
   );
