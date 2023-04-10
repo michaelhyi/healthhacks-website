@@ -3,7 +3,7 @@ import { AmbassadorRowType, RowType, TeamType } from "./types";
 
 export const createTeam = async (row: TeamType) => {
   const SPREADSHEET_ID = process.env.NEXT_PUBLIC_TEAMS_SPREADSHEET_ID;
-  const SHEET_ID = process.env.NEXT_PUBLIC_TEAMS_SHEET_ID;
+  const SHEET_ID = process.env.NEXT_PUBLIC_TEAMS_SUBMISSION_SHEET_ID;
   const GOOGLE_CLIENT_EMAIL =
     process.env.NEXT_PUBLIC_GOOGLE_BAY_AREA_CLIENT_EMAIL;
   const GOOGLE_SERVICE_PRIVATE_KEY =

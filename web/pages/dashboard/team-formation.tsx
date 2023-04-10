@@ -5,9 +5,10 @@ import React, { useEffect, useState } from "react";
 import ContainerApp from "../../components/ContainerApp";
 import TeamProfile from "../../components/TeamProfile";
 import NavbarContainer from "../../components/dashboard/NavbarContainer";
-import { readParticipants } from "../../utils/helpers";
+import { createTeam, readParticipants } from "../../utils/helpers";
 import { useToast } from "@chakra-ui/react";
 import { UserType } from "../../utils/types";
+import moment from "moment";
 
 const App: React.FC = () => {
   const toast = useToast();
@@ -101,9 +102,10 @@ const App: React.FC = () => {
         email: user._rawData[0],
       },
     ]);
+    setEmail("");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (profiles!.length < 2) {
       toast({
         title: "Error!",
@@ -112,7 +114,26 @@ const App: React.FC = () => {
         duration: 10000,
         isClosable: true,
       });
+      return;
     }
+
+    const row = {
+      Timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      firstNameOne: profiles![0].firstName,
+      lastNameOne: profiles![0].lastName,
+      emailOne: profiles![0].email,
+      firstNameTwo: profiles![1].firstName,
+      lastNameTwo: profiles![1].lastName,
+      emailTwo: profiles![1].email,
+      firstNameThree: profiles![2] ? profiles![2].firstName : null,
+      lastNameThree: profiles![2] ? profiles![2].lastName : null,
+      emailThree: profiles![2] ? profiles![2].email : null,
+      firstNameFour: profiles![3] ? profiles![3].firstName : null,
+      lastNameFour: profiles![3] ? profiles![3].lastName : null,
+      emailFour: profiles![3] ? profiles![3].email : null,
+    };
+
+    await createTeam(row);
   };
 
   if (fetching) {

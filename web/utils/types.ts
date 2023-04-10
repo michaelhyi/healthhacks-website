@@ -23,12 +23,12 @@ export type TeamType = {
   firstNameTwo: string;
   lastNameTwo: string;
   emailTwo: string;
-  firstNameThree: string;
-  lastNameThree: string;
-  emailThree: string;
-  firstNameFour: string;
-  lastNameFour: string;
-  emailFour: string;
+  firstNameThree: string | null;
+  lastNameThree: string | null;
+  emailThree: string | null;
+  firstNameFour: string | null;
+  lastNameFour: string | null;
+  emailFour: string | null;
 };
 
 export type ConfirmType = {
