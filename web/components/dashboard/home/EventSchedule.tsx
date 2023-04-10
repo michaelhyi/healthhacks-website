@@ -11,9 +11,12 @@ function Scheduler() {
     { time: moment('2023-04-14 20:00:00'), title: 'Biodesign Needs Workshop', duration: 30, link: 'https://example.com/event3' },
     { time: moment('2023-04-14 20:30:00'), title: 'Team Formation Session', duration: 60, link: 'https://example.com/event3' },
     { time: moment('2023-04-14 22:00:00'), title: 'Venue Closes', duration: 30, link: 'https://example.com/event3' },
-
-
-
+    { time: moment('2023-04-15 08:00:00'), title: 'Venue Opens', duration: 30, link: 'https://example.com/event3' },
+    { time: moment('2023-04-15 11:00:00'), title: 'Brunch', duration: 60, link: 'https://example.com/event3' },
+    { time: moment('2023-04-15 12:00:00'), title: 'Team Registration Deadline', duration: 60, link: 'https://example.com/event3' },
+    { time: moment('2023-04-15 18:00:00'), title: 'Dinner', duration: 60, link: 'https://example.com/event3' },
+    { time: moment('2023-04-15 19:00:00'), title: 'Office Hours & Practice Pitching', duration: 120, link: 'https://example.com/event3' },
+    { time: moment('2023-04-15 22:00:00'), title: 'Venue Closes', duration: 30, link: 'https://example.com/event3' },
   ]);
 
   // Calculate the number of minutes between 12 AM and the start of the first event
