@@ -40,6 +40,8 @@ const Login = () => {
     e.preventDefault();
 
     const response = await login({ email, password });
+
+    console.log(response);
     if (!response.data?.login.error) {
       if (!response.data?.login.user?.verified) {
         await resendVerificationEmail({
