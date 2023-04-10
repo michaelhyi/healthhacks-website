@@ -7,6 +7,7 @@ import TeamProfile from "../../components/TeamProfile";
 import NavbarContainer from "../../components/dashboard/NavbarContainer";
 import { readParticipants } from "../../utils/helpers";
 import { useToast } from "@chakra-ui/react";
+import { UserType } from "../../utils/types";
 
 const App: React.FC = () => {
   const toast = useToast();
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         email: string;
       }[]
   >(null);
+  const [user, setUser] = useState<null | UserType>(null);
   const [data, setData] = useState<null | GoogleSpreadsheetRow[]>(null);
   const [fetching, setFetching] = useState<boolean>(true);
   const [email, setEmail] = useState("");
@@ -31,6 +33,7 @@ const App: React.FC = () => {
         router.push("/login");
       } else {
         const user = JSON.parse(response);
+        setUser(user);
         setProfiles([user]);
         const rows = await readParticipants();
         const track = rows!.find((v) => v._rawData[0] === user.email);
@@ -124,7 +127,12 @@ const App: React.FC = () => {
     <NavbarContainer>
       <div className="grid grid-cols-2 gap-12 p-12">
         {profiles?.map((v) => (
-          <TeamProfile user={v} />
+          <TeamProfile
+            user={v}
+            currentUser={user!}
+            profiles={profiles}
+            setProfiles={setProfiles}
+          />
         ))}
       </div>
       <div>
