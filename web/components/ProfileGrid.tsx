@@ -57,7 +57,6 @@ const ProfileGrid: React.FC = () => {
 
   return (
     <div>
-      <h1>Profile Grid</h1>
       <div
         style={{
           display: "grid",
