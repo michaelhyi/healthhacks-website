@@ -3,6 +3,7 @@ import PdfUploadComponent from "../components/PdfUploadComponent";
 import Input from "../components/Input";
 import { useEffect, useState } from "react";
 import Container from "../components/Container";
+import { useRouter } from 'next/router'
 
 const App: React.FC = () => {
   const [presentation, setPresentation] = useState("");
@@ -10,13 +11,19 @@ const App: React.FC = () => {
   const [description, setDescription] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
 
+  const router = useRouter()
+
   const [user, setUser] = useState(null);
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
-      if (response) setUser(JSON.parse(response));
+      if (response){
+        setUser(JSON.parse(response));
+      }else{
+        router.push("/login")
+      }
       setFetching(false);
     })();
   }, []);

@@ -39,50 +39,41 @@ function Scheduler() {
   };
 
   const timeSlots = [];
-  for (let i = 8; i < 23; i++) {
+  for (let i = 0; i < 24; i++) {
     const time = moment().startOf('day').add(i, 'hours');
     timeSlots.push(time.format('hh:mm A'));
   }
 
   const renderEvents = () => {
-    return events.map((event, index) => {
-      const times = event;
-      const start = moment.duration(event.time.diff(event.time)).asMinutes() - startOffset;
-      const end = start + event.duration;
-      const height = (event.duration / 60) * 62;
-      console.log(event.time.format('HH:mm'));
-      if (event.duration <= 30) {
-        return (
-          <div
-            className="event flex items-center text-white block w-full h-24 bg-blue-500 rounded-xl pl-2 text-xs xl:text-sm overflow-hidden whitespace-nowrap text-clip"
-            key={index}
-            style={{ top: start, height }}
-            onClick={() => window.open(event.link)}
-          >
-            <p className='overflow-hidden whitespace-nowrap text-clip'>
-              {event.title} –– {event.time.format('hh:mm A')}
-            </p>
-          </div>
-        );
-      } else {
+    return events
+      .filter((event) => event.time.isSame(currentDate, 'day'))
+      .map((event, index) => {
+        const start = moment
+          .duration(event.time.diff(event.time.clone().startOf('day')))
+          .asMinutes();
+        const startInPixels = (start / 60) * 64;
+        const height = (event.duration / 60) * 64;
+        
         return (
           <div
             className="event text-white block w-full h-24 bg-blue-500 rounded-xl pl-2 pt-2 text-xs xl:text-sm overflow-hidden whitespace-nowrap text-clip"
             key={index}
-            style={{ top: start, height }}
+            style={{ top: startInPixels, height, position: "absolute"}}
             onClick={() => window.open(event.link)}
           >
-            <p className='overflow-hidden whitespace-nowrap text-clip'>
+            <p className="overflow-hidden whitespace-nowrap text-clip">
               {event.title} –– {event.time.format('hh:mm A')}
             </p>
           </div>
         );
-      }
-    });
+        
+      });
   };
 
+  const timeSlotHeight = 64;
+
   return (
-    <div className='flex flex-col  bg-hh-gray border border-[#aaa] border-opacity-30 rounded-2xl p-4 md:p-8 h-full w-full p-4 overflow-hidden'>
+    <div className='flex flex-col bg-hh-gray border border-[#aaa] border-opacity-30 rounded-2xl p-4 md:p-8 h-full w-full p-4 overflow-hidden'>
       <div className="header flex flex-row items-center justify-between mb-2">
         <button className="text-center bg-white text-black px-4 py-2 w-auto rounded-3xl text-xs md:text-sm font-bold opacity-100 hover:cursor-pointer duration-500 hover:opacity-75" onClick={handlePrevDay}>
           <AiOutlineLeft />
@@ -95,20 +86,16 @@ function Scheduler() {
       <hr className="h-[1px] bg-gray-200 border-0 rounded my-1 mb-4"></hr>
 
       <div className="scheduler flex flex-row overflow-y-scroll h-full gap-x-2 bg-[#333] p-3 -mx-3 rounded-2xl">
-        <div className="sidebar w-1/">
+        <div className="sidebar w-1/6">
           {timeSlots.map((time) => (
-            <div key={time} className="block w-full h-16">
+            <div key={time} className="block w-full" style={{ height: timeSlotHeight }}>
               <hr className="h-[1px] bg-[#888] border-0 rounded"></hr>
               <div className="time text-sm">{time}</div>
             </div>
           ))}
         </div>
-        <div className="schedule flex-1">
+        <div className="schedule flex-1 relative">
           <div className="events flex flex-col gap-y-[2px]">
-            {/* Replace this with your code for displaying events
-            <div className="block w-full h-24 bg-blue-500"></div>
-            <div className="block w-full h-16 bg-red-500"></div>
-            <div className="block w-full h-32 bg-green-500"></div> */}
             {renderEvents()}
           </div>
         </div>

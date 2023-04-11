@@ -1,14 +1,13 @@
 import * as EmailValidator from "email-validator";
 import { GoogleSpreadsheetRow } from "google-spreadsheet";
 import { useRouter } from "next/router";
-import TitleDash from "../../components/dashboard/TitleDash";
 import React, { useEffect, useState } from "react";
+import ContainerApp from "../../components/ContainerApp";
 import TeamProfile from "../../components/TeamProfile";
 import NavbarContainer from "../../components/dashboard/NavbarContainer";
 import { createTeam, readParticipants } from "../../utils/helpers";
 import { useToast } from "@chakra-ui/react";
 import { UserType } from "../../utils/types";
-import { TiPlus } from "react-icons/ti";
 import moment from "moment";
 
 const App: React.FC = () => {
@@ -17,10 +16,10 @@ const App: React.FC = () => {
   const [profiles, setProfiles] = useState<
     | null
     | {
-      firstName: string;
-      lastName: string;
-      email: string;
-    }[]
+        firstName: string;
+        lastName: string;
+        email: string;
+      }[]
   >(null);
   const [user, setUser] = useState<null | UserType>(null);
   const [data, setData] = useState<null | GoogleSpreadsheetRow[]>(null);
@@ -39,6 +38,7 @@ const App: React.FC = () => {
         setProfiles([user]);
         const rows = await readParticipants();
         console.log(rows);
+        console.log(rows)
         const track = rows!.find((v) => v._rawData[0] === user.email);
         setData(rows!.filter((v) => v._rawData[3] === track!._rawData[3]));
         setFetching(false);
@@ -140,58 +140,48 @@ const App: React.FC = () => {
 
   if (fetching) {
     return (
-      <NavbarContainer>
+      <ContainerApp>
         <></>
-      </NavbarContainer>
+      </ContainerApp>
     );
   }
 
   return (
     <NavbarContainer>
-      <div className="m-8 lg:m-12 xl:m-16">
-        <TitleDash title="Team Formation" />
-        <div className="flex flex-col justify-center items-center m-4 lg:m-6 xl:m-8 2xl:m-auto 2xl:w-[50vw]">
-          <div className="flex flex-row w-full xl:w-4/5 justify-center items-center space-between">
-            <input
-              className="bg-black border-white border-[1px] w-full lg:w-1/2 rounded-xl mr-4 h-full px-4 py-2 bg-[#202020] border-[1px]"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Add Team Member's Email"
-            />
-            <button
-              onClick={handleQuery}
-              className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-2 py-2 w-auto rounded-3xl text-xs lg:text-sm font-medium h-full"
-            >
-              <TiPlus size={20} />
-            </button>
-            {error && error.length > 0 && (
-              <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
-                {error}
-              </div>
-            )}
-          </div>
-
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-4 xl:gap-y-8 py-6 xl:py-8 w-full">
-            {profiles?.map((v) => (
-              <TeamProfile
-                user={v}
-                currentUser={user!}
-                profiles={profiles}
-                setProfiles={setProfiles}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={handleSubmit}
-            className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-bold"
-          >
-            Register Team
-          </button>
-
-
-        </div>
+      <div className="grid grid-cols-2 gap-12 p-12">
+        {profiles?.map((v) => (
+          <TeamProfile
+            user={v}
+            currentUser={user!}
+            profiles={profiles}
+            setProfiles={setProfiles}
+          />
+        ))}
       </div>
+      <div>
+        <input
+          className="bg-black border-white border-[1px] rounded-lg mr-4"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button
+          onClick={handleQuery}
+          className="hover:cursor-pointer duration-500 hover:opacity-50"
+        >
+          Submit
+        </button>
+        {error && error.length > 0 && (
+          <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+            {error}
+          </div>
+        )}
+      </div>
+      <button
+        onClick={handleSubmit}
+        className="mt-48 bg-white text-black p-12 rounded-xl"
+      >
+        SUBMIT TEAM
+      </button>
     </NavbarContainer>
   );
 };
