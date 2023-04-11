@@ -61,46 +61,46 @@ const Countdown = () => {
 
   return (
     <div className="flex flex-col justify-center items-center bg-hh-gray border border-[#aaa] border-opacity-30 w-full rounded-2xl p-4 md:p-8">
-      <p className="text-md md:text-xl font-medium text-center">
+      <p className="text-md md:text-xl font-medium text-center select-none">
         {event}<br />
       </p>
       <div className='flex flex-row gap-x-3 md:gap-x-6 mt-4'>
         <div className='flex flex-col items-center gap-y-2'>
           <div className='flex flex-row gap-x-1 lg:gap-x-2'>
-            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{days[0]}</div>
-            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{days[1]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold select-none'>{days[0]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold select-none'>{days[1]}</div>
           </div>
-          <p className='text-xs lg:text-md'>
+          <p className='text-xs lg:text-md select-none'>
             Days
           </p>
         </div>
 
         <div className='flex flex-col items-center gap-y-2'>
           <div className='flex flex-row gap-x-1 lg:gap-x-2'>
-            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{hours[0]}</div>
-            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{hours[1]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold select-none'>{hours[0]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold select-none'>{hours[1]}</div>
           </div>
-          <p className='text-xs lg:text-md'>
+          <p className='text-xs lg:text-md select-none'>
             Hours
           </p>
         </div>
 
         <div className='flex flex-col items-center gap-y-2'>
           <div className='flex flex-row gap-x-1 lg:gap-x-2'>
-            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{mins[0]}</div>
-            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{mins[1]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold select-none'>{mins[0]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold select-none'>{mins[1]}</div>
           </div>
-          <p className='text-xs lg:text-md'>
+          <p className='text-xs lg:text-md select-none'>
             Minutes
           </p>
         </div>
 
         <div className='flex flex-col items-center gap-y-2'>
           <div className='flex flex-row gap-x-1 lg:gap-x-2'>
-            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{secs[0]}</div>
-            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{secs[1]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold select-none'>{secs[0]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold select-none'>{secs[1]}</div>
           </div>
-          <p className='text-xs lg:text-md'>
+          <p className='text-xs lg:text-md select-none'>
             Seconds
           </p>
         </div>

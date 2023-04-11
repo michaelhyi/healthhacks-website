@@ -60,7 +60,7 @@ const Login = () => {
           "user",
           JSON.stringify(response.data!.login.user!)
         );
-        router.push("/");
+        router.push("/dashboard");
       }
     } else {
       if (response.data.login.error.field === "Email") {

@@ -10,6 +10,10 @@ const NavbarDash = () => {
   const [user, setUser] = useState(null);
   const [fetching, setFetching] = useState(true);
 
+  const isHome = router.pathname === `/dashboard`;
+  const isTeam = router.pathname === `/dashboard/team-formation`;
+  const isSubmit = router.pathname === `/dashboard/submit`;
+
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
@@ -21,25 +25,25 @@ const NavbarDash = () => {
   if (fetching) return <></>;
 
   return (
-    <div className="flex justify-between flex-row items-center p-4 w-full sticky top-0 z-50 bg-hh-gray border-b-[0.5px] border-white border-opacity-50">
+    <div className="flex justify-between flex-row items-center p-4 pb-3 w-full sticky top-0 z-50 bg-hh-gray border-b-[0.5px] border-white border-opacity-50">
       <div className="flex flex-col">
         <Logo />
-        <div className="mx-auto flex  space-x-2  md:space-x-4 z-[2000] mt-2">
+        <div className="mx-auto flex flex-row space-x-2 justify-center z-[2000] mt-2">
           <Link
             href="/dashboard"
-            className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm md:text-base"
+            className={`hover:cursor-pointer duration-500 hover:${!isHome ? "bg-[#333]" : ""} sm:text-sm md:text-base h-full justify-center py-[2px] px-2 rounded-3xl ${isHome ? "bg-hh-purple" : ""}`}
           >
             Home
           </Link>
           <Link
             href="/dashboard/team-formation"
-            className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm md:text-base"
+            className={`hover:cursor-pointer duration-500 hover:${!isTeam ? "bg-[#333]" : ""} sm:text-sm md:text-base h-full justify-center py-[2px] px-2 rounded-3xl ${isTeam ? "bg-hh-purple" : ""}`}
           >
             Team
           </Link>
           <Link
             href="/dashboard/submit"
-            className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm md:text-base"
+            className={`hover:cursor-pointer duration-500 hover:${!isSubmit ? "bg-[#333]" : ""} sm:text-sm md:text-base h-full justify-center py-[2px] px-2 rounded-3xl ${isSubmit ? "bg-hh-purple" : ""}`}
           >
             Submit
           </Link>

@@ -136,6 +136,14 @@ const App: React.FC = () => {
     };
 
     await createTeam(row);
+
+    toast({
+      title: 'Team formed.',
+      description: "We've registered your team.",
+      status: 'success',
+      duration: 10000,
+      isClosable: true,
+    })
   };
 
   if (fetching) {
