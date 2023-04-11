@@ -18,10 +18,10 @@ interface Props {
   setProfiles: React.Dispatch<
     React.SetStateAction<
       | {
-          firstName: string;
-          lastName: string;
-          email: string;
-        }[]
+        firstName: string;
+        lastName: string;
+        email: string;
+      }[]
       | null
     >
   >;
@@ -38,24 +38,26 @@ const TeamProfile: React.FC<Props> = ({
   };
 
   return (
-    <div className="rounded-2xl border-2 border-dashed border-gray-400 p-4 w-[512px]">
-      <div className="flex space-x-4">
-        <BsFillPersonFill size={100} />
-        <div>
-          <div className="text-3xl font-bold">
-            {user.firstName}&nbsp;
-            {user.lastName}
+    <div className="relative">
+      <div className="rounded-2xl border-2 border-dashed border-gray-400 p-4 w-inherit">
+        <div className="flex space-x-4">
+          <BsFillPersonFill size={75} className="min-w-[75px]" />
+          <div className="flex flex-col justify-center ">
+            <div className="text-lg lg:text-2xl font-bold">
+              {user.firstName}&nbsp;
+              {user.lastName}
+            </div>
+            <div className="text-xs lg:text-base text-[#b9b9b9]">{user.email}</div>
           </div>
-          <div>{user.email}</div>
-          {user.email !== currentUser.email && (
-            <button
-              onClick={handleDelete}
-              className="duration-500 hover:opacity-50"
-            >
-              <TiDelete size={25} />
-            </button>
-          )}
         </div>
+        {user.email !== currentUser.email && (
+          <button
+            onClick={handleDelete}
+            className="duration-500 hover:opacity-80 absolute -top-[12px] -right-[12px]"
+          >
+            <TiDelete size={30} />
+          </button>
+        )}
       </div>
     </div>
   );
