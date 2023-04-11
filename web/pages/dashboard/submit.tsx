@@ -7,7 +7,6 @@ import TitleDash from "../../components/dashboard/TitleDash";
 import ApplicationInput from "@/components/ApplicationInput";
 import { Spinner, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import ContainerApp from "../../components/ContainerApp";
 
 const App: React.FC = () => {
   const [presentation, setPresentation] = useState("");
@@ -30,9 +29,9 @@ const App: React.FC = () => {
 
   if (fetching) {
     return (
-      <ContainerApp>
+      <NavbarContainer>
         <></>
-      </ContainerApp>
+      </NavbarContainer>
     );
   }
 

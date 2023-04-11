@@ -15,6 +15,22 @@ export type FormType = {
   other: string;
 };
 
+export type TeamType = {
+  Timestamp: string;
+  firstNameOne: string;
+  lastNameOne: string;
+  emailOne: string;
+  firstNameTwo: string;
+  lastNameTwo: string;
+  emailTwo: string;
+  firstNameThree: string | null;
+  lastNameThree: string | null;
+  emailThree: string | null;
+  firstNameFour: string | null;
+  lastNameFour: string | null;
+  emailFour: string | null;
+};
+
 export type ConfirmType = {
   inPerson: string;
   tracks1: string;

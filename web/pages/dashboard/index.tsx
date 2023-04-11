@@ -5,7 +5,6 @@ import EventCountdown from "../../components/dashboard/home/EventCountdown";
 import EventHelp from "../../components/dashboard/home/EventHelp";
 import Scheduler from "../../components/dashboard/home/EventSchedule";
 import { useEffect, useState } from "react";
-import ContainerApp from "../../components/ContainerApp";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -21,9 +20,9 @@ export default function Dashboard() {
 
   if (fetching) {
     return (
-      <ContainerApp>
+      <NavbarContainer>
         <></>
-      </ContainerApp>
+      </NavbarContainer>
     );
   }
 
