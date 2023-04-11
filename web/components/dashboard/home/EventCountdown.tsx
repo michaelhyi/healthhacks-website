@@ -64,11 +64,11 @@ const Countdown = () => {
       <p className="text-md md:text-xl font-medium text-center">
         {event}<br />
       </p>
-      <div className='flex flex-row gap-x-3 xl:gap-x-6 mt-4'>
+      <div className='flex flex-row gap-x-3 md:gap-x-6 mt-4'>
         <div className='flex flex-col items-center gap-y-2'>
           <div className='flex flex-row gap-x-1 lg:gap-x-2'>
-            <div className='w-6 h-6 md:w-8 md:h-8 xl:w-12 xl:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{days[0]}</div>
-            <div className='w-6 h-6 md:w-8 md:h-8  xl:w-12 xl:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{days[1]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{days[0]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{days[1]}</div>
           </div>
           <p className='text-xs lg:text-md'>
             Days
@@ -77,8 +77,8 @@ const Countdown = () => {
 
         <div className='flex flex-col items-center gap-y-2'>
           <div className='flex flex-row gap-x-1 lg:gap-x-2'>
-            <div className='w-6 h-6 md:w-8 md:h-8 xl:w-12 xl:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{hours[0]}</div>
-            <div className='w-6 h-6 md:w-8 md:h-8 xl:w-12 xl:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{hours[1]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{hours[0]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{hours[1]}</div>
           </div>
           <p className='text-xs lg:text-md'>
             Hours
@@ -87,8 +87,8 @@ const Countdown = () => {
 
         <div className='flex flex-col items-center gap-y-2'>
           <div className='flex flex-row gap-x-1 lg:gap-x-2'>
-            <div className='w-6 h-6 md:w-8 md:h-8 xl:w-12 xl:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{mins[0]}</div>
-            <div className='w-6 h-6 md:w-8 md:h-8 xl:w-12 xl:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{mins[1]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{mins[0]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{mins[1]}</div>
           </div>
           <p className='text-xs lg:text-md'>
             Minutes
@@ -97,8 +97,8 @@ const Countdown = () => {
 
         <div className='flex flex-col items-center gap-y-2'>
           <div className='flex flex-row gap-x-1 lg:gap-x-2'>
-            <div className='w-6 h-6 md:w-8 md:h-8 xl:w-12 xl:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{secs[0]}</div>
-            <div className='w-6 h-6 md:w-8 md:h-8 xl:w-12 xl:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{secs[1]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{secs[0]}</div>
+            <div className='w-6 h-6 md:w-12 md:h-12 bg-white rounded-2xl text-black flex items-center justify-center text-xl md:text-2xl font-bold'>{secs[1]}</div>
           </div>
           <p className='text-xs lg:text-md'>
             Seconds

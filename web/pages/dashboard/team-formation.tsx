@@ -151,21 +151,23 @@ const App: React.FC = () => {
       <div className="m-8 lg:m-12 xl:m-16">
         <TitleDash title="Team Formation" />
         <div className="flex flex-col justify-center items-center m-4 lg:m-6 xl:m-8 2xl:m-auto 2xl:w-[50vw]">
-          <div className="flex flex-row w-full xl:w-4/5 justify-center items-center space-between">
-            <input
-              className="bg-black border-white border-[1px] w-full lg:w-1/2 rounded-xl mr-4 h-full px-4 py-2 bg-[#202020] border-[1px]"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Add Team Member's Email"
-            />
-            <button
-              onClick={handleQuery}
-              className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-2 py-2 w-auto rounded-3xl text-xs lg:text-sm font-medium h-full"
-            >
-              <TiPlus size={20} />
-            </button>
+          <div className="w-full xl:w-4/5 items-center">
+            <div className="flex flex-row justify-center items-center space-between">
+              <input
+                className="bg-black border-white border-[1px] w-full lg:w-1/2 rounded-xl mr-4 h-full px-4 py-2 bg-[#202020] border-[1px]"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Add Team Member's Email"
+              />
+              <button
+                onClick={handleQuery}
+                className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-white text-black px-2 py-2 w-auto rounded-3xl text-xs lg:text-sm font-medium h-full"
+              >
+                <TiPlus size={20} />
+              </button>
+            </div>
             {error && error.length > 0 && (
-              <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+              <div className="mt-2 font-poppins font-light text-red-400 text-xs text-center">
                 {error}
               </div>
             )}
@@ -192,7 +194,7 @@ const App: React.FC = () => {
 
         </div>
       </div>
-    </NavbarContainer>
+    </NavbarContainer >
   );
 };
 
