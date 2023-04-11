@@ -1,6 +1,6 @@
-import { useState } from "react";
 import moment from "moment";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
+import React, { useState, useEffect, useRef } from "react";
 
 function Scheduler() {
   const [currentDate, setCurrentDate] = useState(moment("2023-04-14"));
@@ -9,86 +9,103 @@ function Scheduler() {
       time: moment("2023-04-14 17:00:00"),
       title: "Participant Welcome",
       duration: 60,
-      link: "https://example.com/event1",
     },
     {
       time: moment("2023-04-14 18:00:00"),
       title: "Dinner",
       duration: 60,
-      link: "https://example.com/event2",
     },
     {
       time: moment("2023-04-14 19:00:00"),
       title: "Opening Ceremony",
       duration: 60,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-14 20:00:00"),
       title: "Biodesign Needs Workshop",
       duration: 30,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-14 20:30:00"),
       title: "Team Formation Session",
       duration: 60,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-14 22:00:00"),
       title: "Venue Closes",
       duration: 30,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-15 08:00:00"),
       title: "Venue Opens",
       duration: 30,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-15 11:00:00"),
       title: "Brunch",
       duration: 60,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-15 12:00:00"),
       title: "Team Registration Deadline",
       duration: 60,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-15 18:00:00"),
       title: "Dinner",
       duration: 60,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-15 19:00:00"),
       title: "Office Hours & Practice Pitching",
       duration: 120,
-      link: "https://example.com/event3",
     },
     {
       time: moment("2023-04-15 22:00:00"),
       title: "Venue Closes",
       duration: 30,
-      link: "https://example.com/event3",
     },
+    {
+      time: moment("2023-04-16 08:30:00"),
+      title: "Office Hours & Practice Pitching",
+      duration: 150,
+    },
+    {
+      time: moment("2023-04-16 11:00:00"),
+      title: "Final Project Submission Deadline & Brunch",
+      duration: 60,
+    },
+    {
+      time: moment("2023-04-16 12:00:00"),
+      title: "Judging Begins with Pitches from All Teams",
+      duration: 120,
+    },
+    {
+      time: moment("2023-04-16 14:00:00"),
+      title: "Judges Deliberation Time",
+      duration: 60,
+    },
+    {
+      time: moment("2023-04-16 15:00:00"),
+      title: "Awards Ceremony",
+      duration: 30,
+    },
+    
   ]);
 
-  // Calculate the number of minutes between 12 AM and the start of the first event
-  const startOffset =
-    events.length > 0
-      ? moment
-          .duration(events[0].time.diff(events[0].time.startOf("day")))
-          .asMinutes()
-      : 0;
-
-  // Calculate the number of minutes between 12 AM and the end of the last event
-  // const endOffset = events.length > 0 ? moment.duration(events[events.length - 1].time.clone().add(events[events.length - 1].duration, 'minutes').diff(moment().startOf('day'))).asMinutes() : 0;
+  const scheduleRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const firstEvent = events.find((event) => event.time.isSame(currentDate, "day"));
+  
+    if (firstEvent && scheduleRef.current) {
+      const start = moment.duration(firstEvent.time.diff(firstEvent.time.clone().startOf("day"))).asMinutes();
+      const startInPixels = (start / 60) * 64;
+  
+      if (scheduleRef.current) {
+        scheduleRef.current.scrollTop = startInPixels;
+      }
+    }
+  }, [currentDate, events]);
 
   const handlePrevDay = () => {
     if (currentDate > moment("2023-04-14")) {
@@ -123,7 +140,7 @@ function Scheduler() {
             className="event text-white block w-full h-24 bg-blue-500 rounded-xl pl-2 pt-2 text-xs xl:text-sm overflow-hidden whitespace-nowrap text-clip"
             key={index}
             style={{ top: startInPixels, height, position: "absolute" }}
-            onClick={() => window.open(event.link)}
+            //onClick={() => window.open(event.link)}
           >
             <p className="overflow-hidden whitespace-nowrap text-clip">
               {event.title} –– {event.time.format("hh:mm A")}
@@ -156,7 +173,7 @@ function Scheduler() {
       </div>
       <hr className="h-[1px] bg-gray-200 border-0 rounded my-1 mb-4"></hr>
 
-      <div className="scheduler flex flex-row overflow-y-scroll h-full gap-x-2 bg-[#333] p-3 -mx-3 rounded-2xl">
+      <div ref={scheduleRef} className="scheduler flex flex-row overflow-y-scroll h-full gap-x-2 bg-[#333] p-3 -mx-3 rounded-2xl">
         <div className="sidebar w-1/6">
           {timeSlots.map((time) => (
             <div
