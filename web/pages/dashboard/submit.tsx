@@ -1,11 +1,11 @@
 import ApplicationInput from "@/components/ApplicationInput";
 import { Spinner, useToast } from "@chakra-ui/react";
+import { GoogleSpreadsheet } from "google-spreadsheet";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import NavbarContainer from "../../components/dashboard/NavbarContainer";
 import TitleDash from "../../components/dashboard/TitleDash";
-import { createProject } from "../../utils/helpers";
 import { UserType } from "../../utils/types";
 
 const App: React.FC = () => {
@@ -42,6 +42,30 @@ const App: React.FC = () => {
     );
   }
 
+  const SPREADSHEET_ID = process.env.NEXT_PUBLIC_TEAMS_SPREADSHEET_ID;
+  const SHEET_ID = process.env.NEXT_PUBLIC_PROJECT_SUBMISSION_SHEET_ID;
+  const GOOGLE_CLIENT_EMAIL =
+    process.env.NEXT_PUBLIC_GOOGLE_BAY_AREA_CLIENT_EMAIL;
+  const GOOGLE_SERVICE_PRIVATE_KEY =
+    process.env.NEXT_PUBLIC_GOOGLE_BAY_AREA_SERVICE_PRIVATE_KEY;
+
+  const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+
+  const appendSpreadsheet = async (row: { Email: string }) => {
+    try {
+      await doc.useServiceAccountAuth({
+        client_email: GOOGLE_CLIENT_EMAIL!,
+        private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+      });
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsById[SHEET_ID!];
+      await sheet.addRow(row);
+    } catch (e) {
+      console.error("Error: ", e);
+    }
+  };
+
   const handleSubmit = async () => {
     setSubmitting(true);
 
@@ -52,7 +76,7 @@ const App: React.FC = () => {
       presentationName: presentation,
       Description: description,
     };
-    await createProject(row);
+    appendSpreadsheet(row);
 
     setDriveLink("");
     setPresentation("");
