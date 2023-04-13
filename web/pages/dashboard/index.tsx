@@ -5,6 +5,7 @@ import EventCountdown from "../../components/dashboard/home/EventCountdown";
 import EventHelp from "../../components/dashboard/home/EventHelp";
 import Scheduler from "../../components/dashboard/home/EventSchedule";
 import { useEffect, useState } from "react";
+import Sponsors from "@/components/dashboard/Sponsors2023Dash";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -43,6 +44,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+        <Sponsors />
       </div>
     </NavbarContainer>
   );
