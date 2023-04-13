@@ -51,7 +51,7 @@ const App: React.FC = () => {
 
   const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
-  const appendSpreadsheet = async (row: { Email: string }) => {
+  const appendSpreadsheet = async (row: any) => {
     try {
       await doc.useServiceAccountAuth({
         client_email: GOOGLE_CLIENT_EMAIL!,
