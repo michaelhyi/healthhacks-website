@@ -1,15 +1,14 @@
+import { useToast } from "@chakra-ui/react";
 import * as EmailValidator from "email-validator";
-import { GoogleSpreadsheetRow } from "google-spreadsheet";
+import { GoogleSpreadsheet, GoogleSpreadsheetRow } from "google-spreadsheet";
+import moment from "moment";
 import { useRouter } from "next/router";
-import TitleDash from "../../components/dashboard/TitleDash";
 import React, { useEffect, useState } from "react";
+import { TiPlus } from "react-icons/ti";
 import TeamProfile from "../../components/TeamProfile";
 import NavbarContainer from "../../components/dashboard/NavbarContainer";
-import { createTeam, readParticipants } from "../../utils/helpers";
-import { useToast } from "@chakra-ui/react";
+import TitleDash from "../../components/dashboard/TitleDash";
 import { UserType } from "../../utils/types";
-import { TiPlus } from "react-icons/ti";
-import moment from "moment";
 
 const App: React.FC = () => {
   const toast = useToast();
@@ -38,7 +37,6 @@ const App: React.FC = () => {
         setUser(user);
         setProfiles([user]);
         const rows = await readParticipants();
-        console.log(rows);
         const track = rows!.find((v) => v._rawData[0] === user.email);
         setData(rows!.filter((v) => v._rawData[3] === track!._rawData[3]));
         setFetching(false);
@@ -107,6 +105,49 @@ const App: React.FC = () => {
     setEmail("");
   };
 
+  const SPREADSHEET_ID = process.env.NEXT_PUBLIC_TEAMS_SPREADSHEET_ID;
+  const TEAMS_SUBMISSION_SHEET_ID =
+    process.env.NEXT_PUBLIC_TEAMS_SUBMISSION_SHEET_ID;
+  const TEAMS_SHEET_ID = process.env.NEXT_PUBLIC_TEAMS_SHEET_ID;
+
+  const GOOGLE_CLIENT_EMAIL =
+    process.env.NEXT_PUBLIC_GOOGLE_BAY_AREA_CLIENT_EMAIL;
+  const GOOGLE_SERVICE_PRIVATE_KEY =
+    process.env.NEXT_PUBLIC_GOOGLE_BAY_AREA_SERVICE_PRIVATE_KEY;
+
+  const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+
+  const appendSpreadsheet = async (row: any) => {
+    try {
+      await doc.useServiceAccountAuth({
+        client_email: GOOGLE_CLIENT_EMAIL!,
+        private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+      });
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsById[TEAMS_SUBMISSION_SHEET_ID!];
+      await sheet.addRow(row);
+    } catch (e) {
+      console.error("Error: ", e);
+    }
+  };
+
+  const readParticipants = async () => {
+    try {
+      await doc.useServiceAccountAuth({
+        client_email: GOOGLE_CLIENT_EMAIL!,
+        private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+      });
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsById[TEAMS_SHEET_ID!];
+      const rows = await sheet.getRows();
+      return rows;
+    } catch (e) {
+      console.error("Error: ", e);
+    }
+  };
+
   const handleSubmit = async () => {
     if (profiles!.length < 2) {
       toast({
@@ -135,7 +176,7 @@ const App: React.FC = () => {
       emailFour: profiles![3] ? profiles![3].email : "",
     };
 
-    await createTeam(row);
+    appendSpreadsheet(row);
 
     toast({
       title: "Team formed.",
