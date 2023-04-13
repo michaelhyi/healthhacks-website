@@ -23,12 +23,20 @@ export type TeamType = {
   firstNameTwo: string;
   lastNameTwo: string;
   emailTwo: string;
-  firstNameThree: string | null;
-  lastNameThree: string | null;
-  emailThree: string | null;
-  firstNameFour: string | null;
-  lastNameFour: string | null;
-  emailFour: string | null;
+  firstNameThree: string;
+  lastNameThree: string;
+  emailThree: string;
+  firstNameFour: string;
+  lastNameFour: string;
+  emailFour: string;
+};
+
+export type Project = {
+  Timestamp: string;
+  Email: string;
+  googleDriveLink: string;
+  presentationName: string;
+  Description: string;
 };
 
 export type ConfirmType = {

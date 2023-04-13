@@ -17,10 +17,10 @@ const App: React.FC = () => {
   const [profiles, setProfiles] = useState<
     | null
     | {
-      firstName: string;
-      lastName: string;
-      email: string;
-    }[]
+        firstName: string;
+        lastName: string;
+        email: string;
+      }[]
   >(null);
   const [user, setUser] = useState<null | UserType>(null);
   const [data, setData] = useState<null | GoogleSpreadsheetRow[]>(null);
@@ -127,23 +127,23 @@ const App: React.FC = () => {
       firstNameTwo: profiles![1].firstName,
       lastNameTwo: profiles![1].lastName,
       emailTwo: profiles![1].email,
-      firstNameThree: profiles![2] ? profiles![2].firstName : null,
-      lastNameThree: profiles![2] ? profiles![2].lastName : null,
-      emailThree: profiles![2] ? profiles![2].email : null,
-      firstNameFour: profiles![3] ? profiles![3].firstName : null,
-      lastNameFour: profiles![3] ? profiles![3].lastName : null,
-      emailFour: profiles![3] ? profiles![3].email : null,
+      firstNameThree: profiles![2] ? profiles![2].firstName : "",
+      lastNameThree: profiles![2] ? profiles![2].lastName : "",
+      emailThree: profiles![2] ? profiles![2].email : "",
+      firstNameFour: profiles![3] ? profiles![3].firstName : "",
+      lastNameFour: profiles![3] ? profiles![3].lastName : "",
+      emailFour: profiles![3] ? profiles![3].email : "",
     };
 
     await createTeam(row);
 
     toast({
-      title: 'Team formed.',
+      title: "Team formed.",
       description: "We've registered your team.",
-      status: 'success',
+      status: "success",
       duration: 10000,
       isClosable: true,
-    })
+    });
   };
 
   if (fetching) {
@@ -162,7 +162,7 @@ const App: React.FC = () => {
           <div className="w-full xl:w-4/5 items-center">
             <div className="flex flex-row justify-center items-center space-between">
               <input
-                className="bg-black border-white border-[1px] w-full lg:w-1/2 rounded-xl mr-4 h-full px-4 py-2 bg-[#202020] border-[1px]"
+                className=" border-white bw-full lg:w-1/2 rounded-xl mr-4 h-full px-4 py-2 bg-[#202020] border-[1px]"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Add Team Member's Email"
@@ -182,8 +182,9 @@ const App: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-4 xl:gap-y-8 py-6 xl:py-8 w-full">
-            {profiles?.map((v) => (
+            {profiles?.map((v, i) => (
               <TeamProfile
+                key={i}
                 user={v}
                 currentUser={user!}
                 profiles={profiles}
@@ -198,11 +199,9 @@ const App: React.FC = () => {
           >
             Register Team
           </button>
-
-
         </div>
       </div>
-    </NavbarContainer >
+    </NavbarContainer>
   );
 };
 

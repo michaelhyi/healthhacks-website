@@ -1,14 +1,15 @@
-import React from "react";
-import PdfUploadComponent from "../../components/PdfUploadComponent";
-import Input from "../../components/Input";
-import { useEffect, useState } from "react";
-import NavbarContainer from "../../components/dashboard/NavbarContainer";
-import TitleDash from "../../components/dashboard/TitleDash";
 import ApplicationInput from "@/components/ApplicationInput";
 import { Spinner, useToast } from "@chakra-ui/react";
+import moment from "moment";
 import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import NavbarContainer from "../../components/dashboard/NavbarContainer";
+import TitleDash from "../../components/dashboard/TitleDash";
+import { createProject } from "../../utils/helpers";
+import { UserType } from "../../utils/types";
 
 const App: React.FC = () => {
+  const toast = useToast();
   const [presentation, setPresentation] = useState("");
   const [presentationError, setPresentationError] = useState("");
   const [description, setDescription] = useState("");
@@ -22,11 +23,13 @@ const App: React.FC = () => {
 
   const router = useRouter();
   const [fetching, setFetching] = useState<boolean>(true);
+  const [user, setUser] = useState<null | UserType>(null);
 
   useEffect(() => {
     (async () => {
       const response = await localStorage.getItem("user");
       if (!response) router.push("/login");
+      else setUser(JSON.parse(response));
       setFetching(false);
     })();
   }, []);
@@ -41,6 +44,28 @@ const App: React.FC = () => {
 
   const handleSubmit = async () => {
     setSubmitting(true);
+
+    const row = {
+      Timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      Email: user!.email,
+      googleDriveLink: driveLink,
+      presentationName: presentation,
+      Description: description,
+    };
+    await createProject(row);
+
+    setDriveLink("");
+    setPresentation("");
+    setDescription("");
+
+    toast({
+      title: "Success!",
+      description: "You have successfuly submitted your project!",
+      status: "success",
+      duration: 10000,
+      isClosable: true,
+    });
+
     setSubmitting(false);
   };
 
@@ -85,8 +110,7 @@ const App: React.FC = () => {
                 : "pointer-events-auto"
             }`}
           >
-            Submit
-            {/* {submitting ? <Spinner size="xs" /> : "Submit"} */}
+            {submitting ? <Spinner size="xs" /> : "Submit"}
           </button>
         </div>
       </div>
