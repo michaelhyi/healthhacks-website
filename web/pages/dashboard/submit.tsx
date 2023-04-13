@@ -13,6 +13,10 @@ const App: React.FC = () => {
   const [presentationError, setPresentationError] = useState("");
   const [description, setDescription] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
+
+  const [driveLink, setDriveLink] = useState("");
+  const [driveLinkError, setDriveLinkError] = useState("");
+
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState("");
 
@@ -44,16 +48,22 @@ const App: React.FC = () => {
     <NavbarContainer>
       <div className="m-8 lg:m-12 xl:m-16 2xl:m-auto 2xl:mt-16 2xl:w-[50vw]">
         <TitleDash title="Final Submission" />
-        <h1 className="mb-2 font-semibold">
-          Upload Your Final Presentation Slides
-        </h1>
-        <PdfUploadComponent />
+        <div>
+          <ApplicationInput
+            value={driveLink}
+            error={driveLinkError}
+            setValue={setDriveLink}
+            label="Upload Your Final Presentation Slides"
+            placeholder="Submit a Google Drive link"
+          />
+        </div>
         <div>
           <ApplicationInput
             value={presentation}
             error={presentationError}
             setValue={setPresentation}
             label="Team / Project Name"
+            placeholder="Type your team/project name"
           />
         </div>
         <div>
