@@ -40,6 +40,7 @@ const Login = () => {
     e.preventDefault();
 
     const response = await login({ email, password });
+
     if (!response.data?.login.error) {
       if (!response.data?.login.user?.verified) {
         await resendVerificationEmail({
@@ -59,7 +60,7 @@ const Login = () => {
           "user",
           JSON.stringify(response.data!.login.user!)
         );
-        router.push("/");
+        router.push("/dashboard");
       }
     } else {
       if (response.data.login.error.field === "Email") {

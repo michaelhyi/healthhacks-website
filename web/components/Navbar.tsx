@@ -63,11 +63,11 @@ const Navbar = () => {
               Log Out
             </button>
             <Link
-              href="/apply"
+              href={`${user ? "/dashboard" : "/login"}`}
               className="opacity-100 hover:cursor-pointer duration-500 hover:opacity-75"
             >
               <button className="text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-3xl text-sm font-bold">
-                Start Now
+                {user ? "Dashboard" : "Start Now"}
               </button>
             </Link>
           </>

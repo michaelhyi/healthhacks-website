@@ -5,6 +5,7 @@ import Days from "../components/Days";
 import Footer from "../components/Footer";
 import Head from "../components/Head";
 import Statistics from "../components/Statistics";
+import Sponsors from "@/components/Sponsors2023";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -28,6 +29,7 @@ export default function Home() {
     <Container>
       <Head user={user} />
       <Statistics />
+      <Sponsors />
       <Days />
       <Footer />
     </Container>
