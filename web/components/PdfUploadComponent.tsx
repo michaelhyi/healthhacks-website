@@ -30,7 +30,6 @@ const PdfUploadComponent: React.FC = () => {
         }
       );
 
-      console.log(response.data);
       alert("PDF file uploaded successfully.");
     } catch (error) {
       console.error("Error uploading PDF:", error);

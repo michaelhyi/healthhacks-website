@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [fetching, setFetching] = useState<boolean>(true);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -36,48 +37,51 @@ const App: React.FC = () => {
         const user = JSON.parse(response);
         setUser(user);
         const teamsData = await readTeams();
-        const userSubmissions = teamsData!.filter((v) => v._rawData[3] === user.email);
-        
-        if(userSubmissions){
-          const lastSubmission = userSubmissions.at(-1)
-          if (lastSubmission!._rawData.length === 7){
+        const userSubmissions = teamsData!.filter(
+          (v) => v._rawData[3] === user.email
+        );
+
+        if (userSubmissions.length > 0) {
+          setSubmitted(true);
+          const lastSubmission = userSubmissions.at(-1);
+          if (lastSubmission!._rawData.length === 7) {
             const profTwo = {
               firstName: lastSubmission!._rawData[4],
               lastName: lastSubmission!._rawData[5],
-              email: lastSubmission!._rawData[6]
-            }
-            setProfiles([user, profTwo])
-          }else if (lastSubmission!._rawData.length === 10){
+              email: lastSubmission!._rawData[6],
+            };
+            setProfiles([user, profTwo]);
+          } else if (lastSubmission!._rawData.length === 10) {
             const profTwo = {
               firstName: lastSubmission!._rawData[4],
               lastName: lastSubmission!._rawData[5],
-              email: lastSubmission!._rawData[6]
-            }
+              email: lastSubmission!._rawData[6],
+            };
             const profThree = {
               firstName: lastSubmission!._rawData[7],
               lastName: lastSubmission!._rawData[8],
               email: lastSubmission!._rawData[9],
-            }
-            setProfiles([user, profTwo, profThree])
-          }else{
+            };
+            setProfiles([user, profTwo, profThree]);
+          } else {
             const profTwo = {
               firstName: lastSubmission!._rawData[4],
               lastName: lastSubmission!._rawData[5],
-              email: lastSubmission!._rawData[6]
-            }
+              email: lastSubmission!._rawData[6],
+            };
             const profThree = {
               firstName: lastSubmission!._rawData[7],
               lastName: lastSubmission!._rawData[8],
               email: lastSubmission!._rawData[9],
-            }
+            };
             const profFour = {
               firstName: lastSubmission!._rawData[10],
               lastName: lastSubmission!._rawData[11],
               email: lastSubmission!._rawData[12],
-            }
-            setProfiles([user, profTwo, profThree, profFour])
+            };
+            setProfiles([user, profTwo, profThree, profFour]);
           }
-        }else{
+        } else {
           setProfiles([user]);
         }
         const rows = await readParticipants();
@@ -281,11 +285,14 @@ const App: React.FC = () => {
               </div>
             )}
             <div className="mt-2 font-poppins font-light text-white text-xs text-center">
-              <br/> Please only ask one team member to submit once.
+              <br /> Please only ask one team member to submit once.
             </div>
           </div>
-
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-4 xl:gap-y-8 py-6 xl:py-8 w-full">
+          <div
+            className={`${
+              submitted ? "pointer-events-none" : "pointer-events-auto"
+            } grid grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-4 xl:gap-y-8 py-6 xl:py-8 w-full`}
+          >
             {profiles?.map((v, i) => (
               <TeamProfile
                 key={i}
@@ -299,7 +306,9 @@ const App: React.FC = () => {
 
           <button
             onClick={handleSubmit}
-            className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-bold"
+            className={`${
+              submitted ? "pointer-events-none" : "pointer-events-auto"
+            }  hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-bold`}
           >
             Register Team
           </button>
