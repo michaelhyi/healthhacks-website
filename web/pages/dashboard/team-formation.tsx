@@ -35,7 +35,51 @@ const App: React.FC = () => {
       } else {
         const user = JSON.parse(response);
         setUser(user);
-        setProfiles([user]);
+        const teamsData = await readTeams();
+        const userSubmissions = teamsData!.filter((v) => v._rawData[3] === user.email);
+        
+        if(userSubmissions){
+          const lastSubmission = userSubmissions.at(-1)
+          if (lastSubmission!._rawData.length === 7){
+            const profTwo = {
+              firstName: lastSubmission!._rawData[4],
+              lastName: lastSubmission!._rawData[5],
+              email: lastSubmission!._rawData[6]
+            }
+            setProfiles([user, profTwo])
+          }else if (lastSubmission!._rawData.length === 10){
+            const profTwo = {
+              firstName: lastSubmission!._rawData[4],
+              lastName: lastSubmission!._rawData[5],
+              email: lastSubmission!._rawData[6]
+            }
+            const profThree = {
+              firstName: lastSubmission!._rawData[7],
+              lastName: lastSubmission!._rawData[8],
+              email: lastSubmission!._rawData[9],
+            }
+            setProfiles([user, profTwo, profThree])
+          }else{
+            const profTwo = {
+              firstName: lastSubmission!._rawData[4],
+              lastName: lastSubmission!._rawData[5],
+              email: lastSubmission!._rawData[6]
+            }
+            const profThree = {
+              firstName: lastSubmission!._rawData[7],
+              lastName: lastSubmission!._rawData[8],
+              email: lastSubmission!._rawData[9],
+            }
+            const profFour = {
+              firstName: lastSubmission!._rawData[10],
+              lastName: lastSubmission!._rawData[11],
+              email: lastSubmission!._rawData[12],
+            }
+            setProfiles([user, profTwo, profThree, profFour])
+          }
+        }else{
+          setProfiles([user]);
+        }
         const rows = await readParticipants();
         const track = rows!.find((v) => v._rawData[0] === user.email);
         setData(rows!.filter((v) => v._rawData[3] === track!._rawData[3]));
@@ -148,6 +192,22 @@ const App: React.FC = () => {
     }
   };
 
+  const readTeams = async () => {
+    try {
+      await doc.useServiceAccountAuth({
+        client_email: GOOGLE_CLIENT_EMAIL!,
+        private_key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+      });
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsById[TEAMS_SUBMISSION_SHEET_ID!];
+      const rows = await sheet.getRows();
+      return rows;
+    } catch (e) {
+      console.error("Error: ", e);
+    }
+  };
+
   const handleSubmit = async () => {
     if (profiles!.length < 2) {
       toast({
@@ -221,8 +281,6 @@ const App: React.FC = () => {
               </div>
             )}
             <div className="mt-2 font-poppins font-light text-white text-xs text-center">
-              Please note that teams will disappear after you refresh the page.
-              <br/> After you recieve the confirmation success, it means that we have it on our system. 
               <br/> Please only ask one team member to submit once.
             </div>
           </div>
