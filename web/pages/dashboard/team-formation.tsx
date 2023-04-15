@@ -220,6 +220,11 @@ const App: React.FC = () => {
                 {error}
               </div>
             )}
+            <div className="mt-2 font-poppins font-light text-white text-xs text-center">
+              Please note that teams will disappear after you refresh the page.
+              <br/> After you recieve the confirmation success, it means that we have it on our system. 
+              <br/> Please only ask one team member to submit once.
+            </div>
           </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-4 xl:gap-y-8 py-6 xl:py-8 w-full">
