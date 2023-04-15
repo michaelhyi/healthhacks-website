@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import NavbarContainer from "../../components/dashboard/NavbarContainer";
 import TitleDash from "../../components/dashboard/TitleDash";
 import { UserType } from "../../utils/types";
+import DropDown from "../../components/DropDown";
 
 const App: React.FC = () => {
   const toast = useToast();
@@ -14,6 +15,9 @@ const App: React.FC = () => {
   const [presentationError, setPresentationError] = useState("");
   const [description, setDescription] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
+
+  const [track, setTrack] = useState("");
+  const [trackError, setTrackError] = useState("");
 
   const [driveLink, setDriveLink] = useState("");
   const [driveLinkError, setDriveLinkError] = useState("");
@@ -75,6 +79,7 @@ const App: React.FC = () => {
       googleDriveLink: driveLink,
       presentationName: presentation,
       Description: description,
+      Track: track,
     };
     appendSpreadsheet(row);
 
@@ -116,6 +121,19 @@ const App: React.FC = () => {
           />
         </div>
         <div>
+          <DropDown
+            name="Track Name"
+            options={[
+              "Aging & Longevity",
+              "Mental Health & Addiction",
+              "Population & Preventative Health",
+            ]}
+            value={track}
+            error={trackError}
+            setValue={(v) => setTrack(v)}
+          />
+        </div>
+        <div>
           <ApplicationInput
             textarea
             placeholder="We'd love to hear a short blurb about your project in a couple of sentences ..."
@@ -125,6 +143,7 @@ const App: React.FC = () => {
             label="Description"
           />
         </div>
+
         <div className="flex items-center space-x-6 pt-6">
           <button
             onClick={handleSubmit}
