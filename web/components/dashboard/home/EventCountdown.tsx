@@ -12,7 +12,7 @@ const Countdown = () => {
   // Array for deadline times
   const [dueDates, setDueDates] = useState([
     moment('2023-04-14').set({ hour: 17 }).tz('America/Los_Angeles'),   // For event start @ 5 PM Friday
-    moment('2023-04-15').set({ hour: 12 }).tz('America/Los_Angeles'),   // For team registration @ 12 PM Saturday
+    moment('2023-04-15').set({ hour: 13 }).tz('America/Los_Angeles'),   // For team registration @ 12 PM Saturday
     moment('2023-04-16').set({ hour: 11 }).tz('America/Los_Angeles'),   // For final submit @ 11 AM Sunday
     moment('2023-04-16').set({ hour: 12 }).tz('America/Los_Angeles'),   // For final judging @ 12 PM Sunday
     moment('2023-04-16').set({ hour: 15 }).tz('America/Los_Angeles'),   // For award ceremony @ 3 PM Sunday
