@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { socials } from "../data/socials";
 
 //@ts-ignore
@@ -56,14 +56,14 @@ const Footer = () => {
   //   }
   // };
 
+  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {}, []);
+
   return (
     <div className="flex flex-col items-center justify-center text-center border-t-[0.5px] border-white border-opacity-50 mt-24 pt-12 bg-hh-gray">
       <Fade up delay={500} distance="12px">
         <div className="font-semibold sm:text-xl md:text-3xl xl:text-4xl pt-8">{`Build with us at health{hacks}.`}</div>
         <form
-          onSubmit={() => {
-            //submitform
-          }}
+          onSubmit={handleSubmit}
           className="flex items-center pt-6 space-x-8 "
         >
           <div className="flex flex-col text-left">

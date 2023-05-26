@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Link as SmoothLink } from "react-scroll";
 import Logo from "./Logo";
@@ -9,6 +9,7 @@ import NavbarLink from "./NavbarLink";
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState(null);
 
   return (
@@ -17,7 +18,7 @@ const Navbar = () => {
 
       {/* Pages on Navbar */}
       <div className="absolute left-0 right-0 justify-center mx-auto flex items-center sm:space-x-2  md:space-x-4 z-[-1000]">
-        {router.pathname === "/" ? (
+        {pathname === "/" ? (
           <SmoothLink
             to="explore"
             spy={true}
@@ -44,8 +45,8 @@ const Navbar = () => {
               onClick={async () => {
                 await localStorage.removeItem("user");
 
-                if (router.pathname === "/") {
-                  router.reload();
+                if (pathname === "/") {
+                  router.refresh();
                 } else {
                   router.push("/");
                 }
