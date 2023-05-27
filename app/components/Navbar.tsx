@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Link as SmoothLink } from "react-scroll";
 import Logo from "./Logo";
 import NavbarLink from "./NavbarLink";
+import UserMenu from "./UserMenu";
 
 const Navbar = () => {
   const router = useRouter();
@@ -36,89 +36,7 @@ const Navbar = () => {
         <NavbarLink page="About" />
         <NavbarLink page="Blog" />
       </div>
-
-      <div className="flex flex-row gap-4">
-        {user && (
-          <>
-            <button
-              className="text-center bg-white text-black px-6 py-3 w-auto rounded-3xl text-sm font-bold opacity-100 hover:cursor-pointer duration-500 hover:opacity-75"
-              onClick={async () => {
-                await localStorage.removeItem("user");
-
-                if (pathname === "/") {
-                  router.refresh();
-                } else {
-                  router.push("/");
-                }
-              }}
-            >
-              Log Out
-            </button>
-            <Link
-              href="/apply"
-              className="opacity-100 hover:cursor-pointer duration-500 hover:opacity-75"
-            >
-              <button className="text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-3xl text-sm font-bold">
-                Start Now
-              </button>
-            </Link>
-          </>
-
-          // <Menu>
-          //   <MenuButton>
-          //     <div className="flex items-center space-x-2">
-          //       <div>Hi {user.firstName}!</div>
-          //       <AiFillCaretDown />
-          //     </div>
-          //   </MenuButton>
-          //   <MenuList bg="black">
-          //     <MenuItem
-          //       bg="black"
-          //       className="hover:opacity-50"
-          //       onClick={async () => {
-          //         router.push(`/application/0`);
-          //       }}
-          //     >
-          //       Application
-          //     </MenuItem>
-          //     <MenuItem
-          //       bg="black"
-          //       className="hover:opacity-50"
-          //       onClick={async () => {
-          //         router.push("/");
-          //         await localStorage.removeItem("user");
-          //         setUser(null);
-          //       }}
-          //     >
-          //       <div className="font-semibold text-red-400">Logout</div>
-          //     </MenuItem>
-          //   </MenuList>
-          // </Menu>
-        )}
-        {!user && (
-          <>
-            {/* Login Button */}
-            <Link
-              href="/login"
-              className="opacity-100 hover:cursor-pointer duration-500 hover:opacity-75"
-            >
-              <button className="text-center bg-white text-black px-6 py-3 w-auto rounded-3xl text-sm font-bold">
-                Login
-              </button>
-            </Link>
-
-            {/* Register Button */}
-            <Link
-              href="/register"
-              className="opacity-100 hover:cursor-pointer duration-500 hover:opacity-75"
-            >
-              <button className="text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-3xl text-sm font-bold">
-                Start Now
-              </button>
-            </Link>
-          </>
-        )}
-      </div>
+      <UserMenu />
     </div>
   );
 };

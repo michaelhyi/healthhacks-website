@@ -6,3 +6,65 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id                       String   @id @default(auto()) @map("_id") @db.ObjectId
+  email                    String
+  password                 String
+  firstName                String
+  lastName                 String
+  verified                 Boolean? @default(false)
+  verifyToken              String?
+  verifyExpiration         String?
+  forgotPasswordToken      String?
+  forgotPasswordExpiration String?
+  status                   String?  @default("pending")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  accounts Account[]
+  application Application?
+}
+
+model Account {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String  @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.String
+  access_token       String? @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.String
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Application {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId              String   @db.ObjectId @unique()
+  status              String   @default("pending")
+  phone               String?
+  organization        String?
+  city                String?
+  state               String?
+  inPerson            String?
+  wholeEvent          String?
+  background          String[] @default([])
+  whyUs               String[] @default([])
+  howHear             String?
+  team                String?
+  linkedIn            String?
+  dietaryRestrictions String?
+  transportation      String?
+  other               String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
