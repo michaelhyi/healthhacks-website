@@ -18,7 +18,7 @@ const UserMenu: React.FC<Props> = ({ currentUser }) => {
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
-  }, []);
+  }, [setIsOpen]);
 
   return (
     <div className="relative">

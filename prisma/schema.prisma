@@ -13,12 +13,12 @@ model User {
   password                 String
   firstName                String
   lastName                 String
-  verified                 Boolean? @default(false)
+  verified                 Boolean  @default(false)
   verifyToken              String?
   verifyExpiration         String?
   forgotPasswordToken      String?
   forgotPasswordExpiration String?
-  status                   String?  @default("pending")
+  status                   String   @default("pending")
   createdAt                DateTime @default(now())
   updatedAt                DateTime @updatedAt
 
