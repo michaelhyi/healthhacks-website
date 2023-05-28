@@ -150,14 +150,14 @@ const RegisterComponent = () => {
           </form>
           <div className="flex flex-col gap-5 mt-8">
             <button
-              onClick={() => signIn("google")}
+              onClick={() => signIn("google", { callbackUrl: "/" })}
               className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold"
             >
               <FcGoogle size={24} />
               Sign in with Google
             </button>
             <button
-              onClick={() => signIn("github")}
+              onClick={() => signIn("github", { callbackUrl: "/" })}
               className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold"
             >
               <AiFillGithub size={24} />

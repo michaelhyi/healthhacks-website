@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { AiFillGithub } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 import NewInput from "../components/NewInput";
 
 const LoginComponent = () => {
@@ -103,6 +105,30 @@ const LoginComponent = () => {
               </div>
             </div>
           </form>
+          <div className="flex flex-col gap-5 mt-8">
+            <button
+              onClick={() =>
+                signIn("google", {
+                  callbackUrl: "/",
+                })
+              }
+              className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold text-white"
+            >
+              <FcGoogle size={24} />
+              Sign in with Google
+            </button>
+            <button
+              onClick={() =>
+                signIn("github", {
+                  callbackUrl: "/",
+                })
+              }
+              className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold text-white"
+            >
+              <AiFillGithub size={24} />
+              Sign in with Github
+            </button>
+          </div>
         </div>
       </div>
     </div>
