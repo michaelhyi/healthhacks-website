@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientOnly from "./components/ClientOnly";
-import ToasterProvider from "./components/ToastProvider";
+import { ChakraProviders } from "./providers/ChakraProviders";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -22,8 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <ClientOnly>
-          <ToasterProvider />
-          {children}
+          <ChakraProviders>{children}</ChakraProviders>
         </ClientOnly>
       </body>
     </html>

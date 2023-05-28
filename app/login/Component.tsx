@@ -5,13 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import NewInput from "../components/NewInput";
+import { useToast } from "@chakra-ui/react";
 
 const LoginComponent = () => {
   const router = useRouter();
+  const toast = useToast({});
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -37,12 +38,15 @@ const LoginComponent = () => {
       if (callback?.ok) {
         // check if user is not verified --> send email, route to verify,
         // else
-        toast.success("Logged In!");
-        router.push("/");
-      }
+        toast({
+          title: "Success!",
+          description: "You have successfully logged in!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
 
-      if (callback?.error) {
-        toast.error(callback.error);
+        router.push("/");
       }
     });
   };

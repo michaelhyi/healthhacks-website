@@ -6,14 +6,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import ContainerApp from "../components/ContainerApp";
 import NewInput from "../components/NewInput";
+import { useToast } from "@chakra-ui/react";
 
 const RegisterComponent = () => {
   const router = useRouter();
+  const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -29,38 +30,51 @@ const RegisterComponent = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
 
     if (data.password !== data.confirmPassword)
-      return toast.error("Passwords must match!");
+      return toast({
+        title: "Failure!",
+        description: "Passwords must match!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
 
     setIsLoading(true);
 
-    axios
+    await axios
       .post("/api/register", data)
       .then(() => {
-        toast.success("Registered!");
+        toast({
+          title: "Success!",
+          description: "You have successfully registered an account.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+
         signIn("credentials", {
           ...data,
           redirect: false,
         }).then(async (callback) => {
           setIsLoading(false);
-
           if (callback?.ok) {
             // check if user is not verified --> send email, route to verify,
             // else
-            toast.success("Logged In!");
+
+            toast({
+              title: "Success!",
+              description: "You have successfully logged in!",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            });
+
             router.push("/");
           }
-
-          if (callback?.error) {
-            toast.error(callback.error);
-          }
         });
-      })
-      .catch((error) => {
-        toast.error(error);
       })
       .finally(() => {
         setIsLoading(false);

@@ -1,13 +1,10 @@
+import readUser from "../actions/readUser";
 import BlogChunk from "../components/BlogChunk";
-import Footer from "../components/Footer";
 import Container from "../components/Container";
-
-//@ts-ignore
-import Fade from "react-reveal/Fade";
-import getUser from "../actions/getUser";
-
+import Footer from "../components/Footer";
 const Blog = async () => {
-  const user = await getUser();
+  const user = await readUser();
+
   return (
     <Container user={user}>
       <div className="flex flex-col h-auto 2xl:h-screen justify-between">

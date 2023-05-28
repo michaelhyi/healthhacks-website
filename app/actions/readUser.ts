@@ -7,7 +7,7 @@ export async function getSession() {
   return await getServerSession(authOptions);
 }
 
-export default async function getUser() {
+export default async function readUser() {
   try {
     const session = await getSession();
 
@@ -29,6 +29,7 @@ export default async function getUser() {
       ...user,
       createdAt: user.createdAt.toISOString(),
       updatedAt: user.updatedAt.toISOString(),
+      emailVerified: user.emailVerified?.toISOString() || null,
     };
   } catch (error: any) {
     return null;

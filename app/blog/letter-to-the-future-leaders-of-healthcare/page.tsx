@@ -1,9 +1,9 @@
-import getUser from "../../actions/getUser";
+import readUser from "../../actions/readUser";
 import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 
 const Blog1 = async () => {
-  const user = await getUser();
+  const user = await readUser();
 
   return (
     <Container user={user}>
