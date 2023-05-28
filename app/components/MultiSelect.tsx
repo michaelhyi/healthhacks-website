@@ -1,14 +1,13 @@
 "use client";
 
 import { Checkbox } from "@chakra-ui/react";
-import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 interface Props {
   name: string;
   options: string[];
   values: string[];
   setValues: (v: string) => void;
-  error: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
+  error: string;
 }
 
 const MultiSelect: React.FC<Props> = ({
@@ -24,14 +23,14 @@ const MultiSelect: React.FC<Props> = ({
         <div className="md:w-[100%] lg:w-[50vw]">
           <div
             className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-              error ? "text-red-400" : "text-white"
+              error.length > 0 ? "text-red-400" : "text-white"
             }`}
           >
             {name}
           </div>
           <div
             className={`flex flex-col space-y-2 ${
-              error ? "text-red-400" : "text-white"
+              error.length > 0 ? "text-red-400" : "text-white"
             }`}
           >
             {options.map((v, i) => (
@@ -46,6 +45,11 @@ const MultiSelect: React.FC<Props> = ({
               </Checkbox>
             ))}
           </div>
+          {error && error.length > 0 && (
+            <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+              {error}
+            </div>
+          )}
         </div>
       </div>
     </div>

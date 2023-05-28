@@ -1,32 +1,56 @@
 import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { userId, form } = body;
+  const {
+    userId,
+    phone,
+    organization,
+    city,
+    state,
+    inPerson,
+    wholeEvent,
+    background,
+    whyUs,
+    howHear,
+    team,
+    linkedIn,
+    dietaryRestrictions,
+    transportation,
+    other,
+  } = body;
 
-  const data = {
-    phone: form.phone,
-    organization: form.organization,
-    city: form.city,
-    state: form.state,
-    inPerson: form.inPerson,
-    wholeEvent: form.wholeEvent,
-    background: form.background,
-    whyUs: form.whyUs,
-    howHear: form.howHear,
-    team: form.team,
-    linkedIn: form.linkedIn,
-    dietaryRestrictions: form.dietaryRestrictions,
-    transportation: form.transportation,
-    other: form.other,
-  };
+  let valid = true;
+
+  Object.keys(body).forEach((key: string) => {
+    if (key !== "other" && body[key as keyof typeof body].length === 0) {
+      valid = false;
+      return;
+    }
+  });
+
+  if (!valid) return NextResponse.error();
 
   const application = await prisma.application.update({
     where: { userId },
     data: {
-      ...form,
+      phone,
+      organization,
+      city,
+      state,
+      inPerson,
+      wholeEvent,
+      background,
+      whyUs,
+      howHear,
+      team,
+      linkedIn,
+      dietaryRestrictions,
+      transportation,
+      other,
       status: "Submitted",
     },
   });

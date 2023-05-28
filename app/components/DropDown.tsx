@@ -1,14 +1,13 @@
 "use client";
 
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 import { AiFillCaretDown } from "react-icons/ai";
 
 interface Props {
   name: string;
   options: string[];
   value: string;
-  error: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
+  error: string;
   setValue: (v: string) => void;
 }
 
@@ -23,7 +22,7 @@ const DropDown: React.FC<Props> = ({
     <div>
       <div
         className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-          error ? "text-red-400" : "text-white"
+          error.length > 0 ? "text-red-400" : "text-white"
         }`}
       >
         {" "}
@@ -37,14 +36,16 @@ const DropDown: React.FC<Props> = ({
           bg="#202020"
           opacity="95%"
           w="100%"
-          borderColor={`${error ? "#F87171" : "white"}`}
+          borderColor={`${error.length > 0 ? "#F87171" : "white"}`}
           borderRadius="0.75rem"
           minH="42px"
           _hover={{ opacity: "75%" }}
           _expanded={{ bg: "#202020" }}
         >
           <div className="flex items-center justify-between">
-            <div className={`${error ? "text-red-400" : "text-white"}`}>
+            <div
+              className={`${error.length > 0 ? "text-red-400" : "text-white"}`}
+            >
               {value.length > 0 ? value : "Select"}
             </div>
             <AiFillCaretDown color="white" />
@@ -74,6 +75,11 @@ const DropDown: React.FC<Props> = ({
           ))}
         </MenuList>
       </Menu>
+      {error && error.length > 0 && (
+        <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+          {error}
+        </div>
+      )}
     </div>
   );
 };
