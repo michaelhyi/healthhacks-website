@@ -1,16 +1,19 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 import { Link as SmoothLink } from "react-scroll";
+import { UserType } from "../types";
 import Logo from "./Logo";
 import NavbarLink from "./NavbarLink";
 import UserMenu from "./UserMenu";
 
-const Navbar = () => {
+interface Props {
+  user: UserType | null | undefined;
+}
+
+const Navbar: React.FC<Props> = ({ user }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [user, setUser] = useState(null);
 
   return (
     <div className="flex justify-between sm:flex-col sm:space-y-12 md:space-y-0 md:flex-row items-center p-8 w-full sticky top-0 z-50 bg-black">
@@ -36,7 +39,7 @@ const Navbar = () => {
         <NavbarLink page="About" />
         <NavbarLink page="Blog" />
       </div>
-      <UserMenu />
+      <UserMenu user={user} />
     </div>
   );
 };

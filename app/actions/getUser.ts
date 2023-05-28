@@ -7,7 +7,7 @@ export async function getSession() {
   return await getServerSession(authOptions);
 }
 
-export default async function getCurrentUser() {
+export default async function getUser() {
   try {
     const session = await getSession();
 
@@ -15,21 +15,20 @@ export default async function getCurrentUser() {
       return null;
     }
 
-    const currentUser = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email: session.user.email as string,
       },
     });
 
-    if (!currentUser) {
+    if (!user) {
       return null;
     }
 
     return {
-      ...currentUser,
-      createdAt: currentUser.createdAt.toISOString(),
-      updatedAt: currentUser.updatedAt.toISOString(),
-      emailVerified: currentUser.emailVerified?.toISOString() || null,
+      ...user,
+      createdAt: user.createdAt.toISOString(),
+      updatedAt: user.updatedAt.toISOString(),
     };
   } catch (error: any) {
     return null;

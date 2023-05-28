@@ -1,18 +1,18 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
-import MenuItem from "./MenuItem";
+import { useCallback, useState } from "react";
+import { AiOutlineMenu } from "react-icons/ai";
+import { UserType } from "../types";
 import Avatar from "./Avatar";
+import MenuItem from "./MenuItem";
 
 interface Props {
-  currentUser?: any | null;
+  user?: UserType | null;
 }
 
-const UserMenu: React.FC<Props> = ({ currentUser }) => {
+const UserMenu: React.FC<Props> = ({ user }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,7 +43,7 @@ const UserMenu: React.FC<Props> = ({ currentUser }) => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src={currentUser?.image} />
+            <Avatar src={user?.image} />
           </div>
         </div>
       </div>
@@ -61,9 +61,9 @@ const UserMenu: React.FC<Props> = ({ currentUser }) => {
           "
         >
           <div className="flex flex-col cursor-pointer">
-            {currentUser ? (
+            {user ? (
               <>
-                {/* menu items for user*/}
+                <MenuItem label="Apply" onClick={() => router.push("/apply")} />
                 <hr />
                 <MenuItem label="Logout" onClick={() => signOut()} />
               </>

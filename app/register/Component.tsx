@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { AiFillGithub } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 import ContainerApp from "../components/ContainerApp";
 import NewInput from "../components/NewInput";
 
@@ -20,8 +22,7 @@ const RegisterComponent = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -81,28 +82,14 @@ const RegisterComponent = () => {
           </div>
 
           <form onSubmit={(e) => handleSubmit(onSubmit)(e)} className="mt-4">
-            <div className="flex space-x-6">
-              <div className="w-[50vw]">
-                <NewInput
-                  id="firstName"
-                  label="First Name"
-                  disabled={isLoading}
-                  register={register}
-                  errors={errors}
-                  required
-                />
-              </div>
-              <div className="w-[50vw]">
-                <NewInput
-                  id="lastName"
-                  label="Last Name"
-                  disabled={isLoading}
-                  register={register}
-                  errors={errors}
-                  required
-                />
-              </div>
-            </div>
+            <NewInput
+              id="name"
+              label="Name (First & Last)"
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              required
+            />
             <NewInput
               id="email"
               label="Email"
@@ -161,6 +148,22 @@ const RegisterComponent = () => {
               </div>
             </div>
           </form>
+          <div className="flex flex-col gap-5 mt-8">
+            <button
+              onClick={() => signIn("google")}
+              className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold"
+            >
+              <FcGoogle size={24} />
+              Sign in with Google
+            </button>
+            <button
+              onClick={() => signIn("github")}
+              className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold"
+            >
+              <AiFillGithub size={24} />
+              Sign in with Github
+            </button>
+          </div>
         </div>
       </div>
     </ContainerApp>

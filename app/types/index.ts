@@ -1,3 +1,10 @@
+import { User } from "@prisma/client";
+
+export type UserType = Omit<User, "createdAt" | "updatedAt"> & {
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type FormType = {
   phone: string;
   organization: string;
@@ -23,15 +30,6 @@ export type ConfirmType = {
   liabilityDate: string;
   other: string;
   paid: string;
-};
-
-export type UserType = {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  verified: string;
-  status: string;
 };
 
 export type RowType = {

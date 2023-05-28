@@ -1,9 +1,12 @@
+import getUser from "../../actions/getUser";
 import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 
-const Blog1 = () => {
+const Blog1 = async () => {
+  const user = await getUser();
+
   return (
-    <Container>
+    <Container user={user}>
       <img
         src="/blog/lettertofuture.png"
         alt="Letter to the Future"
