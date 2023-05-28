@@ -281,7 +281,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                         setForm({ ...form, phone: value });
                         setCustomValue("phone", value);
                       }}
-                      label="Phone Number"
+                      label="Phone Number *"
                     />
                   </div>
                   <div className="w-[50vw]">
@@ -293,7 +293,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                         setForm({ ...form, organization: value });
                         setCustomValue("organization", value);
                       }}
-                      label="University / Company"
+                      label="University / Company *"
                     />
                   </div>
                 </div>
@@ -309,13 +309,13 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                         setForm({ ...form, city: value });
                         setCustomValue("city", value);
                       }}
-                      label="City"
+                      label="City *"
                     />
                   </div>
                   <div className="w-[50vw]">
                     <DropDown
                       error={error[3]}
-                      name="State"
+                      name="State *"
                       options={states}
                       value={form.state}
                       setValue={(v) => {
@@ -334,7 +334,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                         error[4].length > 0 ? "text-red-400" : "text-white"
                       }`}
                     >
-                      Can you attend in-person?
+                      Can you attend in-person? *
                     </div>
                     <RadioGroup
                       onChange={(v) => {
@@ -390,7 +390,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                         error[5].length > 0 ? "text-red-400" : "text-white"
                       }`}
                     >
-                      Can you attend the whole event?
+                      Can you attend the whole event? *
                     </div>
                     <RadioGroup
                       onChange={(value) => {
@@ -448,7 +448,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                   <div>
                     <MultiSelect
                       error={error[6]}
-                      name="What is your background?"
+                      name="What is your background? *"
                       options={backgroundData}
                       values={form.background}
                       setValues={(v) => {
@@ -482,7 +482,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                   <div>
                     <MultiSelect
                       error={error[7]}
-                      name="Why do you want to attend health{hacks} 2023?"
+                      name="Why do you want to attend health{hacks} 2023? *"
                       options={whyhh}
                       values={form.whyUs}
                       setValues={(v) => {
@@ -516,7 +516,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                   <div>
                     <DropDown
                       error={error[8]}
-                      name="How did you hear about health{hacks}"
+                      name="How did you hear about health{hacks}? *"
                       options={wherefrom}
                       value={form.howHear}
                       setValue={(v) => {
@@ -532,7 +532,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                   <div>
                     <DropDown
                       error={error[9]}
-                      name="Do you have a team yet?"
+                      name="Do you have a team yet? *"
                       options={yesno}
                       value={form.team}
                       setValue={(v) => {
@@ -552,7 +552,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                       setForm({ ...form, linkedIn: value });
                       setCustomValue("linkedIn", value);
                     }}
-                    label="LinkedIn Profile"
+                    label="LinkedIn Profile *"
                   />
                 </div>
 
@@ -561,7 +561,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                   <div>
                     <DropDown
                       error={error[11]}
-                      name="Any dietary restrictions?"
+                      name="Any dietary restrictions? *"
                       options={dietary}
                       value={form.dietaryRestrictions}
                       setValue={(v) => {
@@ -577,7 +577,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                   <div>
                     <DropDown
                       error={error[12]}
-                      name="Do you need transporation to Stanford?"
+                      name="Do you need transporation to Stanford? *"
                       options={yesno}
                       value={form.transportation}
                       setValue={(v) => {
