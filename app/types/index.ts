@@ -1,8 +1,22 @@
-import { User } from "@prisma/client";
+import { Application, User } from "@prisma/client";
 
-export type UserType = Omit<User, "createdAt" | "updatedAt"> & {
+export type UserType = Omit<
+  User,
+  "createdAt" | "updatedAt" | "emailVerified"
+> & {
   createdAt: string;
   updatedAt: string;
+  emailVerified: string | null;
+  application?: ApplicationType | null;
+};
+
+export type ApplicationType = Omit<
+  Application,
+  "createdAt" | "updatedAt" | "emailVerified"
+> & {
+  createdAt: string;
+  updatedAt: string;
+  user: UserType;
 };
 
 export type FormType = {

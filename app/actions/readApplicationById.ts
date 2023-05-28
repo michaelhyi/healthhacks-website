@@ -24,6 +24,7 @@ export default async function readApplicationById(params: IParams) {
     return {
       ...application,
       createdAt: application.createdAt.toISOString(),
+      updatedAt: application.updatedAt.toISOString(),
       user: {
         ...application.user,
         createdAt: application.user.createdAt.toISOString(),
