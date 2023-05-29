@@ -1,8 +1,8 @@
 "use client";
 
-import ContainerApp from "../../components/ContainerApp";
-import { socials } from "../../data/socials";
-import { UserType } from "../../types";
+import ContainerApp from "../components/ContainerApp";
+import { socials } from "../data/socials";
+import { UserType } from "../types";
 
 interface Props {
   user?: UserType | null;

@@ -172,7 +172,6 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
   }, []);
 
   const updateForm = useCallback(async () => {
-    let errors: string[] = [];
     const data = {
       phone: watch("phone"),
       organization: watch("organization"),
@@ -189,16 +188,6 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
       transportation: watch("transportation"),
       other: watch("other"),
     };
-
-    Object.keys(data).forEach((v) => {
-      if (v !== "other" && data[v as keyof typeof data].length === 0) {
-        errors.push("This is a required field");
-      } else {
-        errors.push("");
-      }
-    });
-
-    setError(errors);
 
     toast({ title: "Saving...", isClosable: true, duration: 2000 });
 
@@ -343,11 +332,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                       }}
                       value={form.inPerson}
                     >
-                      <div
-                        className={`flex items-center space-x-4 ${
-                          error[4].length > 0 ? "text-red-400" : "text-white"
-                        }`}
-                      >
+                      <div className={`flex items-center space-x-4 `}>
                         <Radio
                           value="Yes"
                           colorScheme="black"
