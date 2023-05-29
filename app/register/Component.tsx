@@ -58,6 +58,7 @@ const RegisterComponent = () => {
         signIn("credentials", {
           ...data,
           redirect: false,
+          callbackUrl: "/",
         }).then(async (callback) => {
           setIsLoading(false);
           if (callback?.ok) {
@@ -71,8 +72,6 @@ const RegisterComponent = () => {
               duration: 5000,
               isClosable: true,
             });
-
-            router.push("/");
           }
         });
       })
@@ -162,7 +161,7 @@ const RegisterComponent = () => {
               </div>
             </div>
           </form>
-          <div className="flex flex-col gap-5 mt-8">
+          <div className="flex flex-col gap-5 mt-8 mb-48">
             <button
               onClick={() => signIn("google", { callbackUrl: "/" })}
               className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold"
@@ -170,13 +169,13 @@ const RegisterComponent = () => {
               <FcGoogle size={24} />
               Sign in with Google
             </button>
-            <button
+            {/* <button
               onClick={() => signIn("github", { callbackUrl: "/" })}
               className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold"
             >
               <AiFillGithub size={24} />
               Sign in with Github
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

@@ -32,6 +32,7 @@ const LoginComponent = () => {
     signIn("credentials", {
       ...data,
       redirect: false,
+      callbackUrl: "/",
     }).then(async (callback) => {
       setIsLoading(false);
 
@@ -45,8 +46,6 @@ const LoginComponent = () => {
           duration: 5000,
           isClosable: true,
         });
-
-        router.push("/");
       }
     });
   };
@@ -121,7 +120,7 @@ const LoginComponent = () => {
               <FcGoogle size={24} />
               Sign in with Google
             </button>
-            <button
+            {/* <button
               onClick={() =>
                 signIn("github", {
                   callbackUrl: "/",
@@ -131,7 +130,7 @@ const LoginComponent = () => {
             >
               <AiFillGithub size={24} />
               Sign in with Github
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
