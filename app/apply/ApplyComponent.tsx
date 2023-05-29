@@ -129,8 +129,6 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
           isClosable: true,
         });
       } else {
-        console.log(data);
-
         await axios
           .post("/api/application/submit", {
             userId: user?.id,
@@ -169,7 +167,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
     }
 
     setSubmitting(false);
-  }, []);
+  }, [setSubmitting, watch, setError, toast, router]);
 
   const updateForm = useCallback(async () => {
     const data = {
@@ -201,7 +199,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
           duration: 2000,
         });
       });
-  }, [user, form]);
+  }, [watch, toast]);
 
   useAutosave({ data: form, onSave: updateForm });
 

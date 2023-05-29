@@ -23,7 +23,8 @@ const RegisterComponent = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -31,8 +32,6 @@ const RegisterComponent = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
-
     if (data.password !== data.confirmPassword)
       return toast({
         title: "Failure!",
@@ -45,7 +44,11 @@ const RegisterComponent = () => {
     setIsLoading(true);
 
     await axios
-      .post("/api/register", data)
+      .post("/api/register", {
+        name: data.firstName + " " + data.lastName,
+        email: data.email,
+        password: data.password,
+      })
       .then(() => {
         toast({
           title: "Success!",
@@ -56,8 +59,11 @@ const RegisterComponent = () => {
         });
 
         signIn("credentials", {
-          ...data,
-          redirect: false,
+          data: {
+            name: data.firstName + " " + data.lastName,
+            email: data.email,
+            password: data.password,
+          },
           callbackUrl: "/",
         }).then(async (callback) => {
           setIsLoading(false);
@@ -95,14 +101,30 @@ const RegisterComponent = () => {
           </div>
 
           <form onSubmit={(e) => handleSubmit(onSubmit)(e)} className="mt-4">
-            <NewInput
-              id="name"
-              label="Name (First & Last)"
-              disabled={isLoading}
-              register={register}
-              errors={errors}
-              required
-            />
+            <div className="flex space-x-6">
+              <div className="w-[50vw]">
+                <NewInput
+                  id="firstName"
+                  label="First Name"
+                  disabled={isLoading}
+                  register={register}
+                  errors={errors}
+                  required
+                />
+              </div>
+
+              <div className="w-[50vw]">
+                <NewInput
+                  id="lastName"
+                  label="Last Name"
+                  disabled={isLoading}
+                  register={register}
+                  errors={errors}
+                  required
+                />
+              </div>
+            </div>
+
             <NewInput
               id="email"
               label="Email"

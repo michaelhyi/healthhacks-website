@@ -33,7 +33,11 @@ export async function POST(req: Request) {
     }
   });
 
-  if (!valid) return NextResponse.error();
+  if (!valid)
+    return NextResponse.json(
+      { error: "All required fields must be complete." },
+      { status: 500 }
+    );
 
   const application = await prisma.application.update({
     where: { userId },

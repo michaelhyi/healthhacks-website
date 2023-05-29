@@ -31,7 +31,6 @@ const LoginComponent = () => {
 
     signIn("credentials", {
       ...data,
-      redirect: false,
       callbackUrl: "/",
     }).then(async (callback) => {
       setIsLoading(false);
