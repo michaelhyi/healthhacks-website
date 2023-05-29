@@ -19,11 +19,7 @@ const ApplicationInput: React.FC<Props> = ({
 }) => {
   return (
     <div>
-      <div
-        className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-          error && error.length > 0 ? "text-red-400" : "text-white"
-        }`}
-      >
+      <div className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold `}>
         {label}
       </div>
       {textarea ? (
@@ -33,9 +29,7 @@ const ApplicationInput: React.FC<Props> = ({
           onChange={async (e) => {
             setValue(e.target.value);
           }}
-          className={`w-full bg-[#202020] border-[0.5px] ${
-            error && error.length > 0 ? "border-red-400" : "border-white"
-          } py-2 rounded-xl px-4 min-h-[25vh]`}
+          className={`w-full bg-[#202020] border-[0.5px] py-2 rounded-xl px-4 min-h-[25vh]`}
         />
       ) : (
         <input
@@ -45,9 +39,7 @@ const ApplicationInput: React.FC<Props> = ({
           onChange={async (e) => {
             setValue(e.target.value);
           }}
-          className={`w-full  bg-[#202020] border-[1px] ${
-            error && error.length > 0 ? "border-red-400" : "border-white"
-          } py-2 rounded-xl px-4`}
+          className={`w-full  bg-[#202020] border-[1px] py-2 rounded-xl px-4`}
         />
       )}
 

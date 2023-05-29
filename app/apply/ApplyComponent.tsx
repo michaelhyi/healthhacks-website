@@ -319,9 +319,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                 <div className="flex space-x-6">
                   <div className="w-[50vw]">
                     <div
-                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-                        error[4].length > 0 ? "text-red-400" : "text-white"
-                      }`}
+                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold `}
                     >
                       Can you attend in-person? *
                     </div>
@@ -371,9 +369,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                   </div>
                   <div className="w-[50vw]">
                     <div
-                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-                        error[5].length > 0 ? "text-red-400" : "text-white"
-                      }`}
+                      className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold `}
                     >
                       Can you attend the whole event? *
                     </div>
@@ -384,11 +380,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                       }}
                       value={form.wholeEvent}
                     >
-                      <div
-                        className={`flex items-center space-x-4 ${
-                          error[5].length > 0 ? "text-red-400" : "text-white"
-                        }`}
-                      >
+                      <div className={`flex items-center space-x-4 `}>
                         <Radio
                           value="Yes"
                           colorScheme="black"

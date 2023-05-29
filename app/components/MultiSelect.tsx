@@ -21,18 +21,10 @@ const MultiSelect: React.FC<Props> = ({
     <div>
       <div className="flex">
         <div className="md:w-[100%] lg:w-[50vw]">
-          <div
-            className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-              error.length > 0 ? "text-red-400" : "text-white"
-            }`}
-          >
+          <div className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold `}>
             {name}
           </div>
-          <div
-            className={`flex flex-col space-y-2 ${
-              error.length > 0 ? "text-red-400" : "text-white"
-            }`}
-          >
+          <div className={`flex flex-col space-y-2 `}>
             {options.map((v, i) => (
               <Checkbox
                 isChecked={values.includes(v)}

@@ -20,13 +20,8 @@ const DropDown: React.FC<Props> = ({
 }) => {
   return (
     <div>
-      <div
-        className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold ${
-          error.length > 0 ? "text-red-400" : "text-white"
-        }`}
-      >
-        {" "}
-        {name}{" "}
+      <div className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold `}>
+        {name}
       </div>
       <Menu matchWidth={true} closeOnBlur={true}>
         <MenuButton
@@ -36,16 +31,14 @@ const DropDown: React.FC<Props> = ({
           bg="#202020"
           opacity="95%"
           w="100%"
-          borderColor={`${error.length > 0 ? "#F87171" : "white"}`}
+          borderColor={`white`}
           borderRadius="0.75rem"
           minH="42px"
           _hover={{ opacity: "75%" }}
           _expanded={{ bg: "#202020" }}
         >
           <div className="flex items-center justify-between">
-            <div
-              className={`${error.length > 0 ? "text-red-400" : "text-white"}`}
-            >
+            <div className={`text-white`}>
               {value.length > 0 ? value : "Select"}
             </div>
             <AiFillCaretDown color="white" />
