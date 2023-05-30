@@ -69,3 +69,8 @@ model Application {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model MailingList {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+}
