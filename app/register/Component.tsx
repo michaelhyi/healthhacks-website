@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@chakra-ui/react";
+import { Spinner, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import * as EmailValidator from "email-validator";
 import { signIn } from "next-auth/react";
@@ -35,8 +35,7 @@ const RegisterComponent = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (data.password !== data.confirmPassword)
       return toast({
-        title: "Failure!",
-        description: "Passwords must match!",
+        title: "Passwords must match!",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -162,7 +161,7 @@ const RegisterComponent = () => {
             </div>
             <div className="flex items-center mt-6 space-x-4 pb-8">
               <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-4 py-2 rounded-xl text-sm font-medium">
-                Register
+                {isLoading ? <Spinner size="xs" /> : "Register"}
               </button>
               <div className="md:text-sm sm:text-xs">
                 Already Registered?&nbsp;

@@ -43,5 +43,5 @@ export async function POST(req: Request) {
 
   sgMail.send(msg);
 
-  return NextResponse.json({ status: 300 });
+  return NextResponse.json({ status: 200 });
 }

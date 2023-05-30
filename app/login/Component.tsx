@@ -1,6 +1,7 @@
 "use client";
 
-import { useToast } from "@chakra-ui/react";
+import { Spinner, useToast } from "@chakra-ui/react";
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,7 +10,6 @@ import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import NewInput from "../components/NewInput";
-import axios from "axios";
 
 import * as EmailValidator from "email-validator";
 
@@ -42,27 +42,39 @@ const LoginComponent = () => {
       return setIsLoading(false);
     }
 
-    const response = await axios.post("/api/login", { email: data.email });
-    const user = response.data;
+    await axios
+      .post("/api/login", { email: data.email, password: data.password })
+      .then((callback) => {
+        const user = callback.data;
 
-    if (user && !user.verified) {
-      const updatedQuery: any = {
-        id: user?.id,
-        email: user?.email,
-      };
-
-      const url = qs.stringifyUrl(
-        { url: "/", query: updatedQuery },
-        { skipNull: true }
-      );
-
-      router.push(`/verify${url}`);
-    } else if (user && user.verified) {
-      signIn("credentials", {
-        ...data,
-        callbackUrl: "/",
-      }).finally(() => setIsLoading(false));
-    }
+        if (!user.verified) {
+          const updatedQuery: any = {
+            id: user?.id,
+            email: user?.email,
+          };
+          const url = qs.stringifyUrl(
+            { url: "/", query: updatedQuery },
+            { skipNull: true }
+          );
+          router.push(`/verify${url}`);
+        } else {
+          signIn("credentials", {
+            ...data,
+            callbackUrl: "/",
+          }).catch((e) => {
+            console.error(e);
+          });
+        }
+      })
+      .catch((callback) => {
+        toast({
+          title: callback.response.data.error,
+          status: "error",
+          isClosable: true,
+          duration: 5000,
+        });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -110,7 +122,7 @@ const LoginComponent = () => {
             />
             <div className="flex items-center mt-6 space-x-4">
               <button className="hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-4 py-2 rounded-xl text-sm font-semibold">
-                Login
+                {isLoading ? <Spinner size="xs" /> : "Login"}
               </button>
               <div className="text-sm font-medium text-white">
                 Forgot Password?&nbsp;

@@ -20,5 +20,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return NextResponse.json({ status: 300 });
+  return NextResponse.json({ status: 200 });
 }

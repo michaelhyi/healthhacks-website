@@ -21,7 +21,7 @@ const VerifyComponent: React.FC<Props> = ({ token }) => {
       (async () => {
         await axios
           .post("/api/verify", { token })
-          .then((callback) => {
+          .then(() => {
             setResult(true);
           })
           .catch((callback) => {
