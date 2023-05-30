@@ -8,6 +8,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 import ContainerApp from "../components/ContainerApp";
 import Input from "../components/NewInput";
+import * as EmailValidator from "email-validator";
 
 const ForgotPasswordComponent = () => {
   const toast = useToast();
@@ -25,6 +26,16 @@ const ForgotPasswordComponent = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setSubmitting(true);
+
+    if (!EmailValidator.validate(data.email)) {
+      toast({
+        title: "Invalid email!",
+        status: "error",
+        isClosable: true,
+        duration: 5000,
+      });
+      return setSubmitting(false);
+    }
 
     await axios
       .post("/api/forgot-password", data)

@@ -1,18 +1,17 @@
 "use client";
 
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
+import * as EmailValidator from "email-validator";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import qs from "query-string";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import ContainerApp from "../components/ContainerApp";
 import NewInput from "../components/NewInput";
-import qs from "query-string";
-
-import { useToast } from "@chakra-ui/react";
 
 const RegisterComponent = () => {
   const router = useRouter();
@@ -44,6 +43,16 @@ const RegisterComponent = () => {
       });
 
     setIsLoading(true);
+
+    if (!EmailValidator.validate(data.email)) {
+      toast({
+        title: "Invalid email!",
+        status: "error",
+        isClosable: true,
+        duration: 5000,
+      });
+      return setIsLoading(false);
+    }
 
     await axios
       .post("/api/register", {

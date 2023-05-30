@@ -11,6 +11,8 @@ import { FcGoogle } from "react-icons/fc";
 import NewInput from "../components/NewInput";
 import axios from "axios";
 
+import * as EmailValidator from "email-validator";
+
 const LoginComponent = () => {
   const router = useRouter();
   const toast = useToast({});
@@ -29,6 +31,16 @@ const LoginComponent = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
+
+    if (!EmailValidator.validate(data.email)) {
+      toast({
+        title: "Invalid email!",
+        status: "error",
+        isClosable: true,
+        duration: 5000,
+      });
+      return setIsLoading(false);
+    }
 
     const response = await axios.post("/api/login", { email: data.email });
     const user = response.data;
