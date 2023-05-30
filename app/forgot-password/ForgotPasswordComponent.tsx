@@ -28,7 +28,7 @@ const ForgotPasswordComponent = () => {
 
     await axios
       .post("/api/forgot-password", data)
-      .then((callback) => {
+      .then(() => {
         toast({
           title: "Success!",
           description: `We have sent an email to ${data.email}. This can take a couple of minutes. Simply click the link to start your registration form. If you don&apos;t see it, make sure to also check your spam folder.`,

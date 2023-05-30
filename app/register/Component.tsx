@@ -10,6 +10,8 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import ContainerApp from "../components/ContainerApp";
 import NewInput from "../components/NewInput";
+import qs from "query-string";
+
 import { useToast } from "@chakra-ui/react";
 
 const RegisterComponent = () => {
@@ -49,37 +51,18 @@ const RegisterComponent = () => {
         email: data.email,
         password: data.password,
       })
-      .then(() => {
-        toast({
-          title: "Success!",
-          description: "You have successfully registered an account.",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
+      .then((callback) => {
+        const updatedQuery: any = {
+          id: callback.data.id,
+          email: callback.data.email,
+        };
 
-        signIn("credentials", {
-          data: {
-            name: data.firstName + " " + data.lastName,
-            email: data.email,
-            password: data.password,
-          },
-          callbackUrl: "/",
-        }).then(async (callback) => {
-          setIsLoading(false);
-          if (callback?.ok) {
-            // check if user is not verified --> send email, route to verify,
-            // else
+        const url = qs.stringifyUrl(
+          { url: "/", query: updatedQuery },
+          { skipNull: true }
+        );
 
-            toast({
-              title: "Success!",
-              description: "You have successfully logged in!",
-              status: "success",
-              duration: 5000,
-              isClosable: true,
-            });
-          }
-        });
+        router.push(`/verify${url}`);
       })
       .finally(() => {
         setIsLoading(false);

@@ -1,14 +1,15 @@
 "use client";
 
+import { useToast } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import qs from "query-string";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import NewInput from "../components/NewInput";
-import { useToast } from "@chakra-ui/react";
+import axios from "axios";
 
 const LoginComponent = () => {
   const router = useRouter();
@@ -26,27 +27,30 @@ const LoginComponent = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data, e) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
-    signIn("credentials", {
-      ...data,
-      callbackUrl: "/",
-    }).then(async (callback) => {
-      setIsLoading(false);
+    const response = await axios.post("/api/login", { email: data.email });
+    const user = response.data;
 
-      if (callback?.ok) {
-        // check if user is not verified --> send email, route to verify,
-        // else
-        toast({
-          title: "Success!",
-          description: "You have successfully logged in!",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
-      }
-    });
+    if (user && !user.verified) {
+      const updatedQuery: any = {
+        id: user?.id,
+        email: user?.email,
+      };
+
+      const url = qs.stringifyUrl(
+        { url: "/", query: updatedQuery },
+        { skipNull: true }
+      );
+
+      router.push(`/verify${url}`);
+    } else if (user && user.verified) {
+      signIn("credentials", {
+        ...data,
+        callbackUrl: "/",
+      }).finally(() => setIsLoading(false));
+    }
   };
 
   return (
