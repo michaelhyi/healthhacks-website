@@ -4,7 +4,9 @@ import ComingSoonComponent from "./ComingSoonComponent";
 
 const Apply = async () => {
   const user = await readUser();
-  const application = await readApplicationById({ userId: user?.id });
+  let application = null;
+
+  if (user) application = await readApplicationById({ userId: user.id });
 
   return <ComingSoonComponent />;
   // return <ApplyComponent user={user} application={application} />;

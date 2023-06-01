@@ -9,7 +9,9 @@ import Statistics from "./components/Statistics";
 
 export default async function Home() {
   const user = await readUser();
-  const whitelisted = await readApplicationStatusById({ userId: user?.id });
+  let whitelisted = null;
+
+  if (user) whitelisted = await readApplicationStatusById({ userId: user.id });
 
   return (
     <Container user={user} whitelisted={whitelisted}>

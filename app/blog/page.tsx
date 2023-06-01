@@ -6,7 +6,9 @@ import Footer from "../components/Footer";
 
 const Blog = async () => {
   const user = await readUser();
-  const whitelisted = await readApplicationStatusById({ userId: user?.id });
+  let whitelisted = null;
+
+  if (user) whitelisted = await readApplicationStatusById({ userId: user.id });
 
   return (
     <Container user={user} whitelisted={whitelisted}>

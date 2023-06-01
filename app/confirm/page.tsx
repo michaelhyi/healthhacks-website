@@ -6,8 +6,13 @@ import ForbiddenComponent from "./ForbiddenComponent";
 
 const Confirm = async () => {
   const user = await readUser();
-  const whitelisted = await readApplicationStatusById({ userId: user?.id });
-  const confirmation = await readConfirmationById({ userId: user?.id });
+  let whitelisted = null;
+  let confirmation = null;
+
+  if (user) {
+    whitelisted = await readApplicationStatusById({ userId: user.id });
+    confirmation = await readConfirmationById({ userId: user.id });
+  }
 
   if (!whitelisted) {
     return <ForbiddenComponent />;

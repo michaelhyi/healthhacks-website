@@ -12,9 +12,6 @@ export default async function readApplicationById(params: IParams) {
       where: {
         userId,
       },
-      include: {
-        user: true,
-      },
     });
 
     if (!application) {
@@ -25,12 +22,6 @@ export default async function readApplicationById(params: IParams) {
       ...application,
       createdAt: application.createdAt.toISOString(),
       updatedAt: application.updatedAt.toISOString(),
-      user: {
-        ...application.user,
-        createdAt: application.user.createdAt.toISOString(),
-        updatedAt: application.user.updatedAt.toISOString(),
-        emailVerified: application.user.emailVerified?.toString() || null,
-      },
     };
   } catch (error: any) {
     throw new Error(error);
