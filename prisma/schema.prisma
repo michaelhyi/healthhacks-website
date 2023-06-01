@@ -8,39 +8,41 @@ datasource db {
 }
 
 model User {
-  id                       String   @id @default(auto()) @map("_id") @db.ObjectId
-  email                    String?  @unique
+  id                       String    @id @default(auto()) @map("_id") @db.ObjectId
+  email                    String?   @unique
   password                 String?
   name                     String?
   image                    String?
   emailVerified            DateTime?
   verified                 Boolean?
-  verifyToken              String? 
-  verifyExpiration         String? 
-  forgotPasswordToken      String?  
-  forgotPasswordExpiration String? 
-  status                   String   @default("pending")
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @updatedAt
+  verifyToken              String?
+  verifyExpiration         String?
+  forgotPasswordToken      String?
+  forgotPasswordExpiration String?
+  status                   String    @default("pending")
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
 
-  accounts Account[]
-  application Application?
-  submittedApplication SubmittedApplications?
+  accounts              Account[]
+  application           Application?
+  submittedApplication  SubmittedApplications?
+  confirmation          Confirmation?
+  submittedconfirmation SubmittedConfirmations?
 }
 
 model Account {
-  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String  @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String? @db.String
-  access_token       String? @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.String
-  session_state      String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -49,7 +51,7 @@ model Account {
 
 model Application {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId              String   @db.ObjectId @unique
+  userId              String   @unique @db.ObjectId
   status              String   @default("pending")
   phone               String?
   organization        String?
@@ -73,23 +75,23 @@ model Application {
 
 model SubmittedApplications {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId              String   @db.ObjectId @unique
+  userId              String   @unique @db.ObjectId
   confirmed           Boolean  @default(false)
   whitelisted         Boolean  @default(false)
-  phone               String?
-  organization        String?
-  city                String?
-  state               String?
-  inPerson            String?
-  wholeEvent          String?
+  phone               String
+  organization        String
+  city                String
+  state               String
+  inPerson            String
+  wholeEvent          String
   background          String[] @default([])
   whyUs               String[] @default([])
-  howHear             String?
-  team                String?
-  linkedIn            String?
-  dietaryRestrictions String?
-  transportation      String?
-  other               String?
+  howHear             String
+  team                String
+  linkedIn            String
+  dietaryRestrictions String
+  transportation      String
+  other               String
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
@@ -99,4 +101,37 @@ model SubmittedApplications {
 model MailingList {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique
+}
+
+model Confirmation {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String   @unique @db.ObjectId
+  status             String   @default("Pending")
+  inPerson           String?
+  firstTrack         String?
+  secondTrack        String?
+  liabilitySignature String?
+  liabilityDate      String?
+  other              String?
+  paid               Boolean?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SubmittedConfirmations {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String   @unique @db.ObjectId
+  inPerson           String
+  firstTrack         String
+  secondTrack        String
+  liabilitySignature String
+  liabilityDate      String
+  other              String
+  paid               Boolean?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

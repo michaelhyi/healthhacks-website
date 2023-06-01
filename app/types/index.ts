@@ -1,4 +1,4 @@
-import { Application, User } from "@prisma/client";
+import { Application, Confirmation, User } from "@prisma/client";
 
 export type UserType = Omit<
   User,
@@ -17,6 +17,11 @@ export type ApplicationType = Omit<
   createdAt: string;
   updatedAt: string;
   user: UserType;
+};
+
+export type ConfirmationType = Omit<Confirmation, "createdAt" | "updatedAt"> & {
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type FormType = {

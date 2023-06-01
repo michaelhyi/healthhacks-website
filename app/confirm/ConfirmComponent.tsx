@@ -1,92 +1,137 @@
 "use client";
 
 import { tracks } from "@/app/data/tracks";
-import { Radio, RadioGroup, Spinner } from "@chakra-ui/react";
-// import { loadStripe } from "@stripe/stripe-js";
-import { useState } from "react";
+import { Radio, RadioGroup, Spinner, useToast } from "@chakra-ui/react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useCallback, useMemo, useState } from "react";
+import { Autosave, useAutosave } from "react-autosave";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ApplicationInput from "../components/ApplicationInput";
 import ContainerApp from "../components/ContainerApp";
 import DropDown from "../components/DropDown";
-import { UserType } from "../types";
-import { useRouter } from "next/navigation";
+import { ConfirmationType, UserType } from "../types";
 
 interface Props {
   user: UserType | null;
+  confirmation: ConfirmationType | null;
 }
 
-const ConfirmComponent: React.FC<Props> = ({ user }) => {
-  const [status, setStatus] = useState("");
+const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
+  const toast = useToast();
+  const router = useRouter();
+  const status = useMemo(() => {
+    return confirmation?.status || "Pending";
+  }, [confirmation]);
   const [submitting, setSubmitting] = useState(false);
 
+  const { handleSubmit, setValue, watch } = useForm<FieldValues>({
+    defaultValues: {
+      inPerson: confirmation?.inPerson || "",
+      firstTrack: confirmation?.firstTrack || "",
+      secondTrack: confirmation?.secondTrack || "",
+      liabilitySignature: confirmation?.liabilitySignature || "",
+      liabilityDate: confirmation?.liabilityDate || "",
+      other: confirmation?.other || "",
+      paid: confirmation?.paid,
+    },
+  });
+
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
+
   const [form, setForm] = useState({
-    inPerson: "",
-    tracks1: "",
-    tracks2: "",
-    liability: "",
-    liabilityDate: "",
-    other: "",
-    paid: "",
+    inPerson: confirmation?.inPerson || "",
+    firstTrack: confirmation?.firstTrack || "",
+    secondTrack: confirmation?.secondTrack || "",
+    liabilitySignature: confirmation?.liabilitySignature || "",
+    liabilityDate: confirmation?.liabilityDate || "",
+    other: confirmation?.other || "",
+    paid: confirmation?.paid,
   });
   const [error, setError] = useState(new Array(5).fill(""));
 
-  // const redirectToCheckout = async (email: string) => {
-  //   const priceId = process.env.NEXT_PUBLIC_PRICE_ID_TEST; // Replace with your actual price I
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setSubmitting(true);
 
-  //   const res = await fetch("../api/create-checkout-session", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ priceId, email }),
-  //   });
+    let found = false;
+    let errors: string[] = [];
 
-  //   const { sessionId } = await res.json();
-  //   const stripe = await loadStripe(
-  //     process.env.NEXT_PUBLIC_PUBLISHABLE_KEY_TEST!
-  //   ); // Replace with your actual publishable key
-  //   if (!(stripe == null))
-  //     await stripe.redirectToCheckout({ sessionId: sessionId });
-  // };
+    Object.keys(data).forEach((v) => {
+      if (
+        v !== "other" &&
+        v !== "paid" &&
+        data[v as keyof typeof data].length == 0
+      ) {
+        errors.push("This is a required field");
+        found = true;
+      } else {
+        errors.push("");
+      }
+    });
 
-  // const handleSubmit = async () => {
-  //   setSubmitting(true);
+    setError(errors);
 
-  //   let found = false;
-  //   let errors: string[] = [];
+    if (!found) {
+      //redirect to checkout
+      await axios
+        .post("/api/confirmation/submit", { userId: user?.id, ...data })
+        .then(() => {
+          toast({
+            title: "Thanks for your confirmation!",
+            description: `We have sent an email to ${user?.email}. See you in a couple of weeks, and we can't wait for you to come to our event. In the meantime, follow us on social media!            `,
+            status: "success",
+            duration: 10000,
+            isClosable: true,
+          });
 
-  //   Object.keys(cform).forEach((v) => {
-  //     if (
-  //       v !== "other" &&
-  //       v !== "paid" &&
-  //       cform[v as keyof ConfirmType] === undefined
-  //     ) {
-  //       errors.push("This is a required field");
-  //       found = true;
-  //     } else {
-  //       errors.push("");
-  //     }
-  //   });
+          router.refresh();
+        })
+        .catch(() => {
+          toast({
+            title: "Error!",
+            description: "There was a problem submitting your application!",
+            status: "error",
+            duration: 10000,
+            isClosable: true,
+          });
+        })
+        .finally(() => setSubmitting(false));
+    }
+    setSubmitting(false);
+  };
 
-  //   setError(errors);
+  const updateForm = useCallback(async () => {
+    const data = {
+      inPerson: watch("inPerson"),
+      firstTrack: watch("firstTrack"),
+      secondTrack: watch("secondTrack"),
+      liabilitySignature: watch("liabilitySignature"),
+      liabilityDate: watch("liabilityDate"),
+      other: watch("other"),
+      paid: watch("paid"),
+    };
 
-  //   if (!found) {
-  //     redirectToCheckout(user!.email);
-  //     console.log(cform);
-  //     const response = await submitConfirmation({
-  //       userId: user!.id!,
-  //       firstName: user!.firstName,
-  //       lastName: user!.lastName,
-  //       email: user!.email,
-  //       inPerson: cform.inPerson,
-  //       liability: cform.liability,
-  //       liabilityDate: cform.liabilityDate,
-  //       other: cform.other,
-  //       paid: cform.paid,
-  //       tracks1: cform.tracks1,
-  //       tracks2: cform.tracks2,
-  //     });
-  //     console.log(response);
-  //   }
-  //   setSubmitting(false);
-  // };
+    toast({ title: "Saving...", isClosable: true, duration: 2000 });
+
+    await axios
+      .post("/api/confirmation", { userId: user?.id, ...data })
+      .then(() => {
+        toast({
+          title: "Saved!",
+          status: "success",
+          isClosable: true,
+          duration: 2000,
+        });
+      });
+  }, [watch, toast]);
+
+  useAutosave({ data: form, onSave: updateForm });
 
   return (
     <ContainerApp>
@@ -156,6 +201,7 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                     <RadioGroup
                       onChange={(v) => {
                         setForm({ ...form, inPerson: v });
+                        setCustomValue("inPerson", v);
                       }}
                       value={form.inPerson}
                     >
@@ -169,6 +215,7 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                           colorScheme="black"
                           onClick={() => {
                             setForm({ ...form, inPerson: "Yes" });
+                            setCustomValue("inPerson", "Yes");
                           }}
                         >
                           Yes
@@ -178,6 +225,7 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                           colorScheme="black"
                           onClick={() => {
                             setForm({ ...form, inPerson: "No" });
+                            setCustomValue("inPerson", "no");
                           }}
                         >
                           No
@@ -233,9 +281,10 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                       error={error[1]}
                       name="What is your first track choice?"
                       options={tracks}
-                      value={form.tracks1}
+                      value={form.firstTrack}
                       setValue={(v) => {
-                        setForm({ ...form, tracks1: v });
+                        setForm({ ...form, firstTrack: v });
+                        setCustomValue("firstTrack", v);
                       }}
                     />
                   </div>
@@ -249,9 +298,10 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                       error={error[2]}
                       name="What is your second track choice?"
                       options={tracks}
-                      value={form.tracks2}
+                      value={form.secondTrack}
                       setValue={(v) => {
-                        setForm({ ...form, tracks2: v });
+                        setForm({ ...form, secondTrack: v });
+                        setCustomValue("secondTrack", v);
                       }}
                     />
                   </div>
@@ -284,9 +334,10 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                 <div>
                   <ApplicationInput
                     error={error[3]}
-                    value={form.liability}
+                    value={form.liabilitySignature}
                     setValue={(value) => {
-                      setForm({ ...form, liability: value });
+                      setForm({ ...form, liabilitySignature: value });
+                      setCustomValue("liabilitySignature", value);
                     }}
                     label="Please write your full name as your signature to confirm your acceptance of our liability and photo release waiver."
                   />
@@ -299,6 +350,7 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                     value={form.liabilityDate}
                     setValue={(value) => {
                       setForm({ ...form, liabilityDate: value });
+                      setCustomValue("liabilityDate", value);
                     }}
                     label="Please include the date of you signing this form."
                   />
@@ -315,6 +367,7 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                     value={form.other}
                     setValue={(value) => {
                       setForm({ ...form, other: value });
+                      setCustomValue("other", value);
                     }}
                   />
                 </div>
@@ -329,10 +382,11 @@ const ConfirmComponent: React.FC<Props> = ({ user }) => {
                   a <strong> $5 food voucher fee </strong> prior to our event.
                   Please checkout here:
                 </p>
+                <Autosave data={form} onSave={updateForm} />
               </form>
               <div className="flex items-center space-x-6 pt-8 pb-24">
                 <button
-                  // onClick={handleSubmit}
+                  onClick={(e) => handleSubmit(onSubmit)(e)}
                   className={`hover:cursor-pointer duration-500 hover:opacity-50 text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-xl text-sm font-medium ${
                     status === "Submitted"
                       ? "pointer-events-none"
