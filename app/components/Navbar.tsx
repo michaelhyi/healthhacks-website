@@ -9,7 +9,7 @@ import UserMenu from "./UserMenu";
 
 interface Props {
   user: UserType | null | undefined;
-  whitelisted: boolean | null;
+  whitelisted?: boolean | null;
 }
 
 const Navbar: React.FC<Props> = ({ user, whitelisted }) => {

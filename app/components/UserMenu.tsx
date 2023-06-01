@@ -10,7 +10,7 @@ import MenuItem from "./MenuItem";
 
 interface Props {
   user?: UserType | null;
-  whitelisted: boolean | null;
+  whitelisted?: boolean | null;
 }
 
 const UserMenu: React.FC<Props> = ({ user, whitelisted }) => {

@@ -246,31 +246,35 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
                 </p>
                 <ol className="font-base text-md text-[#b9b9b9]">
                   <li className="pt-2">
-                    <b>Aging & Longevity:</b> As the world&apos;s population
-                    continues to age, it is important to consider the unique
-                    healthcare needs and challenges faced by this population.
-                    This track will focus on exploring innovations and solutions
-                    that can help improve the health and well-being of the aging
-                    population, including preventative care, chronic disease
-                    management, and technology-based solutions.
+                    <b>Diagnostic Medicine:</b>With the advancement of data
+                    analytics and bioinformatics, there is growing potential for
+                    innovating cost-effective, accurate diagnostic tools for
+                    studying and treating health conditions. This track will
+                    focus on the design and refinement of reliable, personalized
+                    diagnostic technologies, equitable access and regulation of
+                    resources, and integration of diagnostic medicine. This may
+                    include wearable technologies, predictive software, and
+                    early detection.
                   </li>
                   <li className="pt-2">
-                    <b>Population & Preventative Health:</b> Traditional
-                    medicine has focused heavily on treating illnesses and
-                    diseases, but what if we focused on preventing them in the
-                    first place? This track will explore ways to promote and
-                    encourage preventative health measures, such as exercise,
-                    healthy eating, monitor good sleep schedules, and stress
-                    management, in order to improve overall health.
+                    <b>Healthcare Automation:</b>In today’s healthcare industry,
+                    limited resources is a prevalent issue. How can we alleviate
+                    healthcare provider shortages, telecommunication
+                    limitations, and healthcare data inconsistencies? To promote
+                    an automated healthcare industry, this track aims to make
+                    advancements in medical communication, applied robotics, and
+                    hospital database management to streamline patient care and
+                    physician practices.
                   </li>
                   <li className="pt-2">
-                    <b>Mental Health & Addiction:</b> Mental health is an
-                    important aspect of overall health and well-being, but it is
-                    often overlooked or stigmatized. This track will focus on
-                    exploring innovations and solutions that can help improve
-                    mental health, with a particular focus on issues related to
-                    addiction. This may include therapy and support programs,
-                    technology-based solutions, and community-based approaches.
+                    <b>Population & Preventative Health:</b>While healthcare has
+                    put much effort toward treating diseases, it is far more
+                    resourceful to prevent them from developing in the first
+                    place. This track will focus on improving population health
+                    through preventative measures and proactive lifestyle
+                    changes, such as exercise, healthy eating, adequate sleep,
+                    stress management, and regular medical screenings, on both
+                    individual and community levels.
                   </li>
                 </ol>
 

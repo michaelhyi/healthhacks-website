@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 interface Props {
   children: React.ReactNode;
   user?: UserType | null;
-  whitelisted: boolean | null;
+  whitelisted?: boolean | null;
 }
 
 const Container: React.FC<Props> = ({ children, user, whitelisted }) => {
