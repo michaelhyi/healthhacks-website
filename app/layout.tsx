@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
 import ClientOnly from "./components/ClientOnly";
+import "./globals.css";
 import { ChakraProviders } from "./providers/ChakraProviders";
 
 const font = Inter({ subsets: ["latin"] });

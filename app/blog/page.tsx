@@ -2,6 +2,7 @@ import readUser from "../actions/readUser";
 import BlogChunk from "../components/BlogChunk";
 import Container from "../components/Container";
 import Footer from "../components/Footer";
+
 const Blog = async () => {
   const user = await readUser();
 

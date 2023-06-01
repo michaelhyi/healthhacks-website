@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
 import { AiOutlineRight } from "react-icons/ai";
 import { UserType } from "../types";
 
