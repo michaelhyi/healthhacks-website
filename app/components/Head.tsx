@@ -9,9 +9,10 @@ import Fade from "react-reveal/Fade";
 
 interface Props {
   user?: UserType | null;
+  whitelisted: boolean | null;
 }
 
-const Head: React.FC<Props> = ({ user }) => {
+const Head: React.FC<Props> = ({ user, whitelisted }) => {
   return (
     <Fade delay={500} up distance="25px">
       <div className="flex flex-col items-center justify-center pt-12 p-4 pb-16 bg-[url('/headergradient.svg')] bg-cover">
@@ -33,18 +34,33 @@ const Head: React.FC<Props> = ({ user }) => {
               {`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}
             </div>
           </Fade>
-          <Link href={`${user ? "/apply" : "/login"}`}>
-            <div className="hover:cursor-pointer duration-500 hover:opacity-70">
-              <Fade delay={500} up distance="25px">
-                <div className="mt-6 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
-                  <div className="font-semibold">Start Now</div>
-                  <div className="opacity-75">
-                    <AiOutlineRight size={15} />
+          {whitelisted ? (
+            <Link href="/confirm">
+              <div className="hover:cursor-pointer duration-500 hover:opacity-70">
+                <Fade delay={500} up distance="25px">
+                  <div className="mt-6 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
+                    <div className="font-semibold">RSVP Now</div>
+                    <div className="opacity-75">
+                      <AiOutlineRight size={15} />
+                    </div>
                   </div>
-                </div>
-              </Fade>
-            </div>
-          </Link>
+                </Fade>
+              </div>
+            </Link>
+          ) : (
+            <Link href={`${user ? "/apply" : "/login"}`}>
+              <div className="hover:cursor-pointer duration-500 hover:opacity-70">
+                <Fade delay={500} up distance="25px">
+                  <div className="mt-6 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
+                    <div className="font-semibold">Start Now</div>
+                    <div className="opacity-75">
+                      <AiOutlineRight size={15} />
+                    </div>
+                  </div>
+                </Fade>
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </Fade>

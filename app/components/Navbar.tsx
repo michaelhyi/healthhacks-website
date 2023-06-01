@@ -9,9 +9,10 @@ import UserMenu from "./UserMenu";
 
 interface Props {
   user: UserType | null | undefined;
+  whitelisted: boolean | null;
 }
 
-const Navbar: React.FC<Props> = ({ user }) => {
+const Navbar: React.FC<Props> = ({ user, whitelisted }) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -39,7 +40,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
         <NavbarLink page="About" />
         <NavbarLink page="Blog" />
       </div>
-      <UserMenu user={user} />
+      <UserMenu user={user} whitelisted={whitelisted} />
     </div>
   );
 };

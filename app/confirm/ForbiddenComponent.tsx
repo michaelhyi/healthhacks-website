@@ -8,13 +8,13 @@ interface Props {
   user?: UserType | null;
 }
 
-const ComingSoonComponent: React.FC<Props> = ({ user }) => {
+const ForbiddenComponent: React.FC<Props> = ({ user }) => {
   return (
     <ContainerApp>
       <div className="flex flex-col items-center md:pb-8 md:pt-8 xl:pt-16 sm:pt-16 w-screen h-[100%]">
         <div className="max-w-lg align-middle">
           <h2 className="font-semibold text-4xl w-lg px-8 pt-8 text-left ">
-            Applications will open on June 9th! Stay tuned...
+            Sorry! Your application is still under review.
           </h2>
           <p className="font-normal text-base px-8 pt-6  md:text-base  sm:text-sm text-hh-lightgray">
             Please follow our social media to stay up to date with future
@@ -41,4 +41,4 @@ const ComingSoonComponent: React.FC<Props> = ({ user }) => {
   );
 };
 
-export default ComingSoonComponent;
+export default ForbiddenComponent;

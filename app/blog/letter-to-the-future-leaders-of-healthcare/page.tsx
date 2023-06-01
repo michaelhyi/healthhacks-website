@@ -1,12 +1,14 @@
+import readApplicationStatusById from "../../actions/readApplicationStatusById";
 import readUser from "../../actions/readUser";
 import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 
 const Blog1 = async () => {
   const user = await readUser();
+  const whitelisted = await readApplicationStatusById({ userId: user?.id });
 
   return (
-    <Container user={user}>
+    <Container user={user} whitelisted={whitelisted}>
       <img
         src="/blog/lettertofuture.png"
         alt="Letter to the Future"

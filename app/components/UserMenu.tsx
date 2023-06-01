@@ -10,9 +10,10 @@ import MenuItem from "./MenuItem";
 
 interface Props {
   user?: UserType | null;
+  whitelisted: boolean | null;
 }
 
-const UserMenu: React.FC<Props> = ({ user }) => {
+const UserMenu: React.FC<Props> = ({ user, whitelisted }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -64,6 +65,12 @@ const UserMenu: React.FC<Props> = ({ user }) => {
             {user ? (
               <>
                 <MenuItem label="Apply" onClick={() => router.push("/apply")} />
+                {whitelisted && (
+                  <MenuItem
+                    label="Confirm"
+                    onClick={() => router.push("/confirm")}
+                  />
+                )}
                 <hr />
                 <MenuItem label="Logout" onClick={() => signOut()} />
               </>

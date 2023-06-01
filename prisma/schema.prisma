@@ -75,6 +75,7 @@ model SubmittedApplications {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
   userId              String   @db.ObjectId @unique
   confirmed           Boolean  @default(false)
+  whitelisted         Boolean  @default(false)
   phone               String?
   organization        String?
   city                String?

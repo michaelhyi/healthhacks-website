@@ -5,9 +5,10 @@ import Footer from "../components/Footer";
 
 const Blog = async () => {
   const user = await readUser();
+  const whitelisted = await readApplicationStatusById({ userId: user?.id });
 
   return (
-    <Container user={user}>
+    <Container user={user} whitelisted={whitelisted}>
       <div className="flex flex-col h-auto 2xl:h-screen justify-between">
         {/* <Fade delay={500} up distance="24px"> */}
         <div className="flex flex-col justify-center bg-black h-full items-center mb-0 2xl:mb-auto">

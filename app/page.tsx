@@ -1,3 +1,4 @@
+import readApplicationStatusById from "./actions/readApplicationStatusById";
 import readUser from "./actions/readUser";
 import Container from "./components/Container";
 import Days from "./components/Days";
@@ -8,10 +9,11 @@ import Statistics from "./components/Statistics";
 
 export default async function Home() {
   const user = await readUser();
+  const whitelisted = await readApplicationStatusById({ userId: user?.id });
 
   return (
-    <Container user={user}>
-      <Head user={user} />
+    <Container user={user} whitelisted={whitelisted}>
+      <Head user={user} whitelisted={whitelisted} />
       <Statistics />
       <Sponsors />
       <Days />
