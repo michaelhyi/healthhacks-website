@@ -1,20 +1,34 @@
 "use client";
 
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ContainerApp from "../../components/ContainerApp";
 import VerifyFail from "../../components/VerifyFail";
 import VerifySuccess from "../../components/VerifySuccess";
+import { UserType } from "../../types";
+import { useToast } from "@chakra-ui/react";
 
 interface Props {
   token: string;
+  user: UserType | null;
 }
 
-const VerifyComponent: React.FC<Props> = ({ token }) => {
+const VerifyComponent: React.FC<Props> = ({ token, user }) => {
+  const toast = useToast();
+  const router = useRouter();
   const params = useSearchParams();
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState("");
+
+  if (user) {
+    toast({
+      title: "User already signed in!",
+      duration: 3000,
+      isClosable: true,
+    });
+    router.push("/");
+  }
 
   useEffect(() => {
     if (token) {

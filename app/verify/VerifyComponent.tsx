@@ -5,11 +5,25 @@ import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import { UserType } from "../types";
 
-const VerifyComponent = () => {
+interface Props {
+  user: UserType | null;
+}
+
+const VerifyComponent: React.FC<Props> = ({ user }) => {
   const toast = useToast();
   const router = useRouter();
   const params = useSearchParams();
+
+  if (user) {
+    toast({
+      title: "User already signed in!",
+      duration: 3000,
+      isClosable: true,
+    });
+    router.push("/");
+  }
 
   useEffect(() => {
     if (params?.toString().length === 0) {

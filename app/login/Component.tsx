@@ -2,6 +2,7 @@
 
 import { Spinner, useToast } from "@chakra-ui/react";
 import axios from "axios";
+import * as EmailValidator from "email-validator";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,13 +11,25 @@ import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import NewInput from "../components/NewInput";
+import { UserType } from "../types";
 
-import * as EmailValidator from "email-validator";
+interface Props {
+  user: UserType | null;
+}
 
-const LoginComponent = () => {
+const LoginComponent: React.FC<Props> = ({ user }) => {
+  const toast = useToast();
   const router = useRouter();
-  const toast = useToast({});
   const [isLoading, setIsLoading] = useState(false);
+
+  if (user) {
+    toast({
+      title: "User already signed in!",
+      duration: 3000,
+      isClosable: true,
+    });
+    router.push("/");
+  }
 
   const {
     register,

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ContainerApp from "../../components/ContainerApp";
 import Input from "../../components/NewInput";
+import { UserType } from "../../types";
 import { sleep } from "../../utils/sleep";
 import ChangePasswordFail from "./ChangePasswordFail";
 
@@ -17,12 +18,26 @@ interface Props {
     error?: string | null;
     email?: string | null;
   };
+  user: UserType | null;
 }
 
-const ChangePasswordComponent: React.FC<Props> = ({ tokenValidity, token }) => {
+const ChangePasswordComponent: React.FC<Props> = ({
+  tokenValidity,
+  token,
+  user,
+}) => {
   const toast = useToast();
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+
+  if (user) {
+    toast({
+      title: "You are already signed in!",
+      duration: 3000,
+      isClosable: true,
+    });
+    router.push("/");
+  }
 
   const {
     handleSubmit,

@@ -9,10 +9,26 @@ import { AiOutlineLeft } from "react-icons/ai";
 import ContainerApp from "../components/ContainerApp";
 import Input from "../components/NewInput";
 import * as EmailValidator from "email-validator";
+import { UserType } from "../types";
+import { useRouter } from "next/navigation";
 
-const ForgotPasswordComponent = () => {
+interface Props {
+  user: UserType | null;
+}
+
+const ForgotPasswordComponent: React.FC<Props> = ({ user }) => {
   const toast = useToast();
+  const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+
+  if (user) {
+    toast({
+      title: "User already signed in!",
+      duration: 3000,
+      isClosable: true,
+    });
+    router.push("/");
+  }
 
   const {
     handleSubmit,

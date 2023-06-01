@@ -12,11 +12,25 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import ContainerApp from "../components/ContainerApp";
 import NewInput from "../components/NewInput";
+import { UserType } from "../types";
 
-const RegisterComponent = () => {
-  const router = useRouter();
+interface Props {
+  user: UserType | null;
+}
+
+const RegisterComponent: React.FC<Props> = ({ user }) => {
   const toast = useToast();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  if (user) {
+    toast({
+      title: "User already signed in!",
+      duration: 3000,
+      isClosable: true,
+    });
+    router.push("/");
+  }
 
   const {
     register,
