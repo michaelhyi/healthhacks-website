@@ -60,6 +60,26 @@ export async function POST(req: Request) {
     },
   });
 
+  await prisma.submittedApplications.create({
+    data: {
+      userId,
+      phone,
+      organization,
+      city,
+      state,
+      inPerson,
+      wholeEvent,
+      background,
+      whyUs,
+      howHear,
+      team,
+      linkedIn,
+      dietaryRestrictions,
+      transportation,
+      other,
+    },
+  });
+
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (user) {

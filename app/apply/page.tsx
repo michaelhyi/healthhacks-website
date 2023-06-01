@@ -1,12 +1,13 @@
 import readApplicationById from "../actions/readApplicationById";
 import readUser from "../actions/readUser";
-import ApplyComponent from "./ApplyComponent";
+import ComingSoonComponent from "./ComingSoonComponent";
 
 const Apply = async () => {
   const user = await readUser();
   const application = await readApplicationById({ userId: user?.id });
 
-  return <ApplyComponent user={user} application={application} />;
+  return <ComingSoonComponent />;
+  // return <ApplyComponent user={user} application={application} />;
 };
 
 export default Apply;
