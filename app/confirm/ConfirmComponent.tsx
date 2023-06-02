@@ -11,6 +11,9 @@ import ApplicationInput from "../components/ApplicationInput";
 import ContainerApp from "../components/ContainerApp";
 import DropDown from "../components/DropDown";
 import { ConfirmationType, UserType } from "../types";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
   user: UserType | null;
@@ -31,7 +34,7 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
       firstTrack: confirmation?.firstTrack || "",
       secondTrack: confirmation?.secondTrack || "",
       liabilitySignature: confirmation?.liabilitySignature || "",
-      liabilityDate: confirmation?.liabilityDate || "",
+      liabilityDate: confirmation?.liabilityDate || new Date(),
       other: confirmation?.other || "",
       paid: confirmation?.paid,
     },
@@ -50,7 +53,7 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
     firstTrack: confirmation?.firstTrack || "",
     secondTrack: confirmation?.secondTrack || "",
     liabilitySignature: confirmation?.liabilitySignature || "",
-    liabilityDate: confirmation?.liabilityDate || "",
+    liabilityDate: confirmation?.liabilityDate || new Date(),
     other: confirmation?.other || "",
     paid: confirmation?.paid,
   });
@@ -349,14 +352,18 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
 
                 {/* Liability Form Date*/}
                 <div>
-                  <ApplicationInput
-                    error={error[4]}
-                    value={form.liabilityDate}
-                    setValue={(value) => {
-                      setForm({ ...form, liabilityDate: value });
-                      setCustomValue("liabilityDate", value);
+                  <div
+                    className={`mt-8 mb-2 lg:text-lg md:text-small font-semibold `}
+                  >
+                    Please include the date of you signing this form.
+                  </div>
+                  <DatePicker
+                    className="w-full bg-[#202020] border-[1px] py-2 rounded-xl px-4"
+                    selected={form.liabilityDate}
+                    onChange={(date) => {
+                      setForm({ ...form, liabilityDate: date! });
+                      setCustomValue("liabilityDate", date);
                     }}
-                    label="Please include the date of you signing this form."
                   />
                 </div>
 
@@ -375,7 +382,6 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
                     }}
                   />
                 </div>
-
                 <div className="font-semibold text-4xl mt-12">
                   <u>Food Voucher</u>
                 </div>

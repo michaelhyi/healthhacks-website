@@ -111,7 +111,7 @@ model Confirmation {
   firstTrack         String?
   secondTrack        String?
   liabilitySignature String?
-  liabilityDate      String?
+  liabilityDate      DateTime?
   other              String?
   paid               Boolean?
   createdAt          DateTime @default(now())
@@ -127,7 +127,7 @@ model SubmittedConfirmations {
   firstTrack         String
   secondTrack        String
   liabilitySignature String
-  liabilityDate      String
+  liabilityDate      DateTime
   other              String
   paid               Boolean?
   createdAt          DateTime @default(now())
