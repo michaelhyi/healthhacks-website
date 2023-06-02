@@ -62,6 +62,16 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setSubmitting(true);
 
+    if (data.firstTrack === data.secondTrack) {
+      toast({
+        title: "You must select different first and second choice tracks!",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return setSubmitting(false);
+    }
+
     let found = false;
     let errors: string[] = [];
 
