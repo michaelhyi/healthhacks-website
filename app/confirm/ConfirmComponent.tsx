@@ -6,14 +6,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { Autosave, useAutosave } from "react-autosave";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ApplicationInput from "../components/ApplicationInput";
 import ContainerApp from "../components/ContainerApp";
 import DropDown from "../components/DropDown";
+import { checkout } from "../libs/checkout";
 import { ConfirmationType, UserType } from "../types";
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
   user: UserType | null;
@@ -36,7 +36,7 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
       liabilitySignature: confirmation?.liabilitySignature || "",
       liabilityDate: confirmation?.liabilityDate || new Date(),
       other: confirmation?.other || "",
-      paid: confirmation?.paid,
+      paid: confirmation?.paid || "",
     },
   });
 
@@ -55,9 +55,9 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
     liabilitySignature: confirmation?.liabilitySignature || "",
     liabilityDate: confirmation?.liabilityDate || new Date(),
     other: confirmation?.other || "",
-    paid: confirmation?.paid,
+    paid: confirmation?.paid || "",
   });
-  const [error, setError] = useState(new Array(5).fill(""));
+  const [error, setError] = useState(new Array(6).fill(""));
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setSubmitting(true);
@@ -76,11 +76,7 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
     let errors: string[] = [];
 
     Object.keys(data).forEach((v) => {
-      if (
-        v !== "other" &&
-        v !== "paid" &&
-        data[v as keyof typeof data].length == 0
-      ) {
+      if (v !== "other" && data[v as keyof typeof data].length == 0) {
         errors.push("This is a required field");
         found = true;
       } else {
@@ -91,30 +87,41 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
     setError(errors);
 
     if (!found) {
-      //redirect to checkout
-      await axios
-        .post("/api/confirmation/submit", { userId: user?.id, ...data })
-        .then(() => {
-          toast({
-            title: "Thanks for your confirmation!",
-            description: `We have sent an email to ${user?.email}. See you in a couple of weeks, and we can't wait for you to come to our event. In the meantime, follow us on social media!            `,
-            status: "success",
-            duration: 10000,
-            isClosable: true,
-          });
+      console.log(data.paid);
+      if (data.paid === "I will pay the food voucher fee.") {
+        checkout(user!.id, data, {
+          lineItems: [
+            {
+              price: "price_1NEaOGCkkf0SS11DYCPM3Fb9",
+              quantity: 1,
+            },
+          ],
+        });
+      } else {
+        await axios
+          .post("/api/confirmation/submit", { userId: user?.id, ...data })
+          .then(() => {
+            toast({
+              title: "Thanks for your confirmation!",
+              description: `We have sent an email to ${user?.email}. See you in a couple of weeks, and we can't wait for you to come to our event. In the meantime, follow us on social media!            `,
+              status: "success",
+              duration: 10000,
+              isClosable: true,
+            });
 
-          router.refresh();
-        })
-        .catch(() => {
-          toast({
-            title: "Error!",
-            description: "There was a problem submitting your application!",
-            status: "error",
-            duration: 10000,
-            isClosable: true,
-          });
-        })
-        .finally(() => setSubmitting(false));
+            router.refresh();
+          })
+          .catch(() => {
+            toast({
+              title: "Error!",
+              description: "There was a problem submitting your application!",
+              status: "error",
+              duration: 10000,
+              isClosable: true,
+            });
+          })
+          .finally(() => setSubmitting(false));
+      }
     }
     setSubmitting(false);
   };
@@ -398,10 +405,32 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
 
                 <p className="font-base text-md text-[#b9b9b9] mt-2">
                   {" "}
-                  To confirm your spot as our participant, we will be collecting
-                  a <strong> $5 food voucher fee </strong> prior to our event.
-                  Please checkout here:
+                  We will be providing meals, snacks, and drinks to those who
+                  purchase a <strong>$15 food voucher fee</strong> You may also
+                  choose to purchase food voucher at the door during the event,
+                  but please note that these vouchers will be $30 to cover for
+                  last-minute ordering of food. Please email us if you have
+                  concerns!
                 </p>
+                <div>
+                  <div>
+                    <DropDown
+                      error={error[5]}
+                      name=""
+                      options={[
+                        "I will pay the food voucher fee.",
+                        "I will decide at the door.",
+                        "I will opt out completely and cover meals by myself.",
+                      ]}
+                      value={form.paid}
+                      setValue={(v) => {
+                        setForm({ ...form, paid: v });
+                        setCustomValue("paid", v);
+                      }}
+                    />
+                  </div>
+                </div>
+
                 <Autosave data={form} onSave={updateForm} />
               </form>
               <div className="flex items-center space-x-6 pt-8 pb-24">

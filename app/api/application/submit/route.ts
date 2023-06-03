@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-
 import prisma from "@/app/libs/prismadb";
-import { applicationConfirmationHTML } from "../../../data/emails";
 import sgMail from "@sendgrid/mail";
+import { NextResponse } from "next/server";
+import { v4 } from "uuid";
+import { applicationConfirmationHTML } from "../../../data/emails";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -96,6 +96,13 @@ export async function POST(req: Request) {
       console.error(error);
     });
   }
+
+  await prisma.payments.create({
+    data: {
+      userId,
+      token: v4(),
+    },
+  });
 
   return NextResponse.json(application);
 }

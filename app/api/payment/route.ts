@@ -12,22 +12,19 @@ export async function POST(req: Request) {
     liabilityDate,
     other,
     paid,
+    token,
   } = body;
 
-  let valid = true;
-
-  Object.keys(body).forEach((key: string) => {
-    if (key !== "other" && body[key as keyof typeof body].length == 0) {
-      valid = false;
-      return;
-    }
+  await prisma.payments.update({
+    where: {
+      token,
+    },
+    data: {
+      paid: true,
+    },
   });
 
-  if (!valid)
-    return NextResponse.json(
-      { error: "All required fields must be complete." },
-      { status: 500 }
-    );
+  //submit confirmation
 
   const confirmation = await prisma.confirmation.update({
     where: { userId },

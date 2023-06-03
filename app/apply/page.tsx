@@ -1,5 +1,6 @@
 import readApplicationById from "../actions/readApplicationById";
 import readUser from "../actions/readUser";
+import ApplyComponent from "./ApplyComponent";
 import ComingSoonComponent from "./ComingSoonComponent";
 
 const Apply = async () => {
@@ -8,8 +9,8 @@ const Apply = async () => {
 
   if (user) application = await readApplicationById({ userId: user.id });
 
-  return <ComingSoonComponent />;
-  // return <ApplyComponent user={user} application={application} />;
+  // return <ComingSoonComponent />;
+  return <ApplyComponent user={user} application={application} />;
 };
 
 export default Apply;

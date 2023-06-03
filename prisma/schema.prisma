@@ -104,18 +104,18 @@ model MailingList {
 }
 
 model Confirmation {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @unique @db.ObjectId
-  status             String   @default("Pending")
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String    @unique @db.ObjectId
+  status             String    @default("Pending")
   inPerson           String?
   firstTrack         String?
   secondTrack        String?
   liabilitySignature String?
   liabilityDate      DateTime?
   other              String?
-  paid               Boolean?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  paid               String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -129,9 +129,16 @@ model SubmittedConfirmations {
   liabilitySignature String
   liabilityDate      DateTime
   other              String
-  paid               Boolean?
+  paid               String
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Payments {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId String  @unique @db.ObjectId
+  token  String  @unique
+  paid   Boolean @default(false)
 }

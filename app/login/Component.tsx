@@ -160,17 +160,6 @@ const LoginComponent: React.FC<Props> = ({ user }) => {
               <FcGoogle size={24} />
               Sign in with Google
             </button>
-            {/* <button
-              onClick={() =>
-                signIn("github", {
-                  callbackUrl: "/",
-                })
-              }
-              className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold text-white"
-            >
-              <AiFillGithub size={24} />
-              Sign in with Github
-            </button> */}
           </div>
         </div>
       </div>
