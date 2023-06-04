@@ -1,5 +1,7 @@
 import prisma from "@/app/libs/prismadb";
+import sgMail from "@sendgrid/mail";
 import { NextResponse } from "next/server";
+import { rsvpConfirmationHTML } from "../../../data/emails";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -58,20 +60,20 @@ export async function POST(req: Request) {
 
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
-  // if (user) {
-  //   sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+  if (user) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-  //   const msg = {
-  //     to: user.email!,
-  //     from: process.env.SENDGRID_EMAIL!,
-  //     subject: "health{hacks} 2023 Application Confirmation",
-  //     html: applicationConfirmationHTML,
-  //   };
+    const msg = {
+      to: user.email!,
+      from: process.env.SENDGRID_EMAIL!,
+      subject: "health{hacks} 2023 RSVP Confirmation",
+      html: rsvpConfirmationHTML,
+    };
 
-  //   sgMail.send(msg).catch((error: any) => {
-  //     console.error(error);
-  //   });
-  // }
+    sgMail.send(msg).catch((error: any) => {
+      console.error(error);
+    });
+  }
 
   return NextResponse.json(confirmation);
 }
