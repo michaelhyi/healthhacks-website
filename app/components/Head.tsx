@@ -1,6 +1,8 @@
 "use client";
 
+import { Spinner } from "@chakra-ui/react";
 import Link from "next/link";
+import { useState } from "react";
 import { AiOutlineRight } from "react-icons/ai";
 import { UserType } from "../types";
 
@@ -13,6 +15,8 @@ interface Props {
 }
 
 const Head: React.FC<Props> = ({ user, whitelisted }) => {
+  const [loading, setLoading] = useState(false);
+
   return (
     <Fade delay={500} up distance="25px">
       <div className="flex flex-col items-center justify-center pt-12 p-4 pb-16 bg-[url('/headergradient.svg')] bg-cover">
@@ -35,27 +39,42 @@ const Head: React.FC<Props> = ({ user, whitelisted }) => {
             </div>
           </Fade>
           {whitelisted ? (
-            <Link href="/confirm">
+            <Link onClick={() => setLoading(true)} href="/confirm">
               <div className="hover:cursor-pointer duration-500 hover:opacity-70">
                 <Fade delay={500} up distance="25px">
                   <div className="mt-6 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
-                    <div className="font-semibold">RSVP Now</div>
-                    <div className="opacity-75">
-                      <AiOutlineRight size={15} />
-                    </div>
+                    {loading ? (
+                      <Spinner size="xs" />
+                    ) : (
+                      <div className="flex flex-row gap-2 items-center">
+                        <div className="font-semibold">RSVP Now</div>
+                        <div className="opacity-75">
+                          <AiOutlineRight size={15} />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Fade>
               </div>
             </Link>
           ) : (
-            <Link href={`${user ? "/apply" : "/login"}`}>
+            <Link
+              onClick={() => setLoading(true)}
+              href={`${user ? "/apply" : "/login"}`}
+            >
               <div className="hover:cursor-pointer duration-500 hover:opacity-70">
                 <Fade delay={500} up distance="25px">
                   <div className="mt-6 flex space-x-1 items-center justify-center text-black bg-white py-3 px-6 rounded-3xl">
-                    <div className="font-semibold">Start Now</div>
-                    <div className="opacity-75">
-                      <AiOutlineRight size={15} />
-                    </div>
+                    {loading ? (
+                      <Spinner size="xs" />
+                    ) : (
+                      <div className="flex flex-row gap-2 items-center">
+                        <div className="font-semibold">Start Now</div>
+                        <div className="opacity-75">
+                          <AiOutlineRight size={15} />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Fade>
               </div>

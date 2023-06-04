@@ -16,14 +16,16 @@ const VerifyComponent: React.FC<Props> = ({ user }) => {
   const router = useRouter();
   const params = useSearchParams();
 
-  if (user) {
-    toast({
-      title: "User already signed in!",
-      duration: 3000,
-      isClosable: true,
-    });
-    router.push("/");
-  }
+  useEffect(() => {
+    if (user) {
+      toast({
+        title: "User already signed in!",
+        duration: 3000,
+        isClosable: true,
+      });
+      router.push("/");
+    }
+  }, [toast, router]);
 
   useEffect(() => {
     if (params?.toString().length === 0) {

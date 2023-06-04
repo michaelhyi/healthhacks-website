@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@chakra-ui/react";
+import { Spinner, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,7 +11,7 @@ const Footer = () => {
   const toast = useToast();
   const [submitting, setSubmitting] = useState(false);
 
-  const { handleSubmit, register } = useForm<FieldValues>({
+  const { handleSubmit, register, reset } = useForm<FieldValues>({
     defaultValues: {
       email: "",
     },
@@ -31,6 +31,7 @@ const Footer = () => {
           duration: 5000,
           status: "success",
         });
+        reset();
       })
       .catch((callback) => {
         toast({
@@ -61,7 +62,7 @@ const Footer = () => {
               className={`placeholder-white bg-black p-4 rounded-xl sm-[256px] md:w-[320px] xl:w-[384px]`}
             />
             <button className="hover:cursor-pointer duration-500 hover:opacity-90 flex items-center text-black bg-white px-8 py-4 rounded-[75px] font-semibold sm:text-sm">
-              Subscribe
+              {submitting ? <Spinner size="xs" /> : "Subscribe"}
             </button>
           </div>
         </div>

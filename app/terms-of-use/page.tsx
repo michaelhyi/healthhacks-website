@@ -1,9 +1,10 @@
 import Container from "../components/Container";
 import Footer from "@/app/components/Footer";
+import ContainerApp from "../components/ContainerApp";
 
 const TermsOfUse = () => {
   return (
-    <Container>
+    <ContainerApp>
       <div className="lg:mt-24 md:mt-20 sm:mt-8 mb-24 lg:mx-40 md:mx-16 sm:mx-12">
         <h1 className="font-bold text-4xl">Terms of Use</h1>
 
@@ -860,7 +861,7 @@ const TermsOfUse = () => {
         </div>
       </div>
       <Footer />
-    </Container>
+    </ContainerApp>
   );
 };
 

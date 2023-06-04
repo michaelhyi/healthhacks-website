@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import ContainerApp from "../components/ContainerApp";
@@ -22,15 +22,18 @@ const RegisterComponent: React.FC<Props> = ({ user }) => {
   const toast = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
 
-  if (user) {
-    toast({
-      title: "User already signed in!",
-      duration: 3000,
-      isClosable: true,
-    });
-    router.push("/");
-  }
+  useEffect(() => {
+    if (user) {
+      toast({
+        title: "User already signed in!",
+        duration: 3000,
+        isClosable: true,
+      });
+      router.push("/");
+    }
+  }, [toast, router]);
 
   const {
     register,
@@ -190,11 +193,20 @@ const RegisterComponent: React.FC<Props> = ({ user }) => {
           </form>
           <div className="flex flex-col gap-5 mt-8 mb-48">
             <button
-              onClick={() => signIn("google", { callbackUrl: "/" })}
+              onClick={() => {
+                setLoadingGoogle(true);
+                signIn("google", { callbackUrl: "/" });
+              }}
               className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold"
             >
-              <FcGoogle size={24} />
-              Sign in with Google
+              {loadingGoogle ? (
+                <Spinner size="xs" />
+              ) : (
+                <div className="flex flex-row gap-2">
+                  <FcGoogle size={24} />
+                  Sign in with Google
+                </div>
+              )}
             </button>
           </div>
         </div>

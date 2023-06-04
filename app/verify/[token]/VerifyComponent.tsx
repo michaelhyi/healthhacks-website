@@ -17,18 +17,19 @@ interface Props {
 const VerifyComponent: React.FC<Props> = ({ token, user }) => {
   const toast = useToast();
   const router = useRouter();
-  const params = useSearchParams();
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState("");
 
-  if (user) {
-    toast({
-      title: "User already signed in!",
-      duration: 3000,
-      isClosable: true,
-    });
-    router.push("/");
-  }
+  useEffect(() => {
+    if (user) {
+      toast({
+        title: "User already signed in!",
+        duration: 3000,
+        isClosable: true,
+      });
+      router.push("/");
+    }
+  }, [toast, router]);
 
   useEffect(() => {
     if (token) {
@@ -43,7 +44,7 @@ const VerifyComponent: React.FC<Props> = ({ token, user }) => {
           });
       })();
     }
-  }, [params]);
+  }, [token]);
 
   if (!result) {
     <ContainerApp>

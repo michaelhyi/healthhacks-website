@@ -21,6 +21,7 @@ const LoginComponent: React.FC<Props> = ({ user }) => {
   const toast = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
 
   if (user) {
     toast({
@@ -150,15 +151,22 @@ const LoginComponent: React.FC<Props> = ({ user }) => {
           </form>
           <div className="flex flex-col gap-5 mt-8">
             <button
-              onClick={() =>
+              onClick={() => {
+                setLoadingGoogle(true);
                 signIn("google", {
                   callbackUrl: "/",
-                })
-              }
+                });
+              }}
               className="flex flex-row gap-2 w-full border-[1px] border-white justify-center items-center py-4 rounded-lg duration-300 hover:opacity-50 cursor-pointer font-semibold text-white"
             >
-              <FcGoogle size={24} />
-              Sign in with Google
+              {loadingGoogle ? (
+                <Spinner size="xs" />
+              ) : (
+                <div className="flex flex-row gap-2">
+                  <FcGoogle size={24} />
+                  Sign in with Google
+                </div>
+              )}
             </button>
           </div>
         </div>

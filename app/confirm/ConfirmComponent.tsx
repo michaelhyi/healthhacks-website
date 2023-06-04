@@ -442,7 +442,7 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
                       : "pointer-events-auto"
                   }`}
                 >
-                  {submitting ? <Spinner size="xs" /> : "Pay"}
+                  {submitting ? <Spinner size="xs" /> : "Submit"}
                 </button>
               </div>
             </div>

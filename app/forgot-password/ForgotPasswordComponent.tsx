@@ -3,7 +3,7 @@
 import { Spinner, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 import ContainerApp from "../components/ContainerApp";
@@ -21,14 +21,16 @@ const ForgotPasswordComponent: React.FC<Props> = ({ user }) => {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
-  if (user) {
-    toast({
-      title: "User already signed in!",
-      duration: 3000,
-      isClosable: true,
-    });
-    router.push("/");
-  }
+  useEffect(() => {
+    if (user) {
+      toast({
+        title: "User already signed in!",
+        duration: 3000,
+        isClosable: true,
+      });
+      router.push("/");
+    }
+  }, [toast, router]);
 
   const {
     handleSubmit,
