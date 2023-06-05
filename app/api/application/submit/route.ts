@@ -83,11 +83,11 @@ export async function POST(req: Request) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (user) {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+    sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY!);
 
     const msg = {
       to: user.email!,
-      from: process.env.SENDGRID_EMAIL!,
+      from: process.env.NEXT_PUBLIC_SENDGRID_EMAIL!,
       subject: "health{hacks} 2023 Application Confirmation",
       html: applicationConfirmationHTML,
     };
