@@ -6,7 +6,7 @@ import ForbiddenComponent from "./ForbiddenComponent";
 
 const Confirm = async () => {
   const user = await readUser();
-  let whitelisted = null;
+  let whitelisted = false;
   let confirmation = null;
 
   if (user) {

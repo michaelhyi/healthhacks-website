@@ -18,6 +18,12 @@ export async function POST(req: Request) {
       { status: 500 }
     );
 
+  if (!user.password)
+    return NextResponse.json(
+      { error: "You must sign-in using Google!" },
+      { status: 500 }
+    );
+
   const isCorrectPassword = await bcrypt.compare(password, user.password!);
 
   if (!isCorrectPassword)

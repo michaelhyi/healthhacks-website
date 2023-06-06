@@ -24,11 +24,6 @@ const LoginComponent: React.FC<Props> = ({ user }) => {
   const [loadingGoogle, setLoadingGoogle] = useState(false);
 
   if (user) {
-    toast({
-      title: "User already signed in!",
-      duration: 3000,
-      isClosable: true,
-    });
     router.push("/");
   }
 

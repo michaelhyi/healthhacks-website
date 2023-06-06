@@ -44,10 +44,9 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
     team: application?.team || "",
     linkedIn: application?.linkedIn || "",
     dietaryRestrictions: application?.dietaryRestrictions || "",
-    transportation: application?.transportation || "",
     other: application?.other || "",
   });
-  const [error, setError] = useState(new Array(13).fill(""));
+  const [error, setError] = useState(new Array(12).fill(""));
 
   const { handleSubmit, setValue, watch } = useForm<FieldValues>({
     defaultValues: {
@@ -63,7 +62,6 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
       team: application?.team || "",
       linkedIn: application?.linkedIn || "",
       dietaryRestrictions: application?.dietaryRestrictions || "",
-      transportation: application?.transportation || "",
       other: application?.other || "",
     },
   });
@@ -546,23 +544,6 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                     />
                   </div>
                 </div>
-
-                {/* Do you need transporation to Stanford? */}
-                <div>
-                  <div>
-                    <DropDown
-                      error={error[12]}
-                      name="Do you need transporation to Stanford? *"
-                      options={yesno}
-                      value={form.transportation}
-                      setValue={(v) => {
-                        setForm({ ...form, transportation: v });
-                        setCustomValue("transportation", v);
-                      }}
-                    />
-                  </div>
-                </div>
-
                 {/* Anything Else? */}
                 <div>
                   <p className="mt-8 mb-2 lg:text-lg md:text-small font-semibold">

@@ -15,7 +15,7 @@ export default async function readApplicationStatusById(params: IParams) {
     });
 
     if (!application) {
-      return null;
+      return false;
     }
 
     return application.whitelisted;

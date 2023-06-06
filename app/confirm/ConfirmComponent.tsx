@@ -181,11 +181,8 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
               <>
                 <p className="font-base text-md text-[#b9b9b9] mt-2">
                   To confirm your spot at our event, please fill out this quick
-                  confirmation form to attend our event at{" "}
-                  <strong>
-                    {" "}
-                    Stanford University on April 14 - 16th, 2023.{" "}
-                  </strong>{" "}
+                  confirmation form to attend our event in{" "}
+                  <strong> Los Angeles on August 4 - 6, 2023. </strong>{" "}
                 </p>
               </>
             )}

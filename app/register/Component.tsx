@@ -24,16 +24,7 @@ const RegisterComponent: React.FC<Props> = ({ user }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingGoogle, setLoadingGoogle] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      toast({
-        title: "User already signed in!",
-        duration: 3000,
-        isClosable: true,
-      });
-      router.push("/");
-    }
-  }, [toast, router]);
+  if (user) router.push("/");
 
   const {
     register,
@@ -88,9 +79,6 @@ const RegisterComponent: React.FC<Props> = ({ user }) => {
         );
 
         router.push(`/verify${url}`);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 

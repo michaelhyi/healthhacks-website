@@ -21,17 +21,6 @@ const ForgotPasswordComponent: React.FC<Props> = ({ user }) => {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      toast({
-        title: "User already signed in!",
-        duration: 3000,
-        isClosable: true,
-      });
-      router.push("/");
-    }
-  }, [toast, router]);
-
   const {
     handleSubmit,
     register,

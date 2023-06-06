@@ -10,7 +10,7 @@ const Sponsors = () => {
     <div className="flex flex-col items-center justify-center mt-20 mx-4">
       <Fade up delay={500} distance="24px">
         <div className="font-medium text-md md:text-xl 2xl:text-2xl text-[#ccc]">
-          {`HEALTH{HACKS} 2023 @ STANFORD`} IS BACKED BY
+          {`HEALTH{HACKS} 2023`} IS BACKED BY
         </div>
       </Fade>
       <Fade up delay={500} distance="24px">

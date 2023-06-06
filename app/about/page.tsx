@@ -8,7 +8,7 @@ import Sponsors from "../components/Sponsors";
 
 const About = async () => {
   const user = await readUser();
-  let whitelisted = null;
+  let whitelisted = false;
 
   if (user) whitelisted = await readApplicationStatusById({ userId: user.id });
 
