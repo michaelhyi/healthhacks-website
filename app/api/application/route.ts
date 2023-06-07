@@ -18,8 +18,8 @@ export async function POST(req: Request) {
     team,
     linkedIn,
     dietaryRestrictions,
-    transportation,
     other,
+    ambassador,
   } = body;
 
   let application = await prisma.application.findUnique({ where: { userId } });
@@ -40,8 +40,8 @@ export async function POST(req: Request) {
         team,
         linkedIn,
         dietaryRestrictions,
-        transportation,
         other,
+        ambassador,
       },
     });
   } else {
@@ -60,8 +60,8 @@ export async function POST(req: Request) {
         team,
         linkedIn,
         dietaryRestrictions,
-        transportation,
         other,
+        ambassador,
       },
     });
   }

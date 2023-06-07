@@ -66,6 +66,7 @@ model Application {
   linkedIn            String?
   dietaryRestrictions String?
   other               String?
+  ambassador          String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
@@ -90,6 +91,7 @@ model SubmittedApplications {
   linkedIn            String
   dietaryRestrictions String
   other               String
+  ambassador          String
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 

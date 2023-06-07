@@ -20,8 +20,8 @@ export async function POST(req: Request) {
     team,
     linkedIn,
     dietaryRestrictions,
-    transportation,
     other,
+    ambassador,
   } = body;
 
   let valid = true;
@@ -54,9 +54,9 @@ export async function POST(req: Request) {
       team,
       linkedIn,
       dietaryRestrictions,
-      transportation,
       other,
       status: "Submitted",
+      ambassador,
     },
   });
 
@@ -75,8 +75,8 @@ export async function POST(req: Request) {
       team,
       linkedIn,
       dietaryRestrictions,
-      transportation,
       other,
+      ambassador,
     },
   });
 

@@ -87,7 +87,6 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
     setError(errors);
 
     if (!found) {
-      console.log(data.paid);
       if (data.paid === "I will pay the food voucher fee.") {
         checkout(user!.id, data, {
           lineItems: [

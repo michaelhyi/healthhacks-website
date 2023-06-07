@@ -11,12 +11,13 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { Autosave, useAutosave } from "react-autosave";
+import { FieldValues, useForm } from "react-hook-form";
 import ApplicationInput from "../components/ApplicationInput";
 import ContainerApp from "../components/ContainerApp";
 import DropDown from "../components/DropDown";
 import { states } from "../data/states";
 import { ApplicationType, UserType } from "../types";
-import { FieldValues, useForm } from "react-hook-form";
+import Link from "next/link";
 
 interface Props {
   user?: UserType | null;
@@ -45,8 +46,9 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
     linkedIn: application?.linkedIn || "",
     dietaryRestrictions: application?.dietaryRestrictions || "",
     other: application?.other || "",
+    ambassador: application?.ambassador || "",
   });
-  const [error, setError] = useState(new Array(12).fill(""));
+  const [error, setError] = useState(new Array(13).fill(""));
 
   const { handleSubmit, setValue, watch } = useForm<FieldValues>({
     defaultValues: {
@@ -63,6 +65,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
       linkedIn: application?.linkedIn || "",
       dietaryRestrictions: application?.dietaryRestrictions || "",
       other: application?.other || "",
+      ambassador: application?.ambassador || "",
     },
   });
 
@@ -92,8 +95,8 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
       team: watch("team"),
       linkedIn: watch("linkedIn"),
       dietaryRestrictions: watch("dietaryRestrictions"),
-      transportation: watch("transportation"),
       other: watch("other"),
+      ambassador: watch("ambassador"),
     };
 
     Object.keys(data).forEach((v) => {
@@ -181,8 +184,8 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
       team: watch("team"),
       linkedIn: watch("linkedIn"),
       dietaryRestrictions: watch("dietaryRestrictions"),
-      transportation: watch("transportation"),
       other: watch("other"),
+      ambassador: watch("ambassador"),
     };
 
     toast({ title: "Saving...", isClosable: true, duration: 2000 });
@@ -559,16 +562,68 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                     }}
                   />
                 </div>
+                <div>
+                  <p className="mt-8 mb-2 lg:text-lg md:text-small font-semibold">
+                    {`Would you like to be a health{hacks} ambassador? *`}
+                  </p>
+                  <p className="font-base text-xs text-[#b9b9b9] flex flex-row">
+                    Perks of becoming an ambassador are ...{" "}
+                    <Link
+                      href="/ambassador"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="cursor-pointer underline duration-300 hover:opacity-75"
+                    >
+                      Read More
+                    </Link>
+                  </p>
+                  <RadioGroup
+                    onChange={(value) => {
+                      setForm({
+                        ...form,
+                        ambassador: value,
+                      });
+                      setCustomValue("ambassador", value);
+                    }}
+                    value={form.ambassador}
+                  >
+                    <div className={`flex items-center space-x-4 mt-4`}>
+                      <Radio
+                        value="Yes"
+                        colorScheme="black"
+                        onClick={() => {
+                          setForm({ ...form, ambassador: "Yes" });
+                          setCustomValue("ambassador", "Yes");
+                        }}
+                      >
+                        Yes
+                      </Radio>
+                      <Radio
+                        value="No"
+                        colorScheme="black"
+                        onClick={() => {
+                          setForm({ ...form, ambassador: "No" });
+                          setCustomValue("ambassador", "No");
+                        }}
+                      >
+                        No
+                      </Radio>
+                    </div>
+                  </RadioGroup>
+                  {error[12] && error[12].length > 0 && (
+                    <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
+                      {error[12]}
+                    </div>
+                  )}
+                </div>
                 <p className="font-base text-xs text-[#b9b9b9] mt-6">
-                  {" "}
                   An asterisk (*) denotes a required field. Please note that
-                  this year we will be collecting a{" "}
+                  this year we will be collecting a
                   <strong> $5 food voucher fee </strong>
                   when we send out registration confirmations in a couple of
                   weeks. If this will present a barrier, please let us know at
                   <a href="mailto: info@joinhealthhacks.com">
-                    {" "}
-                    <u> info@joinhealthhacks.com </u>{" "}
+                    <u> info@joinhealthhacks.com </u>
                   </a>
                 </p>
                 <Autosave data={form} onSave={updateForm} />
