@@ -79,6 +79,8 @@ const Footer = () => {
             All Rights Reserved. <br />
             <div className="mt-4" />
             <Link
+              rel="noopener noreferrer"
+              target="_blank"
               className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
               href="/private-policy"
             >
@@ -86,6 +88,8 @@ const Footer = () => {
             </Link>
             <br />
             <Link
+              rel="noopener noreferrer"
+              target="_blank"
               className="opacity-50 hover:cursor-pointer duration-500 hover:opacity-100 sm:text-sm"
               href="/terms-of-use"
             >
