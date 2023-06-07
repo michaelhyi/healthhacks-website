@@ -82,8 +82,8 @@ const LoginComponent: React.FC<Props> = ({ user }) => {
           isClosable: true,
           duration: 5000,
         });
-      })
-      .finally(() => setIsLoading(false));
+        setIsLoading(false);
+      });
   };
 
   return (

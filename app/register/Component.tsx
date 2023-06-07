@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import ContainerApp from "../components/ContainerApp";
@@ -79,6 +79,15 @@ const RegisterComponent: React.FC<Props> = ({ user }) => {
         );
 
         router.push(`/verify${url}`);
+      })
+      .catch((callback) => {
+        toast({
+          title: callback.response.data.error,
+          status: "error",
+          isClosable: true,
+          duration: 3000,
+        });
+        setIsLoading(false);
       });
   };
 
@@ -151,6 +160,8 @@ const RegisterComponent: React.FC<Props> = ({ user }) => {
               By continuing you agree to the {`health{hacks}`}&nbsp;
               <Link
                 href="/terms-of-use"
+                rel="noopener noreferrer"
+                target="_blank"
                 className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
               >
                 terms of service
@@ -158,6 +169,8 @@ const RegisterComponent: React.FC<Props> = ({ user }) => {
               &nbsp;and&nbsp;
               <Link
                 href="/private-policy"
+                rel="noopener noreferrer"
+                target="_blank"
                 className="text-hh-purple hover:cursor-pointer duration-500 hover:opacity-50"
               >
                 privacy policy

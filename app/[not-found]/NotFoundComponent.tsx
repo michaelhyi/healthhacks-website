@@ -18,8 +18,7 @@ const NotFoundComponent = () => {
             href="/"
             className="flex flex-row justify-center items-center text-center bg-hh-purple text-white px-6 py-3 w-auto rounded-3xl text-sm font-bold opacity-100 hover:cursor-pointer duration-500 hover:opacity-75 mt-8"
           >
-            <AiOutlineLeft />
-            &nbsp;Home
+            Return Home
           </Link>
         </div>
         <div className=" flex w-0 lg:w-1/2 md:m-0 bg-[url('/blog/blogbackground.png')] bg-cover items-center justify-center invisible lg:visible bg-center shadow-404" />

@@ -69,7 +69,7 @@ const ChangePasswordComponent: React.FC<Props> = ({
         toast({
           title: "Success!",
           description:
-            "Your password has been successfully changed! You will now be redirected to our application form.",
+            "Your password has been successfully changed! You will now be redirected to our login form.",
           duration: 3000,
           isClosable: true,
           status: "success",

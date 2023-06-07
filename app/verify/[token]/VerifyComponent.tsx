@@ -1,23 +1,18 @@
 "use client";
 
-import { useToast } from "@chakra-ui/react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ContainerApp from "../../components/ContainerApp";
 import VerifyFail from "../../components/VerifyFail";
 import VerifySuccess from "../../components/VerifySuccess";
-import { UserType } from "../../types";
 
 interface Props {
   token: string;
-  user: UserType | null;
 }
 
-const VerifyComponent: React.FC<Props> = ({ token, user }) => {
-  const toast = useToast();
-  const router = useRouter();
-  const [result, setResult] = useState<any>(null);
+const VerifyComponent: React.FC<Props> = ({ token }) => {
+  const [fetching, setFetching] = useState(true);
+  const [result, setResult] = useState<any>(undefined);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -29,13 +24,15 @@ const VerifyComponent: React.FC<Props> = ({ token, user }) => {
             setResult(true);
           })
           .catch((callback) => {
+            setResult(false);
             setError(callback.response.data.error);
-          });
+          })
+          .finally(() => setFetching(false));
       })();
     }
   }, [token]);
 
-  if (!result) {
+  if (fetching) {
     <ContainerApp>
       <></>
     </ContainerApp>;
