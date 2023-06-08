@@ -168,7 +168,15 @@ const ConfirmComponent: React.FC<Props> = ({
 
     setError(errors);
 
-    await axios.post("/api/confirmation", { userId: user?.id, ...data });
+    if (ambassador) {
+      await axios.post("/api/confirmation", {
+        userId: user?.id,
+        ...data,
+        paid: "exempt",
+      });
+    } else {
+      await axios.post("/api/confirmation", { userId: user?.id, ...data });
+    }
   }, [watch, toast]);
 
   useAutosave({ data: form, onSave: updateForm });
@@ -418,44 +426,41 @@ const ConfirmComponent: React.FC<Props> = ({
                     }}
                   />
                 </div>
-                <div className="font-semibold text-4xl mt-12">
-                  <u>Food Voucher</u>
-                </div>
+                {!ambassador && (
+                  <>
+                    <div className="font-semibold text-4xl mt-12">
+                      <u>Food Voucher</u>
+                    </div>
 
-                <p className="font-base text-md text-[#b9b9b9] mt-2">
-                  {" "}
-                  We will be providing meals, snacks, and drinks to those who
-                  purchase a <strong>$15 food voucher fee</strong> You may also
-                  choose to purchase food voucher at the door during the event,
-                  but please note that these vouchers will be $30 to cover for
-                  last-minute ordering of food. Please email us if you have
-                  concerns!
-                </p>
-                <div>
-                  <div>
-                    <DropDown
-                      error={error[6]}
-                      name=""
-                      options={
-                        ambassador
-                          ? [
-                              "I will decide at the door.",
-                              "I will opt out completely and cover meals by myself.",
-                            ]
-                          : [
-                              "I will pay the food voucher fee.",
-                              "I will decide at the door.",
-                              "I will opt out completely and cover meals by myself.",
-                            ]
-                      }
-                      value={form.paid}
-                      setValue={(v) => {
-                        setForm({ ...form, paid: v });
-                        setCustomValue("paid", v);
-                      }}
-                    />
-                  </div>
-                </div>
+                    <p className="font-base text-md text-[#b9b9b9] mt-2">
+                      {" "}
+                      We will be providing meals, snacks, and drinks to those
+                      who purchase a <strong>$15 food voucher fee</strong> You
+                      may also choose to purchase food voucher at the door
+                      during the event, but please note that these vouchers will
+                      be $30 to cover for last-minute ordering of food. Please
+                      email us if you have concerns!
+                    </p>
+                    <div>
+                      <div>
+                        <DropDown
+                          error={error[6]}
+                          name=""
+                          options={[
+                            "I will pay the food voucher fee.",
+                            "I will decide at the door.",
+                            "I will opt out completely and cover meals by myself.",
+                          ]}
+                          value={form.paid}
+                          setValue={(v) => {
+                            setForm({ ...form, paid: v });
+                            setCustomValue("paid", v);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
                 <Autosave data={form} onSave={updateForm} />
               </form>
               <div className="flex items-center space-x-6 pt-8 pb-24">
