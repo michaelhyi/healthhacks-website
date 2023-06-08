@@ -13,7 +13,7 @@ const Statistics = () => {
         <div className="border-l-2  xl:border-l-2 border-[#353535] md:h-[75px] sm:h-[50px]" />
         <Stat value={1000} name="TOTAL PARTICIPANTS" />
         <div className="border-l-2  xl:border-l-2 border-[#353535] md:h-[75px] sm:h-[50px]" />
-        <Stat value={3} name="EVENTS HELD" />
+        <Stat value={4} name="EVENTS HELD" />
         <div className="border-l-2 border-[#353535] md:h-[75px] sm:h-[50px]" />
         <Stat value={36000} name="HOURS SPENT BUILDING" />
       </div>

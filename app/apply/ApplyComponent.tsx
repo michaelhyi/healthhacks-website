@@ -48,7 +48,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
     other: application?.other || "",
     ambassador: application?.ambassador || "",
   });
-  const [error, setError] = useState(new Array(13).fill(""));
+  const [error, setError] = useState(new Array(14).fill(""));
 
   const { handleSubmit, setValue, watch } = useForm<FieldValues>({
     defaultValues: {
@@ -188,18 +188,23 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
       ambassador: watch("ambassador"),
     };
 
-    toast({ title: "Saving...", isClosable: true, duration: 2000 });
+    let errors: string[] = [];
 
-    await axios
-      .post("/api/application", { userId: user?.id, ...data })
-      .then(() => {
-        toast({
-          title: "Saved!",
-          status: "success",
-          isClosable: true,
-          duration: 2000,
-        });
-      });
+    Object.keys(data).forEach((v, i) => {
+      if (
+        v !== "other" &&
+        data[v as keyof typeof data].length === 0 &&
+        errors[i].length !== 0
+      ) {
+        errors.push("This is a required field");
+      } else {
+        errors.push("");
+      }
+    });
+
+    setError(errors);
+
+    await axios.post("/api/application", { userId: user?.id, ...data });
   }, [watch, toast]);
 
   useAutosave({ data: form, onSave: updateForm });
@@ -610,9 +615,9 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                       </Radio>
                     </div>
                   </RadioGroup>
-                  {error[12] && error[12].length > 0 && (
+                  {error[13] && error[13].length > 0 && (
                     <div className="mt-4 font-poppins font-semibold text-red-400 text-sm">
-                      {error[12]}
+                      {error[13]}
                     </div>
                   )}
                 </div>

@@ -136,18 +136,23 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
       paid: watch("paid"),
     };
 
-    toast({ title: "Saving...", isClosable: true, duration: 2000 });
+    let errors: string[] = [];
 
-    await axios
-      .post("/api/confirmation", { userId: user?.id, ...data })
-      .then(() => {
-        toast({
-          title: "Saved!",
-          status: "success",
-          isClosable: true,
-          duration: 2000,
-        });
-      });
+    Object.keys(data).forEach((v, i) => {
+      if (
+        v !== "other" &&
+        data[v as keyof typeof data].length == 0 &&
+        error[i].length !== 0
+      ) {
+        errors.push("This is a required field");
+      } else {
+        errors.push("");
+      }
+    });
+
+    setError(errors);
+
+    await axios.post("/api/confirmation", { userId: user?.id, ...data });
   }, [watch, toast]);
 
   useAutosave({ data: form, onSave: updateForm });
