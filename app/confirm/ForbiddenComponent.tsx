@@ -1,12 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ContainerApp from "../components/ContainerApp";
+import LoadingComponent from "../components/LoadingComponent";
 import { socials } from "../data/socials";
 import { UserType } from "../types";
-import { useRouter } from "next/navigation";
 import { sleep } from "../utils/sleep";
-import LoadingComponent from "../components/LoadingComponent";
 
 interface Props {
   user?: UserType | null;

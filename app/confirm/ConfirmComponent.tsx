@@ -16,6 +16,7 @@ import { checkout } from "../libs/checkout";
 import { ConfirmationType, UserType } from "../types";
 import { sleep } from "../utils/sleep";
 import LoadingComponent from "../components/LoadingComponent";
+import qs from "query-string";
 
 interface Props {
   user: UserType | null;
