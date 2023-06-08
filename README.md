@@ -1,28 +1,19 @@
 # joinhealthhacks.com
 
+This GitHub repository contains the code for the 2023 health{hacks} website.
+
+## Branches:
+
+v3_dev --> dev branch, pr this branch for everything
+v3_prod --> prod branch
+
 ## Tech Stack
 
-Frontend:
-
-- Typescript
-- React.js
-- Next.js
+- TypeScript
+- Next.js 13
 - TailwindCSS
-
-Backend/API:
-
 - Node.js
 - MongoDB
 - Prisma
-- PostgreSQL
-- GraphQL
-- Typeorm
-- URQL
 - Twilio SendGrid
-
-Deployment:
-
 - Vercel
-- DigitalOcean
-- Docker
-- Dokku
