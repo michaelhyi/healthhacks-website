@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-
 import prisma from "@/app/libs/prismadb";
 
 export async function POST(req: Request) {
@@ -23,39 +22,6 @@ export async function POST(req: Request) {
       email,
       password: hashedPassword,
       verified: false,
-    },
-  });
-
-  await prisma.application.create({
-    data: {
-      userId: user.id,
-      phone: "",
-      organization: "",
-      city: "",
-      state: "",
-      inPerson: "",
-      wholeEvent: "",
-      background: [],
-      whyUs: [],
-      howHear: "",
-      team: "",
-      linkedIn: "",
-      dietaryRestrictions: "",
-      other: "",
-      ambassador: "",
-    },
-  });
-
-  await prisma.confirmation.create({
-    data: {
-      userId: user.id,
-      inPerson: "",
-      firstTrack: "",
-      secondTrack: "",
-      liabilitySignature: "",
-      liabilityDate: "",
-      other: "",
-      paid: "",
     },
   });
 
