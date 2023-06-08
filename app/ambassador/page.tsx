@@ -14,7 +14,7 @@ const Ambassador = () => {
               will be part of a community of undergraduate and graduate students
               in the greater Los Angeles area who will publicize different
               initiatives of {`health{hacks}`} and leverage our brand. You will
-              work closely with the Marketing Committee to promote
+              work closely with the Marketing Committee to promote{" "}
               {`health{hacks}`} events and opportunities on your college campus
               and beyond.
               <br />
@@ -34,6 +34,7 @@ const Ambassador = () => {
                   Participate in the {`health{hacks}`} 2023 LA Ambassadorship
                   Program via Slack channels and email communication
                 </li>
+
                 <li className="pl-2">
                   {" "}
                   Promote {`health{hacks}`} events and initiatives on your
@@ -43,7 +44,11 @@ const Ambassador = () => {
                   {" "}
                   Attend bi-monthly meetings to stay updated on planning process
                 </li>
-                <li className="pl-2"> Use word-of-mouth to publicize events</li>
+                <li className="pl-2">
+                  {" "}
+                  Use word-of-mouth to publicize events (eg. have at least 2
+                  professors help publicize the event to their students)
+                </li>
                 <li className="pl-2">
                   {" "}
                   Post flyers on school campuses and submit potential ideas for
@@ -62,11 +67,18 @@ const Ambassador = () => {
                   Help to recruit more diverse participants for{" "}
                   {`health{hacks}`} events
                 </li>
+                <li className="pl-2"> Respond to monthly check-ins on slack</li>
+                <li className="pl-2">
+                  {" "}
+                  Leverage connections with potential sponsors (if interning at
+                  a company)
+                </li>
                 <li className="pl-2">
                   {" "}
                   Provide feedback on the event and suggest ideas for future
                   events
                 </li>
+                <li className="pl-2"> Emailing potential participants</li>
               </ul>
               <br />
               <b>Requirements</b>
@@ -98,34 +110,22 @@ const Ambassador = () => {
               <b>Benefits</b>
               <ul className="list-disc list-outside md:pl-12 sm:pl-6">
                 <li className="pl-2">
-                  {" "}
-                  Attendance at private {`health{hacks}`}events with corporate
-                  sponsors (e.g., networking dinners, meet and greets with
-                  sponsors/investors, private receptions)
+                  Attendance at private {`health{hacks}`} events (eg. networking
+                  dinners, meet and greets with the team, sponsors/investors,
+                  and/or mentors/speakers/judges)
                 </li>
                 <li className="pl-2">
-                  {" "}
                   $50 gift card following 50 signups attained (given a
                   promotional code to share with audience)
                 </li>
                 <li className="pl-2">
-                  {" "}
                   Free and guaranteed participation, food, and merch at our LA
                   event
                 </li>
-                <li className="pl-2">
-                  {" "}
-                  Featured on social media and blog pages
-                </li>
               </ul>
-              <br />
-              <b>To Apply</b>
+              {/* <br /> */}
+              {/* <b>To Apply</b>
               <ul className="list-disc list-outside md:pl-12 sm:pl-6">
-                <li className="pl-2">
-                  {" "}
-                  Applications will open Tuesday, March 27 and the deadline to
-                  apply for the ambassadorship program will be Friday, June 9.
-                </li>
                 <li className="pl-2">
                   {" "}
                   Ambassadors will be accepted on a rolling basis, but are
@@ -139,7 +139,7 @@ const Ambassador = () => {
                   application with 2 weeks of your submission.
                 </li>
               </ul>
-              <br />
+              <br /> */}
             </div>
 
             <br />

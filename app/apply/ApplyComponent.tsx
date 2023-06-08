@@ -585,7 +585,9 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                     {`Would you like to be a health{hacks} ambassador? *`}
                   </p>
                   <p className="font-base text-xs text-[#b9b9b9] flex flex-row">
-                    Perks of becoming an ambassador are ...{" "}
+                    Perks of becoming an ambassador include guaranteed
+                    acceptance to our event, guaranteed parking, free food, and
+                    more.&nbsp;
                     <Link
                       href="/ambassador"
                       rel="noopener noreferrer"
