@@ -26,5 +26,38 @@ export async function POST(req: Request) {
     },
   });
 
+  await prisma.application.create({
+    data: {
+      userId: user.id,
+      phone: "",
+      organization: "",
+      city: "",
+      state: "",
+      inPerson: "",
+      wholeEvent: "",
+      background: [],
+      whyUs: [],
+      howHear: "",
+      team: "",
+      linkedIn: "",
+      dietaryRestrictions: "",
+      other: "",
+      ambassador: "",
+    },
+  });
+
+  await prisma.confirmation.create({
+    data: {
+      userId: user.id,
+      inPerson: "",
+      firstTrack: "",
+      secondTrack: "",
+      liabilitySignature: "",
+      liabilityDate: "",
+      other: "",
+      paid: "",
+    },
+  });
+
   return NextResponse.json(user);
 }
