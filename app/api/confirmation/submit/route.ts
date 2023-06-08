@@ -31,20 +31,38 @@ export async function POST(req: Request) {
       { status: 500 }
     );
 
-  const confirmation = await prisma.confirmation.update({
+  let confirmation = await prisma.confirmation.findUnique({
     where: { userId },
-    data: {
-      inPerson,
-      firstTrack,
-      secondTrack,
-      liabilitySignature,
-      liabilityDate,
-      other,
-      paid,
-      status: "Submitted",
-    },
   });
 
+  if (!confirmation) {
+    confirmation = await prisma.confirmation.create({
+      data: {
+        userId,
+        inPerson,
+        firstTrack,
+        secondTrack,
+        liabilitySignature,
+        liabilityDate,
+        other,
+        paid,
+      },
+    });
+  } else {
+    confirmation = await prisma.confirmation.update({
+      where: { userId },
+      data: {
+        userId,
+        inPerson,
+        firstTrack,
+        secondTrack,
+        liabilitySignature,
+        liabilityDate,
+        other,
+        paid,
+      },
+    });
+  }
   await prisma.submittedConfirmations.create({
     data: {
       userId,
