@@ -25,7 +25,7 @@ const Head: React.FC<Props> = ({ user, whitelisted }) => {
           <div className="relative flex flex-col items-center">
             <img
               className="sm:w-[384px] md:w-[512px] xl:w-[640px] 2xl:w-[680px] -mt-8"
-              src="/health{hacks} - Website Header.PNG"
+              src="/health{hacks} - Website Header.png"
             />
             <div className="absolute bottom-6 sm:text-3xl md:text-3xl lg:text-4xl 2xl:text-5xl font-bold text-center sm:w-[450px] lg:w-[620px] xl:w-[640px] 2xl:w-[768px] sm:px-8">
               Assembling the future innovators of medicine.
