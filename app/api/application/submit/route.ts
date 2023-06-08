@@ -59,6 +59,7 @@ export async function POST(req: Request) {
         dietaryRestrictions,
         other,
         ambassador,
+        status: "Submitted",
       },
     });
   } else {
@@ -79,6 +80,7 @@ export async function POST(req: Request) {
         dietaryRestrictions,
         other,
         ambassador,
+        status: "Submitted",
       },
     });
   }

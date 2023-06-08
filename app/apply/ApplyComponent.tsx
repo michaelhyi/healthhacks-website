@@ -205,7 +205,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
       if (
         v !== "other" &&
         data[v as keyof typeof data].length === 0 &&
-        errors[i].length !== 0
+        error[i].length !== 0
       ) {
         errors.push("This is a required field");
       } else {
