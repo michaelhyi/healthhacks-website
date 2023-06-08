@@ -639,7 +639,7 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
                 <p className="font-base text-xs text-[#b9b9b9] mt-6">
                   An asterisk (*) denotes a required field. Please note that
                   this year we will be collecting a
-                  <strong> $5 food voucher fee </strong>
+                  <strong> $15 food voucher fee </strong>
                   when we send out registration confirmations in a couple of
                   weeks. If this will present a barrier, please let us know at
                   <a href="mailto: info@joinhealthhacks.com">
