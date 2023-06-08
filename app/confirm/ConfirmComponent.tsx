@@ -4,7 +4,7 @@ import { tracks } from "@/app/data/tracks";
 import { Radio, RadioGroup, Spinner, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Autosave, useAutosave } from "react-autosave";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,6 +14,8 @@ import ContainerApp from "../components/ContainerApp";
 import DropDown from "../components/DropDown";
 import { checkout } from "../libs/checkout";
 import { ConfirmationType, UserType } from "../types";
+import { sleep } from "../utils/sleep";
+import LoadingComponent from "../components/LoadingComponent";
 
 interface Props {
   user: UserType | null;
@@ -27,6 +29,15 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
     return confirmation?.status || "Pending";
   }, [confirmation]);
   const [submitting, setSubmitting] = useState(false);
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      if (!user) router.push("/login");
+      await sleep(1000);
+      setFetching(false);
+    })();
+  }, []);
 
   const { handleSubmit, setValue, watch } = useForm<FieldValues>({
     defaultValues: {
@@ -156,6 +167,8 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
   }, [watch, toast]);
 
   useAutosave({ data: form, onSave: updateForm });
+
+  if (fetching) return <LoadingComponent />;
 
   return (
     <ContainerApp>

@@ -9,7 +9,7 @@ import { yesno } from "@/app/data/yesno";
 import { Radio, RadioGroup, Spinner, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Autosave, useAutosave } from "react-autosave";
 import { FieldValues, useForm } from "react-hook-form";
 import ApplicationInput from "../components/ApplicationInput";
@@ -18,6 +18,8 @@ import DropDown from "../components/DropDown";
 import { states } from "../data/states";
 import { ApplicationType, UserType } from "../types";
 import Link from "next/link";
+import LoadingComponent from "../components/LoadingComponent";
+import { sleep } from "../utils/sleep";
 
 interface Props {
   user?: UserType | null;
@@ -31,6 +33,15 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
     return application?.status || "Pending";
   }, [application]);
   const [submitting, setSubmitting] = useState(false);
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      if (!user) router.push("/login");
+      await sleep(1000);
+      setFetching(false);
+    })();
+  }, []);
 
   const [form, setForm] = useState({
     phone: application?.phone || "",
@@ -208,6 +219,8 @@ const ApplyComponent: React.FC<Props> = ({ application, user }) => {
   }, [watch, toast]);
 
   useAutosave({ data: form, onSave: updateForm });
+
+  if (fetching) return <LoadingComponent />;
 
   return (
     <ContainerApp>

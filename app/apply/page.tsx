@@ -1,7 +1,7 @@
+import { useRouter } from "next/navigation";
 import readApplicationById from "../actions/readApplicationById";
 import readUser from "../actions/readUser";
 import ApplyComponent from "./ApplyComponent";
-import ComingSoonComponent from "./ComingSoonComponent";
 
 const Apply = async () => {
   const user = await readUser();

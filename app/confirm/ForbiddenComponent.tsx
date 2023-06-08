@@ -1,14 +1,31 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import ContainerApp from "../components/ContainerApp";
 import { socials } from "../data/socials";
 import { UserType } from "../types";
+import { useRouter } from "next/navigation";
+import { sleep } from "../utils/sleep";
+import LoadingComponent from "../components/LoadingComponent";
 
 interface Props {
   user?: UserType | null;
 }
 
 const ForbiddenComponent: React.FC<Props> = ({ user }) => {
+  const router = useRouter();
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      if (!user) router.push("/login");
+      await sleep(1000);
+      setFetching(false);
+    })();
+  }, []);
+
+  if (fetching) return <LoadingComponent />;
+
   return (
     <ContainerApp>
       <div className="flex flex-col items-center md:pb-8 md:pt-8 xl:pt-16 sm:pt-16 w-screen h-[100%]">
