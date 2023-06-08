@@ -12,18 +12,22 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ApplicationInput from "../components/ApplicationInput";
 import ContainerApp from "../components/ContainerApp";
 import DropDown from "../components/DropDown";
+import LoadingComponent from "../components/LoadingComponent";
 import { checkout } from "../libs/checkout";
 import { ConfirmationType, UserType } from "../types";
 import { sleep } from "../utils/sleep";
-import LoadingComponent from "../components/LoadingComponent";
-import qs from "query-string";
 
 interface Props {
   user: UserType | null;
   confirmation: ConfirmationType | null;
+  ambassador: boolean;
 }
 
-const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
+const ConfirmComponent: React.FC<Props> = ({
+  user,
+  confirmation,
+  ambassador,
+}) => {
   const toast = useToast();
   const router = useRouter();
   const status = useMemo(() => {
@@ -69,20 +73,10 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
     other: confirmation?.other || "",
     paid: confirmation?.paid || "",
   });
-  const [error, setError] = useState(new Array(6).fill(""));
+  const [error, setError] = useState(new Array(7).fill(""));
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setSubmitting(true);
-
-    if (data.firstTrack === data.secondTrack) {
-      toast({
-        title: "You must select different first and second choice tracks!",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return setSubmitting(false);
-    }
 
     let found = false;
     let errors: string[] = [];
@@ -98,12 +92,22 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
 
     setError(errors);
 
+    if (data.firstTrack === data.secondTrack && data.firstTrack !== "") {
+      toast({
+        title: "You must select different first and second choice tracks!",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return setSubmitting(false);
+    }
+
     if (!found) {
       if (data.paid === "I will pay the food voucher fee.") {
         checkout(user!.id, data, {
           lineItems: [
             {
-              price: "price_1NEaOGCkkf0SS11DYCPM3Fb9",
+              price: process.env.NEXT_PUBLIC_STRIPE_PRICE!,
               quantity: 1,
             },
           ],
@@ -281,7 +285,7 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
                 </p>
                 <ol className="font-base text-md text-[#b9b9b9]">
                   <li className="pt-2">
-                    <b>Diagnostic Medicine:</b>With the advancement of data
+                    <b>Diagnostic Medicine:</b> With the advancement of data
                     analytics and bioinformatics, there is growing potential for
                     innovating cost-effective, accurate diagnostic tools for
                     studying and treating health conditions. This track will
@@ -292,9 +296,9 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
                     early detection.
                   </li>
                   <li className="pt-2">
-                    <b>Healthcare Automation:</b>In today’s healthcare industry,
-                    limited resources is a prevalent issue. How can we alleviate
-                    healthcare provider shortages, telecommunication
+                    <b>Healthcare Automation:</b> In today’s healthcare
+                    industry, limited resources is a prevalent issue. How can we
+                    alleviate healthcare provider shortages, telecommunication
                     limitations, and healthcare data inconsistencies? To promote
                     an automated healthcare industry, this track aims to make
                     advancements in medical communication, applied robotics, and
@@ -302,8 +306,8 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
                     physician practices.
                   </li>
                   <li className="pt-2">
-                    <b>Population & Preventative Health:</b>While healthcare has
-                    put much effort toward treating diseases, it is far more
+                    <b>Population & Preventative Health:</b> While healthcare
+                    has put much effort toward treating diseases, it is far more
                     resourceful to prevent them from developing in the first
                     place. This track will focus on improving population health
                     through preventative measures and proactive lifestyle
@@ -430,13 +434,20 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
                 <div>
                   <div>
                     <DropDown
-                      error={error[5]}
+                      error={error[6]}
                       name=""
-                      options={[
-                        "I will pay the food voucher fee.",
-                        "I will decide at the door.",
-                        "I will opt out completely and cover meals by myself.",
-                      ]}
+                      options={
+                        ambassador
+                          ? [
+                              "I will decide at the door.",
+                              "I will opt out completely and cover meals by myself.",
+                            ]
+                          : [
+                              "I will pay the food voucher fee.",
+                              "I will decide at the door.",
+                              "I will opt out completely and cover meals by myself.",
+                            ]
+                      }
                       value={form.paid}
                       setValue={(v) => {
                         setForm({ ...form, paid: v });
@@ -445,7 +456,6 @@ const ConfirmComponent: React.FC<Props> = ({ user, confirmation }) => {
                     />
                   </div>
                 </div>
-
                 <Autosave data={form} onSave={updateForm} />
               </form>
               <div className="flex items-center space-x-6 pt-8 pb-24">
