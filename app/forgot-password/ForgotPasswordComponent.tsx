@@ -2,15 +2,15 @@
 
 import { Spinner, useToast } from "@chakra-ui/react";
 import axios from "axios";
+import * as EmailValidator from "email-validator";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 import ContainerApp from "../components/ContainerApp";
 import Input from "../components/NewInput";
-import * as EmailValidator from "email-validator";
 import { UserType } from "../types";
-import { useRouter } from "next/navigation";
 
 interface Props {
   user: UserType | null;

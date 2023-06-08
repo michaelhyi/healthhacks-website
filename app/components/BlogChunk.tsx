@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { AiOutlineRight } from "react-icons/ai";
 import BlogProfile from "./BlogProfile";
-import { useState } from "react";
 
 interface Props {
   category: string;

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { AiOutlineLeft } from "react-icons/ai";
 import Container from "../components/Container";
 
 const NotFoundComponent = () => {

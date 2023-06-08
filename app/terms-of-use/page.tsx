@@ -1,4 +1,3 @@
-import Container from "../components/Container";
 import Footer from "@/app/components/Footer";
 import ContainerApp from "../components/ContainerApp";
 

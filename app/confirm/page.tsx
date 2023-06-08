@@ -1,10 +1,9 @@
+import readAmbassador from "../actions/readAmbassador";
 import readApplicationStatusById from "../actions/readApplicationStatusById";
 import readConfirmationById from "../actions/readConfirmationById";
-import readIsAmbassador from "../actions/readAmbassador";
 import readUser from "../actions/readUser";
 import ConfirmComponent from "./ConfirmComponent";
 import ForbiddenComponent from "./ForbiddenComponent";
-import readAmbassador from "../actions/readAmbassador";
 
 const Confirm = async () => {
   const user = await readUser();
