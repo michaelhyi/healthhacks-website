@@ -243,12 +243,7 @@ export const verifyHTML = (token: string) => {
                                     <tbody>
                                       <tr>
                                         <td style="padding: 13px 17px; border-radius: 8px; background-color: #8d58b0" bgcolor="#8d58b0" valign="top" align="center">
-                                          <a href="${
-                                            process.env.NODE_ENV ===
-                                            "development"
-                                              ? "http://localhost:3000"
-                                              : "https://joinhealthhacks.com"
-                                          }/verify/${token}" style="line-height: 1.5; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff">Verify</a>
+                                          <a href="https://joinhealthhacks.com/verify/${token}" style="line-height: 1.5; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff">Verify</a>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -1841,12 +1836,7 @@ export const forgotPaswordHTML = (token: string) => {
                                     <tbody>
                                       <tr>
                                         <td style="padding: 13px 17px; border-radius: 8px; background-color: #8d58b0" bgcolor="#8d58b0" valign="top" align="center">
-                                          <a href="${
-                                            process.env.NODE_ENV ===
-                                            "development"
-                                              ? "http://localhost:3000"
-                                              : "https://joinhealthhacks.com"
-                                          }/change-password/${token}" style="line-height: 1.5; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff">Change Password</a>
+                                          <a href="https://joinhealthhacks.com/change-password/${token}" style="line-height: 1.5; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff">Change Password</a>
                                         </td>
                                       </tr>
                                     </tbody>
