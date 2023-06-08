@@ -75,7 +75,17 @@ const ConfirmComponent: React.FC<Props> = ({
   });
   const [error, setError] = useState(new Array(7).fill(""));
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async () => {
+    const data = {
+      inPerson: watch("inPerson"),
+      firstTrack: watch("firstTrack"),
+      secondTrack: watch("secondTrack"),
+      liabilitySignature: watch("liabilitySignature"),
+      liabilityDate: watch("liabilityDate"),
+      other: watch("other"),
+      paid: ambassador ? "exempt" : watch("paid"),
+    };
+
     setSubmitting(true);
 
     let found = false;
@@ -149,7 +159,7 @@ const ConfirmComponent: React.FC<Props> = ({
       liabilitySignature: watch("liabilitySignature"),
       liabilityDate: watch("liabilityDate"),
       other: watch("other"),
-      paid: watch("paid"),
+      paid: ambassador ? "exempt" : watch("paid"),
     };
 
     let errors: string[] = [];
@@ -168,15 +178,7 @@ const ConfirmComponent: React.FC<Props> = ({
 
     setError(errors);
 
-    if (ambassador) {
-      await axios.post("/api/confirmation", {
-        userId: user?.id,
-        ...data,
-        paid: "exempt",
-      });
-    } else {
-      await axios.post("/api/confirmation", { userId: user?.id, ...data });
-    }
+    await axios.post("/api/confirmation", { userId: user?.id, ...data });
   }, [watch, toast]);
 
   useAutosave({ data: form, onSave: updateForm });
