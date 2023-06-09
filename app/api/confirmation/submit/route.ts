@@ -64,9 +64,13 @@ export async function POST(req: Request) {
     });
   }
 
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+
   await prisma.submittedConfirmations.create({
     data: {
       userId,
+      name: user?.name!,
+      email: user?.email!,
       inPerson,
       firstTrack,
       secondTrack,
@@ -76,8 +80,6 @@ export async function POST(req: Request) {
       paid,
     },
   });
-
-  const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (user) {
     const transporter = nodemailer.createTransport({
