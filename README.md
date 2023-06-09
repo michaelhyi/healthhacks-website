@@ -15,5 +15,4 @@ v3_prod --> prod branch
 - Node.js
 - MongoDB
 - Prisma
-- Twilio SendGrid
 - Vercel
