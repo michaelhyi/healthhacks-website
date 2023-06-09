@@ -1,6 +1,6 @@
 import prisma from "@/app/libs/prismadb";
-import sgMail from "@sendgrid/mail";
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 import { v4 } from "uuid";
 import { applicationConfirmationHTML } from "../../../data/emails";
 
@@ -108,17 +108,20 @@ export async function POST(req: Request) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (user) {
-    sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY!);
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
 
-    const msg = {
+    await transporter.sendMail({
+      from: process.env.EMAIL,
       to: user.email!,
-      from: process.env.NEXT_PUBLIC_SENDGRID_EMAIL!,
-      subject: "health{hacks} 2023 Application Confirmation",
+      text: "Thank you for applying to health{hacks}! We will get back to your shortly regarding the status of your application.",
       html: applicationConfirmationHTML,
-    };
-
-    sgMail.send(msg).catch((error: any) => {
-      console.error(error);
+      subject: "health{hacks} 2023 Application Confirmation",
     });
   }
 

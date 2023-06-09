@@ -1,7 +1,7 @@
 import prisma from "@/app/libs/prismadb";
-import sgMail from "@sendgrid/mail";
 import { NextResponse } from "next/server";
 import { rsvpConfirmationHTML } from "../../data/emails";
+import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -58,17 +58,20 @@ export async function POST(req: Request) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (user) {
-    sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY!);
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
 
-    const msg = {
+    await transporter.sendMail({
+      from: process.env.EMAIL,
       to: user.email!,
-      from: process.env.NEXT_PUBLIC_SENDGRID_EMAIL!,
-      subject: "health{hacks} 2023 RSVP Confirmation",
+      text: "Thank you for your RSVP to health{hacks}! Please look out for any emails as the event approaches, and be sure to keep up with our social media!",
       html: rsvpConfirmationHTML,
-    };
-
-    sgMail.send(msg).catch((error: any) => {
-      console.error(error);
+      subject: "health{hacks} 2023 RSVP Confirmation",
     });
   }
 

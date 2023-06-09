@@ -1,7 +1,7 @@
 import prisma from "@/app/libs/prismadb";
-import sgMail from "@sendgrid/mail";
 import * as EmailValidator from "email-validator";
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 import { v4 } from "uuid";
 import { forgotPaswordHTML } from "../../data/emails";
 
@@ -33,15 +33,21 @@ export async function POST(req: Request) {
     },
   });
 
-  sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY!);
-  const msg = {
-    to: email,
-    from: process.env.NEXT_PUBLIC_SENDGRID_EMAIL!,
-    subject: "health{hacks} 2023 Password Change",
-    html: forgotPaswordHTML(token),
-  };
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
 
-  sgMail.send(msg);
+  await transporter.sendMail({
+    from: process.env.EMAIL,
+    to: user.email!,
+    text: "Forget your password? Update it here:",
+    html: forgotPaswordHTML(token),
+    subject: "health{hacks} 2023 Password Change",
+  });
 
   return NextResponse.json({ status: 200 });
 }
