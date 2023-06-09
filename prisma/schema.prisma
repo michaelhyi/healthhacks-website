@@ -78,6 +78,8 @@ model SubmittedApplications {
   userId              String   @unique @db.ObjectId
   confirmed           Boolean  @default(false)
   whitelisted         Boolean  @default(false)
+  name                String
+  email               String
   phone               String
   organization        String
   city                String
@@ -123,6 +125,8 @@ model Confirmation {
 model SubmittedConfirmations {
   id                 String   @id @default(auto()) @map("_id") @db.ObjectId
   userId             String   @unique @db.ObjectId
+  name               String
+  email              String
   inPerson           String
   firstTrack         String
   secondTrack        String
