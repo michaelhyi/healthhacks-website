@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
+import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 import { v4 } from "uuid";
-import sgMail from "@sendgrid/mail";
 import { verifyHTML } from "../../../data/emails";
 
 export async function POST(req: Request) {
@@ -18,15 +18,21 @@ export async function POST(req: Request) {
     },
   });
 
-  sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY!);
-  const msg = {
-    to: email,
-    from: process.env.NEXT_PUBLIC_SENDGRID_EMAIL!,
-    subject: "health{hacks} 2023 Email Verification",
-    html: verifyHTML(token),
-  };
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
 
-  sgMail.send(msg);
+  await transporter.sendMail({
+    from: process.env.EMAIL,
+    to: email,
+    text: "In order to start your health{hacks} application, you must verify your email.",
+    html: verifyHTML(token),
+    subject: "health{hacks} 2023 Email Verification",
+  });
 
   return NextResponse.json({ status: 200 });
 }
