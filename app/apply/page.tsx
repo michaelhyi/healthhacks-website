@@ -11,8 +11,8 @@ const Apply = async () => {
     application = await readApplicationById({ userId: user.id });
   }
 
-  return <ComingSoonComponent />;
-  // return <ApplyComponent user={user} application={application} />;
+  // return <ComingSoonComponent />;
+  return <ApplyComponent user={user} application={application} />;
 };
 
 export default Apply;
