@@ -38,7 +38,7 @@ const Head: React.FC<Props> = ({ user, whitelisted }) => {
               {`health{hacks} invites the most empathy-driven and diverse creators to revolutionize healthcare for 48 hours`}
             </div>
           </Fade>
-          {whitelisted ? (
+          {/* {whitelisted ? (
             <Link onClick={() => setLoading(true)} href="/confirm">
               <div className="hover:cursor-pointer duration-500 hover:opacity-70">
                 <Fade delay={500} up distance="25px">
@@ -79,7 +79,7 @@ const Head: React.FC<Props> = ({ user, whitelisted }) => {
                 </Fade>
               </div>
             </Link>
-          )}
+          )} */}
         </div>
       </div>
     </Fade>
