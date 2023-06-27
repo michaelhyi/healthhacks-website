@@ -64,7 +64,7 @@ const UserMenu: React.FC<Props> = ({ user, whitelisted }) => {
           <div className="flex flex-col cursor-pointer">
             {user ? (
               <>
-                <MenuItem label="Apply" onClick={() => router.push("/apply")} />
+                {/* <MenuItem label="Apply" onClick={() => router.push("/apply")} /> */}
                 {whitelisted && (
                   <MenuItem
                     label="Confirm"
